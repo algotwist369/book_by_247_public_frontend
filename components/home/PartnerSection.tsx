@@ -1,0 +1,108 @@
+import React from "react";
+import { CheckCircle2, TrendingUp, Laptop } from "lucide-react";
+
+const benefits = [
+  {
+    icon: <TrendingUp className="w-5 h-5 text-white" />,
+    title: "Boost Your Visibility",
+    description:
+      "Get discovered by thousands of clients looking for services in your area.",
+  },
+  {
+    icon: <Laptop className="w-5 h-5 text-white" />,
+    title: "Smart Management",
+    description:
+      "Calendar sync, automated reminders, and client management tools in one place.",
+  },
+  {
+    icon: <CheckCircle2 className="w-5 h-5 text-white" />,
+    title: "Verified Pro Status",
+    description:
+      "Build immediate trust with our verified partner badge on your profile.",
+  },
+];
+
+export const PartnerSection: React.FC = () => {
+  return (
+    <section className="relative w-full bg-[#008080] overflow-hidden">
+      {/* Decorative Background */}
+      <div className="absolute top-0 right-0 w-[60%] h-full bg-black/5 -skew-x-12 translate-x-1/3 hidden lg:block" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          
+          {/* LEFT CONTENT */}
+          <div className="space-y-8 text-center lg:text-left">
+            {/* Heading */}
+            <div className="space-y-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight">
+                Grow your business <br className="hidden sm:block" />
+                with SpaAdvisor
+              </h2>
+
+              <p className="text-white/80 text-base sm:text-lg md:text-xl max-w-xl mx-auto lg:mx-0">
+                Join the largest network of spas and salons and start receiving
+                bookings instantly.
+              </p>
+            </div>
+
+            {/* Benefits */}
+            <div className="space-y-6 max-w-xl mx-auto lg:mx-0">
+              {benefits.map((benefit, index) => (
+                <div
+                  key={index}
+                  className="flex items-start gap-4 text-left"
+                >
+                  <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
+                    {benefit.icon}
+                  </div>
+                  <div>
+                    <h4 className="text-white font-semibold text-lg">
+                      {benefit.title}
+                    </h4>
+                    <p className="text-white/70 text-sm sm:text-base">
+                      {benefit.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA */}
+            <div>
+              <button className="w-full sm:w-auto bg-white text-[#008080] font-bold px-8 py-4 rounded-full text-base sm:text-lg hover:bg-zinc-100 transition-all duration-200 shadow-xl">
+                List Your Business
+              </button>
+            </div>
+          </div>
+
+          {/* RIGHT IMAGE */}
+          <div className="relative w-full max-w-md sm:max-w-lg lg:max-w-none mx-auto">
+            <div className="relative bg-white p-3 sm:p-4 rounded-3xl shadow-2xl">
+              <img
+                src="https://images.klipfolio.com/website/public/5a275fee-d42b-4f31-91f6-8148d4d729af/executive%20dashboard.png"
+                alt="Business Manager Dashboard"
+                className="w-full h-auto rounded-2xl object-cover"
+              />
+
+              {/* Revenue Card */}
+              <div className="absolute bottom-4 sm:bottom-8 left-4 sm:left-8 bg-white rounded-2xl shadow-xl p-4 sm:p-6">
+                <p className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-widest mb-1">
+                  Total Revenue
+                </p>
+                <p className="text-xl sm:text-2xl lg:text-3xl font-black text-zinc-900">
+                  $12,450.00
+                </p>
+                <div className="flex items-center gap-2 mt-2 text-green-500 font-bold text-xs sm:text-sm">
+                  <span>+24.5%</span>
+                  <TrendingUp className="w-4 h-4" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+};

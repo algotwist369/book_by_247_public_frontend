@@ -1,0 +1,269 @@
+import * as React from "react"
+import { MapPin, Search, X } from "lucide-react"
+import { FaLocationArrow } from "react-icons/fa"
+import { cn } from "@/lib/utils"
+import { Input } from "./Input"
+import { Button } from "./Button"
+import { useLocationSuggestions } from "../../hooks/useLocationSuggestions"
+import { useGeolocation } from "../../hooks/useGeolocation"
+import { useRouter } from "next/navigation"
+
+interface SearchBarProps {
+    className?: string
+    isCompact?: boolean
+    value?: string
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+    locationValue?: string
+    onLocationChange?: (value: string) => void
+    onSearch?: (q?: string, loc?: string) => void
+}
+
+export const SearchBar: React.FC<SearchBarProps> = ({
+    className,
+    isCompact = false,
+    value,
+    onChange,
+    locationValue = "",
+    onLocationChange,
+    onSearch
+}) => {
+    const [showSuggestions, setShowSuggestions] = React.useState(false);
+    const [localLocation, setLocalLocation] = React.useState(locationValue);
+    const { data: suggestions, isLoading } = useLocationSuggestions(localLocation, showSuggestions);
+    const { getPosition, latitude, longitude, error, isFetching } = useGeolocation();
+    const router = useRouter();
+
+    React.useEffect(() => {
+        if (latitude && longitude) {
+            // Redirect or trigger search with coordinates
+            router.push(`/explore?lat=${latitude}&lng=${longitude}&nearby=true`);
+        }
+    }, [latitude, longitude, router]);
+
+    const handleNearbyClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        getPosition();
+    };
+
+    const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const val = e.target.value;
+        setLocalLocation(val);
+        if (onLocationChange) onLocationChange(val);
+        setShowSuggestions(true);
+    };
+
+    const selectSuggestion = (s: any) => {
+        const val = s.description;
+        setLocalLocation(val);
+        if (onLocationChange) onLocationChange(val);
+        setShowSuggestions(false);
+        // Explicitly trigger search with the new values
+        onSearch?.(value, val);
+    };
+
+    return (
+        <div className="relative w-full">
+            {/* Desktop SearchBar - Horizontal Layout */}
+            <div
+                className={cn(
+                    "hidden md:flex items-center w-full bg-white shadow-lg rounded-full border border-zinc-100",
+                    isCompact ? "max-w-3xl" : "max-w-5xl",
+                    className
+                )}
+            >
+                {/* Search Input */}
+                <div className="flex-[1.5] pl-4 border-r border-zinc-100">
+                    <Input
+                        className="border-none rounded-full focus-visible:ring-0 focus:ring-0 shadow-none h-14 placeholder:text-zinc-400 font-medium"
+                        placeholder={isCompact ? "What are you looking for?" : "Search spa, salon or beauty expert"}
+                        icon={<Search className="w-5 h-5 text-[#008080]" />}
+                        value={value}
+                        onChange={onChange}
+                        onKeyDown={(e) => e.key === 'Enter' && onSearch?.(value, localLocation)}
+                    />
+                    {value && (
+                        <button
+                            onClick={() => {
+                                onChange?.({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>);
+                                onSearch?.('', localLocation);
+                            }}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-zinc-100 rounded-full transition-colors"
+                        >
+                            <X className="w-4 h-4 text-zinc-400" />
+                        </button>
+                    )}
+                </div>
+
+                {/* Location Input */}
+                <div className="flex-1 px-2 relative">
+                    <Input
+                        className="border-none rounded-full focus-visible:ring-0 focus:ring-0 shadow-none h-14 placeholder:text-zinc-400 font-medium"
+                        placeholder="Location"
+                        icon={<MapPin className="w-5 h-5 text-[#008080]" />}
+                        value={localLocation}
+                        onChange={handleLocationChange}
+                        onFocus={() => setShowSuggestions(true)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                setShowSuggestions(false);
+                                onSearch?.(value, localLocation);
+                            }
+                        }}
+                    />
+                    {/* Near Me Button (Desktop) */}
+                    <button
+                        onClick={handleNearbyClick}
+                        disabled={isFetching}
+                        className={cn(
+                            "absolute right-4 top-1/2 -translate-y-1/2 p-2 hover:bg-[#008080]/10 rounded-lg group/nearme transition-all duration-200 flex items-center gap-2 disabled:opacity-50",
+                            isCompact ? "p-1.5" : "px-3"
+                        )}
+                        title="Near me"
+                    >
+                        {isFetching ? (
+                            <div className="w-3.5 h-3.5 border-2 border-[#008080]/20 border-t-[#008080] rounded-full animate-spin" />
+                        ) : (
+                            <FaLocationArrow className="w-3.5 h-3.5 text-zinc-400 group-hover/nearme:text-[#008080] transition-colors" />
+                        )}
+                        {!isCompact && (
+                            <span className="text-xs font-bold text-zinc-500 group-hover/nearme:text-[#008080] transition-colors">
+                                {isFetching ? 'Locating...' : 'Nearby'}
+                            </span>
+                        )}
+                    </button>
+
+                    {/* Desktop Suggestions Dropdown */}
+                    {showSuggestions && (suggestions?.length > 0 || isLoading) && (
+                        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-zinc-100 z-50 overflow-hidden py-2 animate-in fade-in slide-in-from-top-2">
+                            {isLoading ? (
+                                <div className="px-4 py-3 text-sm text-zinc-400 flex items-center gap-2">
+                                    <div className="w-4 h-4 border-2 border-[#008080]/20 border-t-[#008080] rounded-full animate-spin" />
+                                    <span>Searching locations...</span>
+                                </div>
+                            ) : (
+                                suggestions.map((s: any, idx: number) => (
+                                    <button
+                                        key={idx}
+                                        onClick={() => selectSuggestion(s)}
+                                        className="w-full px-4 py-3 flex items-start gap-3 hover:bg-zinc-50 transition-colors text-left"
+                                    >
+                                        <div className="w-8 h-8 rounded-lg bg-zinc-100 flex items-center justify-center shrink-0">
+                                            <MapPin className="w-4 h-4 text-zinc-500" />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-bold text-zinc-900 line-clamp-1">{s.mainText}</p>
+                                            <p className="text-xs text-zinc-500 line-clamp-1">{s.secondaryText}</p>
+                                        </div>
+                                    </button>
+                                ))
+                            )}
+                        </div>
+                    )}
+                </div>
+
+                {/* Near Me & Search Button */}
+                <div className="flex items-center gap-2 pr-4 pl-2 py-2">
+                    <Button
+                        size={isCompact ? "md" : "lg"}
+                        onClick={() => onSearch?.(value, localLocation)}
+                        className="bg-[#008080] hover:bg-[#006666] text-white rounded-full font-black min-w-[120px] transition-transform active:scale-95"
+                    >
+                        {isCompact ? <Search className="w-5 h-5" /> : "Search"}
+                    </Button>
+                </div>
+            </div>
+
+            {/* Mobile SearchBar - Vertical Stack */}
+            <div
+                className={cn(
+                    "flex md:hidden flex-col w-full bg-white shadow-lg rounded-2xl border border-zinc-100 p-4 gap-3",
+                    className
+                )}
+            >
+                <Input
+                    className="border border-zinc-100 focus-visible:ring-0 focus:ring-0 h-12 placeholder:text-zinc-400 rounded-xl"
+                    placeholder="Search services..."
+                    icon={<Search className="w-5 h-5 text-[#008080]" />}
+                    value={value}
+                    onChange={onChange}
+                    onKeyDown={(e) => e.key === 'Enter' && onSearch?.()}
+                />
+                {value && (
+                    <button
+                        onClick={() => {
+                            onChange?.({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>);
+                            onSearch?.('', localLocation);
+                        }}
+                        className="absolute right-8 top-[3.5rem] -translate-y-1/2 p-1 hover:bg-zinc-100 rounded-full transition-colors"
+                    >
+                        <X className="w-4 h-4 text-zinc-400" />
+                    </button>
+                )}
+
+                <div className="relative">
+                    <Input
+                        className="border border-zinc-100 focus-visible:ring-0 focus:ring-0 h-12 placeholder:text-zinc-400 rounded-xl"
+                        placeholder="Location"
+                        icon={<MapPin className="w-5 h-5 text-[#008080]" />}
+                        value={localLocation}
+                        onChange={handleLocationChange}
+                        onFocus={() => setShowSuggestions(true)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                setShowSuggestions(false);
+                                onSearch?.(value, localLocation);
+                            }
+                        }}
+                    />
+                    {/* Near Me Button (Mobile) */}
+                    <button
+                        onClick={handleNearbyClick}
+                        disabled={isFetching}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-zinc-50 rounded-lg disabled:opacity-50"
+                    >
+                        {isFetching ? (
+                            <div className="w-3.5 h-3.5 border-2 border-[#008080]/20 border-t-[#008080] rounded-full animate-spin" />
+                        ) : (
+                            <FaLocationArrow className="w-3.5 h-3.5 text-[#008080]" />
+                        )}
+                    </button>
+
+                    {/* Mobile Suggestions Dropdown */}
+                    {showSuggestions && suggestions?.length > 0 && (
+                        <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-xl border border-zinc-100 z-50 max-h-60 overflow-y-auto">
+                            {suggestions.map((s: any, idx: number) => (
+                                <button
+                                    key={idx}
+                                    onClick={() => selectSuggestion(s)}
+                                    className="w-full px-4 py-3 border-b border-zinc-50 last:border-none flex items-center gap-3 active:bg-zinc-50"
+                                >
+                                    <MapPin className="w-4 h-4 text-zinc-400" />
+                                    <div className="text-left">
+                                        <p className="text-sm font-bold text-zinc-900">{s.mainText}</p>
+                                        <p className="text-[10px] text-zinc-500">{s.secondaryText}</p>
+                                    </div>
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                <Button
+                    onClick={() => onSearch?.(value, localLocation)}
+                    size="lg"
+                    className="bg-[#008080] hover:bg-[#006666] text-white rounded-xl font-black h-12"
+                >
+                    Search
+                </Button>
+            </div>
+
+            {/* Backdrop to close suggestions */}
+            {showSuggestions && (
+                <div
+                    className="fixed inset-0 z-40"
+                    onClick={() => setShowSuggestions(false)}
+                />
+            )}
+        </div>
+    )
+}
