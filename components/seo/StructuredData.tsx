@@ -4,18 +4,18 @@ const StructuredData = () => {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "SpaAdvisor",
-        "url": "https://spaadvisor.com",
+        "name": "bookby247",
+        "url": "https://bookby247.com",
         "potentialAction": {
             "@type": "SearchAction",
-            "target": "https://spaadvisor.com/search?q={search_term_string}",
+            "target": "https://bookby247.com/search?q={search_term_string}",
             "query-input": "required name=search_term_string"
         },
         "description": "Book Best Spas & Salons Near You. Professional treatments at your fingertips.",
         "sameAs": [
-            "https://facebook.com/spaadvisor",
-            "https://instagram.com/spaadvisor",
-            "https://twitter.com/spaadvisor"
+            "https://facebook.com/bookby247",
+            "https://instagram.com/bookby247",
+            "https://twitter.com/bookby247"
         ]
     };
 

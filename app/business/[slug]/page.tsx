@@ -20,14 +20,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     if (!business) {
         return {
-            title: 'Business Not Found | SpaAdvisor',
+            title: 'Business Not Found | bookby247',
         };
     }
 
     const seo = business.seo || {};
 
     return {
-        title: seo.metaTitle || `${business.name} - ${business.city} | SpaAdvisor`,
+        title: seo.metaTitle || `${business.name} - ${business.city} | bookby247`,
         description: seo.metaDescription || business.description?.substring(0, 160) || `Book appointments at ${business.name} in ${business.city}.`,
         keywords: seo.keywords || [],
         openGraph: {

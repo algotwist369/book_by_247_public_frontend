@@ -19,14 +19,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     if (!business) {
         return {
-            title: 'Reviews Not Found | SpaAdvisor',
+            title: 'Reviews Not Found | bookby247',
         };
     }
 
     const seo = business.seo || {};
 
     return {
-        title: `Customer Reviews: ${seo.metaTitle || business.name} | SpaAdvisor`,
+        title: `Customer Reviews: ${seo.metaTitle || business.name} | bookby247`,
         description: `Read verified customer reviews for ${business.name} in ${business.city}. ${seo.metaDescription || ''}`,
         keywords: [...(seo.keywords || []), 'reviews', 'ratings', business.name],
     };

@@ -27,7 +27,7 @@ const Footer = () => {
                             <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
                                 <div className="w-4 h-4 bg-zinc-950 rounded-sm" />
                             </div>
-                            SPAADVISOR
+                            bookby247
                         </Link>
                         <p className="text-sm leading-relaxed max-w-xs">
                             Your ultimate destination for discovering and booking the most premium spas and salons. Experience wellness at your fingertips.
@@ -111,7 +111,7 @@ const Footer = () => {
                         </div>
                         <div>
                             <p className="text-xs uppercase tracking-widest font-bold text-zinc-500">Email Us</p>
-                            <p className="text-sm text-white font-medium">hello@spaadvisor.com</p>
+                            <p className="text-sm text-white font-medium">hello@bookby247.com</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
@@ -128,7 +128,7 @@ const Footer = () => {
                 {/* Bottom Bar */}
                 <div className="pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
                     <p className="text-xs">
-                        © {currentYear} SpaAdvisor. All rights reserved.
+                        © {currentYear} bookby247. All rights reserved.
                     </p>
                     <div className="flex items-center gap-8">
                         <Link href="#" className="text-xs hover:text-white transition-colors">Privacy Policy</Link>

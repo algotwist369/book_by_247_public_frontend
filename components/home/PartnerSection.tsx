@@ -37,7 +37,7 @@ export const PartnerSection: React.FC = () => {
             <div className="space-y-4">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight">
                 Grow your business <br className="hidden sm:block" />
-                with SpaAdvisor
+                with bookby247
               </h2>
 
               <p className="text-white/80 text-base sm:text-lg md:text-xl max-w-xl mx-auto lg:mx-0">
