@@ -79,8 +79,8 @@ export const Navbar = () => {
                 <div className="flex items-center gap-4 md:gap-8">
                     <Link href="/" className="shrink-0">
                         <span className={cn(
-                            "text-2xl sm:text-3xl font-black italic tracking-tighter text-zinc-900 border-2 border-zinc-900 px-2 leading-none transition-all duration-300",
-                            scrolled && "md:text-xl md:opacity-0 md:pointer-events-none md:w-0 md:overflow-hidden"
+                            "text-xl sm:text-2xl font-black italic tracking-tighter text-zinc-900 border-2 border-zinc-900 px-2 leading-none",
+                            scrolled && "lg:opacity-0 lg:pointer-events-none lg:w-0 lg:overflow-hidden"
                         )}>
                             LOGO
                         </span>
@@ -110,18 +110,13 @@ export const Navbar = () => {
                     </AnimatePresence>
                 </div>
 
-                {/* Sticky Search in Center (Desktop & Mobile) */}
-                <div className="hidden sm:flex flex-1 justify-center px-4 max-w-2xl">
+                {/* Sticky Search in Center (Desktop Only - Avoid overlap on tablets/mobile) */}
+                <div className="hidden lg:flex flex-1 justify-center px-8 lg:px-12 max-w-3xl">
                     <AnimatePresence>
                         {scrolled && (
-                            <motion.div
-                                initial={{ opacity: 0, y: -20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -20 }}
-                                className="w-full"
-                            >
+                            <div className="w-full">
                                 <SearchBar isCompact onSearch={handleSearch} />
-                            </motion.div>
+                            </div>
                         )}
                     </AnimatePresence>
                 </div>

@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Metadata } from 'next';
 import ExplorePageContent from './ExplorePageContent';
 import { businessApi } from '@/api/public/business';
@@ -72,7 +73,13 @@ export default async function ExplorePage() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
             <main className="min-h-screen bg-white">
-                <ExplorePageContent />
+                <Suspense fallback={
+                    <div className="flex items-center justify-center min-h-[50vh]">
+                        <div className="w-8 h-8 border-4 border-zinc-200 border-t-[#008080] rounded-full animate-spin" />
+                    </div>
+                }>
+                    <ExplorePageContent />
+                </Suspense>
             </main>
         </>
     );

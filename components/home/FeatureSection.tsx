@@ -58,9 +58,9 @@ const FeatureSection = () => {
 
           {/* RIGHT IMAGE */}
           <div className="relative w-full max-w-md sm:max-w-lg lg:max-w-none mx-auto">
-            <div className="relative aspect-[4/5] sm:aspect-square rounded-3xl overflow-hidden border border-white/10 shadow-xl">
+            <div className="relative aspect-4/5 sm:aspect-square rounded-3xl overflow-hidden border border-white/10 shadow-xl">
               <CustomImage
-                src="https://allurethaispa.in/wp-content/uploads/2024/02/couplee-main.jpg"
+                src="https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399342/4_hb33eu.png"
                 alt="Professional Spa Service"
                 fill
                 className="object-cover"

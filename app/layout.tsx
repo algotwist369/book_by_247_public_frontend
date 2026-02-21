@@ -1,16 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -55,6 +44,7 @@ export const metadata: Metadata = {
 
 import { Navbar } from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { FloatingActionButtons } from "@/components/layout/FloatingActionButtons";
 import StructuredData from "@/components/seo/StructuredData";
 import QueryProvider from "@/providers/QueryProvider";
 
@@ -66,11 +56,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        className="antialiased min-h-screen flex flex-col"
       >
         <QueryProvider>
           <StructuredData />
           <Navbar />
+          <FloatingActionButtons />
           <main className="flex-1">
             {children}
           </main>

@@ -16,7 +16,7 @@ export const SERVICES_DATA = [
         id: 1,
         title: "Swedish Massage",
         icon: Waves,
-        image: "https://images.unsplash.com/photo-1544161599-4358f2732483?q=80&w=800&auto=format&fit=crop",
+        image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399336/1_b4laro.png",
         category: "Spa",
         description: "Gentle full-body massage for complete relaxation"
     },
@@ -24,7 +24,7 @@ export const SERVICES_DATA = [
         id: 2,
         title: "Deep Tissue",
         icon: Zap,
-        image: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?q=80&w=800&auto=format&fit=crop",
+        image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399346/3_tg8oe1.png",
         category: "Spa",
         description: "Intense pressure to release chronic muscle tension"
     },
@@ -32,7 +32,7 @@ export const SERVICES_DATA = [
         id: 3,
         title: "Aromatherapy",
         icon: Flower2,
-        image: "https://images.unsplash.com/photo-1600334129128-685c5582fd35?q=80&w=800&auto=format&fit=crop",
+        image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399347/2_vyncgx.png",
         category: "Spa",
         description: "Therapeutic massage with essential plant oils"
     },
@@ -40,7 +40,7 @@ export const SERVICES_DATA = [
         id: 4,
         title: "Couple Spa",
         icon: Heart,
-        image: "https://images.unsplash.com/photo-1544161599-4358f2732483?q=80&w=800&auto=format&fit=crop",
+        image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399342/4_hb33eu.png",
         category: "Spa",
         description: "Shared relaxation experience for two"
     },
@@ -50,7 +50,7 @@ export const SERVICES_DATA = [
         id: 6,
         title: "Designer Haircut",
         icon: Scissors,
-        image: "https://images.unsplash.com/photo-1560066914-1f29c2cc7d18?q=80&w=800&auto=format&fit=crop",
+        image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399335/5_fmtzw7.png",
         category: "Salon",
         description: "Precision cutting and styling by expert stylists"
     },
@@ -58,7 +58,7 @@ export const SERVICES_DATA = [
         id: 7,
         title: "Bridal Makeup",
         icon: Sparkles,
-        image: "https://images.unsplash.com/photo-1487412912498-0447578fcca8?q=80&w=800&auto=format&fit=crop",
+        image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399338/6_x9sr11.png",
         category: "Salon",
         description: "Exquisite makeup for your special day"
     },
@@ -68,7 +68,7 @@ export const SERVICES_DATA = [
         id: 11,
         title: "Hydrafacial",
         icon: Smile,
-        image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=800&auto=format&fit=crop",
+        image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399334/7_hhhxju.png",
         category: "Beauty",
         description: "Hydrating facial for a clear, radiant complexion"
     },
@@ -76,7 +76,7 @@ export const SERVICES_DATA = [
         id: 12,
         title: "Luxury Manicure",
         icon: Hand,
-        image: "https://images.unsplash.com/photo-1604654894610-df49098271c1?q=80&w=800&auto=format&fit=crop",
+        image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399342/8_q7tlq6.png",
         category: "Beauty",
         description: "Premium nail care and artistic polishing"
     }

@@ -80,24 +80,10 @@ export const PartnerSection: React.FC = () => {
           <div className="relative w-full max-w-md sm:max-w-lg lg:max-w-none mx-auto">
             <div className="relative bg-white p-3 sm:p-4 rounded-3xl shadow-2xl">
               <img
-                src="https://images.klipfolio.com/website/public/5a275fee-d42b-4f31-91f6-8148d4d729af/executive%20dashboard.png"
+                src="https://res.cloudinary.com/dxpxcptn4/image/upload/v1771396607/reports-dashboard_ap3qhp.png"
                 alt="Business Manager Dashboard"
                 className="w-full h-auto rounded-2xl object-cover"
               />
-
-              {/* Revenue Card */}
-              <div className="absolute bottom-4 sm:bottom-8 left-4 sm:left-8 bg-white rounded-2xl shadow-xl p-4 sm:p-6">
-                <p className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-widest mb-1">
-                  Total Revenue
-                </p>
-                <p className="text-xl sm:text-2xl lg:text-3xl font-black text-zinc-900">
-                  $12,450.00
-                </p>
-                <div className="flex items-center gap-2 mt-2 text-green-500 font-bold text-xs sm:text-sm">
-                  <span>+24.5%</span>
-                  <TrendingUp className="w-4 h-4" />
-                </div>
-              </div>
             </div>
           </div>
 

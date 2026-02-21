@@ -66,7 +66,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             {/* Desktop SearchBar - Horizontal Layout */}
             <div
                 className={cn(
-                    "hidden md:flex items-center w-full bg-white shadow-lg rounded-full border border-zinc-100",
+                    "hidden md:flex items-center w-full bg-white rounded-full border border-zinc-100",
                     isCompact ? "max-w-3xl" : "max-w-5xl",
                     className
                 )}
@@ -74,7 +74,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 {/* Search Input */}
                 <div className="flex-[1.5] pl-4 border-r border-zinc-100">
                     <Input
-                        className="border-none rounded-full focus-visible:ring-0 focus:ring-0 shadow-none h-14 placeholder:text-zinc-400 font-medium"
+                        className="border-none rounded-full focus-visible:ring-0 focus:ring-0 focus-visible:ring-offset-0 outline-none shadow-none h-14 placeholder:text-zinc-400 font-medium"
                         placeholder={isCompact ? "What are you looking for?" : "Search spa, salon or beauty expert"}
                         icon={<Search className="w-5 h-5 text-[#008080]" />}
                         value={value}
@@ -97,7 +97,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 {/* Location Input */}
                 <div className="flex-1 px-2 relative">
                     <Input
-                        className="border-none rounded-full focus-visible:ring-0 focus:ring-0 shadow-none h-14 placeholder:text-zinc-400 font-medium"
+                        className="border-none rounded-full focus-visible:ring-0 focus:ring-0 focus-visible:ring-offset-0 outline-none shadow-none h-14 placeholder:text-zinc-400 font-medium"
                         placeholder="Location"
                         icon={<MapPin className="w-5 h-5 text-[#008080]" />}
                         value={localLocation}
@@ -115,7 +115,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                         onClick={handleNearbyClick}
                         disabled={isFetching}
                         className={cn(
-                            "absolute right-4 top-1/2 -translate-y-1/2 p-2 hover:bg-[#008080]/10 rounded-lg group/nearme transition-all duration-200 flex items-center gap-2 disabled:opacity-50",
+                            "absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-[#008080]/10 rounded-lg group/nearme flex items-center gap-2 disabled:opacity-50",
                             isCompact ? "p-1.5" : "px-3"
                         )}
                         title="Near me"
@@ -123,10 +123,10 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                         {isFetching ? (
                             <div className="w-3.5 h-3.5 border-2 border-[#008080]/20 border-t-[#008080] rounded-full animate-spin" />
                         ) : (
-                            <FaLocationArrow className="w-3.5 h-3.5 text-zinc-400 group-hover/nearme:text-[#008080] transition-colors" />
+                            <FaLocationArrow className="w-3.5 h-3.5 text-zinc-400 group-hover/nearme:text-[#008080]" />
                         )}
                         {!isCompact && (
-                            <span className="text-xs font-bold text-zinc-500 group-hover/nearme:text-[#008080] transition-colors">
+                            <span className="text-xs font-bold text-zinc-500 group-hover/nearme:text-[#008080]">
                                 {isFetching ? 'Locating...' : 'Nearby'}
                             </span>
                         )}
@@ -134,7 +134,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
                     {/* Desktop Suggestions Dropdown */}
                     {showSuggestions && (suggestions?.length > 0 || isLoading) && (
-                        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-zinc-100 z-50 overflow-hidden py-2 animate-in fade-in slide-in-from-top-2">
+                        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl border border-zinc-100 z-50 overflow-hidden py-2">
                             {isLoading ? (
                                 <div className="px-4 py-3 text-sm text-zinc-400 flex items-center gap-2">
                                     <div className="w-4 h-4 border-2 border-[#008080]/20 border-t-[#008080] rounded-full animate-spin" />
@@ -145,7 +145,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                                     <button
                                         key={idx}
                                         onClick={() => selectSuggestion(s)}
-                                        className="w-full px-4 py-3 flex items-start gap-3 hover:bg-zinc-50 transition-colors text-left"
+                                        className="w-full px-4 py-3 flex items-start gap-3 hover:bg-zinc-50 text-left"
                                     >
                                         <div className="w-8 h-8 rounded-lg bg-zinc-100 flex items-center justify-center shrink-0">
                                             <MapPin className="w-4 h-4 text-zinc-500" />
@@ -166,7 +166,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                     <Button
                         size={isCompact ? "md" : "lg"}
                         onClick={() => onSearch?.(value, localLocation)}
-                        className="bg-[#008080] hover:bg-[#006666] text-white rounded-full font-black min-w-[120px] transition-transform active:scale-95"
+                        className="bg-[#008080] hover:bg-[#006666] text-white rounded-full font-black min-w-[120px]"
                     >
                         {isCompact ? <Search className="w-5 h-5" /> : "Search"}
                     </Button>
@@ -176,12 +176,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             {/* Mobile SearchBar - Vertical Stack */}
             <div
                 className={cn(
-                    "flex md:hidden flex-col w-full bg-white shadow-lg rounded-2xl border border-zinc-100 p-4 gap-3",
+                    "flex md:hidden flex-col w-full bg-white rounded-2xl border border-zinc-100 p-4 gap-3",
                     className
                 )}
             >
                 <Input
-                    className="border border-zinc-100 focus-visible:ring-0 focus:ring-0 h-12 placeholder:text-zinc-400 rounded-xl"
+                    className="border border-zinc-100 focus-visible:ring-0 focus:ring-0 focus-visible:ring-offset-0 outline-none h-12 placeholder:text-zinc-400 rounded-xl"
                     placeholder="Search services..."
                     icon={<Search className="w-5 h-5 text-[#008080]" />}
                     value={value}
@@ -202,7 +202,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
                 <div className="relative">
                     <Input
-                        className="border border-zinc-100 focus-visible:ring-0 focus:ring-0 h-12 placeholder:text-zinc-400 rounded-xl"
+                        className="border border-zinc-100 focus-visible:ring-0 focus:ring-0 focus-visible:ring-offset-0 outline-none h-12 placeholder:text-zinc-400 rounded-xl"
                         placeholder="Location"
                         icon={<MapPin className="w-5 h-5 text-[#008080]" />}
                         value={localLocation}
@@ -230,7 +230,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
                     {/* Mobile Suggestions Dropdown */}
                     {showSuggestions && suggestions?.length > 0 && (
-                        <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-xl border border-zinc-100 z-50 max-h-60 overflow-y-auto">
+                        <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl border border-zinc-100 z-50 max-h-60 overflow-y-auto">
                             {suggestions.map((s: any, idx: number) => (
                                 <button
                                     key={idx}
