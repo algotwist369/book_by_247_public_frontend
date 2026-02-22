@@ -1,6 +1,6 @@
 
-// Define the base URL for the API
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || `https://api.bookby247.com/api`
+// const API_BASE_URL = "http://localhost:9004/api";
 
 /**
  * Enhanced fetch wrapper for the application
@@ -37,10 +37,16 @@ export async function apiClient<T>(
     if (encryptedStr) {
         try {
             const key = "secure-reviews-key";
+            const keyLen = key.length;
+            const keyCodes = new Uint8Array(keyLen);
+            for (let i = 0; i < keyLen; i++) keyCodes[i] = key.charCodeAt(i);
+
             const binaryString = atob(encryptedStr);
-            const bytes = new Uint8Array(binaryString.length);
-            for (let i = 0; i < binaryString.length; i++) {
-                bytes[i] = binaryString.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i) ^ keyCodes[i % keyLen];
             }
             const decoded = new TextDecoder().decode(bytes);
             return JSON.parse(decoded) as T;

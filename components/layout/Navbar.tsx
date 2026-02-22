@@ -166,6 +166,7 @@ export const Navbar = () => {
                     <button
                         className="md:hidden p-2 text-zinc-600 hover:text-black rounded-md hover:bg-zinc-50 transition-colors"
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        aria-label="Open mobile menu"
                     >
                         <Menu className="w-6 h-6" />
                     </button>
@@ -249,6 +250,7 @@ export const Navbar = () => {
                                     <button
                                         onClick={() => setIsMobileMenuOpen(false)}
                                         className="p-2 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-full transition-colors"
+                                        aria-label="Close mobile menu"
                                     >
                                         <X className="w-6 h-6" />
                                     </button>

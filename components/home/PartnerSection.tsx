@@ -41,7 +41,7 @@ export const PartnerSection: React.FC = () => {
                 with logoname
               </h2>
 
-              <p className="text-white/80 text-base sm:text-lg md:text-xl max-w-xl mx-auto lg:mx-0">
+              <p className="text-white text-base sm:text-lg md:text-xl max-w-xl mx-auto lg:mx-0">
                 Join the largest network of spas and salons and start receiving
                 bookings instantly.
               </p>
@@ -58,10 +58,10 @@ export const PartnerSection: React.FC = () => {
                     {benefit.icon}
                   </div>
                   <div>
-                    <h4 className="text-white font-semibold text-lg">
+                    <h3 className="text-white font-semibold text-lg">
                       {benefit.title}
-                    </h4>
-                    <p className="text-white/70 text-sm sm:text-base">
+                    </h3>
+                    <p className="text-white/90 text-sm sm:text-base">
                       {benefit.description}
                     </p>
                   </div>

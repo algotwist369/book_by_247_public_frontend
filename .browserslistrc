@@ -1,0 +1,7 @@
+# Target modern browsers to reduce polyfills
+last 2 versions
+> 0.5%
+not dead
+not op_mini all
+not ie 11
+not ie_mob 11

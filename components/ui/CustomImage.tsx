@@ -19,6 +19,8 @@ const UNOPTIMIZED_HOSTS = [
     "maps.googleapis.com",
     "content.jdmagicbox.com",
     "jdmagicbox.com",
+    "images.unsplash.com",
+    "cdn.pixabay.com",
 ];
 
 const isHotlinkProtected = (src: string): boolean => {
@@ -82,8 +84,8 @@ const CustomImage = ({
                 unoptimized={shouldUnoptimize}
                 sizes={props.sizes || "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
                 className={cn(
-                    "duration-700 ease-in-out",
-                    isLoading ? "scale-105 blur-lg grayscale" : "scale-100 blur-0 grayscale-0",
+                    "duration-500 ease-in-out",
+                    isLoading ? "opacity-0" : "opacity-100",
                     className
                 )}
                 onLoad={() => {

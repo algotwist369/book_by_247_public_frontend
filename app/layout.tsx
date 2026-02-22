@@ -47,6 +47,7 @@ import Footer from "@/components/layout/Footer";
 import { FloatingActionButtons } from "@/components/layout/FloatingActionButtons";
 import StructuredData from "@/components/seo/StructuredData";
 import QueryProvider from "@/providers/QueryProvider";
+import { LazyMotion, domAnimation } from "framer-motion";
 
 export default function RootLayout({
   children,
@@ -55,18 +56,28 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Preconnect to key external origins to reduce latency */}
+        <link rel="preconnect" href="https://res.cloudinary.com" />
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="preconnect" href="https://lh3.googleusercontent.com" />
+        <link rel="dns-prefetch" href="https://content.jdmagicbox.com" />
+        <link rel="dns-prefetch" href="https://ui-avatars.com" />
+      </head>
       <body
         className="antialiased min-h-screen flex flex-col"
       >
-        <QueryProvider>
-          <StructuredData />
-          <Navbar />
-          <FloatingActionButtons />
-          <main className="flex-1">
-            {children}
-          </main>
-          <Footer />
-        </QueryProvider>
+        <LazyMotion features={domAnimation}>
+          <QueryProvider>
+            <StructuredData />
+            <Navbar />
+            <FloatingActionButtons />
+            <main className="flex-1">
+              {children}
+            </main>
+            <Footer />
+          </QueryProvider>
+        </LazyMotion>
       </body>
     </html>
   );

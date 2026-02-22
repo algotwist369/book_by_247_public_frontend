@@ -1,43 +1,35 @@
 import { Suspense } from "react";
-import { CategorySection } from "@/components/home/CategorySection";
-import { ReviewsSection } from "@/components/home/ReviewsSection";
-import { StatsSection } from "@/components/home/StatsSection";
-import { PartnerSection } from "@/components/home/PartnerSection";
-import { AppPromoSection } from "@/components/home/AppPromoSection";
-import FeatureSection from "@/components/home/FeatureSection";
-import SEOFooter from "@/components/home/SEOFooter";
-import BusinessSection from "@/components/business/BusinessSection";
-import PromotionBanner from "@/components/promotion/PromotionBanner";
+import dynamic from "next/dynamic";
 import HeroSection from "@/components/home/HeroSection";
-
+import { StatsSection } from "@/components/home/StatsSection";
+import { CategorySection } from "@/components/home/CategorySection";
 import { businessApi } from "@/api/public/business";
-import ForBusinesses from "@/components/home/ForBusinesses";
 
-export const revalidate = 3600; // Revalidate every hour
+// Dynamically import all below-fold sections to split the JS bundle.
+// Named exports need .then(m => m.ComponentName) for dynamic() to work correctly.
+const BusinessSection = dynamic(() => import("@/components/business/BusinessSection"), { ssr: true });
+const PartnerSection = dynamic(() => import("@/components/home/PartnerSection").then(m => m.PartnerSection));
+const FeatureSection = dynamic(() => import("@/components/home/FeatureSection"));
+const AppPromoSection = dynamic(() => import("@/components/home/AppPromoSection").then(m => m.AppPromoSection));
+const ForBusinesses = dynamic(() => import("@/components/home/ForBusinesses"));
+const ReviewsSection = dynamic(() => import("@/components/home/ReviewsSection").then(m => m.ReviewsSection));
+const SEOFooter = dynamic(() => import("@/components/home/SEOFooter"));
+
+export const revalidate = 3600;
 
 export default async function Home() {
   const businessData = await businessApi.getPublicBusinesses({ limit: 16 }).catch(() => null);
 
   return (
     <div className="bg-white min-h-screen">
-      {/* Hero Section */}
-      <Suspense fallback={
-        <div className="h-[500px] sm:h-[600px] md:h-[650px] lg:h-[700px] bg-zinc-900 animate-pulse" />
-      }>
-        <HeroSection />
-      </Suspense>
+      {/* Hero — critical, eager-loaded for LCP */}
+      <HeroSection />
 
-      {/* Stats Section */}
+      {/* Stats and Categories — lightweight, above-fold */}
       <StatsSection />
-      
-      {/* Promotion Banner */}
-      {/* <div className="max-w-7xl mx-auto px-6 py-10">
-        <PromotionBanner />
-      </div> */}
-      {/* Categories Section */}
       <CategorySection />
 
-      {/* Featured Businesses Section */}
+      {/* Featured Businesses */}
       <Suspense fallback={
         <div className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 max-w-[90rem] mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
@@ -53,22 +45,12 @@ export default async function Home() {
         <BusinessSection initialData={businessData} />
       </Suspense>
 
-      {/* Partner Section */}
+      {/* Below-fold — dynamically chunked */}
       <PartnerSection />
-
-      {/* Feature Section (Professional "Big Platform" Look) */}
       <FeatureSection />
-
-      {/* Mobile App Section */}
       <AppPromoSection />
-
-      {/* For Businesses Section */}
       <ForBusinesses />
-
-      {/* Reviews Section */}
       <ReviewsSection />
-
-      {/* SEO Footer Text Section */}
       <SEOFooter />
     </div>
   );

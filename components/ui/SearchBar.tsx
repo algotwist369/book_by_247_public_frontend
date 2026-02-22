@@ -1,6 +1,6 @@
 import * as React from "react"
-import { MapPin, Search, X } from "lucide-react"
-import { FaLocationArrow } from "react-icons/fa"
+// Force rebuild to clear stale react-icons cache
+import { MapPin, Search, X, Navigation } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Input } from "./Input"
 import { Button } from "./Button"
@@ -74,7 +74,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 {/* Search Input */}
                 <div className="flex-[1.5] pl-4 border-r border-zinc-100">
                     <Input
-                        className="border-none rounded-full focus-visible:ring-0 focus:ring-0 focus-visible:ring-offset-0 outline-none shadow-none h-14 placeholder:text-zinc-400 font-medium"
+                        className="border-none rounded-full focus-visible:ring-0 focus:ring-0 focus-visible:ring-offset-0 outline-none shadow-none h-14 placeholder:text-zinc-500 font-medium"
                         placeholder={isCompact ? "What are you looking for?" : "Search spa, salon or beauty expert"}
                         icon={<Search className="w-5 h-5 text-[#008080]" />}
                         value={value}
@@ -88,6 +88,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                                 onSearch?.('', localLocation);
                             }}
                             className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-zinc-100 rounded-full transition-colors"
+                            aria-label="Clear search"
                         >
                             <X className="w-4 h-4 text-zinc-400" />
                         </button>
@@ -97,7 +98,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 {/* Location Input */}
                 <div className="flex-1 px-2 relative">
                     <Input
-                        className="border-none rounded-full focus-visible:ring-0 focus:ring-0 focus-visible:ring-offset-0 outline-none shadow-none h-14 placeholder:text-zinc-400 font-medium"
+                        className="border-none rounded-full focus-visible:ring-0 focus:ring-0 focus-visible:ring-offset-0 outline-none shadow-none h-14 placeholder:text-zinc-500 font-medium"
                         placeholder="Location"
                         icon={<MapPin className="w-5 h-5 text-[#008080]" />}
                         value={localLocation}
@@ -119,14 +120,15 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                             isCompact ? "p-1.5" : "px-3"
                         )}
                         title="Near me"
+                        aria-label="Use my current location"
                     >
                         {isFetching ? (
                             <div className="w-3.5 h-3.5 border-2 border-[#008080]/20 border-t-[#008080] rounded-full animate-spin" />
                         ) : (
-                            <FaLocationArrow className="w-3.5 h-3.5 text-zinc-400 group-hover/nearme:text-[#008080]" />
+                            <Navigation className="w-3.5 h-3.5 text-zinc-400 group-hover/nearme:text-[#008080]" />
                         )}
                         {!isCompact && (
-                            <span className="text-xs font-bold text-zinc-500 group-hover/nearme:text-[#008080]">
+                            <span className="text-xs font-bold text-zinc-600 group-hover/nearme:text-[#008080]">
                                 {isFetching ? 'Locating...' : 'Nearby'}
                             </span>
                         )}
@@ -152,7 +154,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                                         </div>
                                         <div>
                                             <p className="text-sm font-bold text-zinc-900 line-clamp-1">{s.mainText}</p>
-                                            <p className="text-xs text-zinc-500 line-clamp-1">{s.secondaryText}</p>
+                                            <p className="text-xs text-zinc-600 line-clamp-1">{s.secondaryText}</p>
                                         </div>
                                     </button>
                                 ))
@@ -181,7 +183,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 )}
             >
                 <Input
-                    className="border border-zinc-100 focus-visible:ring-0 focus:ring-0 focus-visible:ring-offset-0 outline-none h-12 placeholder:text-zinc-400 rounded-xl"
+                    className="border border-zinc-100 focus-visible:ring-0 focus:ring-0 focus-visible:ring-offset-0 outline-none h-12 placeholder:text-zinc-500 rounded-xl"
                     placeholder="Search services..."
                     icon={<Search className="w-5 h-5 text-[#008080]" />}
                     value={value}
@@ -202,7 +204,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
                 <div className="relative">
                     <Input
-                        className="border border-zinc-100 focus-visible:ring-0 focus:ring-0 focus-visible:ring-offset-0 outline-none h-12 placeholder:text-zinc-400 rounded-xl"
+                        className="border border-zinc-100 focus-visible:ring-0 focus:ring-0 focus-visible:ring-offset-0 outline-none h-12 placeholder:text-zinc-500 rounded-xl"
                         placeholder="Location"
                         icon={<MapPin className="w-5 h-5 text-[#008080]" />}
                         value={localLocation}
@@ -224,7 +226,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                         {isFetching ? (
                             <div className="w-3.5 h-3.5 border-2 border-[#008080]/20 border-t-[#008080] rounded-full animate-spin" />
                         ) : (
-                            <FaLocationArrow className="w-3.5 h-3.5 text-[#008080]" />
+                            <Navigation className="w-3.5 h-3.5 text-[#008080]" />
                         )}
                     </button>
 
@@ -240,7 +242,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                                     <MapPin className="w-4 h-4 text-zinc-400" />
                                     <div className="text-left">
                                         <p className="text-sm font-bold text-zinc-900">{s.mainText}</p>
-                                        <p className="text-[10px] text-zinc-500">{s.secondaryText}</p>
+                                        <p className="text-[10px] text-zinc-600">{s.secondaryText}</p>
                                     </div>
                                 </button>
                             ))}

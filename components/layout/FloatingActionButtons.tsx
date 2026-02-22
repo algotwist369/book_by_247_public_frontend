@@ -13,7 +13,7 @@ export const FloatingActionButtons = () => {
                 className="pointer-events-auto bg-[#008080] text-white flex flex-col items-center gap-2 md:gap-4 py-4 px-2 md:py-6 md:px-3 rounded-l-xl md:rounded-l-2xl transition-colors hover:bg-[#006666]"
             >
                 <Store className="w-4 h-4 md:w-5 md:h-5" />
-                <span className="text-[9px] md:text-[11px] font-black uppercase tracking-[0.2em] [writing-mode:vertical-rl] rotate-180">
+                <span className="text-[9px] md:text-[11px] font-black uppercase tracking-[0.2em] [writing-mode:vertical-rl] rotate-180 text-white">
                     Free Listing
                 </span>
             </Link>
@@ -24,7 +24,7 @@ export const FloatingActionButtons = () => {
                 className="pointer-events-auto bg-[#f15a24] text-white flex flex-col items-center gap-2 md:gap-4 py-4 px-2 md:py-6 md:px-3 rounded-l-xl md:rounded-l-2xl transition-colors hover:bg-[#d94e1c]"
             >
                 <CalendarCheck className="w-4 h-4 md:w-5 md:h-5" />
-                <span className="text-[9px] md:text-[11px] font-black uppercase tracking-[0.2em] [writing-mode:vertical-rl] rotate-180">
+                <span className="text-[9px] md:text-[11px] font-black uppercase tracking-[0.2em] [writing-mode:vertical-rl] rotate-180 text-white">
                     Book Demo
                 </span>
             </Link>

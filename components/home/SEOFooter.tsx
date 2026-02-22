@@ -2,11 +2,11 @@ import React from "react";
 
 const SEOFooter = () => {
   return (
-    <section className="max-w-7xl mx-auto px-6 py-24 mt-20 border-t border-zinc-200">
+    <section className="max-w-7xl mx-auto px-6 lg:py-24 lg:mt-20 py-6 border-t border-zinc-200">
 
       <div className="max-w-4xl">
-        <h2 className="text-zinc-900 text-3xl md:text-4xl font-bold leading-tight">
-          logoname – Your Trusted Beauty & Wellness Booking Platform
+        <h2 className="text-zinc-900 text-3xl lg:text-4xl font-bold leading-tight">
+          logoname - Your Trusted Beauty & Wellness Booking Platform
         </h2>
 
         <p className="mt-4 text-zinc-600 text-base leading-relaxed">

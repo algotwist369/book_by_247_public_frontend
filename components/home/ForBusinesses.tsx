@@ -20,19 +20,19 @@ const ForBusinesses = () => {
                         <div className="space-y-5">
                             <div className="inline-flex items-center gap-2 px-3 py-1 border border-zinc-300 rounded-full">
                                 <span className="h-2 w-2 rounded-full bg-teal-600" />
-                                <span className="text-xs font-semibold text-zinc-600 uppercase tracking-widest">
+                                <span className="text-xs font-semibold text-zinc-700 uppercase tracking-widest">
                                     Partner Growth
                                 </span>
                             </div>
 
-                            <h2 className="text-4xl md:text-5xl font-bold text-zinc-900 leading-tight">
+                            <h2 className="text-3xl lg:text-5xl font-bold text-zinc-900 leading-tight">
                                 Grow your spa salon <br />
                                 <span className="text-teal-600">
                                     and beauty business.
                                 </span>
                             </h2>
 
-                            <p className="text-zinc-600 text-lg max-w-xl leading-relaxed">
+                            <p className="text-zinc-700 text-lg max-w-xl leading-relaxed">
                                 Manage bookings, attract regular customers, and scale your
                                 brand with an easy-to-use wellness management platform.
                             </p>
@@ -48,7 +48,7 @@ const ForBusinesses = () => {
                             ].map((item, idx) => (
                                 <div key={idx} className="flex items-center gap-3">
                                     <CheckCircle className="w-5 h-5 text-teal-600" />
-                                    <span className="text-zinc-700 text-sm font-medium">
+                                    <span className="text-zinc-800 text-sm font-medium">
                                         {item}
                                     </span>
                                 </div>

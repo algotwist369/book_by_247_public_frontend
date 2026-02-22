@@ -13,9 +13,9 @@ export const ReviewsSection: React.FC = () => {
     }, []);
 
     return (
-        <section className="w-full bg-white pb-20 mt-10">
+        <section className="w-full bg-white lg:pb-20 mt-10">
             <div className="max-w-[90rem] mx-auto px-6">
-                <h2 className="text-3xl font-black text-zinc-900 my-10 tracking-tight">
+                <h2 className="text-3xl font-black text-zinc-800 my-10 tracking-tight">
                     What Customers Say
                 </h2>
 

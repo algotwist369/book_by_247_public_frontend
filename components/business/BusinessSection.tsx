@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import BusinessCard from './BusinessCard';
 import { usePublicBusinesses, useNearbyBusinesses } from '@/hooks/useBusinesses';
 import { useGeolocation } from '@/hooks/useGeolocation';
-import { motion } from 'framer-motion';
 import { MapPin } from 'lucide-react';
 
 const QUERY_PARAMS = { limit: 16 };
@@ -92,7 +91,7 @@ const BusinessSection: React.FC<BusinessSectionProps> = ({ initialData }) => {
     }
 
     return (
-        <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 max-w-[90rem] mx-auto">
+        <section aria-label="Business listings" className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 max-w-[90rem] mx-auto">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 md:mb-10 gap-4">
                 <div className="flex items-center gap-3">
                     <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-zinc-900 tracking-tight">
@@ -110,11 +109,10 @@ const BusinessSection: React.FC<BusinessSectionProps> = ({ initialData }) => {
                 </button>
             </div>
 
-            <motion.div
+            {/* Use CSS animate-in for GPU-composited transition (opacity + transform) */}
+            <div
                 key={isNearbyMode ? 'nearby' : 'featured'}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 xl:gap-8"
+                className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 xl:gap-8 animate-in fade-in slide-in-from-bottom-2 duration-500"
             >
                 {businesses.map((business: any) => (
                     <BusinessCard
@@ -122,7 +120,7 @@ const BusinessSection: React.FC<BusinessSectionProps> = ({ initialData }) => {
                         business={business}
                     />
                 ))}
-            </motion.div>
+            </div>
 
             {isNearbyMode && businesses.length === 0 && !isNearbyLoading && (
                 <div className="text-center py-20 bg-zinc-50 rounded-3xl border border-dashed border-zinc-200">

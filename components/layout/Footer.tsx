@@ -1,4 +1,3 @@
-"use client";
 
 import Link from "next/link";
 import {
@@ -33,17 +32,17 @@ const Footer = () => {
                             Your ultimate destination for discovering and booking the most premium spas and salons. Experience wellness at your fingertips.
                         </p>
                         <div className="flex items-center gap-4">
-                            <Link href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-zinc-950 transition-all duration-300">
-                                <Instagram className="w-5 h-5" />
+                            <Link href="#" aria-label="Follow us on Instagram" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-zinc-950 transition-all duration-300">
+                                <Instagram className="w-5 h-5" aria-hidden="true" />
                             </Link>
-                            <Link href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-zinc-950 transition-all duration-300">
-                                <Facebook className="w-5 h-5" />
+                            <Link href="#" aria-label="Follow us on Facebook" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-zinc-950 transition-all duration-300">
+                                <Facebook className="w-5 h-5" aria-hidden="true" />
                             </Link>
-                            <Link href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-zinc-950 transition-all duration-300">
-                                <Twitter className="w-5 h-5" />
+                            <Link href="#" aria-label="Follow us on Twitter" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-zinc-950 transition-all duration-300">
+                                <Twitter className="w-5 h-5" aria-hidden="true" />
                             </Link>
-                            <Link href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-zinc-950 transition-all duration-300">
-                                <Linkedin className="w-5 h-5" />
+                            <Link href="#" aria-label="Follow us on LinkedIn" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-zinc-950 transition-all duration-300">
+                                <Linkedin className="w-5 h-5" aria-hidden="true" />
                             </Link>
                         </div>
                     </div>
@@ -86,8 +85,9 @@ const Footer = () => {
                             <Input
                                 placeholder="Email address"
                                 className="bg-white/5 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-white/20"
+                                aria-label="Email address for newsletter"
                             />
-                            <Button className="w-full bg-white text-zinc-950 hover:bg-zinc-200 font-bold">
+                            <Button className="w-full bg-white text-zinc-950 hover:bg-zinc-200 font-bold" aria-label="Subscribe to newsletter">
                                 Subscribe
                             </Button>
                         </div>
@@ -98,28 +98,28 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-8 border-y border-white/5">
                     <div className="flex items-center gap-4">
                         <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
-                            <Phone className="w-5 h-5 text-white" />
+                            <Phone className="w-5 h-5 text-white" aria-hidden="true" />
                         </div>
                         <div>
-                            <p className="text-xs uppercase tracking-widest font-bold text-zinc-500">Call Us</p>
+                            <p className="text-xs uppercase tracking-widest font-bold text-zinc-400">Call Us</p>
                             <p className="text-sm text-white font-medium">+1 (555) 000-1234</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
                         <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
-                            <Mail className="w-5 h-5 text-white" />
+                            <Mail className="w-5 h-5 text-white" aria-hidden="true" />
                         </div>
                         <div>
-                            <p className="text-xs uppercase tracking-widest font-bold text-zinc-500">Email Us</p>
+                            <p className="text-xs uppercase tracking-widest font-bold text-zinc-400">Email Us</p>
                             <p className="text-sm text-white font-medium">hello@logoname.com</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
                         <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
-                            <MapPin className="w-5 h-5 text-white" />
+                            <MapPin className="w-5 h-5 text-white" aria-hidden="true" />
                         </div>
                         <div>
-                            <p className="text-xs uppercase tracking-widest font-bold text-zinc-500">Visit Us</p>
+                            <p className="text-xs uppercase tracking-widest font-bold text-zinc-400">Visit Us</p>
                             <p className="text-sm text-white font-medium">123 Wellness St, Beauty City</p>
                         </div>
                     </div>

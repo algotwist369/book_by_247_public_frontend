@@ -38,30 +38,44 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ business, className }) => {
                 {/* Image Container */}
                 <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-zinc-100 mb-3">
                     <AnimatePresence mode="wait">
-                        <motion.div
-                            key={currentIndex}
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -20 }}
-                            transition={{ duration: 0.4, ease: "easeInOut" }}
-                            className="absolute inset-0"
-                        >
-                            <CustomImage
-                                src={business.images[currentIndex]}
-                                alt={`${business.name} image ${currentIndex + 1}`}
-                                fill
-                                className="object-cover"
-                                priority={currentIndex === 0}
-                            />
-                        </motion.div>
+                        {isInView && (
+                            <motion.div
+                                key={currentIndex}
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -20 }}
+                                transition={{ duration: 0.4, ease: "easeInOut" }}
+                                className="absolute inset-0"
+                            >
+                                <CustomImage
+                                    src={business.images[currentIndex]}
+                                    alt={`${business.name} image ${currentIndex + 1}`}
+                                    fill
+                                    className="object-cover"
+                                    priority={currentIndex === 0}
+                                />
+                            </motion.div>
+                        )}
+                        {!isInView && (
+                            <div className="absolute inset-0">
+                                <CustomImage
+                                    src={business.images[0]}
+                                    alt={`${business.name} thumbnail`}
+                                    fill
+                                    className="object-cover"
+                                    priority={false}
+                                />
+                            </div>
+                        )}
                     </AnimatePresence>
 
                     {/* Indicator Dots */}
-                    {business.images.length > 1 && (
+                    {business.images.length > 1 && isInView && (
                         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
                             {business.images.map((_, idx) => (
                                 <div
                                     key={idx}
+                                    role="presentation"
                                     className={cn(
                                         "w-1.5 h-1.5 rounded-full transition-all duration-300",
                                         idx === currentIndex ? "bg-white w-3" : "bg-white/50"
@@ -98,7 +112,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ business, className }) => {
                         <div className="flex items-center gap-0.5 sm:gap-1 shrink-0 bg-zinc-50 px-2 py-1 rounded-lg">
                             <span className="text-xs sm:text-sm font-black text-zinc-900">{Number(business.rating || 0).toFixed(1)}</span>
                             <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-yellow-400 text-yellow-400" />
-                            <span className="text-zinc-400 text-[10px] sm:text-xs">({business.reviews || 0})</span>
+                            <span className="text-zinc-500 text-[10px] sm:text-xs">({business.reviews || 0})</span>
                         </div>
                     </div>
 
