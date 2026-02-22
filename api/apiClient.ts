@@ -11,16 +11,23 @@ export async function apiClient<T>(
 ): Promise<T> {
     const url = `${API_BASE_URL}${endpoint}`;
 
-    const response = await fetch(url, {
-        ...options,
-        headers: {
-            "Content-Type": "application/json",
-            ...options.headers,
-        },
-    });
+    let response: Response;
+    try {
+        response = await fetch(url, {
+            ...options,
+            headers: {
+                "Content-Type": "application/json",
+                ...options.headers,
+            },
+        });
+    } catch (error) {
+        console.error(`[apiClient] Network error fetching ${url}:`, error);
+        throw error;
+    }
 
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
+        console.error(`[apiClient] API Error ${response.status} from ${url}:`, errorData);
         throw new Error(errorData.message || `API Error: ${response.status}`);
     }
 
