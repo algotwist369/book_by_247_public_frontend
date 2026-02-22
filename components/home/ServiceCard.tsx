@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { LucideIcon } from "lucide-react";
+import { CustomImage } from "../ui/CustomImage";
 
 interface ServiceCardProps {
     service: {
@@ -27,13 +28,11 @@ export const ServiceCard: React.FC<ServiceCardProps> = React.memo(({ service, on
             onKeyDown={(e) => e.key === "Enter" && onClick(service.title)}
         >
             <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-zinc-100 mb-4">
-                <img
+                <CustomImage
                     src={service.image}
                     alt={service.title}
-                    width={300}
-                    height={375}
-                    loading="lazy"
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60" />
 

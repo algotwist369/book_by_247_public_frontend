@@ -25,7 +25,6 @@ export async function apiClient<T>(
     }
 
     const data = await response.json();
-    console.log(`API Response from ${endpoint}:`, data);
 
     // The backend often returns a XOR-encrypted base64 string, sometimes nested in a payload property
     let encryptedStr: string | null = null;
@@ -44,9 +43,7 @@ export async function apiClient<T>(
                 bytes[i] = binaryString.charCodeAt(i) ^ key.charCodeAt(i % key.length);
             }
             const decoded = new TextDecoder().decode(bytes);
-            const decrypted = JSON.parse(decoded);
-            console.log(`Decrypted data from ${endpoint}:`, decrypted);
-            return decrypted as T;
+            return JSON.parse(decoded) as T;
         } catch (e) {
             console.error("Failed to decrypt or parse response:", e);
             return data as T;

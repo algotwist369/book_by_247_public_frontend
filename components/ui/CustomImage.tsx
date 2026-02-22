@@ -11,15 +11,36 @@ interface CustomImageProps extends ImageProps {
 
 const GLOBAL_PLACEHOLDER = "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=2070&auto=format&fit=crop";
 
+// Domains that block proxy requests (hotlink protected). Images from these
+// hosts must be served directly by the browser, not through Next.js's optimizer.
+const UNOPTIMIZED_HOSTS = [
+    "googleusercontent.com",
+    "lh3.googleusercontent.com",
+    "maps.googleapis.com",
+    "content.jdmagicbox.com",
+    "jdmagicbox.com",
+];
+
+const isHotlinkProtected = (src: string): boolean => {
+    try {
+        const { hostname } = new URL(src);
+        return UNOPTIMIZED_HOSTS.some((h) => hostname === h || hostname.endsWith("." + h));
+    } catch {
+        return false;
+    }
+};
+
 const CustomImage = ({
     src,
     alt,
     className,
     containerClassName,
     fallback = GLOBAL_PLACEHOLDER,
-    unoptimized = true, // Force unoptimized by default to bypass local proxy issues
+    unoptimized,
     ...props
 }: CustomImageProps) => {
+    // Auto-detect hotlink-protected sources and bypass the optimizer for them
+    const shouldUnoptimize = unoptimized ?? isHotlinkProtected(src as string ?? "");
     const [imgSrc, setImgSrc] = useState<string>(src as string || fallback)
     const [isLoading, setIsLoading] = useState(true)
     const [hasError, setHasError] = useState(false)
@@ -58,7 +79,7 @@ const CustomImage = ({
                 {...props}
                 src={imgSrc}
                 alt={alt || "Image"}
-                unoptimized={unoptimized}
+                unoptimized={shouldUnoptimize}
                 sizes={props.sizes || "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
                 className={cn(
                     "duration-700 ease-in-out",

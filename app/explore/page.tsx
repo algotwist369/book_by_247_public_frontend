@@ -6,10 +6,10 @@ import { businessApi } from '@/api/public/business';
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-    title: 'Explore Top Spas & Salons | bookby247',
+    title: 'Explore Top Spas & Salons | logoname',
     description: 'Discover and book the best spas, salons, and wellness centers near you. Filter by rating, category, and location for a premium experience.',
     openGraph: {
-        title: 'Explore Top Spas & Salons | bookby247',
+        title: 'Explore Top Spas & Salons | logoname',
         description: 'Discover and book the best spas, salons, and wellness centers near you.',
         images: ['https://thaiodyssey.co.in/assets/img/blog/475003.jpg'],
     },
@@ -51,7 +51,7 @@ export default async function ExplorePage() {
                 "@type": "LocalBusiness",
                 "name": b.name,
                 "image": Array.isArray(b.images) ? b.images[0] : (b.images?.banner || b.images?.logo),
-                "url": `https://bookby247.com/business/${b.slug}`,
+                "url": `https://logoname.com/business/${b.slug}`,
                 "aggregateRating": {
                     "@type": "AggregateRating",
                     "ratingValue": b.rating ?? b.ratings?.average ?? 0,

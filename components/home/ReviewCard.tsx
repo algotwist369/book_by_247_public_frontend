@@ -3,6 +3,7 @@
 import * as React from "react";
 import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { CustomImage } from "../ui/CustomImage";
 
 interface ReviewCardProps {
     review: {
@@ -37,11 +38,12 @@ export const ReviewCard: React.FC<ReviewCardProps> = React.memo(({ review }) => 
             {/* User */}
             <div className="flex items-center gap-2 sm:gap-3 mt-4 sm:mt-6">
                 <div className="relative flex-shrink-0">
-                    <img
+                    <CustomImage
                         src={review.avatar}
                         alt={review.name}
+                        width={40}
+                        height={40}
                         className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover ring-2 ring-white shadow-sm"
-                        loading="lazy"
                     />
                 </div>
                 <div className="min-w-0">

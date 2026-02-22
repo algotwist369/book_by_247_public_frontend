@@ -1,5 +1,6 @@
 import React from "react";
 import { CheckCircle2, TrendingUp, Laptop } from "lucide-react";
+import { CustomImage } from "@/components/ui/CustomImage";
 
 const benefits = [
   {
@@ -30,14 +31,14 @@ export const PartnerSection: React.FC = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          
+
           {/* LEFT CONTENT */}
           <div className="space-y-8 text-center lg:text-left">
             {/* Heading */}
             <div className="space-y-4">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight">
                 Grow your business <br className="hidden sm:block" />
-                with bookby247
+                with logoname
               </h2>
 
               <p className="text-white/80 text-base sm:text-lg md:text-xl max-w-xl mx-auto lg:mx-0">
@@ -79,9 +80,11 @@ export const PartnerSection: React.FC = () => {
           {/* RIGHT IMAGE */}
           <div className="relative w-full max-w-md sm:max-w-lg lg:max-w-none mx-auto">
             <div className="relative bg-white p-3 sm:p-4 rounded-3xl shadow-2xl">
-              <img
+              <CustomImage
                 src="https://res.cloudinary.com/dxpxcptn4/image/upload/v1771396607/reports-dashboard_ap3qhp.png"
                 alt="Business Manager Dashboard"
+                width={800}
+                height={600}
                 className="w-full h-auto rounded-2xl object-cover"
               />
             </div>

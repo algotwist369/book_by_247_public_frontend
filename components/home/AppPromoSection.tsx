@@ -1,5 +1,6 @@
 import React from "react";
 import { Smartphone, Zap, Bell, Gift } from "lucide-react";
+import { CustomImage } from "@/components/ui/CustomImage";
 
 export const AppPromoSection: React.FC = () => {
   return (
@@ -33,10 +34,11 @@ export const AppPromoSection: React.FC = () => {
                   {/* Dynamic Island */}
                   <div className="absolute top-2 sm:top-3 left-1/2 -translate-x-1/2 w-20 sm:w-28 h-5 sm:h-6 bg-black rounded-full z-20" />
 
-                  <img
+                  <CustomImage
                     src="https://res.cloudinary.com/dxpxcptn4/image/upload/v1771396713/new_mob_vb1vtz.png"
                     alt="App Interface"
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
 
                   {/* Light reflection */}
@@ -99,7 +101,7 @@ export const AppPromoSection: React.FC = () => {
                 ))}
               </div>
 
-              
+
             </div>
 
           </div>

@@ -4,6 +4,7 @@ import React, { useCallback, useState } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
 import { Business } from '@/components/business/businessData';
 import { Star, Map as MapIcon, AlertCircle } from 'lucide-react';
+import { CustomImage } from '@/components/ui/CustomImage';
 
 interface ExploreMapProps {
     businesses: Business[];
@@ -232,10 +233,11 @@ const ExploreMap = ({ businesses }: ExploreMapProps) => {
                         <div className="p-0 min-w-[200px] max-w-[220px] overflow-hidden">
                             {/* Image Header */}
                             <div className="relative h-24 w-full bg-zinc-100 rounded-t-lg overflow-hidden">
-                                <img
+                                <CustomImage
                                     src={selectedBusiness.image || "/placeholder.jpg"}
                                     alt={selectedBusiness.name}
-                                    className="w-full h-full object-cover"
+                                    fill
+                                    className="object-cover"
                                 />
                                 <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded-md flex items-center gap-1 shadow-sm">
                                     <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />

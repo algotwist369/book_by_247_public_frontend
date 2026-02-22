@@ -21,7 +21,7 @@ const HeroSection = () => {
                 {/* Background Overlay with Gradient */}
                 <div
                     className="absolute inset-0 bg-cover bg-center z-0"
-                    style={{ backgroundImage: "url('')" }}
+                    style={{ backgroundImage: "url('https://images.unsplash.com/photo-1540555700478-4be289a5150a?q=80&w=2070&auto=format&fit=crop')" }}
                 >
                     {/* Multi-layered premium gradient overlay */}
                     <div className="absolute inset-0 bg-zinc-900/40" />

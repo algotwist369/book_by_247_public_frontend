@@ -15,19 +15,25 @@ interface BusinessCardProps {
 
 const BusinessCard: React.FC<BusinessCardProps> = ({ business, className }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [isInView, setIsInView] = useState(false);
 
     useEffect(() => {
-        if (!business.images || business.images.length <= 1) return;
+        if (!business.images || business.images.length <= 1 || !isInView) return;
 
         const timer = setInterval(() => {
             setCurrentIndex((prev) => (prev + 1) % business.images.length);
-        }, 3000); // 3 seconds interval
+        }, 4000); // Slightly slower to be less distracting and more performance-friendly
 
         return () => clearInterval(timer);
-    }, [business.images.length]);
+    }, [business.images.length, isInView]);
 
     return (
-        <div className={cn("flex flex-col gap-3 group cursor-pointer", className)}>
+        <motion.div
+            onViewportEnter={() => setIsInView(true)}
+            onViewportLeave={() => setIsInView(false)}
+            viewport={{ once: false, amount: 0.3 }}
+            className={cn("flex flex-col gap-3 group cursor-pointer", className)}
+        >
             <Link href={`/business/${business.slug}`} className="block h-full">
                 {/* Image Container */}
                 <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-zinc-100 mb-3">
@@ -105,7 +111,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ business, className }) => {
                     </div>
                 </div>
             </Link>
-        </div>
+        </motion.div>
     );
 };
 

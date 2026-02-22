@@ -3,6 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { CheckCircle, ArrowRight } from "lucide-react";
+import { CustomImage } from "@/components/ui/CustomImage";
 
 const ForBusinesses = () => {
     const router = useRouter();
@@ -94,9 +95,11 @@ const ForBusinesses = () => {
                                 <div className="w-2.5 h-2.5 rounded-full bg-zinc-300" />
                             </div>
 
-                            <img
+                            <CustomImage
                                 src="https://res.cloudinary.com/dxpxcptn4/image/upload/v1771403175/free-listing_rczevw.png"
                                 alt="Dashboard Mockup"
+                                width={800}
+                                height={600}
                                 className="w-full h-auto object-cover"
                             />
 
