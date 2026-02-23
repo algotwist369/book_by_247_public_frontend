@@ -1,5 +1,5 @@
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || `https://api.bookby247.com/api`
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || `http://localhost:9004/api`
 // const API_BASE_URL = "http://localhost:9004/api";
 
 /**

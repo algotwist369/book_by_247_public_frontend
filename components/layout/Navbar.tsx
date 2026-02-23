@@ -18,7 +18,6 @@ import { CityLink } from "../navigation/CityLink"
 import { CategoryLink } from "../navigation/CategoryLink"
 import { Button } from "../ui/Button"
 import { cn } from "@/lib/utils"
-import { SearchBar } from "../ui/SearchBar"
 import { motion, AnimatePresence } from "framer-motion"
 import { CATEGORIES_DATA } from "@/lib/constants"
 
@@ -75,51 +74,31 @@ export const Navbar = () => {
     return (
         <nav className="sticky top-0 z-50 w-full bg-white shadow-sm">
             {/* Top Tier */}
-            <div className="flex items-center justify-between px-3 sm:px-4 md:px-8 py-3 md:py-4 border-b border-zinc-50">
+            <div className="relative flex items-center justify-between px-3 sm:px-4 md:px-8 py-3 md:py-4 border-b border-zinc-50">
                 <div className="flex items-center gap-4 md:gap-8">
-                    <Link href="/" className="shrink-0">
-                        <span className={cn(
-                            "text-xl sm:text-2xl font-black italic tracking-tighter text-zinc-900 border-2 border-zinc-900 px-2 leading-none",
-                            scrolled && "lg:opacity-0 lg:pointer-events-none lg:w-0 lg:overflow-hidden"
-                        )}>
-                            LOGO
+                    <Link href="/" className="md:static absolute left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 shrink-0 z-10">
+                        <span className="text-xl sm:text-2xl font-black italic tracking-tighter text-zinc-900 border-2 border-zinc-900 px-2 leading-none">
+                            SPA ADVISOR
                         </span>
                     </Link>
 
                     {/* Info Blocks (Desktop Only) */}
-                    <AnimatePresence>
-                        {!scrolled && (
-                            <motion.div
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: -20 }}
-                                className="hidden lg:flex items-center"
-                            >
-                                <NavInfoBlock
-                                    icon={Briefcase}
-                                    title="LOGO for Business"
-                                    subtitle="Trusted by 5000 Business"
-                                />
-                                <NavInfoBlock
-                                    icon={Handshake}
-                                    title="Become A Partner"
-                                    subtitle="Start receiving qualified leads within days"
-                                />
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+                    <div className="hidden lg:flex items-center">
+                        <NavInfoBlock
+                            icon={Briefcase}
+                            title="LOGO for Business"
+                            subtitle="Trusted by 5000 Business"
+                        />
+                        <NavInfoBlock
+                            icon={Handshake}
+                            title="Become A Partner"
+                            subtitle="Start receiving qualified leads within days"
+                        />
+                    </div>
                 </div>
 
-                {/* Sticky Search in Center (Desktop Only - Avoid overlap on tablets/mobile) */}
-                <div className="hidden lg:flex flex-1 justify-center px-8 lg:px-12 max-w-3xl">
-                    <AnimatePresence>
-                        {scrolled && (
-                            <div className="w-full">
-                                <SearchBar isCompact onSearch={handleSearch} />
-                            </div>
-                        )}
-                    </AnimatePresence>
-                </div>
+                {/* Sticky Search in Center (Desktop Only - Avoid overlap on tablets/mobile) - REMOVED ON SCROLL AS REQUESTED */}
+                <div className="hidden lg:flex flex-1 justify-center px-8 lg:px-12 max-w-3xl" />
 
                 <div className="flex items-center gap-2 md:gap-4">
                     {/* Discover by City (Desktop) */}
@@ -157,7 +136,7 @@ export const Navbar = () => {
                     </div>
 
                     {/* Login/Signup */}
-                    <div className="flex items-center gap-2 cursor-pointer hover:bg-zinc-50 px-2 md:px-3 py-2 rounded-md transition-colors group">
+                    <div className="hidden md:flex items-center gap-2 cursor-pointer hover:bg-zinc-50 px-2 md:px-3 py-2 rounded-md transition-colors group">
                         <UserCircle2 className="w-7 h-7 md:w-8 md:h-8 text-zinc-300 group-hover:text-zinc-500 transition-colors" />
                         <span className="hidden sm:block text-sm font-bold text-zinc-900">Login</span>
                     </div>
@@ -246,7 +225,7 @@ export const Navbar = () => {
                             <div className="flex flex-col h-full">
                                 {/* Header */}
                                 <div className="flex items-center justify-between p-4 border-b border-zinc-100">
-                                    <span className="text-2xl font-black italic tracking-tighter text-zinc-900 border-2 border-zinc-900 px-2">LOGO</span>
+                                    <span className="text-2xl font-black italic tracking-tighter text-zinc-900 border-2 border-zinc-900 px-2">SPA ADVISOR</span>
                                     <button
                                         onClick={() => setIsMobileMenuOpen(false)}
                                         className="p-2 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-full transition-colors"

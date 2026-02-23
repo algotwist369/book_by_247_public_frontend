@@ -70,7 +70,7 @@ export const businessApi = {
                 queryParams.append(key, String(value));
             }
         });
-        return apiClient<any>(`/business/public/spa?${queryParams.toString()}`);
+        return apiClient<any>(`/business/public/explore?${queryParams.toString()}`);
     },
 
     /**

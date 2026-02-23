@@ -49,7 +49,7 @@ export const CategorySection: React.FC<CategorySectionProps> = () => {
 
     return (
         <section className="max-w-[90rem] mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20">
-            <div className="flex flex-col gap-5 sm:gap-6 md:gap-8 mb-6 sm:mb-8 md:mb-10">
+            <div className="flex flex-col gap-5 sm:gap-6 md:gap-8 mb-2 sm:mb-8 md:mb-10">
                 <div className="space-y-3 sm:space-y-4 md:space-y-6">
                     <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-zinc-900 tracking-tight">
@@ -60,9 +60,9 @@ export const CategorySection: React.FC<CategorySectionProps> = () => {
                         </p>
                     </div>
 
-                    {/* Mobile: Horizontal Scroll */}
-                    <div className="md:hidden overflow-x-auto scrollbar-hide -mx-4 px-4">
-                        <div className="flex gap-3 pb-2">
+                    {/* Mobile: Grid-like wrapping layout for categories */}
+                    <div className="md:hidden px-2">
+                        <div className="flex flex-wrap gap-3 justify-start">
                             {categories.map((cat) => (
                                 <CategoryButton
                                     key={cat.id}
@@ -99,13 +99,13 @@ export const CategorySection: React.FC<CategorySectionProps> = () => {
 
 
 
-            {/* Mobile: Horizontal Slider */}
-            <div className="md:hidden overflow-x-auto scrollbar-hide -mx-4 px-4">
-                <div className="flex gap-4 pb-2">
+            {/* Mobile: Grid-like wrapping layout */}
+            <div className="md:hidden px-2">
+                <div className="flex flex-wrap gap-4 lg:gap-6 xl:gap-8 justify-start">
                     {services
                         .filter((s) => s.category === selectedCategory)
                         .map((service) => (
-                            <div key={service.id} className="flex-none w-[calc(40%-8px)]">
+                            <div key={service.id} className="flex-none">
                                 <ServiceCard
                                     service={service}
                                     onClick={handleServiceClick}
@@ -117,7 +117,7 @@ export const CategorySection: React.FC<CategorySectionProps> = () => {
             </div>
 
             {/* Desktop: Grid Layout */}
-            <div className="hidden md:grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 lg:gap-8">
+            <div className="hidden lg:flex flex-wrap gap-4 md:gap-6 lg:gap-6 xl:gap-8 justify-start">
                 {services
                     .filter((s) => s.category === selectedCategory)
                     .map((service) => (

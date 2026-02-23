@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export const FloatingActionButtons = () => {
     return (
-        <div className="fixed right-0 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-2 pointer-events-none">
+        <div className="hidden md:fixed right-0 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-2 pointer-events-none">
             {/* Free Listing Button */}
             <Link
                 href="/business"

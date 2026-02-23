@@ -7,7 +7,7 @@ import ExploreFilters from '@/components/explore-business/ExploreFilters';
 import ExploreFilterModal, { FilterState } from '@/components/explore-business/ExploreFilterModal';
 import { Map, List } from 'lucide-react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import { useSearch } from '@/hooks/useSearch';
+import { useInfiniteSearch } from '@/hooks/useInfiniteSearch';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { MapPin, ArrowLeft, Search, X as CloseIcon } from 'lucide-react';
 import { useLocationSuggestions } from '@/hooks/useLocationSuggestions';
@@ -21,6 +21,7 @@ const ExplorePageContent = () => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
+    const DEFAULT_RADIUS = 15000;
 
     // Initialize state from URL
     const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || "");
@@ -32,7 +33,7 @@ const ExplorePageContent = () => {
 
     const [selectedCategory, setSelectedCategory] = useState<string | null>(searchParams.get('category'));
     const [minRating, setMinRating] = useState<number>(Number(searchParams.get('minRating')) || 0);
-    const [radius, setRadius] = useState<number>(Number(searchParams.get('radius')) || 15000);
+    const [radius, setRadius] = useState<number>(Number(searchParams.get('radius')) || DEFAULT_RADIUS);
     const [showMap, setShowMap] = useState(searchParams.get('view') === 'map');
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
@@ -61,8 +62,8 @@ const ExplorePageContent = () => {
     // No longer using debounced values for the MAIN business search to prevent auto-reloading
     // Location suggestions inside SearchBar handle their own debouncing
 
-    // Advanced search query - TRIGGERED BY COMMITTED STATE (Intent-Driven)
-    const { data: searchData } = useSearch({
+    // Infinite search — loads page by page as the user scrolls
+    const searchFilters = {
         q: committedSearch,
         location: committedLocation,
         category: selectedCategory === 'All' ? null : selectedCategory,
@@ -75,9 +76,18 @@ const ExplorePageContent = () => {
         sort: activeFilters.sortBy === 'Recommended' ? null :
             activeFilters.sortBy === 'Rating (High to Low)' ? 'rating' :
                 activeFilters.sortBy === 'Price (Low to High)' ? 'price_low' : 'price_high'
-    });
+    };
 
-    const businesses = searchData?.results || [];
+    const {
+        data: infiniteData,
+        hasNextPage,
+        isFetchingNextPage,
+        fetchNextPage,
+    } = useInfiniteSearch(searchFilters);
+
+    // Flatten all pages into a single list
+    const businesses = infiniteData?.pages.flatMap(p => p.results) ?? [];
+    const totalResults = infiniteData?.pages[0]?.totalResults;
 
     // URL sync - Syncs with COMMITTED state (what the user actually sees)
     useEffect(() => {
@@ -92,9 +102,13 @@ const ExplorePageContent = () => {
         if (activeFilters.gender !== 'Any') params.set('gender', activeFilters.gender);
         if (activeFilters.sortBy !== 'Recommended') params.set('sortBy', activeFilters.sortBy);
         if (showMap) params.set('view', 'map');
-        if (radius !== 3000) params.set('radius', radius.toString());
-        if (activeLat) params.set('lat', activeLat.toString());
-        if (activeLng) params.set('lng', activeLng.toString());
+
+        // Only sync location-based params if coordinates are present
+        if (activeLat && activeLng) {
+            if (radius !== DEFAULT_RADIUS) params.set('radius', radius.toString());
+            params.set('lat', activeLat.toString());
+            params.set('lng', activeLng.toString());
+        }
 
         const queryString = params.toString();
         router.replace(`${pathname}${queryString ? `?${queryString}` : ''}`, { scroll: false });
@@ -111,15 +125,15 @@ const ExplorePageContent = () => {
         }
     }, [latitude, longitude, router, searchParams, urlLat, urlLng, pathname]);
 
-    // Automatically ask for location if not in URL
+    // Automatically ask for location if not in URL and no location query provided
     useEffect(() => {
-        if (!urlLat || !urlLng) {
+        if (!urlLat && !urlLng && !locationQuery) {
             const timer = setTimeout(() => {
                 getPosition();
             }, 1500);
             return () => clearTimeout(timer);
         }
-    }, [getPosition, urlLat, urlLng]);
+    }, [getPosition, urlLat, urlLng, locationQuery]);
 
     const handleSearch = useCallback((q?: string, loc?: string) => {
         setCommittedSearch(q !== undefined ? q : searchQuery);
@@ -142,7 +156,7 @@ const ExplorePageContent = () => {
             `}</style>
 
             {/* Mobile-Only Header */}
-            <div className="lg:hidden flex items-center justify-between px-4 py-4 border-b border-zinc-100 sticky top-0 bg-white z-[60]">
+            <div className="lg:hidden flex items-center justify-between px-4 py-3 border-b border-zinc-100 sticky top-0 bg-white z-[60]">
                 <button
                     onClick={() => router.back()}
                     className="p-2 -ml-2 text-zinc-600 active:bg-zinc-50 rounded-full"
@@ -164,7 +178,7 @@ const ExplorePageContent = () => {
                                     {locationQuery && <span className="text-[#008080] truncate">{locationQuery}</span>}
                                 </span>
                             ) : (
-                                <span className="text-zinc-400 font-medium">Explore Business</span>
+                                <span className="text-zinc-400 font-medium">Explore Businessess </span>
                             )}
                         </span>
                     </button>
@@ -355,41 +369,46 @@ const ExplorePageContent = () => {
                             </button>
                         </div>
 
-                        {/* Filters & Search */}
-                        <ExploreFilters
-                            categories={categories}
-                            selectedCategory={selectedCategory}
-                            onSelectCategory={(cat) => {
-                                setSelectedCategory(cat);
-                                setCommittedSearch(searchQuery);
-                                setCommittedLocation(locationQuery);
-                            }}
-                            minRating={minRating}
-                            onSelectRating={(rate) => {
-                                setMinRating(rate);
-                                setCommittedSearch(searchQuery);
-                                setCommittedLocation(locationQuery);
-                            }}
-                            searchQuery={searchQuery}
-                            onSearchChange={setSearchQuery}
-                            locationQuery={locationQuery}
-                            onLocationChange={setLocationQuery}
-                            onSearch={handleSearch}
-                            onOpenFilters={() => setIsFilterModalOpen(true)}
-                            radius={radius}
-                            onRadiusChange={setRadius}
-                            isNearby={!!(activeLat && activeLng)}
-                        />
+                        {/* Filters & Search — sticky on scroll */}
+                        <div className="sticky top-0 lg:top-0 z-30 bg-white pb-2 -mx-4 px-4 lg:-mx-0 lg:px-0">
+                            <ExploreFilters
+                                categories={categories}
+                                selectedCategory={selectedCategory}
+                                onSelectCategory={(cat) => {
+                                    setSelectedCategory(cat);
+                                    setCommittedSearch(searchQuery);
+                                    setCommittedLocation(locationQuery);
+                                }}
+                                minRating={minRating}
+                                onSelectRating={(rate) => {
+                                    setMinRating(rate);
+                                    setCommittedSearch(searchQuery);
+                                    setCommittedLocation(locationQuery);
+                                }}
+                                searchQuery={searchQuery}
+                                onSearchChange={setSearchQuery}
+                                locationQuery={locationQuery}
+                                onLocationChange={setLocationQuery}
+                                onSearch={handleSearch}
+                                onOpenFilters={() => setIsFilterModalOpen(true)}
+                                radius={radius}
+                                onRadiusChange={setRadius}
+                                isNearby={!!(activeLat && activeLng)}
+                            />
+                        </div>
 
                         {/* Results List */}
-                        {/* Results List */}
-                        {searchData ? (
+                        {infiniteData ? (
                             <>
                                 <ExploreBusinessList
                                     businesses={businesses}
                                     isFullWidth={!showMap}
                                     location={committedLocation}
                                     category={selectedCategory}
+                                    totalResults={totalResults}
+                                    hasNextPage={hasNextPage}
+                                    isFetchingNextPage={isFetchingNextPage}
+                                    onLoadMore={fetchNextPage}
                                 />
 
                                 {businesses.length === 0 && (

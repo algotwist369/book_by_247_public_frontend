@@ -33,7 +33,7 @@ const ExploreFilters = ({
     onLocationChange,
     onSearch,
     onOpenFilters,
-    radius = 3000,
+    radius = 15000,
     onRadiusChange,
     isNearby = false
 }: ExploreFiltersProps) => {

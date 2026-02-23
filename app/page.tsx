@@ -27,6 +27,7 @@ export default async function Home() {
 
       {/* Stats and Categories — lightweight, above-fold */}
       <StatsSection />
+      
       <CategorySection />
 
       {/* Featured Businesses */}

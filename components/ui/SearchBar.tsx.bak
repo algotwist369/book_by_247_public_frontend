@@ -1,0 +1,11 @@
+"use client"
+
+import * as React from "react"
+
+export const SearchBar = () => {
+    return (
+        <div className="p-4 bg-zinc-100 rounded-lg text-zinc-500 text-sm">
+            Search bar temporarily disabled for debugging...
+        </div>
+    )
+}

@@ -21,6 +21,7 @@ const UNOPTIMIZED_HOSTS = [
     "jdmagicbox.com",
     "images.unsplash.com",
     "cdn.pixabay.com",
+    "halohealingtherapies.com",
 ];
 
 const isHotlinkProtected = (src: string): boolean => {
@@ -74,7 +75,7 @@ const CustomImage = ({
     return (
         <div className={cn(
             "relative overflow-hidden bg-zinc-100",
-            isFill && "h-full w-full",
+            isFill ? "absolute inset-0" : "h-full w-full",
             containerClassName
         )}>
             <Image
@@ -84,8 +85,7 @@ const CustomImage = ({
                 unoptimized={shouldUnoptimize}
                 sizes={props.sizes || "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
                 className={cn(
-                    "duration-500 ease-in-out",
-                    isLoading ? "opacity-0" : "opacity-100",
+                    "duration-500 ease-in-out opacity-100",
                     className
                 )}
                 onLoad={() => {

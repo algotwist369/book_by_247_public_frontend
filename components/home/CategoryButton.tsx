@@ -22,7 +22,7 @@ export const CategoryButton: React.FC<CategoryButtonProps> = React.memo(({ categ
             aria-pressed={isActive}
         >
             <div className={cn(
-                "w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 transition-all active:scale-95",
+                "w-14 h-14 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 transition-all active:scale-95",
                 isActive
                     ? "border-zinc-900 shadow-xl ring-4 ring-zinc-900/5"
                     : "border-zinc-100 grayscale hover:grayscale-0 hover:border-zinc-200"
@@ -37,7 +37,7 @@ export const CategoryButton: React.FC<CategoryButtonProps> = React.memo(({ categ
                 />
             </div>
             <span className={cn(
-                "text-[10px] sm:text-xs font-black tracking-widest uppercase transition-colors",
+                "hidden lg:block text-[8px] lg:text-xs font-black tracking-widest uppercase transition-colors text-center",
                 isActive ? "text-zinc-900" : "text-zinc-400 group-hover:text-zinc-600"
             )}>
                 {category.label}

@@ -44,10 +44,42 @@ export const SERVICES_DATA = [
         category: "Spa",
         description: "Shared relaxation experience for two"
     },
+    {
+        id: 5,
+        title: "Swedish Massage",
+        icon: Waves,
+        image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399336/1_b4laro.png",
+        category: "Spa",
+        description: "Gentle full-body massage for complete relaxation"
+    },
+    {
+        id: 6,
+        title: "Deep Tissue",
+        icon: Zap,
+        image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399346/3_tg8oe1.png",
+        category: "Spa",
+        description: "Intense pressure to release chronic muscle tension"
+    },
+    {
+        id: 7,
+        title: "Aromatherapy",
+        icon: Flower2,
+        image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399347/2_vyncgx.png",
+        category: "Spa",
+        description: "Therapeutic massage with essential plant oils"
+    },
+    {
+        id: 8,
+        title: "Couple Spa",
+        icon: Heart,
+        image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399342/4_hb33eu.png",
+        category: "Spa",
+        description: "Shared relaxation experience for two"
+    },
 
     // Salon Category
     {
-        id: 6,
+        id: 9,
         title: "Designer Haircut",
         icon: Scissors,
         image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399335/5_fmtzw7.png",
@@ -55,7 +87,7 @@ export const SERVICES_DATA = [
         description: "Precision cutting and styling by expert stylists"
     },
     {
-        id: 7,
+        id: 10,
         title: "Bridal Makeup",
         icon: Sparkles,
         image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399338/6_x9sr11.png",

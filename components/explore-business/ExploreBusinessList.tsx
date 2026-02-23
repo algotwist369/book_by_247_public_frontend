@@ -1,36 +1,78 @@
 "use client";
 
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import ExploreBusinessCard from './ExploreBusinessCard';
 import { Business } from '@/components/business/businessData';
-import { motion, AnimatePresence } from 'framer-motion';
 
 interface ExploreBusinessListProps {
     businesses: Business[];
     isFullWidth?: boolean;
     location?: string;
     category?: string | null;
+    totalResults?: number;
+    hasNextPage?: boolean;
+    isFetchingNextPage?: boolean;
+    onLoadMore?: () => void;
 }
 
-const ExploreBusinessList = ({ businesses, isFullWidth = false, location, category }: ExploreBusinessListProps) => {
+const ExploreBusinessList = ({
+    businesses,
+    isFullWidth = false,
+    location,
+    category,
+    totalResults,
+    hasNextPage,
+    isFetchingNextPage,
+    onLoadMore,
+}: ExploreBusinessListProps) => {
+    const sentinelRef = useRef<HTMLDivElement>(null);
+
+    // IntersectionObserver — triggers onLoadMore when sentinel comes into view
+    useEffect(() => {
+        if (!onLoadMore) return;
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+                    onLoadMore();
+                }
+            },
+            { threshold: 0.1 }
+        );
+        const el = sentinelRef.current;
+        if (el) observer.observe(el);
+        return () => { if (el) observer.unobserve(el); };
+    }, [hasNextPage, isFetchingNextPage, onLoadMore]);
+
     return (
         <div className="flex flex-col gap-6">
-            <div className="flex items-center justify-between mb-2">
-                <h2 className="text-xl font-bold text-zinc-900">
-                    Found <span className="text-[#008080]">{businesses.length}</span>
-                    {category && category !== 'All' ? ` ${category}s` : ' businesses'}
-                    {location ? <span> in <span className="text-zinc-900 underline decoration-[#008080]/30 underline-offset-4">{location}</span></span> : ''}
-                </h2>
-                <div className="h-[2px] flex-1 bg-zinc-50 ml-6" />
-            </div>
-
+            {/* Grid */}
             <div className={`grid grid-cols-1 md:grid-cols-2 ${isFullWidth ? 'lg:grid-cols-4' : 'lg:grid-cols-2'} gap-6 lg:gap-8`}>
                 {businesses.map((business, index) => (
-                    <div key={business.id}>
+                    <div key={`${business.id}-${index}`}>
                         <ExploreBusinessCard business={business} index={index} />
                     </div>
                 ))}
             </div>
+
+            {/* Infinite scroll sentinel */}
+            <div ref={sentinelRef} className="h-1" />
+
+            {/* Loading indicator */}
+            {isFetchingNextPage && (
+                <div className="flex justify-center py-8">
+                    <div className="flex items-center gap-3 text-zinc-500">
+                        <div className="w-5 h-5 border-2 border-zinc-200 border-t-[#008080] rounded-full animate-spin" />
+                        <span className="text-sm">Loading more...</span>
+                    </div>
+                </div>
+            )}
+
+            {/* End of results */}
+            {!hasNextPage && businesses.length > 0 && (
+                <p className="text-center text-sm text-zinc-400 py-6">
+                    You've seen all {businesses.length} results
+                </p>
+            )}
         </div>
     );
 };
