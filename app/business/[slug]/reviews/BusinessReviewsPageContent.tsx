@@ -118,7 +118,7 @@ const BusinessReviewsPageContent = ({ slug, initialBusiness, initialReviews }: R
                                         {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => {
                                             const dayLower = day.toLowerCase();
                                             const isOpen = business.workingHours?.days?.includes(dayLower);
-                                            const timeRange = isOpen
+                                            const timeRange = (isOpen && business.workingHours)
                                                 ? `${business.workingHours.open} - ${business.workingHours.close}`
                                                 : 'Closed';
 
