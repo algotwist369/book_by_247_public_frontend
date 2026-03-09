@@ -4,19 +4,19 @@ import { CustomImage } from "@/components/ui/CustomImage";
 
 const benefits = [
   {
-    icon: <TrendingUp className="w-5 h-5 text-white" />,
+    icon: <TrendingUp className="w-5 h-5 text-gray-600" />,
     title: "Boost Your Visibility",
     description:
       "Get discovered by thousands of clients looking for services in your area.",
   },
   {
-    icon: <Laptop className="w-5 h-5 text-white" />,
+    icon: <Laptop className="w-5 h-5 text-gray-600" />,
     title: "Smart Management",
     description:
       "Calendar sync, automated reminders, and client management tools in one place.",
   },
   {
-    icon: <CheckCircle2 className="w-5 h-5 text-white" />,
+    icon: <CheckCircle2 className="w-5 h-5 text-gray-600" />,
     title: "Verified Pro Status",
     description:
       "Build immediate trust with our verified partner badge on your profile.",
@@ -25,9 +25,18 @@ const benefits = [
 
 export const PartnerSection: React.FC = () => {
   return (
-    <section className="relative w-full bg-black overflow-hidden">
-      {/* Decorative Background */}
-      <div className="absolute top-0 right-0 w-[60%] h-full bg-white/5 -skew-x-12 translate-x-1/3 hidden lg:block" />
+    <section className="relative w-full overflow-hidden">
+      {/* Base — deep indigo/navy */}
+      <div className="absolute inset-0 bg-[#0d0d1a]" />
+      {/* Primary glow — violet top-left */}
+      <div className="absolute inset-0 z-1" style={{background: 'radial-gradient(ellipse 70% 60% at 20% 10%, rgba(109,40,217,0.55) 0%, transparent 70%)'}} />
+      {/* Secondary glow — rose/pink bottom-right */}
+      <div className="absolute inset-0 z-1" style={{background: 'radial-gradient(ellipse 60% 50% at 80% 85%, rgba(219,39,119,0.40) 0%, transparent 70%)'}} />
+      {/* Accent glow — indigo center */}
+      <div className="absolute inset-0 z-1" style={{background: 'radial-gradient(ellipse 50% 40% at 55% 40%, rgba(79,70,229,0.25) 0%, transparent 65%)'}} />
+      {/* Vignette */}
+      <div className="absolute inset-0 z-2 bg-linear-to-t from-black/60 via-transparent to-black/20" />
+      <div className="absolute inset-0 z-2 bg-linear-to-r from-black/30 via-transparent to-black/30" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -58,10 +67,10 @@ export const PartnerSection: React.FC = () => {
                     {benefit.icon}
                   </div>
                   <div>
-                    <h3 className="text-white font-semibold text-lg">
+                    <h3 className="text-gray-500 font-semibold text-lg">
                       {benefit.title}
                     </h3>
-                    <p className="text-white/90 text-sm sm:text-base">
+                    <p className="text-gray-600 text-sm sm:text-base">
                       {benefit.description}
                     </p>
                   </div>

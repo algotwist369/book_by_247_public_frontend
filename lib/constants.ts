@@ -80,38 +80,117 @@ export const SERVICES_DATA = [
     // Salon Category
     {
         id: 9,
-        title: "Designer Haircut",
+        title: "Hair Services",
         icon: Scissors,
-        image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399335/5_fmtzw7.png",
+        image: "https://hourglasslex.com/wp-content/uploads/2023/08/The-Importance-of-Consultations-in-Hair-Salon-Services-min-scaled.jpeg",
         category: "Salon",
         description: "Precision cutting and styling by expert stylists"
     },
     {
         id: 10,
-        title: "Bridal Makeup",
+        title: "beard Services",
+        icon: Scissors,
+        image: "https://www.weatherbeardsupply.com/cdn/shop/articles/img-1770762677093_14ebba5f-2980-49b5-b6e8-bf11e0f62217.jpg?v=1770763473&width=1600",
+        category: "Salon",
+        description: "Precision cutting and styling by expert stylists"
+    },
+    {
+        id: 11,
+        title: "Skin & Makeup",
         icon: Sparkles,
-        image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399338/6_x9sr11.png",
+        image: "https://www.mitchellusa.co.in/cdn/shop/articles/Header-01_06843ef4-4134-4885-8ac2-cd659a4d8b76.jpg?v=1640255228",
         category: "Salon",
         description: "Exquisite makeup for your special day"
     },
-
-    // Beauty & Care Category
-    {
-        id: 11,
-        title: "Hydrafacial",
-        icon: Smile,
-        image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399334/7_hhhxju.png",
-        category: "Beauty",
-        description: "Hydrating facial for a clear, radiant complexion"
-    },
     {
         id: 12,
-        title: "Luxury Manicure",
-        icon: Hand,
-        image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399342/8_q7tlq6.png",
+        title: "Mani-Pedi",
+        icon: Sparkles,
+        image: "https://images.squarespace-cdn.com/content/v1/528e7c71e4b0fe20836f0a7e/1624054744381-X10SEZUGM1606C1W7M3U/AdobeStock_74478328.jpeg",
+        category: "Salon",
+        description: "Exquisite makeup for your special day"
+    },
+    {
+        id: 13,
+        title: "Waxing",
+        icon: Sparkles,
+        image: "https://remedytupelo.com/storage/2022/11/10-Things-To-Know-Before-Getting-Your-Facial-Waxing-scaled.jpeg",
+        category: "Salon",
+        description: "Exquisite makeup for your special day"
+    },
+    {
+        id: 14,
+        title: "Nail Art",
+        icon: Sparkles,
+        image: "https://ellementco.com/cdn/shop/articles/EC_Blog_-_17.png?v=1715416536",
+        category: "Salon",
+        description: "Exquisite makeup for your special day"
+    },
+    {
+        id: 15,
+        title: "Threading",
+        icon: Sparkles,
+        image: "https://visubeauty.com/wp-content/uploads/2024/09/Eye-Brow-Threading-Image.jpg",
+        category: "Salon",
+        description: "Exquisite makeup for your special day"
+    },
+    {
+        id: 16,
+        title: "Body Polishing",
+        icon: Sparkles,
+        image: "https://cpimg.tistatic.com/02270356/b/4/Body-Polishing-Massage.jpg",
+        category: "Salon",
+        description: "Exquisite makeup for your special day"
+    },
+    // Beauty & Care Category
+    {
+        id: 17,
+        title: "Skin & Makeup",
+        icon: Sparkles,
+        image: "https://www.mitchellusa.co.in/cdn/shop/articles/Header-01_06843ef4-4134-4885-8ac2-cd659a4d8b76.jpg?v=1640255228",
         category: "Beauty",
-        description: "Premium nail care and artistic polishing"
-    }
+        description: "Exquisite makeup for your special day"
+    },
+    {
+        id: 18,
+        title: "Mani-Pedi",
+        icon: Sparkles,
+        image: "https://images.squarespace-cdn.com/content/v1/528e7c71e4b0fe20836f0a7e/1624054744381-X10SEZUGM1606C1W7M3U/AdobeStock_74478328.jpeg",
+        category: "Beauty",
+        description: "Exquisite makeup for your special day"
+    },
+    {
+        id: 19,
+        title: "Waxing",
+        icon: Sparkles,
+        image: "https://remedytupelo.com/storage/2022/11/10-Things-To-Know-Before-Getting-Your-Facial-Waxing-scaled.jpeg",
+        category: "Beauty",
+        description: "Exquisite makeup for your special day"
+    },
+    {
+        id: 20,
+        title: "Nail Art",
+        icon: Sparkles,
+        image: "https://ellementco.com/cdn/shop/articles/EC_Blog_-_17.png?v=1715416536",
+        category: "Beauty",
+        description: "Exquisite makeup for your special day"
+    },
+    {
+        id: 21,
+        title: "Threading",
+        icon: Sparkles,
+        image: "https://visubeauty.com/wp-content/uploads/2024/09/Eye-Brow-Threading-Image.jpg",
+        category: "Beauty",
+        description: "Exquisite makeup for your special day"
+    },
+    {
+        id: 22,
+        title: "Body Polishing",
+        icon: Sparkles,
+        image: "https://cpimg.tistatic.com/02270356/b/4/Body-Polishing-Massage.jpg",
+        category: "Beauty",
+        description: "Exquisite makeup for your special day"
+    },
 ];
 
 export const CATEGORIES_DATA = [
