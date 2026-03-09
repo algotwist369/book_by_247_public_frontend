@@ -16,8 +16,8 @@ const NAV_ITEMS = [
     { label: "Home", icon: Home, href: "/" },
     { label: "Search", icon: Search, href: "/explore" },
     { label: "For Business", icon: Briefcase, href: "/bookings" },
-    { label: "Demo", icon: Calendar, href: "/offers" },
-    { label: "Status", icon: CalendarRange , href: "/account" },
+    { label: "Demo", icon: Calendar, href: "/book-demo" },
+    { label: "Status", icon: CalendarRange, href: "/my-status" },
 ]
 
 export const BottomNav = () => {

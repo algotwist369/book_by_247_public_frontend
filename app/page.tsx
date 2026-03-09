@@ -14,6 +14,7 @@ const AppPromoSection = dynamic(() => import("@/components/home/AppPromoSection"
 const ForBusinesses = dynamic(() => import("@/components/home/ForBusinesses"));
 const ReviewsSection = dynamic(() => import("@/components/home/ReviewsSection").then(m => m.ReviewsSection));
 const SEOFooter = dynamic(() => import("@/components/home/SEOFooter"));
+const PromotionBanner = dynamic(() => import("@/components/promotion/PromotionBanner").then(m => m.default));
 
 export const revalidate = 3600;
 
@@ -22,12 +23,14 @@ export default async function Home() {
 
   return (
     <div className="bg-white min-h-screen">
-      {/* Hero — critical, eager-loaded for LCP */}
       <HeroSection />
-
-      {/* Stats and Categories — lightweight, above-fold */}
-      <StatsSection />
-      
+      {/* <br />
+      <br />
+      <PromotionBanner />
+      <br />
+      <br />
+      <PromotionBanner /> */}
+      {/* <StatsSection /> */}
       <CategorySection />
 
       {/* Featured Businesses */}

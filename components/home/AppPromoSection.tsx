@@ -6,7 +6,7 @@ export const AppPromoSection: React.FC = () => {
   return (
     <section className="w-full bg-white">
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-28">
+      <div className="max-w-[90rem] mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-28">
 
         <div className="bg-white border border-zinc-200 rounded-3xl p-6 sm:p-10 lg:p-16">
 
