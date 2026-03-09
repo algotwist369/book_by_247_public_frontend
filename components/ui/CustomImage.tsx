@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Image, { ImageProps } from "next/image"
 import { cn } from "@/lib/utils"
 
@@ -9,7 +9,7 @@ interface CustomImageProps extends ImageProps {
     containerClassName?: string
 }
 
-const GLOBAL_PLACEHOLDER = "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=2070&auto=format&fit=crop";
+const GLOBAL_PLACEHOLDER = "https://img.freepik.com/free-photo/stylish-beauty-women-elegent-enjoy-concept_53876-132577.jpg?semt=ais_user_personalization&w=740&q=80";
 
 // Domains that block proxy requests (hotlink protected). Images from these
 // hosts must be served directly by the browser, not through Next.js's optimizer.
@@ -49,7 +49,7 @@ const CustomImage = ({
     const [hasError, setHasError] = useState(false)
 
     // Reset state when src changes
-    React.useEffect(() => {
+    useEffect(() => {
         if (src) {
             setImgSrc(src as string)
             setIsLoading(true)
@@ -92,7 +92,9 @@ const CustomImage = ({
                     setIsLoading(false);
                 }}
                 onError={handleError}
+                referrerPolicy="no-referrer"
             />
+
             {isLoading && (
                 <div className="absolute inset-0 flex items-center justify-center bg-zinc-200">
                     <div className="w-6 h-6 border-2 border-[#008080] border-t-transparent rounded-full animate-spin" />

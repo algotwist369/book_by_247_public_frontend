@@ -43,7 +43,7 @@ const WriteReviewModal = ({ isOpen, onClose, businessName }: WriteReviewModalPro
                     {/* Header */}
                     <div className="text-center space-y-1.5 sm:space-y-2">
                         <h2 className="text-2xl sm:text-3xl font-black text-zinc-900 tracking-tight">Write a Review</h2>
-                        <p className="text-xs sm:text-base text-zinc-500 font-medium">How was your experience at <span className="text-[#008080]">{businessName}</span>?</p>
+                        <p className="text-xs sm:text-base text-zinc-500 font-medium">How was your experience at <span className="text-zinc-900 font-bold">{businessName}</span>?</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
@@ -61,7 +61,7 @@ const WriteReviewModal = ({ isOpen, onClose, businessName }: WriteReviewModalPro
                                     >
                                         <Star
                                             className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 transition-colors ${star <= (hoverRating || rating)
-                                                ? 'text-yellow-400 fill-yellow-400'
+                                                ? 'text-zinc-900 fill-zinc-900'
                                                 : 'text-zinc-200'
                                                 }`}
                                         />
@@ -81,14 +81,14 @@ const WriteReviewModal = ({ isOpen, onClose, businessName }: WriteReviewModalPro
                         {/* Review Text Area */}
                         <div className="space-y-2">
                             <label className="text-xs sm:text-sm font-bold text-zinc-900 uppercase tracking-wide ml-1 flex items-center gap-2">
-                                <MessageSquare className="w-4 h-4 text-[#008080]" />
+                                <MessageSquare className="w-4 h-4 text-zinc-900" />
                                 Your Feedback
                             </label>
                             <textarea
                                 value={review}
                                 onChange={(e) => setReview(e.target.value)}
                                 placeholder="Tell others about your experience, services you liked, or recommendations..."
-                                className="w-full h-32 sm:h-40 p-4 rounded-xl sm:rounded-2xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-[#008080]/20 focus:border-[#008080] outline-none transition-all resize-none text-zinc-700 placeholder:text-zinc-400 text-sm sm:text-base"
+                                className="w-full h-32 sm:h-40 p-4 rounded-xl sm:rounded-2xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-black/20 focus:border-black outline-none transition-all resize-none text-zinc-700 placeholder:text-zinc-400 text-sm sm:text-base"
                                 required
                             />
                         </div>
@@ -106,7 +106,7 @@ const WriteReviewModal = ({ isOpen, onClose, businessName }: WriteReviewModalPro
                             <Button
                                 type="submit"
                                 disabled={isSubmitting || rating === 0}
-                                className={`order-1 sm:order-2 flex-1 h-12 sm:h-14 font-black transition-all rounded-xl gap-2 text-sm sm:text-base ${isSubmitting ? 'bg-zinc-400' : 'bg-[#008080] hover:bg-[#006666]'
+                                className={`order-1 sm:order-2 flex-1 h-12 sm:h-14 font-black transition-all rounded-xl gap-2 text-sm sm:text-base ${isSubmitting ? 'bg-zinc-400' : 'bg-black hover:bg-zinc-800'
                                     }`}
                             >
                                 {isSubmitting ? 'Posting...' : 'Submit Review'}

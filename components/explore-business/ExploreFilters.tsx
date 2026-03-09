@@ -68,7 +68,7 @@ const ExploreFilters = ({
                                 key={category}
                                 onClick={() => onSelectCategory(category === 'All' ? null : category)}
                                 className={`h-9 lg:h-11 px-4 lg:px-6 rounded-xl font-bold text-xs lg:text-sm whitespace-nowrap border-2 transition-colors flex-shrink-0 ${isSelected
-                                    ? 'bg-[#008080]/5 text-[#008080] border-[#008080]/20'
+                                    ? 'bg-black/5 text-black border-black/20'
                                     : 'bg-white text-zinc-500 border-zinc-100'
                                     }`}
                             >
@@ -91,7 +91,7 @@ const ExploreFilters = ({
                                         key={r}
                                         onClick={() => onRadiusChange?.(r)}
                                         className={`h-9 lg:h-11 px-3 lg:px-4 rounded-xl font-bold text-xs lg:text-sm transition-colors border-2 flex-shrink-0 ${radius === r
-                                            ? 'bg-[#008080] text-white border-[#008080]'
+                                            ? 'bg-black text-white border-black'
                                             : 'bg-white text-zinc-500 border-zinc-100'
                                             }`}
                                     >

@@ -22,7 +22,7 @@ const BusinessCategories = ({ categories = [], tags = [] }: BusinessCategoriesPr
                         {categories.map((cat, index) => (
                             <span
                                 key={index}
-                                className="px-3 py-1.5 sm:px-4 sm:py-2 bg-[#008080]/10 text-[#008080] font-bold rounded-full text-xs sm:text-sm hover:bg-[#008080]/20 transition-colors cursor-default"
+                                className="px-3 py-1.5 sm:px-4 sm:py-2 bg-zinc-100 text-zinc-900 font-bold rounded-full text-xs sm:text-sm hover:bg-zinc-200 transition-colors cursor-default"
                             >
                                 {cat}
                             </span>

@@ -57,7 +57,7 @@ const EnquiryModal = ({ isOpen, onClose, businessName }: EnquiryModalProps) => {
                         <div className="text-center space-y-2">
                             <h2 className="text-2xl sm:text-3xl font-black text-zinc-900 tracking-tight">Send Enquiry</h2>
                             <p className="text-sm text-zinc-500 font-medium">
-                                Get in touch with <span className="text-[#008080] font-bold">{businessName}</span>
+                                Get in touch with <span className="text-zinc-900 font-bold">{businessName}</span>
                             </p>
                         </div>
 
@@ -66,7 +66,7 @@ const EnquiryModal = ({ isOpen, onClose, businessName }: EnquiryModalProps) => {
                             <div className="space-y-1.5">
                                 <label className="text-xs font-bold text-zinc-900 uppercase tracking-wider ml-1">Full Name</label>
                                 <div className="relative group">
-                                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-[#008080] transition-colors">
+                                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-zinc-900 transition-colors">
                                         <User className="w-5 h-5" />
                                     </div>
                                     <input
@@ -76,7 +76,7 @@ const EnquiryModal = ({ isOpen, onClose, businessName }: EnquiryModalProps) => {
                                         value={formData.name}
                                         onChange={handleChange}
                                         placeholder="Enter your name"
-                                        className="w-full h-12 sm:h-14 pl-12 pr-4 rounded-xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-[#008080]/10 focus:border-[#008080] outline-none transition-all text-zinc-900 placeholder:text-zinc-400 font-medium"
+                                        className="w-full h-12 sm:h-14 pl-12 pr-4 rounded-xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-black/10 focus:border-black outline-none transition-all text-zinc-900 placeholder:text-zinc-400 font-medium"
                                     />
                                 </div>
                             </div>
@@ -85,7 +85,7 @@ const EnquiryModal = ({ isOpen, onClose, businessName }: EnquiryModalProps) => {
                             <div className="space-y-1.5">
                                 <label className="text-xs font-bold text-zinc-900 uppercase tracking-wider ml-1">Phone Number</label>
                                 <div className="relative group">
-                                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-[#008080] transition-colors">
+                                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-zinc-900 transition-colors">
                                         <Phone className="w-5 h-5" />
                                     </div>
                                     <input
@@ -95,7 +95,7 @@ const EnquiryModal = ({ isOpen, onClose, businessName }: EnquiryModalProps) => {
                                         value={formData.phone}
                                         onChange={handleChange}
                                         placeholder="Enter your mobile number"
-                                        className="w-full h-12 sm:h-14 pl-12 pr-4 rounded-xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-[#008080]/10 focus:border-[#008080] outline-none transition-all text-zinc-900 placeholder:text-zinc-400 font-medium"
+                                        className="w-full h-12 sm:h-14 pl-12 pr-4 rounded-xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-black/10 focus:border-black outline-none transition-all text-zinc-900 placeholder:text-zinc-400 font-medium"
                                     />
                                 </div>
                             </div>
@@ -104,7 +104,7 @@ const EnquiryModal = ({ isOpen, onClose, businessName }: EnquiryModalProps) => {
                             <div className="space-y-1.5">
                                 <label className="text-xs font-bold text-zinc-900 uppercase tracking-wider ml-1">Email (Optional)</label>
                                 <div className="relative group">
-                                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-[#008080] transition-colors">
+                                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-zinc-900 transition-colors">
                                         <Mail className="w-5 h-5" />
                                     </div>
                                     <input
@@ -113,7 +113,7 @@ const EnquiryModal = ({ isOpen, onClose, businessName }: EnquiryModalProps) => {
                                         value={formData.email}
                                         onChange={handleChange}
                                         placeholder="Enter your email address"
-                                        className="w-full h-12 sm:h-14 pl-12 pr-4 rounded-xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-[#008080]/10 focus:border-[#008080] outline-none transition-all text-zinc-900 placeholder:text-zinc-400 font-medium"
+                                        className="w-full h-12 sm:h-14 pl-12 pr-4 rounded-xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-black/10 focus:border-black outline-none transition-all text-zinc-900 placeholder:text-zinc-400 font-medium"
                                     />
                                 </div>
                             </div>
@@ -122,7 +122,7 @@ const EnquiryModal = ({ isOpen, onClose, businessName }: EnquiryModalProps) => {
                             <div className="space-y-1.5">
                                 <label className="text-xs font-bold text-zinc-900 uppercase tracking-wider ml-1">Message</label>
                                 <div className="relative group">
-                                    <div className="absolute left-4 top-4 text-zinc-400 group-focus-within:text-[#008080] transition-colors">
+                                    <div className="absolute left-4 top-4 text-zinc-400 group-focus-within:text-zinc-900 transition-colors">
                                         <MessageSquare className="w-5 h-5" />
                                     </div>
                                     <textarea
@@ -130,7 +130,7 @@ const EnquiryModal = ({ isOpen, onClose, businessName }: EnquiryModalProps) => {
                                         value={formData.message}
                                         onChange={handleChange}
                                         placeholder="Describe your requirement..."
-                                        className="w-full h-28 sm:h-32 pl-12 pr-4 py-4 rounded-xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-[#008080]/10 focus:border-[#008080] outline-none transition-all text-zinc-900 placeholder:text-zinc-400 font-medium resize-none"
+                                        className="w-full h-28 sm:h-32 pl-12 pr-4 py-4 rounded-xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-black/10 focus:border-black outline-none transition-all text-zinc-900 placeholder:text-zinc-400 font-medium resize-none"
                                     />
                                 </div>
                             </div>
@@ -140,7 +140,7 @@ const EnquiryModal = ({ isOpen, onClose, businessName }: EnquiryModalProps) => {
                                 <Button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className={`w-full h-14 font-black text-base sm:text-lg transition-all rounded-xl gap-2 shadow-lg ${isSubmitting ? 'bg-zinc-400' : 'bg-[#008080] hover:bg-[#006666] shadow-[#008080]/20'
+                                    className={`w-full h-14 font-black text-base sm:text-lg transition-all rounded-xl gap-2 shadow-lg ${isSubmitting ? 'bg-zinc-400' : 'bg-black hover:bg-zinc-800 shadow-black/20'
                                         }`}
                                 >
                                     {isSubmitting ? 'Sending Request...' : 'Send Enquiry'}
@@ -162,7 +162,7 @@ const EnquiryModal = ({ isOpen, onClose, businessName }: EnquiryModalProps) => {
                         <div className="space-y-2">
                             <h3 className="text-2xl font-black text-zinc-900">Enquiry Sent!</h3>
                             <p className="text-zinc-500 font-medium">
-                                Thank you for your interest. <span className="text-[#008080] font-bold">{businessName}</span> will contact you shortly.
+                                Thank you for your interest. <span className="text-zinc-900 font-bold">{businessName}</span> will contact you shortly.
                             </p>
                         </div>
                     </div>

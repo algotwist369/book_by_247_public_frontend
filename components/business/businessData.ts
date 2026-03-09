@@ -34,6 +34,7 @@ export interface Business {
     services?: any[];
     distanceKm?: number;
     isOpen?: boolean;
+    gallery?: string[];
 }
 
 

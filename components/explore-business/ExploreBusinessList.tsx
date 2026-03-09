@@ -61,7 +61,7 @@ const ExploreBusinessList = ({
             {isFetchingNextPage && (
                 <div className="flex justify-center py-8">
                     <div className="flex items-center gap-3 text-zinc-500">
-                        <div className="w-5 h-5 border-2 border-zinc-200 border-t-[#008080] rounded-full animate-spin" />
+                        <div className="w-5 h-5 border-2 border-zinc-200 border-t-black rounded-full animate-spin" />
                         <span className="text-sm">Loading more...</span>
                     </div>
                 </div>

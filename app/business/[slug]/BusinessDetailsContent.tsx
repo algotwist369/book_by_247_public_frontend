@@ -79,7 +79,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
     if (isLoading) {
         return (
             <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-4">
-                <div className="w-12 h-12 border-4 border-[#008080] border-t-transparent rounded-full animate-spin" />
+                <div className="w-12 h-12 border-4 border-black border-t-transparent rounded-full animate-spin" />
                 <p className="text-zinc-500 font-medium">Loading business details...</p>
             </div>
         );
@@ -95,7 +95,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                     </p>
                 </div>
                 <Link href="/">
-                    <Button variant="primary" className="bg-[#008080] hover:bg-[#006666]">
+                    <Button variant="primary" className="bg-black hover:bg-zinc-800">
                         Back to Home
                     </Button>
                 </Link>
@@ -120,16 +120,16 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
 
                                 <div className="space-y-4">
                                     <Link href={`/business/${slug}/book-appointment`} className="block w-full">
-                                        <Button className="w-full h-14 text-lg font-bold bg-[#008080] hover:bg-[#006666] rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98]" variant="primary">
+                                        <Button className="w-full h-12 text-lg font-bold rounded-xl" variant="primary">
                                             Proceed to Book
                                         </Button>
                                     </Link>
 
                                     <div className="grid grid-cols-3 gap-2">
                                         {[
-                                            { Icon: Phone, label: 'Call', color: 'text-[#008080]', border: 'hover:border-[#008080]', isWhatsApp: false },
+                                            { Icon: Phone, label: 'Call', color: 'text-zinc-900', border: 'hover:border-zinc-900', isWhatsApp: false },
                                             { Icon: null, label: 'WhatsApp', color: 'text-green-600', border: 'hover:border-green-600', isWhatsApp: true },
-                                            { Icon: Mail, label: 'Enquiry', color: 'text-blue-600', border: 'hover:border-blue-600', isWhatsApp: false }
+                                            { Icon: Mail, label: 'Enquiry', color: 'text-zinc-600', border: 'hover:border-zinc-900', isWhatsApp: false }
                                         ].map((action, idx) => {
                                             const { Icon } = action;
                                             return (
@@ -164,32 +164,32 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                             {/* Contact & Hours - Collapsible */}
                             <div className="bg-white rounded-3xl border border-zinc-100 overflow-hidden divide-y divide-zinc-100">
                                 {/* Contact Info Accordion */}
-                                <DropdownSection title="Contact Information" icon={<MapPin className="w-5 h-5 text-[#008080]" />}>
+                                <DropdownSection title="Contact Information" icon={<MapPin className="w-5 h-5 text-zinc-900" />}>
                                     <div className="space-y-4 pt-2">
                                         <button
                                             onClick={() => {
                                                 const mapUrl = business.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${business.name} ${business.address}`)}`;
                                                 window.open(mapUrl, '_blank');
                                             }}
-                                            className="flex items-start gap-3 text-left hover:text-[#008080] transition-colors group"
+                                            className="flex items-start gap-3 text-left hover:text-black transition-colors group"
                                         >
-                                            <MapPin className="w-5 h-5 text-zinc-400 mt-0.5 shrink-0 group-hover:text-[#008080] transition-colors" />
-                                            <p className="text-sm text-zinc-600 group-hover:text-[#008080] transition-colors">{business.address}</p>
+                                            <MapPin className="w-5 h-5 text-zinc-400 mt-0.5 shrink-0 group-hover:text-black transition-colors" />
+                                            <p className="text-sm text-zinc-600 group-hover:text-black transition-colors">{business.address}</p>
                                         </button>
                                         <div className="flex items-center gap-3">
                                             <Phone className="w-5 h-5 text-zinc-400 shrink-0" />
-                                            <a href={`tel:${business.phone}`} className="text-sm text-zinc-600 hover:text-[#008080] transition-colors">{business.phone}</a>
+                                            <a href={`tel:${business.phone}`} className="text-sm text-zinc-600 hover:text-black transition-colors">{business.phone}</a>
                                         </div>
                                         {business.email && (
                                             <div className="flex items-center gap-3">
                                                 <Mail className="w-5 h-5 text-zinc-400 shrink-0" />
-                                                <a href={`mailto:${business.email}`} className="text-sm text-zinc-600 hover:text-[#008080] transition-colors">{business.email}</a>
+                                                <a href={`mailto:${business.email}`} className="text-sm text-zinc-600 hover:text-black transition-colors">{business.email}</a>
                                             </div>
                                         )}
                                         {business.website && (
                                             <div className="flex items-center gap-3">
                                                 <Globe className="w-5 h-5 text-zinc-400 shrink-0" />
-                                                <a href={business.website} target="_blank" rel="noopener noreferrer" className="text-sm text-zinc-600 hover:text-[#008080] transition-colors">
+                                                <a href={business.website} target="_blank" rel="noopener noreferrer" className="text-sm text-zinc-600 hover:text-black transition-colors">
                                                     {business.website.replace(/^https?:\/\//, '')}
                                                 </a>
                                             </div>
@@ -198,7 +198,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                                 </DropdownSection>
 
                                 {/* Working Hours Accordion */}
-                                <DropdownSection title="Working Hours" icon={<Clock className="w-5 h-5 text-[#008080]" />}>
+                                <DropdownSection title="Working Hours" icon={<Clock className="w-5 h-5 text-zinc-900" />}>
                                     <div className="space-y-2 pt-2">
                                         {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => {
                                             const dayLower = day.toLowerCase();
@@ -225,7 +225,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                                 <h4 className="font-bold text-zinc-900 text-sm uppercase tracking-wide">Follow Us</h4>
                                 <div className="flex justify-center gap-4">
                                     {[Facebook, Instagram, Twitter].map((Icon, i) => (
-                                        <a key={i} href="#" className="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-400 hover:bg-[#008080] hover:text-white transition-all transform hover:scale-110">
+                                        <a key={i} href="#" className="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-400 hover:bg-black hover:text-white transition-all transform hover:scale-110">
                                             <Icon className="w-5 h-5" />
                                         </a>
                                     ))}
@@ -303,7 +303,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                                             const mapUrl = business.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${business.name} ${business.address}`)}`;
                                             window.open(mapUrl, '_blank');
                                         }}
-                                        className="flex items-center gap-1.5 text-[#008080] font-bold hover:underline whitespace-nowrap bg-[#008080]/5 px-3 py-1 rounded-full"
+                                        className="flex items-center gap-1.5 text-zinc-900 font-bold hover:underline whitespace-nowrap bg-zinc-100 px-3 py-1 rounded-full border border-zinc-200"
                                         aria-label="Get directions to business"
                                     >
                                         <Navigation className="w-3.5 h-3.5 fill-current" />
@@ -336,12 +336,12 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                                                 });
                                             }
                                         }}
-                                        className={`pb-4 pt-4 text-sm sm:text-base font-bold transition-colors relative ${activeTab === tab.id ? 'text-[#008080]' : 'text-zinc-400 hover:text-zinc-600'
+                                        className={`pb-4 pt-4 text-sm sm:text-base font-bold transition-colors relative ${activeTab === tab.id ? 'text-zinc-900' : 'text-zinc-400 hover:text-zinc-600'
                                             }`}
                                     >
                                         {tab.label}
                                         {activeTab === tab.id && (
-                                            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-[#008080]" />
+                                            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-black" />
                                         )}
                                     </button>
                                 ))}
@@ -382,7 +382,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                                     { name: "Beverages", icon: Coffee }
                                 ].map((item, i) => (
                                     <div key={i} className="flex items-center gap-3 text-zinc-600 bg-zinc-50 p-3 rounded-xl border border-zinc-100 hover:bg-white hover:shadow-sm transition-all">
-                                        <item.icon className="w-4 h-4 text-[#008080]" />
+                                        <item.icon className="w-4 h-4 text-zinc-900" />
                                         <span className="text-xs sm:text-sm font-medium">{item.name}</span>
                                     </div>
                                 ))}
@@ -437,7 +437,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                     </a>
                     <Link href={`/business/${slug}/book-appointment`} className="flex-1">
                         <Button
-                            className="w-full h-12 text-sm sm:text-base font-bold bg-[#008080] hover:bg-[#006666] rounded-xl shadow-lg shadow-[#008080]/20 transition-all active:scale-[0.98]"
+                            className="w-full h-12 text-sm sm:text-base font-bold rounded-xl"
                             variant="primary"
                         >
                             Book Now

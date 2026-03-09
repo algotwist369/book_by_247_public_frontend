@@ -88,8 +88,8 @@ const ShareModal = ({ isOpen, onClose, url }: ShareModalProps) => {
                             <button
                                 onClick={handleCopy}
                                 className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${copied
-                                        ? 'bg-green-600 text-white'
-                                        : 'bg-[#008080] text-white hover:bg-[#006666]'
+                                    ? 'bg-green-600 text-white'
+                                    : 'bg-black text-white hover:bg-zinc-800'
                                     }`}
                             >
                                 {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}

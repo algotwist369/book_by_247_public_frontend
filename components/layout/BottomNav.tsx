@@ -8,7 +8,7 @@ import {
     Search,
     Briefcase,
     Calendar,
-    CalendarRange ,
+    CalendarRange,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -23,6 +23,10 @@ const NAV_ITEMS = [
 export const BottomNav = () => {
     const pathname = usePathname()
 
+    // Only show BottomNav on the home page
+    const isHome = pathname === "/" || pathname === ""
+    if (!isHome) return null
+
     return (
         <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-zinc-100 px-4 py-2 z-50">
             <div className="flex items-center justify-between max-w-lg mx-auto">
@@ -36,13 +40,13 @@ export const BottomNav = () => {
                             href={item.href}
                             className={cn(
                                 "flex flex-col items-center gap-1 min-w-[64px] transition-colors",
-                                isActive ? "text-[#FF4D4D]" : "text-zinc-400 hover:text-zinc-600"
+                                isActive ? "text-zinc-900" : "text-zinc-400 hover:text-zinc-600"
                             )}
                         >
                             <Icon className={cn("w-6 h-6", isActive ? "stroke-[2.5px]" : "stroke-2")} />
                             <span className={cn(
                                 "text-[10px] font-bold uppercase tracking-tight",
-                                isActive ? "text-[#FF4D4D]" : "text-zinc-500"
+                                isActive ? "text-zinc-900" : "text-zinc-500"
                             )}>
                                 {item.label}
                             </span>

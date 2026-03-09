@@ -12,20 +12,30 @@ export const usePublicBusinesses = (params: { type?: string; page?: number; limi
         initialData,
         select: (response: any) => {
             const businesses = response?.businesses || response?.data || [];
-            const normalized = businesses.map((business: any) => ({
-                ...business,
-                id: business.id || business._id,
-                rating: business.rating ?? business.ratings?.average ?? 0,
-                reviews: business.reviews ?? business.ratings?.totalReviews ?? 0,
-                images: Array.isArray(business.images)
-                    ? business.images
-                    : Array.from(new Set([
-                        business.images?.banner,
-                        business.images?.logo,
-                        ...(business.images?.gallery || []),
-                        business.images?.thumbnail
-                    ])).filter(Boolean) as string[]
-            }));
+            const normalized = businesses.map((business: any) => {
+                const rawImages = Array.isArray(business.images) ? business.images : [];
+                const galleryImages = Array.isArray(business.gallery) ? business.gallery : [];
+                const nestedGallery = Array.isArray(business.images?.gallery) ? business.images.gallery : [];
+
+                const combinedImages = Array.from(new Set([
+                    ...rawImages,
+                    ...galleryImages,
+                    ...nestedGallery,
+                    business.image,
+                    business.images?.banner,
+                    business.images?.logo,
+                    business.images?.thumbnail
+                ])).filter(Boolean) as string[];
+
+                return {
+                    ...business,
+                    id: business.id || business._id,
+                    rating: business.rating ?? business.ratings?.average ?? 0,
+                    reviews: business.reviews ?? business.ratings?.totalReviews ?? 0,
+                    images: combinedImages,
+                    image: business.image || combinedImages[0] || "",
+                };
+            });
             return {
                 ...response,
                 data: normalized
@@ -50,14 +60,15 @@ export const useBusinessBySlug = (slug: string, initialData?: any) => {
                 id: business.id || business._id,
                 rating: business.rating ?? business.ratings?.average ?? 0,
                 reviews: business.reviews ?? business.ratings?.totalReviews ?? 0,
-                images: Array.isArray(business.images)
-                    ? business.images
-                    : Array.from(new Set([
-                        business.images?.banner,
-                        business.images?.logo,
-                        ...(business.images?.gallery || []),
-                        business.images?.thumbnail
-                    ])).filter(Boolean) as string[],
+                images: Array.from(new Set([
+                    ...(Array.isArray(business.images) ? business.images : []),
+                    ...(Array.isArray(business.gallery) ? business.gallery : []),
+                    ...(Array.isArray(business.images?.gallery) ? business.images.gallery : []),
+                    business.image,
+                    business.images?.banner,
+                    business.images?.logo,
+                    business.images?.thumbnail
+                ])).filter(Boolean) as string[],
                 // Ensure categories and tags are arrays
                 categories: business.category ? [business.category] : (Array.isArray(business.categories) ? business.categories : []),
                 tags: Array.isArray(business.tags) ? business.tags : []
@@ -106,20 +117,26 @@ export const useNearbyBusinesses = (params: { lat: number; lng: number; maxDista
         staleTime: 5 * 60 * 1000,
         select: (response: any) => {
             const businesses = response?.data || [];
-            const normalized = businesses.map((business: any) => ({
-                ...business,
-                id: business.id || business._id,
-                rating: business.rating ?? business.ratings?.average ?? 0,
-                reviews: business.reviews ?? business.ratings?.totalReviews ?? 0,
-                images: Array.isArray(business.images)
-                    ? business.images
-                    : Array.from(new Set([
-                        business.images?.banner,
-                        business.images?.logo,
-                        ...(business.images?.gallery || []),
-                        business.images?.thumbnail
-                    ])).filter(Boolean) as string[]
-            }));
+            const normalized = businesses.map((business: any) => {
+                const combinedImages = Array.from(new Set([
+                    ...(Array.isArray(business.images) ? business.images : []),
+                    ...(Array.isArray(business.gallery) ? business.gallery : []),
+                    ...(Array.isArray(business.images?.gallery) ? business.images.gallery : []),
+                    business.image,
+                    business.images?.banner,
+                    business.images?.logo,
+                    business.images?.thumbnail
+                ])).filter(Boolean) as string[];
+
+                return {
+                    ...business,
+                    id: business.id || business._id,
+                    rating: business.rating ?? business.ratings?.average ?? 0,
+                    reviews: business.reviews ?? business.ratings?.totalReviews ?? 0,
+                    images: combinedImages,
+                    image: business.image || combinedImages[0] || "",
+                };
+            });
             return {
                 ...response,
                 data: normalized

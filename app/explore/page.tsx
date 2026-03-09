@@ -19,26 +19,32 @@ export default async function ExplorePage() {
     const response = await businessApi.getPublicBusinesses({ limit: 100 }).catch(() => null);
     const rawBusinesses = (response as any)?.data || (response as any)?.businesses || [];
 
-    const businesses = rawBusinesses.map((b: any) => ({
-        ...b,
-        id: b.id || b._id,
-        rating: b.rating ?? b.ratings?.average ?? 0,
-        reviews: b.reviews ?? b.ratings?.totalReviews ?? 0,
-        images: Array.isArray(b.images)
-            ? b.images
-            : Array.from(new Set([
-                b.images?.banner,
-                b.images?.logo,
-                ...(b.images?.gallery || []),
-                b.images?.thumbnail
-            ])).filter(Boolean) as string[],
-        price: b.price ?? 0,
-        amenities: Array.isArray(b.amenities) ? b.amenities : [],
-        gender: b.gender ?? 'Any',
-        categories: b.category ? [b.category] : (Array.isArray(b.categories) ? b.categories : []),
-        description: b.description || b.seo?.metaDescription || "Experience premium wellness treatments and relaxation therapies.",
-        coordinates: b.coordinates || { lat: 13.0418, lng: 80.2341 }
-    }));
+    const businesses = rawBusinesses.map((b: any) => {
+        const combinedImages = Array.from(new Set([
+            ...(Array.isArray(b.images) ? b.images : []),
+            ...(Array.isArray(b.gallery) ? b.gallery : []),
+            ...(Array.isArray(b.images?.gallery) ? b.images.gallery : []),
+            b.image,
+            b.images?.banner,
+            b.images?.logo,
+            b.images?.thumbnail
+        ])).filter(Boolean) as string[];
+
+        return {
+            ...b,
+            id: b.id || b._id,
+            rating: b.rating ?? b.ratings?.average ?? 0,
+            reviews: b.reviews ?? b.ratings?.totalReviews ?? 0,
+            images: combinedImages,
+            image: b.image || combinedImages[0] || "",
+            price: b.price ?? 0,
+            amenities: Array.isArray(b.amenities) ? b.amenities : [],
+            gender: b.gender ?? 'Any',
+            categories: b.category ? [b.category] : (Array.isArray(b.categories) ? b.categories : []),
+            description: b.description || b.seo?.metaDescription || "Experience premium wellness treatments and relaxation therapies.",
+            coordinates: b.coordinates || { lat: 13.0418, lng: 80.2341 }
+        };
+    });
 
     // Senior SEO: Injecting JSON-LD for LocalBusiness list
     const jsonLd = {
@@ -75,7 +81,7 @@ export default async function ExplorePage() {
             <main className="min-h-screen bg-white">
                 <Suspense fallback={
                     <div className="flex items-center justify-center min-h-[50vh]">
-                        <div className="w-8 h-8 border-4 border-zinc-200 border-t-[#008080] rounded-full animate-spin" />
+                        <div className="w-8 h-8 border-4 border-zinc-200 border-t-black rounded-full animate-spin" />
                     </div>
                 }>
                     <ExplorePageContent />

@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils"
 import { useLocationSuggestions } from "../../hooks/useLocationSuggestions"
 import { useGeolocation } from "../../hooks/useGeolocation"
 import { useRouter } from "next/navigation"
+import LocationPermissionModal from "./LocationPermissionModal"
 
 interface SearchBarProps {
     className?: string
@@ -28,6 +29,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
     const [showSuggestions, setShowSuggestions] = React.useState(false);
     const [localLocation, setLocalLocation] = React.useState(locationValue);
+    const [showLocationModal, setShowLocationModal] = React.useState(false);
     const { data: suggestions, isLoading } = useLocationSuggestions(localLocation, showSuggestions);
     const { getPosition, latitude, longitude, isFetching, error: geoError } = useGeolocation();
     const router = useRouter();
@@ -40,7 +42,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
     const handleNearbyClick = (e: React.MouseEvent) => {
         e.preventDefault();
+        setShowLocationModal(true);
+    };
+
+    const handleAllowLocation = () => {
         getPosition();
+        setShowLocationModal(false);
     };
 
     const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,6 +79,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 <div className="flex-[1.5] flex items-center gap-2 px-4 border-r border-zinc-200 h-14">
                     <Search className="w-4 h-4 text-zinc-400 shrink-0" />
                     <input
+                        id="desktop-search-input"
+                        name="desktop-search"
                         type="text"
                         placeholder={isCompact ? "What are you looking for?" : "Search spa, salon or beauty expert"}
                         value={value}
@@ -97,6 +106,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 <div className="flex-1 relative flex items-center gap-2 px-4 h-14">
                     <MapPin className="w-4 h-4 text-zinc-400 shrink-0" />
                     <input
+                        id="desktop-location-input"
+                        name="desktop-location"
                         type="text"
                         placeholder="Location"
                         value={localLocation}
@@ -173,6 +184,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 <div className="flex items-center gap-2 border border-zinc-200 rounded-xl px-3 h-11">
                     <Search className="w-4 h-4 text-zinc-400 shrink-0" />
                     <input
+                        id="mobile-search-input"
+                        name="mobile-search"
                         type="text"
                         placeholder="Search services..."
                         value={value}
@@ -197,6 +210,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                     <div className="flex items-center gap-2 border border-zinc-200 rounded-xl px-3 h-11">
                         <MapPin className="w-4 h-4 text-zinc-400 shrink-0" />
                         <input
+                            id="mobile-location-input"
+                            name="mobile-location"
                             type="text"
                             placeholder="Location"
                             value={localLocation}
@@ -265,6 +280,13 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             {showSuggestions && (
                 <div className="fixed inset-0 z-40" onClick={() => setShowSuggestions(false)} />
             )}
+
+            <LocationPermissionModal
+                isOpen={showLocationModal}
+                onClose={() => setShowLocationModal(false)}
+                onAllow={handleAllowLocation}
+                isLocating={isFetching}
+            />
         </div>
     )
 }

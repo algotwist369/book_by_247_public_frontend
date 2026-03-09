@@ -38,7 +38,7 @@ const BusinessReviews = ({ reviews = [], rating, reviewCount, slug, businessName
                         {[...Array(5)].map((_, i) => (
                             <Star
                                 key={i}
-                                className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${i < Math.floor(rating) ? 'text-yellow-400 fill-yellow-400' : 'text-zinc-300'}`}
+                                className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${i < Math.floor(rating) ? 'text-zinc-900 fill-zinc-900' : 'text-zinc-300'}`}
                             />
                         ))}
                     </div>
@@ -53,7 +53,7 @@ const BusinessReviews = ({ reviews = [], rating, reviewCount, slug, businessName
                             <span className="text-[10px] font-bold text-zinc-400 w-3">{star}</span>
                             <div className="flex-1 h-1.5 sm:h-2 bg-zinc-200 rounded-full overflow-hidden">
                                 <div
-                                    className="h-full bg-yellow-400 rounded-full"
+                                    className="h-full bg-zinc-900 rounded-full"
                                     style={{ width: star === 5 ? '70%' : star === 4 ? '20%' : '5%' }}
                                 />
                             </div>
@@ -87,7 +87,7 @@ const BusinessReviews = ({ reviews = [], rating, reviewCount, slug, businessName
                                 {[...Array(5)].map((_, i) => (
                                     <Star
                                         key={i}
-                                        className={`w-3 h-3 sm:w-4 sm:h-4 ${i < review.rating ? 'text-yellow-400 fill-yellow-400' : 'text-zinc-200'}`}
+                                        className={`w-3 h-3 sm:w-4 sm:h-4 ${i < review.rating ? 'text-zinc-900 fill-zinc-900' : 'text-zinc-200'}`}
                                     />
                                 ))}
                             </div>
@@ -96,7 +96,7 @@ const BusinessReviews = ({ reviews = [], rating, reviewCount, slug, businessName
                             {review.content}
                         </p>
                         <div className="flex items-center gap-4 text-[11px] sm:text-xs font-bold text-zinc-400">
-                            <button className="flex items-center gap-1.5 hover:text-[#008080] transition-colors">
+                            <button className="flex items-center gap-1.5 hover:text-black transition-colors">
                                 <ThumbsUp className="w-3.5 h-3.5" />
                                 <span>Helpful</span>
                             </button>

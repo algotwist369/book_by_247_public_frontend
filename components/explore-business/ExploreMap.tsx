@@ -98,12 +98,12 @@ const mapOptions = {
         {
             "featureType": "water",
             "elementType": "all",
-            "stylers": [{ "color": "#46bcec" }, { "visibility": "on" }]
+            "stylers": [{ "color": "#e9e9e9" }, { "visibility": "on" }]
         },
         {
             "featureType": "water",
             "elementType": "geometry.fill",
-            "stylers": [{ "color": "#c8d7d4" }]
+            "stylers": [{ "color": "#e9e9e9" }]
         },
         {
             "featureType": "water",
@@ -185,7 +185,7 @@ const ExploreMap = ({ businesses }: ExploreMapProps) => {
     if (!isLoaded) return (
         <div className="sticky top-24 h-[calc(100vh-120px)] w-full bg-zinc-50 rounded-[2.5rem] border-4 border-white shadow-2xl flex items-center justify-center">
             <div className="flex flex-col items-center gap-4">
-                <div className="w-12 h-12 border-4 border-[#008080]/20 border-t-[#008080] rounded-full animate-spin" />
+                <div className="w-12 h-12 border-4 border-black/20 border-t-black rounded-full animate-spin" />
                 <p className="text-zinc-400 font-bold text-sm uppercase tracking-widest">Loading Map...</p>
             </div>
         </div>
@@ -240,7 +240,7 @@ const ExploreMap = ({ businesses }: ExploreMapProps) => {
                                     className="object-cover"
                                 />
                                 <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded-md flex items-center gap-1 shadow-sm">
-                                    <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                                    <Star className="w-3 h-3 fill-black text-black" />
                                     <span className="text-[10px] font-bold text-zinc-900">{selectedBusiness.rating}</span>
                                 </div>
                             </div>

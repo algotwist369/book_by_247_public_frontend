@@ -52,7 +52,7 @@ const ServiceCard = ({ service }: { service: Service }) => {
                 className="w-full flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-5 text-left gap-4"
             >
                 <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-400 group-hover:bg-[#008080]/10 group-hover:text-[#008080] transition-colors shrink-0">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-400 group-hover:bg-zinc-100 group-hover:text-black transition-colors shrink-0">
                         {service.thumbnail ? (
                             <div className="relative w-full h-full rounded-full overflow-hidden">
                                 <CustomImage
@@ -67,7 +67,7 @@ const ServiceCard = ({ service }: { service: Service }) => {
                         )}
                     </div>
                     <div>
-                        <h3 className="font-bold text-zinc-900 text-base sm:text-lg group-hover:text-[#008080] transition-colors leading-tight">{service.name}</h3>
+                        <h3 className="font-bold text-zinc-900 text-base sm:text-lg group-hover:text-black transition-colors leading-tight">{service.name}</h3>
                         <p className="text-xs sm:text-sm text-zinc-500 mt-1">{service.shortDescription || service.description}</p>
                     </div>
                 </div>
@@ -79,7 +79,7 @@ const ServiceCard = ({ service }: { service: Service }) => {
                         <span className="text-[10px] sm:text-xs font-normal text-zinc-500 sm:mt-0.5">onwards</span>
                     </div>
                     <div className="flex items-center gap-3">
-                        {isOpen ? <ChevronUp className="w-5 h-5 text-[#008080]" /> : <ChevronDown className="w-5 h-5 text-zinc-400" />}
+                        {isOpen ? <ChevronUp className="w-5 h-5 text-black" /> : <ChevronDown className="w-5 h-5 text-zinc-400" />}
                     </div>
                 </div>
             </button>
@@ -96,7 +96,7 @@ const ServiceCard = ({ service }: { service: Service }) => {
                         <div className="p-4 sm:p-5 pt-0 space-y-3">
                             <div className="h-px bg-zinc-100 mb-4" />
                             {service.pricingOptions.map((option, idx) => (
-                                <div key={idx} className="flex flex-col xs:flex-row items-start xs:items-center justify-between p-3 rounded-xl bg-white border border-zinc-100 hover:border-[#008080]/30 transition-colors gap-3">
+                                <div key={idx} className="flex flex-col xs:flex-row items-start xs:items-center justify-between p-3 rounded-xl bg-white border border-zinc-100 hover:border-black/30 transition-colors gap-3">
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-500">
                                             <Clock className="w-4 h-4" />
@@ -110,7 +110,7 @@ const ServiceCard = ({ service }: { service: Service }) => {
                                                 <span className="text-[10px] text-zinc-400 line-through">₹{option.originalPrice.toLocaleString('en-IN')}</span>
                                             )}
                                         </div>
-                                        <Button size="sm" className="bg-zinc-900 text-white hover:bg-[#008080] transition-colors px-5 sm:px-6 rounded-full font-bold h-8 sm:h-9 text-xs sm:text-sm">
+                                        <Button size="sm" className="bg-zinc-900 text-white hover:bg-zinc-800 transition-colors px-5 sm:px-6 rounded-full font-bold h-8 sm:h-9 text-xs sm:text-sm">
                                             Select
                                         </Button>
                                     </div>
@@ -138,7 +138,7 @@ const PopularServices = ({ services = [] }: PopularServicesProps) => {
                 {services.length > 4 && (
                     <button
                         onClick={() => setIsExpanded(!isExpanded)}
-                        className="text-[#008080] font-bold text-xs sm:text-sm hover:underline whitespace-nowrap bg-[#008080]/5 px-3 py-1.5 rounded-full"
+                        className="text-black font-bold text-xs sm:text-sm hover:underline whitespace-nowrap bg-zinc-100 px-3 py-1.5 rounded-full"
                     >
                         {isExpanded ? 'View Less' : 'Full Menu'}
                     </button>

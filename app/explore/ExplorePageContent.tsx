@@ -58,10 +58,6 @@ const ExplorePageContent = () => {
     // Effective coordinates
     const activeLat = latitude || (urlLat ? parseFloat(urlLat) : null);
     const activeLng = longitude || (urlLng ? parseFloat(urlLng) : null);
-
-    // No longer using debounced values for the MAIN business search to prevent auto-reloading
-    // Location suggestions inside SearchBar handle their own debouncing
-
     // Infinite search — loads page by page as the user scrolls
     const searchFilters = {
         q: committedSearch,
@@ -175,7 +171,7 @@ const ExplorePageContent = () => {
                                 <span className="flex items-center gap-1.5">
                                     {searchQuery && <span className="truncate">{searchQuery}</span>}
                                     {searchQuery && locationQuery && <span className="text-zinc-300 font-normal">in</span>}
-                                    {locationQuery && <span className="text-[#008080] truncate">{locationQuery}</span>}
+                                    {locationQuery && <span className="text-black truncate">{locationQuery}</span>}
                                 </span>
                             ) : (
                                 <span className="text-zinc-400 font-medium">Explore Businessess </span>
@@ -207,7 +203,7 @@ const ExplorePageContent = () => {
 
             {/* Mobile Search Overlay */}
             {isMobileSearchOpen && (
-                <div className="fixed inset-0 bg-white z-[100] flex flex-col p-4">
+                <div className="fixed inset-0 bg-white z-100 flex flex-col p-4">
                     <div className="flex items-center gap-4 mb-6">
                         <button
                             onClick={() => setIsMobileSearchOpen(false)}
@@ -235,7 +231,7 @@ const ExplorePageContent = () => {
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     placeholder="Salon, Spa, Massage..."
-                                    className="w-full h-14 bg-zinc-50 border border-zinc-100 rounded-2xl pl-12 pr-12 text-zinc-900 focus:outline-none focus:border-[#008080]/30"
+                                    className="w-full h-14 bg-zinc-50 border border-zinc-100 rounded-2xl pl-12 pr-12 text-zinc-900 focus:outline-none focus:border-black/30"
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter') {
                                             handleSearch(searchQuery, locationQuery);
@@ -267,7 +263,7 @@ const ExplorePageContent = () => {
                                     }}
                                     onFocus={() => setShowLocationSuggestions(true)}
                                     placeholder="City or Area"
-                                    className="w-full h-14 bg-zinc-50 border border-zinc-100 rounded-2xl pl-12 pr-12 text-zinc-900 focus:outline-none focus:border-[#008080]/30"
+                                    className="w-full h-14 bg-zinc-50 border border-zinc-100 rounded-2xl pl-12 pr-12 text-zinc-900 focus:outline-none focus:border-black/30"
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter') {
                                             setShowLocationSuggestions(false);
@@ -291,7 +287,7 @@ const ExplorePageContent = () => {
                                 <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-zinc-100 rounded-2xl z-50 overflow-hidden min-h-[50px] max-h-[300px] overflow-y-auto">
                                     {isLoadingSuggestions ? (
                                         <div className="p-4 text-sm text-zinc-400 flex items-center gap-2">
-                                            <div className="w-4 h-4 border-2 border-zinc-200 border-t-[#008080] rounded-full animate-spin" />
+                                            <div className="w-4 h-4 border-2 border-zinc-200 border-t-black rounded-full animate-spin" />
                                             <span>Searching...</span>
                                         </div>
                                     ) : (
@@ -342,7 +338,7 @@ const ExplorePageContent = () => {
                                 <div className="flex items-center gap-3">
                                     <h1 className="text-3xl font-black text-zinc-900 tracking-tight">Explore Wellness</h1>
                                     {(activeLat && activeLng) && (
-                                        <div className="flex items-center gap-1.5 px-3 py-1 bg-[#008080]/10 text-[#008080] rounded-full text-[10px] font-bold">
+                                        <div className="flex items-center gap-1.5 px-3 py-1 bg-black/10 text-black rounded-full text-[10px] font-bold">
                                             <MapPin className="w-3 h-3" />
                                             <span>NEARBY</span>
                                         </div>
@@ -427,7 +423,7 @@ const ExplorePageContent = () => {
                                                     gender: 'Any'
                                                 });
                                             }}
-                                            className="text-sm font-bold text-[#008080] uppercase tracking-wider underline underline-offset-8 mt-4"
+                                            className="text-sm font-bold text-black uppercase tracking-wider underline underline-offset-8 mt-4"
                                         >
                                             Clear all filters
                                         </button>

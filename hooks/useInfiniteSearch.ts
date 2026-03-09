@@ -4,21 +4,35 @@ import { businessApi } from "../api/public/business";
 const PAGE_SIZE = 20;
 
 const normalizeResults = (results: any[]) =>
-    results.map((b: any) => ({
-        ...b,
-        id: b.id || b._id,
-        slug: b.slug,
-        rating: b.ratings?.average ?? 0,
-        reviews: b.ratings?.totalReviews ?? 0,
-        image:
-            b.image ||
-            (Array.isArray(b.images)
-                ? b.images[0]
-                : b.images?.thumbnail || b.images?.logo || b.images?.banner),
-        coordinates: b.location?.coordinates
-            ? { lat: b.location.coordinates[1], lng: b.location.coordinates[0] }
-            : b.coordinates || { lat: 13.0418, lng: 80.2341 },
-    }));
+    results.map((b: any) => {
+        // Collect all possible images into a single flat array
+        const rawImages = Array.isArray(b.images) ? b.images : [];
+        const galleryImages = Array.isArray(b.gallery) ? b.gallery : [];
+        const nestedGallery = Array.isArray(b.images?.gallery) ? b.images.gallery : [];
+
+        const combinedImages = Array.from(new Set([
+            ...rawImages,
+            ...galleryImages,
+            ...nestedGallery,
+            b.image,
+            b.images?.banner,
+            b.images?.logo,
+            b.images?.thumbnail
+        ])).filter(Boolean) as string[];
+
+        return {
+            ...b,
+            id: b.id || b._id,
+            slug: b.slug,
+            rating: b.rating ?? b.ratings?.average ?? 0,
+            reviews: b.reviews ?? b.ratings?.totalReviews ?? 0,
+            images: combinedImages,
+            image: b.image || combinedImages[0] || "",
+            coordinates: b.location?.coordinates
+                ? { lat: b.location.coordinates[1], lng: b.location.coordinates[0] }
+                : b.coordinates || { lat: 13.0418, lng: 80.2341 },
+        };
+    });
 
 export const useInfiniteSearch = (params: any) => {
     return useInfiniteQuery({
