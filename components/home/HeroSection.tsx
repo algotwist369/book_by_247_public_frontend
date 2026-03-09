@@ -11,7 +11,7 @@ const HeroSection = () => {
                 className="relative w-full h-[500px] sm:h-[600px] md:h-[650px] lg:h-[700px] flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 overflow-hidden"
             >
                 {/* Base — deep indigo/navy */}
-                <div className="absolute inset-0 bg-[#0d0d1a]" />
+                <div className="absolute inset-0 bg-[#ad21a6]" />
 
                 {/* Primary glow — violet top-left */}
                 <div className="absolute inset-0 z-1" style={{background: 'radial-gradient(ellipse 70% 60% at 20% 10%, rgba(109,40,217,0.55) 0%, transparent 70%)'}} />
@@ -23,8 +23,8 @@ const HeroSection = () => {
                 <div className="absolute inset-0 z-1" style={{background: 'radial-gradient(ellipse 50% 40% at 55% 40%, rgba(79,70,229,0.25) 0%, transparent 65%)'}} />
 
                 {/* Vignette — top & bottom darkness for legibility */}
-                <div className="absolute inset-0 z-2 bg-linear-to-t from-black/70 via-transparent to-black/30" />
-                <div className="absolute inset-0 z-2 bg-linear-to-r from-black/30 via-transparent to-black/30" />
+                <div className="absolute inset-0 z-2 bg-linear-to-t from-pink/70 via-transparent to-pink/30" />
+                <div className="absolute inset-0 z-2 bg-linear-to-r from-pink/30 via-transparent to-pink/30" />
 
                 {/* Subtle noise texture */}
                 <div className="absolute inset-0 opacity-[0.04] mix-blend-overlay z-3 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
