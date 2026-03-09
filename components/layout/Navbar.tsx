@@ -88,11 +88,15 @@ export const Navbar = () => {
                             icon={Briefcase}
                             title="LOGO for Business"
                             subtitle="Trusted by 5000 Business"
+                            href="https://business.logoname.com"
+                            target="_blank"
                         />
                         <NavInfoBlock
                             icon={Handshake}
                             title="Become A Partner"
                             subtitle="Start receiving qualified leads within days"
+                            href="https://business.logoname.com/book-demo"
+                            target="_blank"
                         />
                     </div>
                 </div>
@@ -282,8 +286,11 @@ export const Navbar = () => {
 
                                     {/* Business Links */}
                                     <div className="space-y-3 pt-4 border-t border-zinc-100">
-                                        <Link
-                                            href="#"
+                                        <a
+                                            href="https://business.logoname.com"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            onClick={handleLinkClick}
                                             className="flex items-center gap-3 p-3 hover:bg-zinc-50 rounded-lg transition-colors group"
                                         >
                                             <Briefcase className="w-5 h-5 text-zinc-500 group-hover:text-zinc-700" />
@@ -291,9 +298,12 @@ export const Navbar = () => {
                                                 <p className="text-sm font-bold text-zinc-900">LOGO for Business</p>
                                                 <p className="text-xs text-zinc-500">Trusted by 5000 Business</p>
                                             </div>
-                                        </Link>
-                                        <Link
-                                            href="#"
+                                        </a>
+                                        <a
+                                            href="https://business.logoname.com/book-demo"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            onClick={handleLinkClick}
                                             className="flex items-center gap-3 p-3 hover:bg-zinc-50 rounded-lg transition-colors group"
                                         >
                                             <Handshake className="w-5 h-5 text-zinc-500 group-hover:text-zinc-700" />
@@ -301,7 +311,7 @@ export const Navbar = () => {
                                                 <p className="text-sm font-bold text-zinc-900">Become A Partner</p>
                                                 <p className="text-xs text-zinc-500">Start receiving qualified leads</p>
                                             </div>
-                                        </Link>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

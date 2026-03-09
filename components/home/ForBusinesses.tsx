@@ -1,12 +1,8 @@
-"use client";
-
 import React from "react";
-import { useRouter } from "next/navigation";
 import { CheckCircle, ArrowRight } from "lucide-react";
 import { CustomImage } from "@/components/ui/CustomImage";
 
 const ForBusinesses = () => {
-    const router = useRouter();
 
     return (
         <section className="max-w-360 mx-auto px-6 mt-10">
@@ -58,20 +54,24 @@ const ForBusinesses = () => {
                         {/* Buttons */}
                         <div className="flex flex-col sm:flex-row gap-4 pt-4">
 
-                            <button
-                                onClick={() => router.push("/free-listing")}
+                            <a
+                                href="https://business.logoname.com/free-listing"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="px-6 py-3 rounded-xl bg-black hover:bg-zinc-900 text-white font-semibold text-base flex items-center justify-center gap-2"
                             >
                                 List Your Business Free
                                 <ArrowRight className="w-4 h-4" />
-                            </button>
+                            </a>
 
-                            <button
-                                onClick={() => router.push("/book-demo")}
+                            <a
+                                href="https://business.logoname.com/book-demo"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="px-6 py-3 rounded-xl border border-zinc-300 text-zinc-800 font-semibold text-base hover:bg-zinc-100"
                             >
                                 Request a Demo
-                            </button>
+                            </a>
 
                         </div>
 

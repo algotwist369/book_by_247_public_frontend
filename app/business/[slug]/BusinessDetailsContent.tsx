@@ -2,10 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Star, MapPin, Phone, Globe, Clock, Share2, Mail, Facebook, Instagram, Twitter, Wifi, Car, Wind, Coffee, BadgeCheck, ShieldCheck, Navigation } from 'lucide-react';
+import { Star, MapPin, Phone, Globe, Clock, Share2, Mail, Facebook, Instagram, Twitter, Wifi, Car, Wind, Coffee, BadgeCheck, ShieldCheck, Navigation, CreditCard, CalendarCheck } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-import { CustomImage } from '@/components/ui/CustomImage';
-import { Business } from '@/components/business/businessData';
 import DropdownSection from '@/components/ui/DropdownSection';
 import PopularServices from '@/components/business/PopularServices';
 import BusinessGallery from '@/components/business/BusinessGallery';
@@ -140,9 +138,9 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                                                         if (action.label === 'Enquiry') {
                                                             setIsEnquiryModalOpen(true);
                                                         } else if (action.label === 'Call') {
-                                                            window.location.href = `tel:${business.phone}`;
+                                                            if (business.phone) window.location.href = `tel:${business.phone}`;
                                                         } else if (action.label === 'WhatsApp') {
-                                                            window.open(`https://wa.me/${business.phone.replace(/[^0-9]/g, '')}`, '_blank');
+                                                            if (business.phone) window.open(`https://wa.me/${business.phone.replace(/[^0-9]/g, '')}`, '_blank');
                                                         }
                                                     }}
                                                     className={`flex flex-col md:flex-row lg:flex-col xl:flex-row items-center justify-center p-2 h-auto gap-1 border-zinc-200 hover:bg-zinc-50 ${action.border} group`}
@@ -178,7 +176,9 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                                         </button>
                                         <div className="flex items-center gap-3">
                                             <Phone className="w-5 h-5 text-zinc-400 shrink-0" />
-                                            <a href={`tel:${business.phone}`} className="text-sm text-zinc-600 hover:text-black transition-colors">{business.phone}</a>
+                                            {business.phone && (
+                                                <a href={`tel:${business.phone}`} className="text-sm text-zinc-600 hover:text-black transition-colors">{business.phone}</a>
+                                            )}
                                         </div>
                                         {business.email && (
                                             <div className="flex items-center gap-3">
@@ -203,7 +203,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                                         {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => {
                                             const dayLower = day.toLowerCase();
                                             const isOpen = business.workingHours?.days?.includes(dayLower);
-                                            const timeRange = isOpen
+                                            const timeRange = (isOpen && business.workingHours)
                                                 ? `${business.workingHours.open} - ${business.workingHours.close}`
                                                 : 'Closed';
 
@@ -316,12 +316,14 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                         <div className={`sticky top-[64px] md:top-[72px] z-40 bg-white/95 backdrop-blur-md -mx-4 px-4 sm:mx-0 sm:px-0 border-b border-zinc-100 mb-6 order-4 transition-all duration-300 ease-in-out ${isTabsVisible ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible pointer-events-none'
                             }`}>
                             <div className="flex items-center gap-6 overflow-x-auto no-scrollbar whitespace-nowrap">
-                                {[
+                                {([
                                     { label: 'Gallery', id: 'gallery' },
                                     { label: 'Services', id: 'services' },
-                                    { label: 'Reviews', id: 'reviews' },
+                                    ...((business.reviewsList?.length ?? 0) > 0 || (business.ratings?.totalReviews ?? 0) > 0
+                                        ? [{ label: 'Reviews', id: 'reviews' }]
+                                        : []),
                                     { label: 'About', id: 'about' }
-                                ].map((tab) => (
+                                ] as { label: string; id: string }[]).map((tab) => (
                                     <button
                                         key={tab.id}
                                         onClick={() => {
@@ -349,23 +351,28 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                         </div>
 
                         {/* Gallery Grid */}
-                        {business.images.length > 0 && (
-                            <section id="gallery" className="order-2 lg:order-3">
-                                <TabNavigation
-                                    tabs={[
-                                        { label: 'Photos', count: business.images.length },
-                                        { label: '360 Tours' },
-                                        { label: 'Videos' }
-                                    ]}
-                                    activeTab={galleryTab}
-                                    onTabChange={setGalleryTab}
-                                />
+                        {business.images.length > 0 && (() => {
+                            const has360 = Array.isArray(business.tours) && business.tours.length > 0;
+                            const hasVideos = Array.isArray(business.videos) && business.videos.length > 0;
+                            const galleryTabs = [
+                                { label: 'Photos', count: business.images.length },
+                                ...(has360 ? [{ label: '360 Tours' }] : []),
+                                ...(hasVideos ? [{ label: 'Videos' }] : []),
+                            ];
+                            return (
+                                <section id="gallery" className="order-2 lg:order-3">
+                                    <TabNavigation
+                                        tabs={galleryTabs}
+                                        activeTab={galleryTab}
+                                        onTabChange={setGalleryTab}
+                                    />
 
-                                {galleryTab === 'Photos' && <BusinessGallery images={business.images} />}
-                                {galleryTab === '360 Tours' && <Business360Tour />}
-                                {galleryTab === 'Videos' && <BusinessVideos />}
-                            </section>
-                        )}
+                                    {galleryTab === 'Photos' && <BusinessGallery images={business.images} />}
+                                    {has360 && galleryTab === '360 Tours' && <Business360Tour />}
+                                    {hasVideos && galleryTab === 'Videos' && <BusinessVideos />}
+                                </section>
+                            );
+                        })()}
 
                         {/* About Section */}
                         <section id="about" className="order-7 lg:order-4 mt-4 md:mt-0">
@@ -374,19 +381,29 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                                 {business.description}
                             </p>
 
-                            <div className="mt-6 sm:mt-8 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-                                {[
-                                    { name: "Free Wi-Fi", icon: Wifi },
-                                    { name: "Parking Available", icon: Car },
-                                    { name: "AC Rooms", icon: Wind },
-                                    { name: "Beverages", icon: Coffee }
-                                ].map((item, i) => (
-                                    <div key={i} className="flex items-center gap-3 text-zinc-600 bg-zinc-50 p-3 rounded-xl border border-zinc-100 hover:bg-white hover:shadow-sm transition-all">
-                                        <item.icon className="w-4 h-4 text-zinc-900" />
-                                        <span className="text-xs sm:text-sm font-medium">{item.name}</span>
-                                    </div>
-                                ))}
-                            </div>
+                            {business.amenities && business.amenities.length > 0 && (
+                                <div className="mt-6 sm:mt-8 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                                    {business.amenities.map((amenity: string, i: number) => {
+                                        const getIcon = (name: string) => {
+                                            const lowerName = name.toLowerCase();
+                                            if (lowerName.includes('wifi') || lowerName.includes('wi-fi')) return Wifi;
+                                            if (lowerName.includes('parking')) return Car;
+                                            if (lowerName.includes('ac') || lowerName.includes('air conditioning')) return Wind;
+                                            if (lowerName.includes('beverage') || lowerName.includes('coffee')) return Coffee;
+                                            if (lowerName.includes('card') || lowerName.includes('payment')) return CreditCard;
+                                            if (lowerName.includes('booking') || lowerName.includes('online')) return CalendarCheck;
+                                            return ShieldCheck; // Fallback icon
+                                        };
+                                        const Icon = getIcon(amenity);
+                                        return (
+                                            <div key={i} className="flex items-center gap-3 text-zinc-600 bg-zinc-50 p-3 rounded-xl border border-zinc-100 hover:bg-white hover:shadow-sm transition-all">
+                                                <Icon className="w-4 h-4 text-zinc-900" />
+                                                <span className="text-xs sm:text-sm font-medium">{amenity}</span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            )}
                         </section>
 
                         {/* Services Section */}
@@ -403,15 +420,17 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                         </div>
 
                         {/* Reviews Section */}
-                        <div id="reviews" className="order-6 lg:order-7">
-                            <BusinessReviews
-                                reviews={business.reviewsList}
-                                rating={business.ratings?.average || 0}
-                                reviewCount={business.ratings?.totalReviews || 0}
-                                slug={slug}
-                                businessName={business.name || 'businessname'}
-                            />
-                        </div>
+                        {((business.reviewsList?.length ?? 0) > 0 || (business.ratings?.totalReviews ?? 0) > 0) && (
+                            <div id="reviews" className="order-6 lg:order-7">
+                                <BusinessReviews
+                                    reviews={business.reviewsList}
+                                    rating={business.ratings?.average || 0}
+                                    reviewCount={business.ratings?.totalReviews || 0}
+                                    slug={slug}
+                                    businessName={business.name || 'businessname'}
+                                />
+                            </div>
+                        )}
                     </div>
 
                 </div>
@@ -419,22 +438,26 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
             {/* Sticky Mobile Actions Footer */}
             <div className="lg:hidden fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-md border-t border-zinc-100 z-50">
                 <div className="flex items-center gap-3">
-                    <a
-                        href={`tel:${business.phone}`}
-                        className="flex items-center justify-center w-12 h-12 rounded-xl bg-zinc-100 text-zinc-900 border border-zinc-200 transition-all active:scale-95 shrink-0"
-                        aria-label="Call business"
-                    >
-                        <Phone className="w-5 h-5" />
-                    </a>
-                    <a
-                        href={`https://wa.me/${business.phone.replace(/[^0-9]/g, '')}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center w-12 h-12 rounded-xl bg-zinc-100 text-black border border-zinc-200 transition-all active:scale-95 shrink-0"
-                        aria-label="Contact on WhatsApp"
-                    >
-                        <svg viewBox="0 0 24 24" className="w-6 h-6 fill-black" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
-                    </a>
+                    {business.phone && (
+                        <>
+                            <a
+                                href={`tel:${business.phone}`}
+                                className="flex items-center justify-center w-12 h-12 rounded-xl bg-zinc-100 text-zinc-900 border border-zinc-200 transition-all active:scale-95 shrink-0"
+                                aria-label="Call business"
+                            >
+                                <Phone className="w-5 h-5" />
+                            </a>
+                            <a
+                                href={`https://wa.me/${business.phone.replace(/[^0-9]/g, '')}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-center w-12 h-12 rounded-xl bg-zinc-100 text-black border border-zinc-200 transition-all active:scale-95 shrink-0"
+                                aria-label="Contact on WhatsApp"
+                            >
+                                <svg viewBox="0 0 24 24" className="w-6 h-6 fill-black" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
+                            </a>
+                        </>
+                    )}
                     <Link href={`/business/${slug}/book-appointment`} className="flex-1">
                         <Button
                             className="w-full h-12 text-sm sm:text-base font-bold rounded-xl"

@@ -71,9 +71,14 @@ export const PartnerSection: React.FC = () => {
 
             {/* CTA */}
             <div>
-              <button className="w-full sm:w-auto bg-white text-black font-bold px-8 py-4 rounded-full text-base sm:text-lg hover:bg-zinc-200 transition-all duration-200 shadow-xl shadow-white/5">
+              <a
+                href="https://business.logoname.com/free-listing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block w-full sm:w-auto bg-white text-black font-bold px-8 py-4 rounded-full text-base sm:text-lg hover:bg-zinc-200 transition-all duration-200 shadow-xl shadow-white/5 text-center"
+              >
                 List Your Business
-              </button>
+              </a>
             </div>
           </div>
 

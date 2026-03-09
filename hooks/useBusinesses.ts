@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { businessApi } from "@/api/public/business";
+import { Business } from "@/components/business/businessData";
 
 export const usePublicBusinesses = (params: { type?: string; page?: number; limit?: number, initialData?: any } = {}) => {
     const { initialData, ...queryKeyParams } = params;
@@ -51,7 +52,7 @@ export const useBusinessBySlug = (slug: string, initialData?: any) => {
         enabled: !!slug,
         staleTime: 5 * 60 * 1000,
         initialData,
-        select: (response: any) => {
+        select: (response: any): Business | null => {
             const business = response?.data;
             if (!business) return null;
 
