@@ -24,10 +24,10 @@ const BookingSuccess = ({
         <div className="max-w-xl mx-auto space-y-6 pb-12">
             {/* Header Section */}
             <div className="bg-white rounded-lg border border-gray-200 p-8 text-center space-y-6 overflow-hidden relative">
-                <div className="absolute top-0 left-0 right-0 h-1 bg-[#008080]" />
+                <div className="absolute top-0 left-0 right-0 h-1 bg-black" />
 
                 <div className="flex justify-center">
-                    <div className="w-20 h-20 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center animate-bounce-slow">
+                    <div className="w-20 h-20 rounded-full bg-zinc-50 text-zinc-900 flex items-center justify-center animate-bounce-slow">
                         <CheckCircle2 className="w-12 h-12 stroke-[2.5px]" />
                     </div>
                 </div>
@@ -90,7 +90,7 @@ const BookingSuccess = ({
                         ))}
                         <div className="pt-4 flex justify-between items-center border-t border-zinc-100 mt-4">
                             <span className="text-sm font-black text-gray-900 uppercase">Total Amount</span>
-                            <span className="text-2xl font-black text-[#008080]">₹{totalPrice.toLocaleString('en-IN')}</span>
+                            <span className="text-2xl font-black text-black">₹{totalPrice.toLocaleString('en-IN')}</span>
                         </div>
                     </div>
                 </div>

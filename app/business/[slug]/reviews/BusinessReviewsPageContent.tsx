@@ -49,7 +49,7 @@ const BusinessReviewsPageContent = ({ slug, initialBusiness, initialReviews }: R
     if (isBusinessLoading) {
         return (
             <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-4">
-                <div className="w-12 h-12 border-4 border-[#008080] border-t-transparent rounded-full animate-spin" />
+                <div className="w-12 h-12 border-4 border-black border-t-transparent rounded-full animate-spin" />
                 <p className="text-zinc-500 font-medium">Loading reviews...</p>
             </div>
         );
@@ -60,7 +60,7 @@ const BusinessReviewsPageContent = ({ slug, initialBusiness, initialReviews }: R
             <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-6 px-4">
                 <h1 className="text-3xl font-black text-zinc-900">Business Not Found</h1>
                 <Link href="/">
-                    <Button variant="primary" className="bg-[#008080] hover:bg-[#006666]">
+                    <Button variant="primary" className="bg-black hover:bg-zinc-900">
                         Back to Home
                     </Button>
                 </Link>
@@ -71,7 +71,7 @@ const BusinessReviewsPageContent = ({ slug, initialBusiness, initialReviews }: R
     return (
         <div className="min-h-screen bg-white pb-20">
             {/* Content Section */}
-            <div className="max-w-[90rem] mx-auto px-4 md:px-8 py-10 md:py-16">
+            <div className="max-w-360 mx-auto px-4 md:px-8 py-10 md:py-16">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-16">
 
                     {/* Left Column - Sidebar (Sticky) */}
@@ -85,7 +85,7 @@ const BusinessReviewsPageContent = ({ slug, initialBusiness, initialReviews }: R
                                 </div>
                                 <div className="space-y-4">
                                     <Link href={`/business/${slug}/book-appointment`} className="block w-full">
-                                        <Button className="w-full h-14 text-lg font-bold bg-[#008080] hover:bg-[#006666] rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98]" variant="primary">
+                                        <Button className="w-full h-14 text-lg font-bold bg-black hover:bg-zinc-900 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98]" variant="primary">
                                             Proceed to Book
                                         </Button>
                                     </Link>
@@ -94,26 +94,26 @@ const BusinessReviewsPageContent = ({ slug, initialBusiness, initialReviews }: R
 
                             {/* Contact & Hours */}
                             <div className="bg-white rounded-3xl border border-zinc-100 overflow-hidden divide-y divide-zinc-100">
-                                <DropdownSection title="Contact Information" icon={<MapPin className="w-5 h-5 text-[#008080]" />}>
+                                <DropdownSection title="Contact Information" icon={<MapPin className="w-5 h-5 text-black" />}>
                                     <div className="space-y-4 pt-2">
                                         <button
                                             onClick={() => {
                                                 const mapUrl = business.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${business.name} ${business.address}`)}`;
                                                 window.open(mapUrl, '_blank');
                                             }}
-                                            className="flex items-start gap-3 text-left hover:text-[#008080] transition-colors group"
+                                            className="flex items-start gap-3 text-left hover:text-black transition-colors group"
                                         >
-                                            <MapPin className="w-5 h-5 text-zinc-400 mt-0.5 shrink-0 group-hover:text-[#008080] transition-colors" />
-                                            <p className="text-sm text-zinc-600 group-hover:text-[#008080] transition-colors">{business.address}</p>
+                                            <MapPin className="w-5 h-5 text-zinc-400 mt-0.5 shrink-0 group-hover:text-black transition-colors" />
+                                            <p className="text-sm text-zinc-600 group-hover:text-black transition-colors">{business.address}</p>
                                         </button>
                                         <div className="flex items-center gap-3">
                                             <Phone className="w-5 h-5 text-zinc-400 shrink-0" />
-                                            <a href={`tel:${business.phone}`} className="text-sm text-zinc-600 hover:text-[#008080] transition-colors">{business.phone}</a>
+                                            <a href={`tel:${business.phone}`} className="text-sm text-zinc-600 hover:text-black transition-colors">{business.phone}</a>
                                         </div>
                                     </div>
                                 </DropdownSection>
 
-                                <DropdownSection title="Working Hours" icon={<Clock className="w-5 h-5 text-[#008080]" />}>
+                                <DropdownSection title="Working Hours" icon={<Clock className="w-5 h-5 text-black" />}>
                                     <div className="space-y-2 pt-2">
                                         {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => {
                                             const dayLower = day.toLowerCase();
@@ -161,9 +161,9 @@ const BusinessReviewsPageContent = ({ slug, initialBusiness, initialReviews }: R
                                 <h1 className="text-3xl md:text-4xl font-black text-zinc-900 tracking-tight">
                                     Reviews for {business.name}
                                 </h1>
-                                <div className="flex items-center gap-1 bg-blue-50 px-2 py-1 rounded-md border border-blue-100 shrink-0">
-                                    <BadgeCheck className="w-4 h-4 text-blue-600 fill-blue-600/10" />
-                                    <span className="text-[10px] font-bold text-blue-700 uppercase tracking-wide">Verified</span>
+                                <div className="flex items-center gap-1 bg-zinc-100 px-2 py-1 rounded-md border border-zinc-200 shrink-0">
+                                    <BadgeCheck className="w-4 h-4 text-black fill-black/10" />
+                                    <span className="text-[10px] font-bold text-black uppercase tracking-wide">Verified</span>
                                 </div>
                             </div>
 
@@ -173,7 +173,7 @@ const BusinessReviewsPageContent = ({ slug, initialBusiness, initialReviews }: R
                                     {[...Array(5)].map((_, i) => (
                                         <Star
                                             key={i}
-                                            className={`w-4 h-4 ${i < Math.floor(business.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-zinc-300'}`}
+                                            className={`w-4 h-4 ${i < Math.floor(business.rating) ? 'text-black fill-black' : 'text-zinc-200'}`}
                                         />
                                     ))}
                                 </div>
@@ -203,7 +203,7 @@ const BusinessReviewsPageContent = ({ slug, initialBusiness, initialReviews }: R
                                         className="min-w-[200px] border-zinc-200 font-bold hover:bg-zinc-50"
                                     >
                                         {isReviewsLoading ? (
-                                            <div className="w-5 h-5 border-2 border-[#008080] border-t-transparent rounded-full animate-spin mx-auto" />
+                                            <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin mx-auto" />
                                         ) : (
                                             'Load More Reviews'
                                         )}

@@ -3,25 +3,25 @@ import { Users, Building2, Map, CalendarCheck } from "lucide-react";
 
 const stats = [
     {
-        icon: <Users className="w-6 h-6 text-teal-600" />,
+        icon: <Users className="w-6 h-6 text-zinc-900" />,
         value: "1M+",
         label: "Happy Users",
         description: "Trusting our platform for their self-care",
     },
     {
-        icon: <Building2 className="w-6 h-6 text-teal-600" />,
+        icon: <Building2 className="w-6 h-6 text-zinc-900" />,
         value: "25,000+",
         label: "Salons & Spas",
         description: "Verified business partners nationwide",
     },
     {
-        icon: <Map className="w-6 h-6 text-teal-600" />,
+        icon: <Map className="w-6 h-6 text-zinc-900" />,
         value: "100+",
         label: "Cities Covered",
         description: "Bringing services to your doorstep",
     },
     {
-        icon: <CalendarCheck className="w-6 h-6 text-teal-600" />,
+        icon: <CalendarCheck className="w-6 h-6 text-zinc-900" />,
         value: "5M+",
         label: "Bookings",
         description: "Successful appointments made",
@@ -39,7 +39,7 @@ export const StatsSection: React.FC = () => {
                         <div key={index} className="flex flex-col items-center sm:items-start space-y-3">
 
                             {/* Icon */}
-                            <div className="w-12 h-12 flex items-center justify-center bg-teal-50 rounded-lg">
+                            <div className="w-12 h-12 flex items-center justify-center bg-zinc-50 rounded-lg">
                                 {stat.icon}
                             </div>
 

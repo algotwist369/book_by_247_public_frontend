@@ -106,7 +106,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
     return (
         <div className="min-h-screen bg-white pb-20 relative">
             {/* Content Section */}
-            <div className="max-w-[90rem] mx-auto px-4 md:px-8 py-6 md:py-16">
+            <div className="max-w-360 mx-auto px-4 md:px-8 py-6 md:py-16">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-16">
                     {/* Left Column - Sidebar (Sticky) */}
                     <div className="lg:col-span-1 order-last lg:order-first">
@@ -128,7 +128,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                                     <div className="grid grid-cols-3 gap-2">
                                         {[
                                             { Icon: Phone, label: 'Call', color: 'text-zinc-900', border: 'hover:border-zinc-900', isWhatsApp: false },
-                                            { Icon: null, label: 'WhatsApp', color: 'text-green-600', border: 'hover:border-green-600', isWhatsApp: true },
+                                            { Icon: null, label: 'WhatsApp', color: 'text-zinc-900', border: 'hover:border-zinc-900', isWhatsApp: true },
                                             { Icon: Mail, label: 'Enquiry', color: 'text-zinc-600', border: 'hover:border-zinc-900', isWhatsApp: false }
                                         ].map((action, idx) => {
                                             const { Icon } = action;
@@ -149,7 +149,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                                                     aria-label={`${action.label} business`}
                                                 >
                                                     {action.isWhatsApp ? (
-                                                        <svg viewBox="0 0 24 24" className="w-5 h-5 fill-green-600" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
+                                                        <svg viewBox="0 0 24 24" className="w-5 h-5 fill-black" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
                                                     ) : (
                                                         Icon && <Icon className={`w-5 h-5 ${action.color}`} />
                                                     )}
@@ -254,20 +254,20 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                         {/* Identity Block - Business Name, Badges & Meta */}
                         <div className="space-y-4 order-3 lg:order-2">
                             {/* Title & Badges */}
-                            <div className="flex flex-wrap items-center gap-2 sm:gap-0 sm:flex-col sm:items-start sm:gap-3">
+                            <div className="flex flex-wrap items-center gap-2 sm:flex-col sm:items-start sm:gap-3">
                                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-zinc-900 tracking-tight leading-tight">
                                     {business.name}
                                 </h1>
                                 <div className="flex flex-wrap items-center gap-2">
                                     {/* Verified Badge */}
-                                    <div className="flex items-center gap-1 sm:bg-blue-50 sm:px-2 sm:py-1 sm:rounded-md sm:border sm:border-blue-100 shrink-0">
-                                        <BadgeCheck className="w-5 h-5 sm:w-3.5 sm:h-3.5 text-blue-600 fill-blue-600/10" />
-                                        <span className="hidden sm:inline text-[10px] font-bold text-blue-700 uppercase tracking-wide">Verified</span>
+                                    <div className="flex items-center gap-1 sm:bg-zinc-100 sm:px-2 sm:py-1 sm:rounded-md sm:border sm:border-zinc-200 shrink-0">
+                                        <BadgeCheck className="w-5 h-5 sm:w-3.5 sm:h-3.5 text-black fill-black/10" />
+                                        <span className="hidden sm:inline text-[10px] font-bold text-black uppercase tracking-wide">Verified</span>
                                     </div>
                                     {/* Trusted Badge */}
-                                    <div className="flex items-center gap-1 sm:bg-amber-50 sm:px-2 sm:py-1 sm:rounded-md sm:border sm:border-amber-100 shrink-0">
-                                        <ShieldCheck className="w-5 h-5 sm:w-3.5 sm:h-3.5 text-amber-600 fill-amber-600/10" />
-                                        <span className="hidden sm:inline text-[10px] font-bold text-amber-700 uppercase tracking-wide">Trusted</span>
+                                    <div className="flex items-center gap-1 sm:bg-zinc-100 sm:px-2 sm:py-1 sm:rounded-md sm:border sm:border-zinc-200 shrink-0">
+                                        <ShieldCheck className="w-5 h-5 sm:w-3.5 sm:h-3.5 text-black fill-black/10" />
+                                        <span className="hidden sm:inline text-[10px] font-bold text-black uppercase tracking-wide">Trusted</span>
                                     </div>
                                 </div>
                             </div>
@@ -291,10 +291,10 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                                 <div className="flex items-center gap-2 bg-zinc-50 px-2.5 py-1 rounded-lg border border-zinc-100">
                                     <div className="flex items-center gap-1">
                                         <span className="font-bold text-zinc-900">{business.ratings?.average || 0}</span>
-                                        <Star className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" />
+                                        <Star className="w-3.5 h-3.5 text-black fill-black" />
                                     </div>
                                     <span className="w-px h-3 bg-zinc-200" />
-                                    <span className="text-blue-600 font-bold text-xs">{business.ratings?.totalReviews || 0} reviews</span>
+                                    <span className="text-black font-bold text-xs underline underline-offset-2">{business.ratings?.totalReviews || 0} reviews</span>
                                 </div>
 
                                 <div className="ml-auto">
@@ -430,10 +430,10 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                         href={`https://wa.me/${business.phone.replace(/[^0-9]/g, '')}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center w-12 h-12 rounded-xl bg-green-50 text-green-600 border border-green-100 transition-all active:scale-95 shrink-0"
+                        className="flex items-center justify-center w-12 h-12 rounded-xl bg-zinc-100 text-black border border-zinc-200 transition-all active:scale-95 shrink-0"
                         aria-label="Contact on WhatsApp"
                     >
-                        <svg viewBox="0 0 24 24" className="w-6 h-6 fill-green-600" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
+                        <svg viewBox="0 0 24 24" className="w-6 h-6 fill-black" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
                     </a>
                     <Link href={`/business/${slug}/book-appointment`} className="flex-1">
                         <Button

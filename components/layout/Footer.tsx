@@ -47,34 +47,36 @@ const Footer = () => {
                         </div>
                     </div>
 
-                    {/* Categories Column */}
-                    <div className="space-y-6">
-                        <h3 className="text-white font-bold uppercase tracking-widest text-sm">Top Categories</h3>
-                        <ul className="space-y-4">
-                            {['Spa & Wellness', 'Hair Salons', 'Massage Therapy', 'Nail Care', 'Facial & Skin'].map((item) => (
-                                <li key={item}>
-                                    <Link href="#" className="text-sm hover:text-white transition-colors flex items-center gap-2 group">
-                                        <ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
-                                        {item}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                    <div className="flex gap-12 lg:gap-16">
+                        {/* Categories Column */}
+                        <div className="space-y-6">
+                            <h3 className="text-white font-bold uppercase tracking-widest text-sm">Top Categories</h3>
+                            <ul className="space-y-4">
+                                {['Spa & Wellness', 'Hair Salons', 'Massage Therapy', 'Nail Care', 'Facial & Skin'].map((item) => (
+                                    <li key={item}>
+                                        <Link href="#" className="text-sm hover:text-white transition-colors flex items-center gap-2 group">
+                                            <ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
+                                            {item}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
 
-                    {/* Quick Links Column */}
-                    <div className="space-y-6">
-                        <h3 className="text-white font-bold uppercase tracking-widest text-sm">Quick Links</h3>
-                        <ul className="space-y-4">
-                            {['About Us', 'Contact Us', 'Become a Partner', 'Careers', 'Blog'].map((item) => (
-                                <li key={item}>
-                                    <Link href="#" className="text-sm hover:text-white transition-colors flex items-center gap-2 group">
-                                        <ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
-                                        {item}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
+                        {/* Quick Links Column */}
+                        <div className="space-y-6">
+                            <h3 className="text-white font-bold uppercase tracking-widest text-sm">Quick Links</h3>
+                            <ul className="space-y-4">
+                                {['About Us', 'Contact Us', 'Become a Partner', 'Careers', 'Blog'].map((item) => (
+                                    <li key={item}>
+                                        <Link href="#" className="text-sm hover:text-white transition-colors flex items-center gap-2 group">
+                                            <ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
+                                            {item}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
 
                     {/* Newsletter Column */}
@@ -96,31 +98,10 @@ const Footer = () => {
 
                 {/* Contact Strip */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-8 border-y border-white/5">
+
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
-                            <Phone className="w-5 h-5 text-white" aria-hidden="true" />
-                        </div>
                         <div>
-                            <p className="text-xs uppercase tracking-widest font-bold text-zinc-400">Call Us</p>
-                            <p className="text-sm text-white font-medium">+1 (555) 000-1234</p>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
-                            <Mail className="w-5 h-5 text-white" aria-hidden="true" />
-                        </div>
-                        <div>
-                            <p className="text-xs uppercase tracking-widest font-bold text-zinc-400">Email Us</p>
-                            <p className="text-sm text-white font-medium">hello@logoname.com</p>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
-                            <MapPin className="w-5 h-5 text-white" aria-hidden="true" />
-                        </div>
-                        <div>
-                            <p className="text-xs uppercase tracking-widest font-bold text-zinc-400">Visit Us</p>
-                            <p className="text-sm text-white font-medium">123 Wellness St, Beauty City</p>
+                            <p className="text-sm text-white font-medium">Support - support@logoname.com</p>
                         </div>
                     </div>
                 </div>

@@ -13,8 +13,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             secondary: "bg-zinc-100 text-black hover:bg-zinc-200 active:scale-[0.98]",
             outline: "border border-zinc-200 bg-transparent hover:bg-zinc-50 active:scale-[0.98]",
             ghost: "bg-transparent hover:bg-zinc-100",
-            success: "bg-emerald-600 text-white hover:bg-emerald-700 shadow-sm active:scale-[0.98]",
-            danger: "bg-red-600 text-white hover:bg-red-700 shadow-sm active:scale-[0.98]",
+            success: "bg-black text-white hover:bg-zinc-800 shadow-sm active:scale-[0.98]",
+            danger: "bg-zinc-700 text-white hover:bg-zinc-800 shadow-sm active:scale-[0.98]",
         }
 
         const sizes = {

@@ -155,7 +155,7 @@ const EnquiryModal = ({ isOpen, onClose, businessName }: EnquiryModalProps) => {
                 ) : (
                     <div className="p-10 sm:p-16 text-center space-y-6">
                         <div className="flex justify-center">
-                            <div className="w-20 h-20 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-500 animate-bounce">
+                            <div className="w-20 h-20 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-900 animate-bounce">
                                 <CheckCircle2 className="w-12 h-12" />
                             </div>
                         </div>

@@ -31,7 +31,7 @@ const ExploreFilters = ({
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="fixed inset-0 bg-zinc-900/60 backdrop-blur-sm z-[100]"
+                        className="fixed inset-0 bg-zinc-900/60 backdrop-blur-sm z-100"
                     />
 
                     {/* Drawer */}
@@ -40,7 +40,7 @@ const ExploreFilters = ({
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}
                         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                        className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white z-[101] shadow-2xl flex flex-col"
+                        className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white z-101 shadow-2xl flex flex-col"
                     >
                         <div className="p-6 border-b border-zinc-100 flex items-center justify-between">
                             <h2 className="text-xl font-black text-zinc-900 uppercase tracking-tight italic">Refine Discovery</h2>
@@ -69,7 +69,7 @@ const ExploreFilters = ({
                                                     }`}
                                             >
                                                 <span>{category}</span>
-                                                {isSelected && <Check className="w-4 h-4 text-[#00CCCC]" />}
+                                                {isSelected && <Check className="w-4 h-4 text-white" />}
                                             </button>
                                         );
                                     })}
@@ -87,7 +87,7 @@ const ExploreFilters = ({
                                                 key={rating}
                                                 onClick={() => onSelectRating(rating)}
                                                 className={`h-14 px-5 rounded-2xl font-black text-sm transition-all flex items-center justify-between border-2 ${isSelected
-                                                        ? 'bg-[#008080]/5 text-[#008080] border-[#008080]/20'
+                                                        ? 'bg-zinc-900 text-white border-zinc-900'
                                                         : 'bg-zinc-50 text-zinc-600 border-transparent hover:border-zinc-200'
                                                     }`}
                                             >
@@ -95,7 +95,7 @@ const ExploreFilters = ({
                                                     {rating > 0 ? (
                                                         <>
                                                             <div className="flex items-center gap-0.5">
-                                                                <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                                                                <Star className="w-4 h-4 fill-black text-black" />
                                                                 <span className="text-lg">{rating}+</span>
                                                             </div>
                                                             <span className="text-zinc-400 font-bold ml-1">Rating</span>
@@ -104,7 +104,7 @@ const ExploreFilters = ({
                                                         <span>Any Rating</span>
                                                     )}
                                                 </div>
-                                                {isSelected && <div className="w-2 h-2 rounded-full bg-[#008080]" />}
+                                                {isSelected && <div className="w-2 h-2 rounded-full bg-white" />}
                                             </button>
                                         );
                                     })}
@@ -115,7 +115,7 @@ const ExploreFilters = ({
                         <div className="p-6 border-t border-zinc-100">
                             <button
                                 onClick={onClose}
-                                className="w-full h-14 bg-[#00CCCC] text-zinc-900 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-[#00E6E6] active:scale-[0.98] transition-all"
+                                className="w-full h-14 bg-zinc-900 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-black active:scale-[0.98] transition-all"
                             >
                                 Apply Filters
                             </button>

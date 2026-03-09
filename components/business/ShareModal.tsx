@@ -23,31 +23,31 @@ const ShareModal = ({ isOpen, onClose, url }: ShareModalProps) => {
         {
             name: 'WhatsApp',
             icon: MessageCircle,
-            color: 'text-green-500',
+            color: 'text-zinc-900',
             href: `https://wa.me/?text=${encodeURIComponent(url)}`
         },
         {
             name: 'Facebook',
             icon: Facebook,
-            color: 'text-blue-600',
+            color: 'text-zinc-900',
             href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`
         },
         {
             name: 'Twitter',
             icon: Twitter,
-            color: 'text-sky-400',
+            color: 'text-zinc-900',
             href: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`
         },
         {
             name: 'LinkedIn',
             icon: Linkedin,
-            color: 'text-blue-700',
+            color: 'text-zinc-900',
             href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`
         },
         {
             name: 'Telegram',
             icon: Send,
-            color: 'text-blue-500',
+            color: 'text-zinc-900',
             href: `https://t.me/share/url?url=${encodeURIComponent(url)}`
         },
         {

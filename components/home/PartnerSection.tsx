@@ -25,9 +25,9 @@ const benefits = [
 
 export const PartnerSection: React.FC = () => {
   return (
-    <section className="relative w-full bg-[#008080] overflow-hidden">
+    <section className="relative w-full bg-black overflow-hidden">
       {/* Decorative Background */}
-      <div className="absolute top-0 right-0 w-[60%] h-full bg-black/5 -skew-x-12 translate-x-1/3 hidden lg:block" />
+      <div className="absolute top-0 right-0 w-[60%] h-full bg-white/5 -skew-x-12 translate-x-1/3 hidden lg:block" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -71,7 +71,7 @@ export const PartnerSection: React.FC = () => {
 
             {/* CTA */}
             <div>
-              <button className="w-full sm:w-auto bg-white text-[#008080] font-bold px-8 py-4 rounded-full text-base sm:text-lg hover:bg-zinc-100 transition-all duration-200 shadow-xl">
+              <button className="w-full sm:w-auto bg-white text-black font-bold px-8 py-4 rounded-full text-base sm:text-lg hover:bg-zinc-200 transition-all duration-200 shadow-xl shadow-white/5">
                 List Your Business
               </button>
             </div>

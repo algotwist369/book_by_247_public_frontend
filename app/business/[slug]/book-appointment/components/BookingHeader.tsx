@@ -19,11 +19,11 @@ const BookingHeader = ({ business }: BookingHeaderProps) => {
                     <div className="text-right">
                         <h1 className="text-xs sm:text-sm font-black text-zinc-900 leading-tight truncate max-w-[150px] sm:max-w-none">{business.name}</h1>
                         <div className="flex items-center justify-end gap-1 text-[9px] text-zinc-400 font-bold uppercase tracking-wider">
-                            <Star className="w-2 h-2 text-yellow-400 fill-current" />
+                            <Star className="w-2 h-2 text-black fill-current" />
                             <span>{business.rating} • {business.reviews} Reviews</span>
                         </div>
                     </div>
-                    <div className="w-8 h-8 rounded-full bg-[#008080]/10 flex items-center justify-center text-[#008080]">
+                    <div className="w-8 h-8 rounded-full bg-zinc-900 flex items-center justify-center text-white">
                         <ShieldCheck className="w-5 h-5" />
                     </div>
                 </div>

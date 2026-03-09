@@ -43,7 +43,7 @@ const ExploreBusinessCard = ({ business, index }: ExploreBusinessCardProps) => {
                 {/* Distance Badge */}
                 {business.distanceKm !== undefined && (
                     <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5">
-                        <FaLocationArrow className="w-3.5 h-3.5 text-[#008080]" />
+                        <FaLocationArrow className="w-3.5 h-3.5 text-black" />
                         <span className="text-xs font-black text-white">
                             {business.distanceKm} km
                         </span>

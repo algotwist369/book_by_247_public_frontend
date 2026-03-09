@@ -324,7 +324,7 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
                     <div className="max-w-xl mx-auto flex items-center justify-between gap-3">
                         <div className="flex flex-col shrink-0">
                             <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider leading-none mb-1">Total</span>
-                            <span className="text-lg font-bold text-[#008080] leading-none">₹{totalPrice.toLocaleString('en-IN')}</span>
+                            <span className="text-lg font-bold text-black leading-none">₹{totalPrice.toLocaleString('en-IN')}</span>
                         </div>
                         <div className="flex items-center gap-2 flex-1">
                             {step !== 'services' && (
@@ -338,7 +338,7 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
                             <button
                                 disabled={!isNextEnabled || isSubmitting}
                                 onClick={step === 'payment' ? handleConfirm : handleNext}
-                                className={`flex-1 h-12 rounded-lg text-sm font-semibold ${isNextEnabled ? 'bg-[#008080] text-white' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                className={`flex-1 h-12 rounded-lg text-sm font-semibold ${isNextEnabled ? 'bg-black text-white' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                                     }`}
                             >
                                 {isSubmitting ? 'Processing...' : actionButtonText}

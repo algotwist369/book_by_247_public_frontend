@@ -10,10 +10,21 @@ const HeroSection = () => {
                 aria-label="Hero — Book spas and salons"
                 className="relative w-full h-[500px] sm:h-[600px] md:h-[650px] lg:h-[700px] flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 overflow-hidden"
             >
-                {/* Gradient overlays */}
-                <div className="absolute inset-0 bg-zinc-900/40 z-[1]" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-[1]" />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#008080]/40 via-transparent to-black/20 z-[1]" />
+                {/* Premium Monochromatic Mesh Gradient */}
+                <div className="absolute inset-0 bg-zinc-950" />
+                
+                {/* Primary Radial Highlight */}
+                <div className="absolute inset-0 bg-radial-[at_30%_20%] from-zinc-800/40 via-transparent to-transparent opacity-60 z-1" />
+                
+                {/* Secondary Accent Glow */}
+                <div className="absolute inset-0 bg-radial-[at_70%_60%] from-zinc-700/20 via-transparent to-transparent opacity-40 z-1" />
+                
+                {/* Vignette & Depth */}
+                <div className="absolute inset-0 bg-linear-to-t from-black via-transparent to-black/20 z-1" />
+                <div className="absolute inset-0 bg-linear-to-r from-black/30 via-transparent to-black/30 z-1" />
+                
+                {/* Subtle Grain/Noise Texture (Optional but adds 'Premium' feel) */}
+                <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay z-1 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
 
                 <div className="relative z-10 w-full max-w-6xl text-center space-y-6 md:space-y-8">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight px-2">

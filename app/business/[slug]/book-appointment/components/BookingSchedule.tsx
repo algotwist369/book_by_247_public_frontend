@@ -110,7 +110,7 @@ const BookingSchedule = ({
                                     key={i}
                                     onClick={() => onSelectDate(dateItem.fullDate)}
                                     className={`shrink-0 w-14 py-2.5 rounded-lg flex flex-col items-center justify-center text-center border ${isActive
-                                        ? 'border-[#008080] bg-[#008080] text-white'
+                                        ? 'border-zinc-900 bg-zinc-900 text-white'
                                         : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
                                         }`}
                                 >
@@ -149,7 +149,7 @@ const BookingSchedule = ({
                     <p className="text-sm text-gray-400 py-4">Select a date to see available slots.</p>
                 ) : isLoading ? (
                     <div className="flex items-center justify-center py-8">
-                        <Loader2 className="w-5 h-5 text-[#008080] animate-spin" />
+                        <Loader2 className="w-5 h-5 text-zinc-900 animate-spin" />
                     </div>
                 ) : error ? (
                     <p className="text-sm text-red-500">{error}</p>
@@ -162,7 +162,7 @@ const BookingSchedule = ({
                                 key={time}
                                 onClick={() => onSelectTime(time)}
                                 className={`py-2.5 rounded-lg text-sm font-medium border ${selectedTime === time
-                                    ? 'border-[#008080] bg-[#008080] text-white'
+                                    ? 'border-zinc-900 bg-zinc-900 text-white'
                                     : 'border-gray-200 text-gray-600 hover:border-gray-300'
                                     }`}
                             >

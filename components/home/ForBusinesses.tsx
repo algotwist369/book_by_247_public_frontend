@@ -19,7 +19,7 @@ const ForBusinesses = () => {
 
                         <div className="space-y-5">
                             <div className="inline-flex items-center gap-2 px-3 py-1 border border-zinc-300 rounded-full">
-                                <span className="h-2 w-2 rounded-full bg-teal-600" />
+                                <span className="h-2 w-2 rounded-full bg-black" />
                                 <span className="text-xs font-semibold text-zinc-700 uppercase tracking-widest">
                                     Partner Growth
                                 </span>
@@ -27,7 +27,7 @@ const ForBusinesses = () => {
 
                             <h2 className="text-3xl lg:text-5xl font-bold text-zinc-900 leading-tight">
                                 Grow your spa salon <br />
-                                <span className="text-teal-600">
+                                <span className="text-black">
                                     and beauty business.
                                 </span>
                             </h2>
@@ -47,7 +47,7 @@ const ForBusinesses = () => {
                                 "24/7 Support",
                             ].map((item, idx) => (
                                 <div key={idx} className="flex items-center gap-3">
-                                    <CheckCircle className="w-5 h-5 text-teal-600" />
+                                    <CheckCircle className="w-5 h-5 text-black" />
                                     <span className="text-zinc-800 text-sm font-medium">
                                         {item}
                                     </span>
@@ -60,7 +60,7 @@ const ForBusinesses = () => {
 
                             <button
                                 onClick={() => router.push("/free-listing")}
-                                className="px-6 py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-semibold text-base flex items-center justify-center gap-2"
+                                className="px-6 py-3 rounded-xl bg-black hover:bg-zinc-900 text-white font-semibold text-base flex items-center justify-center gap-2"
                             >
                                 List Your Business Free
                                 <ArrowRight className="w-4 h-4" />

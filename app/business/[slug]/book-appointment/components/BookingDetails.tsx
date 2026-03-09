@@ -41,7 +41,7 @@ const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
                         <input
                             type="text"
                             placeholder="John Doe"
-                            className="w-full h-11 pl-10 pr-3 bg-white border border-gray-200 rounded-lg focus:border-[#008080] outline-none text-sm"
+                            className="w-full h-11 pl-10 pr-3 bg-white border border-gray-200 rounded-lg focus:border-black outline-none text-sm"
                             value={formData.name}
                             onChange={(e) => onUpdateForm({ name: e.target.value })}
                         />
@@ -57,7 +57,7 @@ const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
                             inputMode="numeric"
                             maxLength={10}
                             placeholder="10-digit mobile number"
-                            className={`w-full h-11 pl-10 pr-3 bg-white border rounded-lg outline-none text-sm ${showPhoneError ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-[#008080]'}`}
+                            className={`w-full h-11 pl-10 pr-3 bg-white border rounded-lg outline-none text-sm ${showPhoneError ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-black'}`}
                             value={formData.phone}
                             onChange={(e) => handlePhoneChange(e.target.value)}
                         />
@@ -66,7 +66,7 @@ const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
                         <p className="text-xs text-red-500 mt-1">{phoneError}</p>
                     )}
                     {isPhoneValid && (
-                        <p className="text-xs text-green-600 mt-1">✓ Valid phone number</p>
+                        <p className="text-xs text-black mt-1">✓ Valid phone number</p>
                     )}
                 </div>
 
@@ -74,7 +74,7 @@ const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
                     <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 block">Special Instructions <span className="text-gray-400 normal-case tracking-normal">(optional)</span></label>
                     <textarea
                         placeholder="Any special requirements..."
-                        className="w-full h-28 p-3 bg-white border border-gray-200 rounded-lg focus:border-[#008080] outline-none text-sm resize-none"
+                        className="w-full h-28 p-3 bg-white border border-gray-200 rounded-lg focus:border-black outline-none text-sm resize-none"
                         value={formData.notes}
                         onChange={(e) => onUpdateForm({ notes: e.target.value })}
                     />

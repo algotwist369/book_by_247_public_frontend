@@ -128,7 +128,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                         className="shrink-0 flex items-center gap-1.5 text-xs text-zinc-500 disabled:opacity-40 bg-gray-100 px-2 py-1 rounded-lg"
                         aria-label="Use my location"
                     >
-                        <Navigation className="w-3.5 h-3.5 text-[#008080]" />
+                        <Navigation className="w-3.5 h-3.5 text-black" />
                         <span>{isFetching ? 'Locating...' : 'Nearby'}</span>
                     </button>
 
@@ -171,7 +171,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 <div className="px-2 py-2">
                     <button
                         onClick={() => onSearch?.(value, localLocation)}
-                        className="bg-[#008080] text-white text-sm font-semibold rounded-full px-6 h-10"
+                        className="bg-black text-white text-sm font-semibold rounded-full px-6 h-10"
                     >
                         {isCompact ? <Search className="w-4 h-4" /> : "Search"}
                     </button>
@@ -231,7 +231,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                             disabled={isFetching}
                             className="shrink-0 flex items-center gap-1 text-xs text-zinc-500 disabled:opacity-40 bg-gray-100 px-2 py-1 rounded-lg"
                         >
-                            <Navigation className="w-3.5 h-3.5 text-[#008080]" />
+                            <Navigation className="w-3.5 h-3.5 text-black" />
                             <span>{isFetching ? 'Locating...' : 'Nearby'}</span>
                         </button>
                     </div>
@@ -270,7 +270,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 {/* Search button */}
                 <button
                     onClick={() => onSearch?.(value, localLocation)}
-                    className="w-full bg-[#008080] text-white text-sm font-semibold rounded-xl h-11"
+                    className="w-full bg-black text-white text-sm font-semibold rounded-xl h-11"
                 >
                     Search
                 </button>

@@ -50,7 +50,7 @@ const BookingOTP = ({ phone, onVerify, onResend, isLoading, error = null }: Book
                 <div className="flex justify-center gap-4 sm:gap-6">
                     {otp.map((data, index) => (
                         <input
-                            className="w-14 h-16 border-2 border-gray-100 rounded-xl text-center text-2xl font-black text-zinc-900 focus:border-[#008080] focus:bg-[#008080]/[0.02] outline-none transition-all duration-200"
+                            className="w-14 h-16 border-2 border-gray-100 rounded-xl text-center text-2xl font-black text-zinc-900 focus:border-black focus:bg-zinc-50 outline-none transition-all duration-200"
                             type="text"
                             inputMode="numeric"
                             autoComplete="one-time-code"
@@ -76,7 +76,7 @@ const BookingOTP = ({ phone, onVerify, onResend, isLoading, error = null }: Book
                         type="submit"
                         disabled={!isComplete || isLoading}
                         className={`w-full h-14 rounded-xl text-sm font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all duration-300 ${isComplete && !isLoading
-                            ? 'bg-[#008080] text-white hover:bg-[#006e6e] shadow-lg shadow-[#008080]/20'
+                            ? 'bg-black text-white hover:bg-zinc-900 shadow-lg shadow-black/20'
                             : 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
                             }`}
                     >
@@ -99,7 +99,7 @@ const BookingOTP = ({ phone, onVerify, onResend, isLoading, error = null }: Book
                         disabled={isLoading}
                         className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 hover:text-zinc-900 transition-colors text-center"
                     >
-                        Didn't receive code? <span className="text-[#008080] decoration-2 underline-offset-4 hover:underline cursor-pointer">Resend OTP</span>
+                        Didn't receive code? <span className="text-black decoration-2 underline-offset-4 hover:underline cursor-pointer">Resend OTP</span>
                     </button>
                 </div>
             </form>

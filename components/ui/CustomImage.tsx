@@ -97,7 +97,7 @@ const CustomImage = ({
 
             {isLoading && (
                 <div className="absolute inset-0 flex items-center justify-center bg-zinc-200">
-                    <div className="w-6 h-6 border-2 border-[#008080] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-6 h-6 border-2 border-black border-t-transparent rounded-full animate-spin" />
                 </div>
             )}
         </div>

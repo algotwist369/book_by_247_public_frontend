@@ -18,12 +18,12 @@ const BookingPayment = ({ paymentMethod, onSelectPayment }: BookingPaymentProps)
                 <button
                     onClick={() => onSelectPayment('cash')}
                     className={`flex items-start justify-between p-4 rounded-lg border-2 transition-all duration-200 text-left ${paymentMethod === 'cash'
-                        ? 'border-[#008080] bg-[#008080]/[0.02]'
+                        ? 'border-black bg-zinc-50'
                         : 'border-gray-100 hover:border-gray-200 bg-gray-50/50'
                         }`}
                 >
                     <div className="flex items-start gap-4">
-                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center transition-colors ${paymentMethod === 'cash' ? 'bg-[#008080] text-white' : 'bg-white border border-gray-200 text-gray-400'}`}>
+                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center transition-colors ${paymentMethod === 'cash' ? 'bg-black text-white' : 'bg-white border border-gray-200 text-gray-400'}`}>
                             <Banknote className="w-6 h-6" />
                         </div>
                         <div className="pt-0.5">
@@ -31,7 +31,7 @@ const BookingPayment = ({ paymentMethod, onSelectPayment }: BookingPaymentProps)
                             <p className="text-sm text-gray-500 mt-1 max-w-[200px]">No advance payment required. Pay by Cash or Card after your service.</p>
                         </div>
                     </div>
-                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${paymentMethod === 'cash' ? 'border-[#008080] bg-[#008080]' : 'border-gray-200 bg-white'}`}>
+                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${paymentMethod === 'cash' ? 'border-black bg-black' : 'border-gray-200 bg-white'}`}>
                         {paymentMethod === 'cash' && <Check className="w-3.5 h-3.5 text-white stroke-[3px]" />}
                     </div>
                 </button>
@@ -39,12 +39,12 @@ const BookingPayment = ({ paymentMethod, onSelectPayment }: BookingPaymentProps)
                 <button
                     onClick={() => onSelectPayment('online')}
                     className={`flex items-start justify-between p-4 rounded-lg border-2 transition-all duration-200 text-left ${paymentMethod === 'online'
-                        ? 'border-[#008080] bg-[#008080]/[0.02]'
+                        ? 'border-black bg-zinc-50'
                         : 'border-gray-100 hover:border-gray-200 bg-gray-50/50'
                         }`}
                 >
                     <div className="flex items-start gap-4">
-                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center transition-colors ${paymentMethod === 'online' ? 'bg-[#008080] text-white' : 'bg-white border border-gray-200 text-gray-400'}`}>
+                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center transition-colors ${paymentMethod === 'online' ? 'bg-black text-white' : 'bg-white border border-gray-200 text-gray-400'}`}>
                             <CreditCard className="w-6 h-6" />
                         </div>
                         <div className="pt-0.5">
@@ -55,7 +55,7 @@ const BookingPayment = ({ paymentMethod, onSelectPayment }: BookingPaymentProps)
                             <p className="text-sm text-gray-500 mt-1 max-w-[200px]">Securely pay via UPI, Credit/Debit Cards, or Net Banking.</p>
                         </div>
                     </div>
-                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${paymentMethod === 'online' ? 'border-[#008080] bg-[#008080]' : 'border-gray-200 bg-white'}`}>
+                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${paymentMethod === 'online' ? 'border-black bg-black' : 'border-gray-200 bg-white'}`}>
                         {paymentMethod === 'online' && <Check className="w-3.5 h-3.5 text-white stroke-[3px]" />}
                     </div>
                 </button>

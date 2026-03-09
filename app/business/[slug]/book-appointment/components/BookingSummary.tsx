@@ -91,13 +91,13 @@ const BookingSummary = ({
                                         <span className="font-medium text-gray-800">{s.name}</span>
                                         <span className="text-xs text-gray-400 ml-1.5">{s.duration}</span>
                                     </div>
-                                    <span className="font-semibold text-[#008080]">₹{s.price?.toLocaleString('en-IN')}</span>
+                                    <span className="font-semibold text-zinc-900">₹{s.price?.toLocaleString('en-IN')}</span>
                                 </div>
                             ))}
                             <div className="h-px bg-gray-100 my-3" />
                             <div className="flex justify-between items-center">
                                 <span className="text-sm text-gray-500">Total</span>
-                                <span className="text-base font-bold text-[#008080]">
+                                <span className="text-base font-bold text-zinc-900">
                                     ₹{totalPrice.toLocaleString('en-IN')}
                                 </span>
                             </div>
@@ -131,7 +131,7 @@ const BookingSummary = ({
                             <button
                                 disabled={!isNextEnabled || isSubmitting}
                                 onClick={step === 'payment' ? onConfirm : onNext}
-                                className={`w-full h-11 rounded-lg text-sm font-semibold ${isNextEnabled ? 'bg-[#008080] text-white hover:bg-[#006e6e]' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                className={`w-full h-11 rounded-lg text-sm font-semibold ${isNextEnabled ? 'bg-black text-white hover:bg-zinc-900' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                                     }`}
                             >
                                 {isSubmitting ? 'Processing...' : actionButtonText}
@@ -151,7 +151,7 @@ const BookingSummary = ({
             </div>
 
             <div className="p-4 rounded-lg border border-gray-200 bg-white flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-[#008080] shrink-0 mt-0.5" />
+                <CheckCircle className="w-5 h-5 text-zinc-900 shrink-0 mt-0.5" />
                 <div>
                     <p className="text-sm font-medium text-gray-800">Verified by logoname</p>
                     <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">
