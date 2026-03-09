@@ -27,16 +27,16 @@ export const PartnerSection: React.FC = () => {
   return (
     <section className="relative w-full overflow-hidden">
       {/* Base — deep indigo/navy */}
-      <div className="absolute inset-0 bg-[#a83395]" />
+      <div className="absolute inset-0 bg-slate-950" />
       {/* Primary glow — violet top-left */}
-      <div className="absolute inset-0 z-1" style={{background: 'radial-gradient(ellipse 70% 60% at 20% 10%, rgba(109,40,217,0.55) 0%, transparent 70%)'}} />
+      <div className="absolute inset-0 z-10" style={{background: 'radial-gradient(ellipse 70% 60% at 20% 10%, rgba(109,40,217,0.55) 0%, transparent 70%)'}} />
       {/* Secondary glow — rose/pink bottom-right */}
-      <div className="absolute inset-0 z-1" style={{background: 'radial-gradient(ellipse 60% 50% at 80% 85%, rgba(219,39,119,0.40) 0%, transparent 70%)'}} />
+      <div className="absolute inset-0 z-10" style={{background: 'radial-gradient(ellipse 60% 50% at 80% 85%, rgba(219,39,119,0.40) 0%, transparent 70%)'}} />
       {/* Accent glow — indigo center */}
-      <div className="absolute inset-0 z-1" style={{background: 'radial-gradient(ellipse 50% 40% at 55% 40%, rgba(79,70,229,0.25) 0%, transparent 65%)'}} />
+      <div className="absolute inset-0 z-10" style={{background: 'radial-gradient(ellipse 50% 40% at 55% 40%, rgba(79,70,229,0.25) 0%, transparent 65%)'}} />
       {/* Vignette */}
-      <div className="absolute inset-0 z-2 bg-linear-to-t from-pink/60 via-transparent to-pink/20" />
-      <div className="absolute inset-0 z-2 bg-linear-to-r from-pink/30 via-transparent to-pink/30" />
+      <div className="absolute inset-0 z-20 bg-linear-to-t from-slate-950/80 via-transparent to-slate-950/40" />
+      <div className="absolute inset-0 z-20 bg-linear-to-r from-slate-950/40 via-transparent to-slate-950/40" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -45,12 +45,12 @@ export const PartnerSection: React.FC = () => {
           <div className="space-y-8 text-center lg:text-left">
             {/* Heading */}
             <div className="space-y-4">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-600 leading-tight">
                 Grow your business <br className="hidden sm:block" />
                 with logoname
               </h2>
 
-              <p className="text-white text-base sm:text-lg md:text-xl max-w-xl mx-auto lg:mx-0">
+              <p className="text-gray-600 text-base sm:text-lg md:text-xl max-w-xl mx-auto lg:mx-0">
                 Join the largest network of spas and salons and start receiving
                 bookings instantly.
               </p>
