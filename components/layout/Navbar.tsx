@@ -75,9 +75,9 @@ export const Navbar = () => {
         <nav className="sticky top-0 z-50 w-full bg-white shadow-sm">
             {/* Top Tier */}
             <div className="relative flex items-center justify-between px-3 sm:px-4 md:px-8 py-3 md:py-4 border-b border-zinc-50">
-                <div className="flex items-center gap-4 md:gap-8">
-                    <Link href="/" className="md:static absolute left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 shrink-0 z-10">
-                        <span className="text-xl sm:text-2xl font-black italic tracking-tighter text-zinc-900 border-2 border-zinc-900 px-2 leading-none">
+                <div className="flex items-center gap-3 sm:gap-4 md:gap-8">
+                    <Link href="/" className="shrink-0">
+                        <span className="text-lg sm:text-xl md:text-2xl font-black italic tracking-tighter text-zinc-900 border-2 border-zinc-900 px-2 leading-none">
                             SPA ADVISOR
                         </span>
                     </Link>
@@ -88,14 +88,14 @@ export const Navbar = () => {
                             icon={Briefcase}
                             title="LOGO for Business"
                             subtitle="Trusted by 5000 Business"
-                            href="https://business.logoname.com"
+                            href="https://business.bookby247.com"
                             target="_blank"
                         />
                         <NavInfoBlock
                             icon={Handshake}
                             title="Become A Partner"
                             subtitle="Start receiving qualified leads within days"
-                            href="https://business.logoname.com/book-demo"
+                            href="https://business.bookby247.com/book-demo"
                             target="_blank"
                         />
                     </div>
@@ -287,7 +287,7 @@ export const Navbar = () => {
                                     {/* Business Links */}
                                     <div className="space-y-3 pt-4 border-t border-zinc-100">
                                         <a
-                                            href="https://business.logoname.com"
+                                            href="https://business.bookby247.com"
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             onClick={handleLinkClick}
@@ -300,7 +300,7 @@ export const Navbar = () => {
                                             </div>
                                         </a>
                                         <a
-                                            href="https://business.logoname.com/book-demo"
+                                            href="https://business.bookby247.com/book-demo"
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             onClick={handleLinkClick}

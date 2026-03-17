@@ -1,28 +1,40 @@
 import React from "react";
+import { safeJsonLdStringify } from "@/lib/utils";
 
 const StructuredData = () => {
     const schema = {
         "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "logoname",
-        "url": "https://logoname.com",
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": "https://logoname.com/search?q={search_term_string}",
-            "query-input": "required name=search_term_string"
-        },
-        "description": "Book Best Spas & Salons Near You. Professional treatments at your fingertips.",
-        "sameAs": [
-            "https://facebook.com/logoname",
-            "https://instagram.com/logoname",
-            "https://twitter.com/logoname"
+        "@graph": [
+            {
+                "@type": "Organization",
+                "name": "bookby247",
+                "url": "https://bookby247.com",
+                "logo": "https://bookby247.com/logo.png",
+                "sameAs": [
+                    "https://facebook.com/bookby247",
+                    "https://instagram.com/bookby247",
+                    "https://twitter.com/bookby247",
+                    "https://www.linkedin.com/company/bookby247"
+                ]
+            },
+            {
+                "@type": "WebSite",
+                "name": "bookby247",
+                "url": "https://bookby247.com",
+                "description": "Book best spas, salons, and wellness services near you with bookby247.",
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://bookby247.com/explore?q={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                }
+            }
         ]
     };
 
     return (
         <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+            dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(schema) }}
         />
     );
 };

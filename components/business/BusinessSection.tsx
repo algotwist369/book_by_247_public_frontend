@@ -75,63 +75,74 @@ const BusinessSection: React.FC<BusinessSectionProps> = ({ initialData }) => {
 
     if (isLoading && businesses.length === 0) {
         return (
-            <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 max-w-[90rem] mx-auto">
-                <div className="flex items-center justify-between mb-8">
-                    <div className="h-10 w-64 bg-zinc-200 animate-pulse rounded-lg" />
-                    <div className="h-6 w-20 bg-zinc-200 animate-pulse rounded-md" />
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
-                    {[...Array(8)].map((_, i) => (
-                        <div key={i} className="flex flex-col gap-3">
-                            <div className="aspect-video w-full bg-zinc-100 animate-pulse rounded-xl" />
-                            <div className="h-6 w-3/4 bg-zinc-100 animate-pulse rounded-md" />
-                            <div className="h-4 w-1/2 bg-zinc-100 animate-pulse rounded-md" />
-                        </div>
-                    ))}
+            <section className="w-full bg-linear-to-b from-white via-zinc-50/80 to-white px-4 py-12 sm:px-6 sm:py-16 md:px-8 md:py-20">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                    <div className="mb-8 flex items-center justify-between gap-4">
+                        <div className="h-10 w-64 rounded-lg bg-zinc-100" />
+                        <div className="h-6 w-20 rounded-md bg-zinc-100" />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
+                        {[...Array(8)].map((_, i) => (
+                            <div
+                                key={i}
+                                className="flex flex-col gap-3 rounded-2xl border border-zinc-100 bg-white/70 p-3"
+                            >
+                                <div className="aspect-video w-full rounded-xl bg-zinc-100" />
+                                <div className="h-6 w-3/4 rounded-md bg-zinc-100" />
+                                <div className="h-4 w-1/2 rounded-md bg-zinc-100" />
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </section>
         );
     }
 
     return (
-        <section aria-label="Business listings" className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 max-w-[90rem] mx-auto">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 md:mb-10 gap-4">
-                <div className="flex items-center gap-3">
-                    <h2 className="hidden md:block text-2xl sm:text-3xl md:text-4xl font-black text-zinc-900 tracking-tight">
-                        {isNearbyMode ? "Nearby Businesses" : "Featured Businesses"}
-                    </h2>
-                    {isNearbyMode && (
-                        <div className="hidden md:flex items-center gap-1.5 px-3 py-1 bg-zinc-100 text-zinc-900 rounded-full text-xs font-bold animate-in fade-in zoom-in">
-                            <MapPin className="w-3 h-3" />
-                            <span>Based on your location</span>
-                        </div>
-                    )}
+        <section
+            aria-label="Business listings"
+            className="w-full bg-linear-to-b from-white via-zinc-50/80 to-white px-4 py-12 sm:px-6 sm:py-16 md:px-8 md:py-20"
+        >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-0">
+                <div className="mb-6 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:items-center sm:justify-between md:mb-10">
+                    <div className="flex items-center gap-3">
+                        <h2 className="hidden text-2xl font-black tracking-tight text-zinc-900 sm:text-3xl md:block md:text-4xl">
+                            {isNearbyMode ? "Nearby Businesses" : "Featured Businesses"}
+                        </h2>
+                        {isNearbyMode && (
+                            <div className="hidden items-center gap-1.5 rounded-full bg-zinc-100 px-3 py-1 text-xs font-bold text-zinc-900 md:flex">
+                                <MapPin className="h-3 w-3" />
+                                <span>Based on your location</span>
+                            </div>
+                        )}
+                    </div>
+                    <Link
+                        href="/explore"
+                        className="self-start text-sm font-bold text-zinc-900 sm:self-auto sm:text-base"
+                    >
+                        View all {isNearbyMode ? "nearby" : ""}
+                    </Link>
                 </div>
-                <Link href="/explore" className="text-zinc-900 text-sm sm:text-base font-bold hover:underline underline-offset-4 transition-all self-start sm:self-auto">
-                    View all {isNearbyMode ? "nearby" : ""}
-                </Link>
-            </div>
 
-            {/* Use CSS animate-in for GPU-composited transition (opacity + transform) */}
-            <div
-                key={isNearbyMode ? 'nearby' : 'featured'}
-                className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 xl:gap-8 animate-in fade-in slide-in-from-bottom-2 duration-500"
-            >
-                {businesses.map((business: any) => (
-                    <BusinessCard
-                        key={business.id}
-                        business={business}
-                    />
-                ))}
-            </div>
-
-            {isNearbyMode && businesses.length === 0 && !isNearbyLoading && (
-                <div className="text-center py-20 bg-zinc-50 rounded-3xl border border-dashed border-zinc-200">
-                    <MapPin className="w-12 h-12 text-zinc-300 mx-auto mb-4" />
-                    <h3 className="text-lg font-bold text-zinc-900">No businesses found nearby</h3>
-                    <p className="text-zinc-500 max-w-xs mx-auto mt-2">Try increasing your search radius or exploring another category.</p>
+                <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 md:gap-6 lg:grid-cols-4 xl:gap-8">
+                    {businesses.map((business: any) => (
+                        <BusinessCard
+                            key={business.id}
+                            business={business}
+                        />
+                    ))}
                 </div>
-            )}
+
+                {isNearbyMode && businesses.length === 0 && !isNearbyLoading && (
+                    <div className="mt-10 rounded-3xl border border-dashed border-zinc-200 bg-zinc-50 px-6 py-16 text-center sm:px-10">
+                        <MapPin className="mx-auto mb-4 h-12 w-12 text-zinc-300" />
+                        <h3 className="text-lg font-bold text-zinc-900">No businesses found nearby</h3>
+                        <p className="mx-auto mt-2 max-w-xs text-sm text-zinc-500">
+                            Try increasing your search radius or exploring another category.
+                        </p>
+                    </div>
+                )}
+            </div>
         </section>
     );
 };

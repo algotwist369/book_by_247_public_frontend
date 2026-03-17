@@ -1,56 +1,112 @@
 
-import Image from 'next/image'
-import { ShieldCheck, Sparkles, Star } from 'lucide-react'
+import { Check, ShieldCheck, Sparkles, Star } from 'lucide-react'
 import { HeroSearch } from './HeroSearch'
 
 const HeroSection = () => {
     return (
-        <div>
-            <section
-                aria-label="Hero — Book spas and salons"
-                className="relative w-full h-[500px] sm:h-[600px] md:h-[650px] lg:h-[700px] flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 overflow-hidden"
-            >
-                {/* Base — deep indigo/navy */}
-                <div className="absolute inset-0 bg-slate-950" />
+        <section aria-label="Hero — Book spas and salons" className="relative isolate overflow-hidden">
+            <div className="absolute inset-0 bg-linear-to-b from-rose-50 via-white to-fuchsia-50" aria-hidden="true" />
+            <div className="absolute inset-0" aria-hidden="true">
+                <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-fuchsia-300/40 blur-3xl" />
+                <div className="absolute -right-24 top-16 h-80 w-80 rounded-full bg-rose-300/45 blur-3xl" />
+                <div className="absolute left-1/2 top-72 h-72 w-72 -translate-x-1/2 rounded-full bg-pink-300/35 blur-3xl" />
+            </div>
 
-                {/* Primary glow — violet top-left */}
-                <div className="absolute inset-0 z-10" style={{background: 'radial-gradient(ellipse 70% 60% at 20% 10%, rgba(109,40,217,0.55) 0%, transparent 70%)'}} />
+            <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 md:px-8 md:py-20">
+                <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
+                    <div className="text-center lg:text-left">
+                        <div className="hidden mx-auto md:inline-flex items-center gap-2 rounded-full border border-rose-200 bg-white/70 px-3 py-1 text-xs font-semibold tracking-wide text-rose-900 lg:mx-0">
+                            <span className="h-1.5 w-1.5 rounded-full bg-rose-500" aria-hidden="true" />
+                            Book confidently with verified businesses
+                        </div>
 
-                {/* Secondary glow — rose/pink bottom-right */}
-                <div className="absolute inset-0 z-10" style={{background: 'radial-gradient(ellipse 60% 50% at 80% 85%, rgba(219,39,119,0.40) 0%, transparent 70%)'}} />
+                        <h1 className="md:mt-5 text-balance text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
+                            Find your next wellness day
+                            <span className="block text-rose-700">in minutes</span>
+                        </h1>
 
-                {/* Accent glow — indigo center */}
-                <div className="absolute inset-0 z-10" style={{background: 'radial-gradient(ellipse 50% 40% at 55% 40%, rgba(79,70,229,0.25) 0%, transparent 65%)'}} />
+                        <p className="hidden md:block mt-4 max-w-2xl text-pretty text-base leading-relaxed text-slate-700 sm:text-lg lg:max-w-xl">
+                            Browse top salons, compare services, and schedule appointments with a smooth, reliable booking flow.
+                        </p>
 
-                {/* Vignette — top & bottom darkness for legibility */}
-                <div className="absolute inset-0 z-20 bg-linear-to-t from-slate-950/80 via-transparent to-slate-950/40" />
-                <div className="absolute inset-0 z-20 bg-linear-to-r from-slate-950/40 via-transparent to-slate-950/40" />
+                        <div className="mt-7 max-w-2xl lg:max-w-xl">
+                            <HeroSearch />
+                        </div>
 
-                {/* Subtle noise texture */}
-                <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay z-30 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
+                        <div className="mt-7 grid grid-cols-3 gap-2 sm:gap-3">
+                            <div className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-center">
+                                <Sparkles className="mx-auto h-4 w-4 text-rose-700" aria-hidden="true" />
+                                <div className="mt-1 text-[11px] font-semibold leading-tight text-slate-900 sm:text-sm sm:leading-normal">
+                                    Premium <br className="sm:hidden" /> services
+                                </div>
+                            </div>
+                            <div className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-center">
+                                <ShieldCheck className="mx-auto h-4 w-4 text-rose-700" aria-hidden="true" />
+                                <div className="mt-1 text-[11px] font-semibold leading-tight text-slate-900 sm:text-sm sm:leading-normal">
+                                    Verified <br className="sm:hidden" /> businesses
+                                </div>
+                            </div>
+                            <div className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-center">
+                                <Star className="mx-auto h-4 w-4 text-rose-700" aria-hidden="true" />
+                                <div className="mt-1 text-[11px] font-semibold leading-tight text-slate-900 sm:text-sm sm:leading-normal">
+                                    Top-rated <br className="sm:hidden" /> picks
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                <div className="relative z-10 w-full max-w-6xl text-center space-y-6 md:space-y-8">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-600 leading-tight tracking-tight px-2">
-                        Over 15,000 Spas &amp; Salons <br className="hidden sm:block" /> Across 25+ Cities
-                    </h1>
+                    <div className="hidden md:block mx-auto w-full max-w-xl lg:max-w-none">
+                        <div className="rounded-2xl border border-rose-200 bg-white/70 p-5 sm:p-6">
+                            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                                <div className="rounded-xl border border-rose-200 bg-white/70 p-4">
+                                    <div className="text-xs font-semibold tracking-wide text-slate-600">Businesses</div>
+                                    <div className="mt-1 text-2xl font-extrabold text-slate-900">15,000+</div>
+                                    <div className="mt-1 text-xs text-slate-600">Spa &amp; salon partners</div>
+                                </div>
+                                <div className="rounded-xl border border-rose-200 bg-white/70 p-4">
+                                    <div className="text-xs font-semibold tracking-wide text-slate-600">Cities</div>
+                                    <div className="mt-1 text-2xl font-extrabold text-slate-900">25+</div>
+                                    <div className="mt-1 text-xs text-slate-600">Across India</div>
+                                </div>
+                                <div className="col-span-2 rounded-xl border border-rose-200 bg-white/70 p-4">
+                                    <div className="flex flex-col items-start gap-3 sm:flex-row">
+                                        <div
+                                            className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-lg border border-rose-200 bg-white/70 sm:h-9 sm:w-9"
+                                            aria-hidden="true"
+                                        >
+                                            <Check className="h-4 w-4 text-rose-700 sm:h-5 sm:w-5" />
+                                        </div>
+                                        <div className="min-w-0">
+                                            <div className="text-sm font-semibold leading-snug text-slate-900 sm:leading-normal">
+                                                Verified listings
+                                            </div>
+                                            <div className="mt-1 text-sm leading-relaxed text-slate-700">
+                                                Clear business details and quality signals so users can book with confidence.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                    {/* Client-side interactive search bar */}
-                    <HeroSearch />
-
-                    <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:gap-6 text-gray-600 pt-4 md:pt-8 font-medium px-2">
-                        <span className="flex items-center gap-1.5 md:gap-2 text-xs sm:text-sm md:text-base tracking-wide">
-                            <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-gray-600" aria-hidden="true" /> Premium Services
-                        </span>
-                        <span className="flex items-center gap-1.5 md:gap-2 text-xs sm:text-sm md:text-base tracking-wide">
-                            <ShieldCheck className="w-4 h-4 md:w-5 md:h-5 text-gray-600" aria-hidden="true" /> Verified Businesses
-                        </span>
-                        <span className="flex items-center gap-1.5 md:gap-2 text-xs sm:text-sm md:text-base tracking-wide">
-                            <Star className="w-4 h-4 md:w-5 md:h-5 text-gray-600" aria-hidden="true" /> Top Rated
-                        </span>
+                            <div className="mt-4 rounded-xl border border-rose-200 bg-white/70 p-4">
+                                <div className="text-xs font-semibold tracking-wide text-slate-600">Popular Business</div>
+                                <div className="mt-2 grid grid-cols-3 gap-2 text-center">
+                                    <div className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-[11px] font-semibold text-slate-900 sm:text-xs">
+                                        Spa & Wellness
+                                    </div>
+                                    <div className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-[11px] font-semibold text-slate-900 sm:text-xs">
+                                        Salon & Haircare
+                                    </div>
+                                    <div className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-[11px] font-semibold text-slate-900 sm:text-xs">
+                                        Beauty & Makeup
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
     )
 }
 

@@ -32,6 +32,11 @@ const nextConfig: NextConfig = {
 
   // Add cache-control headers to maximize browser caching and cut latency
   async headers() {
+    const isProd = process.env.NODE_ENV === "production";
+    const csp = isProd
+      ? "default-src 'self' https: data: blob:; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https:; img-src 'self' https: data: blob:; font-src 'self' https: data:; connect-src 'self' https: wss:;"
+      : "default-src 'self' https: data: blob:; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https:; img-src 'self' https: data: blob:; font-src 'self' https: data:; connect-src 'self' https: wss:;";
+
     return [
       {
         // Static assets (JS/CSS/images) — immutable for 1 year
@@ -64,6 +69,30 @@ const nextConfig: NextConfig = {
           {
             key: "X-Frame-Options",
             value: "DENY",
+          },
+          {
+            key: "X-XSS-Protection",
+            value: "1; mode=block",
+          },
+          {
+            key: "Referrer-Policy",
+            value: "no-referrer",
+          },
+          {
+            key: "Permissions-Policy",
+            value: "geolocation=(self), camera=(), microphone=()",
+          },
+          ...(isProd
+            ? [
+                {
+                  key: "Strict-Transport-Security",
+                  value: "max-age=31536000; includeSubDomains; preload",
+                },
+              ]
+            : []),
+          {
+            key: "Content-Security-Policy",
+            value: csp,
           },
         ],
       },

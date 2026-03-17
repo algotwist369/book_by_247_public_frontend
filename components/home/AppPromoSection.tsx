@@ -4,13 +4,13 @@ import { CustomImage } from "@/components/ui/CustomImage";
 
 export const AppPromoSection: React.FC = () => {
   return (
-    <section className="w-full bg-white">
+    <section className="w-full bg-gradient-to-b from-white via-zinc-50 to-white">
 
-      <div className="max-w-[90rem] mx-auto px-4 sm:px-6 py-16 sm:py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:py-24">
 
-        <div className="bg-white border border-zinc-200 rounded-3xl p-6 sm:p-10 lg:p-16">
+        <div className="rounded-3xl border border-zinc-200 bg-gradient-to-br from-white via-zinc-50 to-rose-50/60 p-6 sm:p-10 lg:p-16">
 
-          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-12 items-center">
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
 
             {/* ================= PHONE MOCKUP ================= */}
             <div className="relative flex justify-center lg:order-2">
@@ -46,7 +46,7 @@ export const AppPromoSection: React.FC = () => {
             </div>
 
             {/* ================= CONTENT ================= */}
-            <div className="space-y-8 text-center lg:text-left md:block hidden">
+            <div className="mt-10 space-y-8 text-center lg:mt-0 lg:text-left">
 
               <div className="space-y-4">
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-zinc-900 leading-tight">
@@ -60,7 +60,7 @@ export const AppPromoSection: React.FC = () => {
               </div>
 
               {/* Feature Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+              <div className="grid grid-cols-2 gap-4 pt-4 sm:grid-cols-2 sm:gap-6">
                 {[
                   {
                     icon: <Zap className="w-5 h-5 text-zinc-700" />,
@@ -81,12 +81,12 @@ export const AppPromoSection: React.FC = () => {
                 ].map((item, i) => (
                   <div
                     key={i}
-                    className="flex items-center justify-center lg:justify-start gap-3"
+                    className="flex items-center justify-center gap-3 lg:justify-start"
                   >
-                    <div className="w-10 h-10 bg-zinc-100 border border-zinc-200 rounded-xl flex items-center justify-center">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-zinc-200 bg-zinc-50 sm:h-10 sm:w-10">
                       {item.icon}
                     </div>
-                    <span className="text-zinc-800 font-medium text-sm sm:text-base">
+                    <span className="text-zinc-800 text-xs font-medium sm:text-sm">
                       {item.title}
                     </span>
                   </div>

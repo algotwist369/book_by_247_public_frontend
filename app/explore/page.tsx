@@ -2,16 +2,37 @@ import { Suspense } from 'react';
 import { Metadata } from 'next';
 import ExplorePageContent from './ExplorePageContent';
 import { businessApi } from '@/api/public/business';
+import { safeJsonLdStringify } from '@/lib/utils';
 
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-    title: 'Explore Top Spas & Salons | logoname',
-    description: 'Discover and book the best spas, salons, and wellness centers near you. Filter by rating, category, and location for a premium experience.',
+    title: 'Explore Top Spas & Salons',
+    description: 'Compare and book top-rated spas, salons, and wellness centers near you with powerful filters for rating, category, and location.',
+    keywords: [
+        "explore spas",
+        "explore salons",
+        "wellness centers",
+        "spa booking",
+        "salon booking",
+        "nearby spas",
+    ],
+    authors: [{ name: "bookby247 Team" }],
+    alternates: {
+        canonical: "/explore",
+    },
     openGraph: {
-        title: 'Explore Top Spas & Salons | logoname',
+        title: 'Explore Top Spas & Salons | bookby247',
         description: 'Discover and book the best spas, salons, and wellness centers near you.',
         images: ['https://thaiodyssey.co.in/assets/img/blog/475003.jpg'],
+        url: "https://bookby247.com/explore",
+        type: "website",
+        siteName: "bookby247",
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "Explore Top Spas & Salons | bookby247",
+        description: "Discover and book the best spas, salons, and wellness centers near you.",
     },
 };
 
@@ -49,34 +70,60 @@ export default async function ExplorePage() {
     // Senior SEO: Injecting JSON-LD for LocalBusiness list
     const jsonLd = {
         "@context": "https://schema.org",
-        "@type": "ItemList",
-        "itemListElement": businesses.map((b: any, i: number) => ({
-            "@type": "ListItem",
-            "position": i + 1,
-            "item": {
-                "@type": "LocalBusiness",
-                "name": b.name,
-                "image": Array.isArray(b.images) ? b.images[0] : (b.images?.banner || b.images?.logo),
-                "url": `https://logoname.com/business/${b.slug}`,
-                "aggregateRating": {
-                    "@type": "AggregateRating",
-                    "ratingValue": b.rating ?? b.ratings?.average ?? 0,
-                    "reviewCount": b.reviews ?? b.ratings?.totalReviews ?? 0
-                },
-                "address": {
-                    "@type": "PostalAddress",
-                    "streetAddress": b.address,
-                    "addressLocality": b.branch || b.city
-                }
-            }
-        }))
+        "@graph": [
+            {
+                "@type": "ItemList",
+                "name": "Explore spas and salons",
+                "url": "https://bookby247.com/explore",
+                "itemListElement": businesses.map((b: any, i: number) => ({
+                    "@type": "ListItem",
+                    "position": i + 1,
+                    "item": {
+                        "@type": "LocalBusiness",
+                        "name": b.name,
+                        "image":
+                            Array.isArray(b.images) && b.images.length > 0
+                                ? b.images[0]
+                                : b.images?.banner || b.images?.logo || b.images?.thumbnail,
+                        "url": `https://bookby247.com/business/${b.slug}`,
+                        "aggregateRating": {
+                            "@type": "AggregateRating",
+                            "ratingValue": b.rating ?? b.ratings?.average ?? 0,
+                            "reviewCount": b.reviews ?? b.ratings?.totalReviews ?? 0,
+                        },
+                        "address": {
+                            "@type": "PostalAddress",
+                            "streetAddress": b.address,
+                            "addressLocality": b.branch || b.city,
+                        },
+                    },
+                })),
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://bookby247.com/",
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Explore",
+                        "item": "https://bookby247.com/explore",
+                    },
+                ],
+            },
+        ],
     };
 
     return (
         <>
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(jsonLd) }}
             />
             <main className="min-h-screen bg-white">
                 <Suspense fallback={

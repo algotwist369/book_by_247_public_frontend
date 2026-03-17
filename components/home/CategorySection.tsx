@@ -48,7 +48,7 @@ export const CategorySection: React.FC<CategorySectionProps> = () => {
     }, [router]);
 
     return (
-        <section className="max-w-[90rem] mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20">
             <div className="flex flex-col gap-5 sm:gap-6 md:gap-8 mb-2 sm:mb-8 md:mb-10">
                 <div className="space-y-3 sm:space-y-4 md:space-y-6">
                     <div className="space-y-1 sm:space-y-1.5 md:space-y-2">

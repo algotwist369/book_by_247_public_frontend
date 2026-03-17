@@ -2,69 +2,64 @@ import React from "react";
 
 const SEOFooter = () => {
   return (
-    <section className="max-w-7xl mx-auto px-6 lg:py-24 lg:mt-20 py-6 border-t border-zinc-200">
+    <section className="border-t border-zinc-200 bg-white">
+      <div className="flex max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20 flex-col gap-10 lg:gap-14">
+        <div className="max-w-4xl">
+          <h2 className="text-2xl font-bold leading-tight text-zinc-900 sm:text-3xl lg:text-4xl">
+          bookby247 - Your Trusted Beauty & Wellness Booking Platform
+          </h2>
 
-      <div className="max-w-4xl">
-        <h2 className="text-zinc-900 text-3xl lg:text-4xl font-bold leading-tight">
-          logoname - Your Trusted Beauty & Wellness Booking Platform
-        </h2>
-
-        <p className="mt-4 text-zinc-600 text-base leading-relaxed">
-          Discover, compare, and book the best spas and salons near you.
-          logoname connects customers with verified beauty professionals,
-          making self-care simple, transparent, and accessible.
-        </p>
-      </div>
-
-      <div className="grid md:grid-cols-3 gap-10 mt-16 text-sm leading-relaxed">
-
-        {/* Column 1 */}
-        <div className="space-y-4">
-          <h3 className="text-zinc-900 font-semibold text-base">
-            Find the Best Spas & Salons
-          </h3>
-          <p className="text-zinc-600">
-            Browse thousands of verified spas, salons, and wellness centers.
-            Compare prices, explore real customer reviews, and choose services
-            that match your preferences and budget.
+          <p className="mt-3 text-sm leading-relaxed text-zinc-600 sm:text-base">
+            Discover, compare, and book the best spas and salons near you.
+            bookby247 connects customers with verified beauty professionals,
+            making self-care simple, transparent, and accessible.
           </p>
         </div>
 
-        {/* Column 2 */}
-        <div className="space-y-4">
-          <h3 className="text-zinc-900 font-semibold text-base">
-            Book Instantly & Securely
-          </h3>
-          <p className="text-zinc-600">
-            Enjoy seamless online booking with real-time availability.
-            Whether it's a Swedish massage, haircut, facial, manicure,
-            pedicure, or bridal makeup - book your appointment in seconds.
-          </p>
+        <div className="rounded-2xl border border-zinc-200 bg-linear-to-br from-white via-zinc-50 to-rose-50/60 p-6 sm:p-8">
+          <div className="grid gap-8 text-sm leading-relaxed md:grid-cols-3 md:gap-10">
+            <div className="space-y-3">
+              <h3 className="text-base font-semibold text-zinc-900">
+                Find the Best Spas &amp; Salons
+              </h3>
+              <p className="text-zinc-600">
+                Browse thousands of verified spas, salons, and wellness centers.
+                Compare prices, explore real customer reviews, and choose services
+                that match your preferences and budget.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="text-base font-semibold text-zinc-900">
+                Book Instantly &amp; Securely
+              </h3>
+              <p className="text-zinc-600">
+                Enjoy seamless online booking with real-time availability.
+                Whether it&apos;s a massage, haircut, facial, manicure, pedicure, or bridal
+                makeup, you can confirm appointments in seconds.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="text-base font-semibold text-zinc-900">
+                Beauty for Every Budget
+              </h3>
+              <p className="text-zinc-600">
+                From neighborhood salons to luxury spa resorts, bookby247 makes self-care
+                accessible to everyone with clear pricing and curated offers.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-8 border-t border-zinc-200 pt-4">
+            <p className="max-w-4xl text-xs leading-relaxed text-zinc-500">
+              bookby247 is a beauty and wellness discovery platform helping users find
+              trusted spa services, salon treatments, massage therapy, skincare, hair
+              styling, grooming, and holistic wellness solutions across the country.
+            </p>
+          </div>
         </div>
-
-        {/* Column 3 */}
-        <div className="space-y-4">
-          <h3 className="text-zinc-900 font-semibold text-base">
-            Beauty for Every Budget
-          </h3>
-          <p className="text-zinc-600">
-            From affordable neighborhood salons to luxury spa resorts,
-            logoname ensures self-care is accessible to everyone.
-            Discover exclusive deals, discounts, and premium experiences.
-          </p>
-        </div>
-
       </div>
-
-      <div className="mt-16 pt-8 border-t border-zinc-200">
-        <p className="text-xs text-zinc-500 leading-relaxed max-w-4xl">
-          logoname is a leading beauty and wellness discovery platform,
-          helping users find trusted spa services, salon treatments,
-          massage therapy, skincare, hair styling, grooming, and
-          holistic wellness solutions across the country.
-        </p>
-      </div>
-
     </section>
   );
 };

@@ -1,12 +1,42 @@
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
+import type { Metadata } from "next";
 import HeroSection from "@/components/home/HeroSection";
-import { StatsSection } from "@/components/home/StatsSection";
 import { CategorySection } from "@/components/home/CategorySection";
 import { businessApi } from "@/api/public/business";
 
-// Dynamically import all below-fold sections to split the JS bundle.
-// Named exports need .then(m => m.ComponentName) for dynamic() to work correctly.
+export const metadata: Metadata = {
+  title: "Book Spas & Salons Near You",
+  description:
+    "Discover, compare, and book top-rated spas and salons near you with bookby247. Verified businesses, real reviews, and seamless online booking.",
+  keywords: [
+    "book spa",
+    "book salon",
+    "spa near me",
+    "salon near me",
+    "massage booking",
+    "beauty services",
+  ],
+  authors: [{ name: "bookby247 Team" }],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Book Spas & Salons Near You | bookby247",
+    description:
+      "Find verified spas and salons near you, explore reviews, and book appointments in minutes.",
+    url: "https://bookby247.com/",
+    siteName: "bookby247",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Book Spas & Salons Near You | bookby247",
+    description:
+      "Discover and book premium spa and salon services near you with bookby247.",
+  },
+};
+ 
 const BusinessSection = dynamic(() => import("@/components/business/BusinessSection"), { ssr: true });
 const PartnerSection = dynamic(() => import("@/components/home/PartnerSection").then(m => m.PartnerSection));
 const FeatureSection = dynamic(() => import("@/components/home/FeatureSection"));
@@ -30,22 +60,25 @@ export default async function Home() {
       <br />
       <br />
       <PromotionBanner /> */}
-      {/* <StatsSection /> */}
       <CategorySection />
 
       {/* Featured Businesses */}
-      <Suspense fallback={
-        <div className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 max-w-[90rem] mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="flex flex-col gap-3">
-                <div className="aspect-video w-full bg-zinc-100 animate-pulse rounded-xl" />
-                <div className="h-6 w-3/4 bg-zinc-100 animate-pulse rounded-md" />
+      <Suspense
+        fallback={
+          <section className="w-full bg-linear-to-b from-white via-zinc-50 to-white">
+            <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 md:px-8 md:py-20">
+              <div className="grid grid-cols-2 gap-4 sm:gap-8 md:grid-cols-3 lg:grid-cols-4">
+                {[...Array(4)].map((_, i) => (
+                  <div key={i} className="flex flex-col gap-3 rounded-2xl border border-zinc-100 bg-white/70 p-3">
+                    <div className="aspect-video w-full rounded-xl bg-zinc-100" />
+                    <div className="h-6 w-3/4 rounded-md bg-zinc-100" />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      }>
+            </div>
+          </section>
+        }
+      >
         <BusinessSection initialData={businessData} />
       </Suspense>
 

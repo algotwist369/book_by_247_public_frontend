@@ -153,7 +153,7 @@ const BookingSummary = ({
             <div className="p-4 rounded-lg border border-gray-200 bg-white flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-zinc-900 shrink-0 mt-0.5" />
                 <div>
-                    <p className="text-sm font-medium text-gray-800">Verified by logoname</p>
+                    <p className="text-sm font-medium text-gray-800">Verified by bookby247</p>
                     <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">
                         5.2k+ users booked here in the last 30 days. No advance payment required.
                     </p>

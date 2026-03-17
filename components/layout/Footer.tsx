@@ -1,13 +1,9 @@
-
 import Link from "next/link";
 import {
     Facebook,
     Instagram,
     Twitter,
     Linkedin,
-    Mail,
-    Phone,
-    MapPin,
     ArrowRight
 } from "lucide-react";
 import { Button } from "../ui/Button";
@@ -16,105 +12,153 @@ import { Input } from "../ui/Input";
 const Footer = () => {
     const currentYear = new Date().getFullYear();
 
+    // 🔥 DATA
+    const socialLinks = [
+        { icon: Instagram, label: "Instagram" },
+        { icon: Facebook, label: "Facebook" },
+        { icon: Twitter, label: "Twitter" },
+        { icon: Linkedin, label: "LinkedIn" }
+    ];
+
+    const categories = [
+        "Spa & Wellness",
+        "Hair Salons",
+        "Massage Therapy",
+        "Nail Care",
+        "Facial & Skin"
+    ];
+
+    const quickLinks = [
+        "About Us",
+        "Contact Us",
+        "Become a Partner",
+        "Careers",
+        "Blog"
+    ];
+
+    const bottomLinks = [
+        "Privacy Policy",
+        "Terms of Service",
+        "Cookies Settings"
+    ];
+
+    const renderLinks = (links: any[]) =>
+        links.map((item) => (
+            <li key={item}>
+                <Link
+                    href="#"
+                    className="text-sm hover:text-white transition-colors flex items-center gap-2 group"
+                >
+                    <ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
+                    {item}
+                </Link>
+            </li>
+        ));
+
     return (
-        <footer className="bg-zinc-950 text-zinc-400 pt-20 pb-10 border-t border-white/5">
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 pb-16">
-                    {/* Brand Column */}
-                    <div className="space-y-6">
-                        <Link href="/" className="text-2xl font-black text-white tracking-tighter flex items-center gap-2">
+        <footer className="bg-zinc-950 text-zinc-400 border-t border-white/5 py-10">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                {/* 🔥 TOP GRID */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+
+                    {/* Brand */}
+                    <div className="space-y-5">
+                        <Link href="/" className="text-2xl font-black text-white flex items-center gap-2">
                             <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
                                 <div className="w-4 h-4 bg-zinc-950 rounded-sm" />
                             </div>
-                            logoname
+                            bookby247
                         </Link>
-                        <p className="text-sm leading-relaxed max-w-xs">
-                            Your ultimate destination for discovering and booking the most premium spas and salons. Experience wellness at your fingertips.
+
+                        <p className="text-sm max-w-xs">
+                            Discover and book premium spas and salons. Wellness at your fingertips.
                         </p>
-                        <div className="flex items-center gap-4">
-                            <Link href="#" aria-label="Follow us on Instagram" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-zinc-950 transition-all duration-300">
-                                <Instagram className="w-5 h-5" aria-hidden="true" />
-                            </Link>
-                            <Link href="#" aria-label="Follow us on Facebook" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-zinc-950 transition-all duration-300">
-                                <Facebook className="w-5 h-5" aria-hidden="true" />
-                            </Link>
-                            <Link href="#" aria-label="Follow us on Twitter" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-zinc-950 transition-all duration-300">
-                                <Twitter className="w-5 h-5" aria-hidden="true" />
-                            </Link>
-                            <Link href="#" aria-label="Follow us on LinkedIn" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-zinc-950 transition-all duration-300">
-                                <Linkedin className="w-5 h-5" aria-hidden="true" />
-                            </Link>
+
+                        {/* Social */}
+                        <div className="flex gap-3 flex-wrap">
+                            {socialLinks.map(({ icon: Icon, label }) => (
+                                <Link
+                                    key={label}
+                                    href="#"
+                                    aria-label={label}
+                                    className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-zinc-950 transition-all"
+                                >
+                                    <Icon className="w-5 h-5" />
+                                </Link>
+                            ))}
                         </div>
                     </div>
 
-                    <div className="flex gap-12 lg:gap-16">
-                        {/* Categories Column */}
-                        <div className="space-y-6">
-                            <h3 className="text-white font-bold uppercase tracking-widest text-sm">Top Categories</h3>
-                            <ul className="space-y-4">
-                                {['Spa & Wellness', 'Hair Salons', 'Massage Therapy', 'Nail Care', 'Facial & Skin'].map((item) => (
-                                    <li key={item}>
-                                        <Link href="#" className="text-sm hover:text-white transition-colors flex items-center gap-2 group">
-                                            <ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
-                                            {item}
-                                        </Link>
-                                    </li>
-                                ))}
+                    {/* 🔥 Categories + Quick Links (2 COL ON MOBILE) */}
+                    <div className="grid grid-cols-2 gap-8 sm:col-span-2 lg:col-span-2">
+
+                        {/* Categories */}
+                        <div className="space-y-5">
+                            <h3 className="text-white font-bold text-sm uppercase tracking-widest">
+                                Top Categories
+                            </h3>
+                            <ul className="space-y-3">
+                                {renderLinks(categories)}
                             </ul>
                         </div>
 
-                        {/* Quick Links Column */}
-                        <div className="space-y-6">
-                            <h3 className="text-white font-bold uppercase tracking-widest text-sm">Quick Links</h3>
-                            <ul className="space-y-4">
-                                {['About Us', 'Contact Us', 'Become a Partner', 'Careers', 'Blog'].map((item) => (
-                                    <li key={item}>
-                                        <Link href="#" className="text-sm hover:text-white transition-colors flex items-center gap-2 group">
-                                            <ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
-                                            {item}
-                                        </Link>
-                                    </li>
-                                ))}
+                        {/* Quick Links */}
+                        <div className="space-y-5">
+                            <h3 className="text-white font-bold text-sm uppercase tracking-widest">
+                                Quick Links
+                            </h3>
+                            <ul className="space-y-3">
+                                {renderLinks(quickLinks)}
                             </ul>
                         </div>
+
                     </div>
 
-                    {/* Newsletter Column */}
-                    <div className="space-y-6">
-                        <h3 className="text-white font-bold uppercase tracking-widest text-sm">Stay Updated</h3>
-                        <p className="text-sm">Subscribe to get special offers and wellness tips.</p>
+                    {/* Newsletter */}
+                    <div className="space-y-5">
+                        <h3 className="text-white font-bold text-sm uppercase tracking-widest">
+                            Stay Updated
+                        </h3>
+                        <p className="text-sm">
+                            Get offers & wellness tips directly.
+                        </p>
+
                         <div className="space-y-3">
                             <Input
                                 placeholder="Email address"
-                                className="bg-white/5 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-white/20"
-                                aria-label="Email address for newsletter"
+                                className="bg-white/5 border-white/10 text-white placeholder:text-zinc-600"
                             />
-                            <Button className="w-full bg-white text-zinc-950 hover:bg-zinc-200 font-bold" aria-label="Subscribe to newsletter">
+                            <Button className="w-full bg-white text-zinc-950 hover:bg-zinc-200 font-bold">
                                 Subscribe
                             </Button>
                         </div>
                     </div>
                 </div>
 
-                {/* Contact Strip */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-8 border-y border-white/5">
-
-                    <div className="flex items-center gap-4">
-                        <div>
-                            <p className="text-sm text-white font-medium">Support - support@logoname.com</p>
-                        </div>
-                    </div>
+                {/* 🔥 CONTACT */}
+                <div className="border-y border-white/5 py-6 mt-10 text-center md:text-left">
+                    <p className="text-sm text-white">
+                        Support: support@bookby247.com
+                    </p>
                 </div>
 
-                {/* Bottom Bar */}
-                <div className="pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
+                {/* 🔥 BOTTOM BAR */}
+                <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-6 text-center md:text-left">
                     <p className="text-xs">
-                        © {currentYear} logoname. All rights reserved.
+                        © {currentYear} bookby247. All rights reserved.
                     </p>
-                    <div className="flex items-center gap-8">
-                        <Link href="#" className="text-xs hover:text-white transition-colors">Privacy Policy</Link>
-                        <Link href="#" className="text-xs hover:text-white transition-colors">Terms of Service</Link>
-                        <Link href="#" className="text-xs hover:text-white transition-colors">Cookies Settings</Link>
+
+                    <div className="flex flex-wrap justify-center md:justify-end gap-5">
+                        {bottomLinks.map((item) => (
+                            <Link
+                                key={item}
+                                href="#"
+                                className="text-xs hover:text-white transition-colors"
+                            >
+                                {item}
+                            </Link>
+                        ))}
                     </div>
                 </div>
             </div>

@@ -5,37 +5,38 @@ import { CustomImage } from "@/components/ui/CustomImage";
 const ForBusinesses = () => {
 
     return (
-        <section className="max-w-360 mx-auto px-6 mt-10">
-            <div className="bg-white border border-zinc-200 rounded-3xl">
+        <section className="mt-10 bg-linear-to-b from-white via-zinc-50/80 to-white max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+            <div className="rounded-3xl border border-zinc-200 bg-linear-to-br from-white via-zinc-50 to-rose-50/60">
 
-                <div className="grid lg:grid-cols-12 gap-16 items-center p-10 md:p-14 lg:p-20">
+                <div className="grid items-center gap-10 p-6 sm:p-10 md:grid-cols-12 md:gap-12 md:p-12">
 
                     {/* ================= LEFT CONTENT ================= */}
-                    <div className="lg:col-span-6 space-y-8">
+                    <div className="space-y-8 md:col-span-6">
 
                         <div className="space-y-5">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 border border-zinc-300 rounded-full">
+                            <div className="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-3 py-1">
                                 <span className="h-2 w-2 rounded-full bg-black" />
                                 <span className="text-xs font-semibold text-zinc-700 uppercase tracking-widest">
                                     Partner Growth
                                 </span>
                             </div>
 
-                            <h2 className="text-3xl lg:text-5xl font-bold text-zinc-900 leading-tight">
-                                Grow your spa salon <br />
-                                <span className="text-black">
+                            <h2 className="text-2xl font-bold leading-tight text-zinc-900 sm:text-3xl lg:text-4xl">
+                                Grow your spa, salon
+                                <br />
+                                <span className="text-zinc-900">
                                     and beauty business.
                                 </span>
                             </h2>
 
-                            <p className="text-zinc-700 text-lg max-w-xl leading-relaxed">
+                            <p className="max-w-xl text-sm leading-relaxed text-zinc-700 sm:text-base">
                                 Manage bookings, attract regular customers, and scale your
                                 brand with an easy-to-use wellness management platform.
                             </p>
                         </div>
 
                         {/* Feature Grid */}
-                        <div className="grid sm:grid-cols-2 gap-x-10 gap-y-4">
+                        <div className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
                             {[
                                 "Online booking management",
                                 "Reach nearby customers",
@@ -44,7 +45,7 @@ const ForBusinesses = () => {
                             ].map((item, idx) => (
                                 <div key={idx} className="flex items-center gap-3">
                                     <CheckCircle className="w-5 h-5 text-black" />
-                                    <span className="text-zinc-800 text-sm font-medium">
+                                    <span className="text-sm font-medium text-zinc-800">
                                         {item}
                                     </span>
                                 </div>
@@ -52,30 +53,30 @@ const ForBusinesses = () => {
                         </div>
 
                         {/* Buttons */}
-                        <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                        <div className="flex flex-col gap-4 pt-4 sm:flex-row">
 
                             <a
-                                href="https://business.logoname.com/free-listing"
+                                href="https://business.bookby247.com/free-listing"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="px-6 py-3 rounded-xl bg-black hover:bg-zinc-900 text-white font-semibold text-base flex items-center justify-center gap-2"
+                                className="flex items-center justify-center gap-2 rounded-xl bg-black px-6 py-3 text-base font-semibold text-white"
                             >
                                 List Your Business Free
                                 <ArrowRight className="w-4 h-4" />
                             </a>
 
                             <a
-                                href="https://business.logoname.com/book-demo"
+                                href="https://business.bookby247.com/book-demo"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="px-6 py-3 rounded-xl border border-zinc-300 text-zinc-800 font-semibold text-base hover:bg-zinc-100"
+                                className="text-center rounded-xl border border-zinc-300 px-6 py-3 text-base font-semibold text-zinc-800"
                             >
                                 Request a Demo
                             </a>
 
                         </div>
 
-                        <div className="pt-4 border-t border-zinc-200">
+                        <div className="border-t border-zinc-200 pt-4">
                             <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
                                 Joined by 12,000+ businesses nationwide
                             </p>
@@ -84,9 +85,9 @@ const ForBusinesses = () => {
                     </div>
 
                     {/* ================= RIGHT SIDE ================= */}
-                    <div className="lg:col-span-6">
+                    <div className="md:col-span-6">
 
-                        <div className="bg-white border border-zinc-200 rounded-2xl overflow-hidden">
+                        <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white">
 
                             {/* Browser Header */}
                             <div className="h-10 bg-zinc-50 border-b border-zinc-200 flex items-center px-4 gap-2">
