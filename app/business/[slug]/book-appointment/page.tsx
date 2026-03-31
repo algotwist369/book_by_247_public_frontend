@@ -20,8 +20,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     if (!business) {
         return {
-            title: "Book Appointment | bookby247",
-            description: "Securely book spa and salon appointments online with bookby247.",
+            title: "Book Appointment | Bookby247",
+            description: "Securely book spa and salon appointments online with Bookby247.",
             robots: {
                 index: false,
                 follow: true,
@@ -29,14 +29,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         };
     }
 
-    const title = `Book Appointment at ${business.name} | bookby247`;
+    const title = `Book Appointment at ${business.name} | Bookby247`;
     const description = `Choose your preferred slot and instantly book an appointment at ${business.name} in ${business.city}.`;
     const canonicalPath = `/business/${business.slug || slug}/book-appointment`;
 
     return {
         title,
         description,
-        authors: [{ name: "bookby247 Team" }],
+        authors: [{ name: "Bookby247 Team" }],
         alternates: {
             canonical: canonicalPath,
         },
@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             description,
             url: `https://bookby247.com${canonicalPath}`,
             type: "website",
-            siteName: "bookby247",
+            siteName: "Bookby247",
         },
         twitter: {
             card: "summary",

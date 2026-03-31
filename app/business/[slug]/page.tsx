@@ -21,14 +21,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     if (!business) {
         return {
-            title: 'Business Not Found | bookby247',
+            title: 'Business Not Found | Bookby247',
         };
     }
 
     const seo = business.seo || {};
 
     const title =
-        seo.metaTitle || `${business.name} - ${business.city} | bookby247`;
+        seo.metaTitle || `${business.name} - ${business.city} | Bookby247`;
     const description =
         seo.metaDescription ||
         (business.description
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         title,
         description,
         keywords: seo.keywords || [],
-        authors: [{ name: "bookby247 Team" }],
+        authors: [{ name: "Bookby247 Team" }],
         alternates: {
             canonical: canonicalPath,
         },
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             title,
             description,
             url: `https://bookby247.com${canonicalPath}`,
-            siteName: "bookby247",
+            siteName: "Bookby247",
             type: "website",
             images: ogImage ? [ogImage] : [],
         },

@@ -17,21 +17,21 @@ export const metadata: Metadata = {
         "salon booking",
         "nearby spas",
     ],
-    authors: [{ name: "bookby247 Team" }],
+    authors: [{ name: "Bookby247 Team" }],
     alternates: {
         canonical: "/explore",
     },
     openGraph: {
-        title: 'Explore Top Spas & Salons | bookby247',
+        title: 'Explore Top Spas & Salons | Bookby247',
         description: 'Discover and book the best spas, salons, and wellness centers near you.',
         images: ['https://thaiodyssey.co.in/assets/img/blog/475003.jpg'],
         url: "https://bookby247.com/explore",
         type: "website",
-        siteName: "bookby247",
+        siteName: "Bookby247",
     },
     twitter: {
         card: "summary_large_image",
-        title: "Explore Top Spas & Salons | bookby247",
+        title: "Explore Top Spas & Salons | Bookby247",
         description: "Discover and book the best spas, salons, and wellness centers near you.",
     },
 };

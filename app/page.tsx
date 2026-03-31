@@ -8,7 +8,7 @@ import { businessApi } from "@/api/public/business";
 export const metadata: Metadata = {
   title: "Book Spas & Salons Near You",
   description:
-    "Discover, compare, and book top-rated spas and salons near you with bookby247. Verified businesses, real reviews, and seamless online booking.",
+    "Discover, compare, and book top-rated spas and salons near you with Bookby247. Verified businesses, real reviews, and seamless online booking.",
   keywords: [
     "book spa",
     "book salon",
@@ -17,23 +17,23 @@ export const metadata: Metadata = {
     "massage booking",
     "beauty services",
   ],
-  authors: [{ name: "bookby247 Team" }],
+  authors: [{ name: "Bookby247 Team" }],
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Book Spas & Salons Near You | bookby247",
+    title: "Book Spas & Salons Near You | Bookby247",
     description:
       "Find verified spas and salons near you, explore reviews, and book appointments in minutes.",
     url: "https://bookby247.com/",
-    siteName: "bookby247",
+    siteName: "Bookby247",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Book Spas & Salons Near You | bookby247",
+    title: "Book Spas & Salons Near You | Bookby247",
     description:
-      "Discover and book premium spa and salon services near you with bookby247.",
+      "Discover and book premium spa and salon services near you with Bookby247.",
   },
 };
  

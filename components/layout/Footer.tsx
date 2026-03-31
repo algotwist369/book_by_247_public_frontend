@@ -64,11 +64,15 @@ const Footer = () => {
 
                     {/* Brand */}
                     <div className="space-y-5">
-                        <Link href="/" className="text-2xl font-black text-white flex items-center gap-2">
-                            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
-                                <div className="w-4 h-4 bg-zinc-950 rounded-sm" />
-                            </div>
-                            bookby247
+                        <Link href="/" className="shrink-0 flex items-center">
+                            <img
+                                src="https://res.cloudinary.com/dwsv275kv/image/upload/v1774690800/WhatsApp_Image_2026-03-28_at_3_imgupscaler.ai_General_8K_x8h19z.jpg" // put your logo inside public folder
+                                alt="SPA ADVISOR Logo"
+                                width={180}
+                                height={60}
+                                // priority
+                                className="h-10 sm:h-12 md:h-14 w-auto object-contain rounded-lg"
+                            />
                         </Link>
 
                         <p className="text-sm max-w-xs">
@@ -146,7 +150,7 @@ const Footer = () => {
                 {/* 🔥 BOTTOM BAR */}
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-6 text-center md:text-left">
                     <p className="text-xs">
-                        © {currentYear} bookby247. All rights reserved.
+                        © {currentYear} Bookby247. All rights reserved.
                     </p>
 
                     <div className="flex flex-wrap justify-center md:justify-end gap-5">

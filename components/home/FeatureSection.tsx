@@ -64,7 +64,7 @@ const FeatureSection = () => {
           <div className="mx-auto max-w-md rounded-3xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-rose-50/60 p-4 sm:max-w-lg sm:p-5 lg:max-w-2xl">
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl sm:aspect-square">
               <CustomImage
-                src="https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399342/4_hb33eu.png"
+                src="https://res.cloudinary.com/dwsv275kv/image/upload/v1774788053/service1_ta4znw.png"
                 alt="Professional spa service"
                 fill
                 className="object-cover"

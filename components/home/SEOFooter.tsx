@@ -6,12 +6,12 @@ const SEOFooter = () => {
       <div className="flex max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20 flex-col gap-10 lg:gap-14">
         <div className="max-w-4xl">
           <h2 className="text-2xl font-bold leading-tight text-zinc-900 sm:text-3xl lg:text-4xl">
-          bookby247 - Your Trusted Beauty & Wellness Booking Platform
+          Bookby247 - Your Trusted Beauty & Wellness Booking Platform
           </h2>
 
           <p className="mt-3 text-sm leading-relaxed text-zinc-600 sm:text-base">
             Discover, compare, and book the best spas and salons near you.
-            bookby247 connects customers with verified beauty professionals,
+            Bookby247 connects customers with verified beauty professionals,
             making self-care simple, transparent, and accessible.
           </p>
         </div>
@@ -45,7 +45,7 @@ const SEOFooter = () => {
                 Beauty for Every Budget
               </h3>
               <p className="text-zinc-600">
-                From neighborhood salons to luxury spa resorts, bookby247 makes self-care
+                From neighborhood salons to luxury spa resorts, Bookby247 makes self-care
                 accessible to everyone with clear pricing and curated offers.
               </p>
             </div>
@@ -53,7 +53,7 @@ const SEOFooter = () => {
 
           <div className="mt-8 border-t border-zinc-200 pt-4">
             <p className="max-w-4xl text-xs leading-relaxed text-zinc-500">
-              bookby247 is a beauty and wellness discovery platform helping users find
+              Bookby247 is a beauty and wellness discovery platform helping users find
               trusted spa services, salon treatments, massage therapy, skincare, hair
               styling, grooming, and holistic wellness solutions across the country.
             </p>

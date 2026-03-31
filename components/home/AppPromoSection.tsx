@@ -12,36 +12,15 @@ export const AppPromoSection: React.FC = () => {
 
           <div className="flex flex-col lg:grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
 
-            {/* ================= PHONE MOCKUP ================= */}
+            {/* ================= IMAGE ONLY ================= */}
             <div className="relative flex justify-center lg:order-2">
-
-              <div className="relative w-[200px] sm:w-[200px] md:w-[200px] aspect-[9/19] rotate-3">
-
-                {/* Outer Frame */}
-                <div className="absolute inset-0 rounded-[2.5rem] bg-zinc-200" />
-
-                {/* Metallic Edge */}
-                <div className="absolute inset-[3px] rounded-[2.3rem] bg-black" />
-
-                {/* Screen */}
-                <div className="absolute inset-[8px] rounded-[2rem] overflow-hidden bg-black">
-
-                  {/* Top notch */}
-                  <div className="absolute top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full z-20" />
-
-                  <CustomImage
-                    src="https://res.cloudinary.com/dxpxcptn4/image/upload/v1771396713/new_mob_vb1vtz.png"
-                    alt="App Interface"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-
-                {/* Side Buttons */}
-                <div className="hidden sm:block absolute left-[-4px] top-24 w-1 h-10 bg-zinc-400 rounded-full" />
-                <div className="hidden sm:block absolute left-[-4px] top-36 w-1 h-14 bg-zinc-400 rounded-full" />
-                <div className="hidden sm:block absolute right-[-4px] top-32 w-1 h-16 bg-zinc-400 rounded-full" />
-
+              <div className="relative w-full max-w-[280px] sm:max-w-[320px] aspect-[9/19] rotate-3 overflow-hidden">
+                <CustomImage
+                  src="https://res.cloudinary.com/dwsv275kv/image/upload/v1774952731/cr3_exqizu.png"
+                  alt="App Interface"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
 

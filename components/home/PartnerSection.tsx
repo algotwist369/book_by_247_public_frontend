@@ -36,7 +36,7 @@ export const PartnerSection: React.FC = () => {
             </p>
             <h2 className="text-balance text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
               Grow your spa &amp; salon
-              <span className="block text-rose-700">with bookby247</span>
+              <span className="block text-rose-700">with Bookby247</span>
             </h2>
             <p className="mx-auto max-w-xl text-sm leading-relaxed text-slate-700 sm:text-base">
               Join a curated marketplace of wellness businesses and start receiving quality bookings from day one.
@@ -77,7 +77,7 @@ export const PartnerSection: React.FC = () => {
         <div className="flex-1">
           <div className="mx-auto max-w-md rounded-3xl border border-rose-100 bg-linear-to-br from-white via-rose-50 to-rose-100/60 p-4 sm:max-w-lg sm:p-5 lg:max-w-2xl">
             <CustomImage
-              src="https://res.cloudinary.com/dxpxcptn4/image/upload/v1771396607/reports-dashboard_ap3qhp.png"
+              src="https://res.cloudinary.com/dwsv275kv/image/upload/v1774953174/CRM_dashboard__February_2025_overview_y0fj7b.png"
               alt="Business manager dashboard"
               width={800}
               height={600}

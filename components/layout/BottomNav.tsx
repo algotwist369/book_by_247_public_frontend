@@ -14,8 +14,8 @@ import { cn } from "@/lib/utils"
 
 const NAV_ITEMS = [
     { label: "Home", icon: Home, href: "/" },
-    { label: "Search", icon: Search, href: "/explore" },
     { label: "For Business", icon: Briefcase, href: "https://business.bookby247.com/bookings", external: true },
+    { label: "Search", icon: Search, href: "/explore" },
     { label: "Demo", icon: Calendar, href: "https://business.bookby247.com/book-demo", external: true },
     { label: "Status", icon: CalendarRange, href: "https://business.bookby247.com/my-status", external: true },
 ]

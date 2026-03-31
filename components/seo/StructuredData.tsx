@@ -7,21 +7,21 @@ const StructuredData = () => {
         "@graph": [
             {
                 "@type": "Organization",
-                "name": "bookby247",
+                "name": "Bookby247",
                 "url": "https://bookby247.com",
                 "logo": "https://bookby247.com/logo.png",
                 "sameAs": [
-                    "https://facebook.com/bookby247",
-                    "https://instagram.com/bookby247",
-                    "https://twitter.com/bookby247",
-                    "https://www.linkedin.com/company/bookby247"
+                    "https://facebook.com/Bookby247",
+                    "https://instagram.com/Bookby247",
+                    "https://twitter.com/Bookby247",
+                    "https://www.linkedin.com/company/Bookby247"
                 ]
             },
             {
                 "@type": "WebSite",
-                "name": "bookby247",
+                "name": "Bookby247",
                 "url": "https://bookby247.com",
-                "description": "Book best spas, salons, and wellness services near you with bookby247.",
+                "description": "Book best spas, salons, and wellness services near you with Bookby247.",
                 "potentialAction": {
                     "@type": "SearchAction",
                     "target": "https://bookby247.com/explore?q={search_term_string}",
