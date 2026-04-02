@@ -6,37 +6,115 @@ import { CategorySection } from "@/components/home/CategorySection";
 import { businessApi } from "@/api/public/business";
 
 export const metadata: Metadata = {
-  title: "Book Spas & Salons Near You",
+  title: "Book Spas, Salons & Beauty Services Near You Across India | Bookby247",
   description:
-    "Discover, compare, and book top-rated spas and salons near you with Bookby247. Verified businesses, real reviews, and seamless online booking.",
+    "Discover, compare, and book top-rated spas, salons & beauty services near you with Bookby247. Verified businesses, real reviews, and seamless online booking.",
   keywords: [
-    "book spa",
-    "book salon",
     "spa near me",
     "salon near me",
-    "massage booking",
-    "beauty services",
+    "beauty parlour near me",
+    "massage near me",
+    "body massage near me",
+    "facial near me",
+    "hair salon near me",
+    "spa booking online",
+    "salon booking online",
+    "beauty services near me",
+    "best spa near me",
+    "best salon near me",
+    "luxury spa near me",
+    "couple spa near me",
+    "unisex salon near me",
+    "spa near me open now",
+    "salon near me open now",
+    "affordable spa near me",
+    "cheap salon near me",
+
+    "spa near me",
+    "salon near me",
+    "beauty parlour near me",
+    "massage near me",
+    "hair salon near me",
+    "spa booking online",
+    "salon booking online",
+    "beauty services near me",
+    "best spa near me",
+    "best salon near me",
+
+    "body massage near me",
+    "full body massage near me",
+    "deep tissue massage near me",
+    "facial near me",
+    "haircut near me",
+    "hair spa near me",
+    "manicure pedicure near me",
+    "bridal makeup near me",
+    "waxing near me",
+    "threading near me",
+
+    "luxury spa near me",
+    "couple spa near me",
+    "unisex salon near me",
+    "premium salon near me",
+    "best beauty salon near me",
+    "top rated spa near me",
+    "5 star spa near me",
+
+    "spa in Mumbai",
+    "salon in Delhi",
+    "beauty parlour in Bangalore",
+    "spa in Pune",
+    "salon in Hyderabad",
+    "massage in Navi Mumbai",
+    "spa in Andheri",
+    "salon in Whitefield",
+
+    "spa near me open now",
+    "salon near me open today",
+    "massage near me open now",
+    "beauty parlour near me open now",
+    "spa near me for couples",
+    "salon near me for men",
+    "salon near me for women",
+
+    "spa price near me",
+    "salon price list near me",
+    "body massage cost in Mumbai",
+    "facial price near me",
+    "cheap salon near me",
+    "affordable spa near me",
   ],
   authors: [{ name: "Bookby247 Team" }],
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Book Spas & Salons Near You | Bookby247",
+    title: "Best Spas, Salons & Beauty Services in India | Bookby247",
     description:
-      "Find verified spas and salons near you, explore reviews, and book appointments in minutes.",
+      "Discover top-rated spas, salons, and beauty services near you across India. Compare prices, read real reviews, and book appointments instantly on Bookby247.",
     url: "https://bookby247.com/",
     siteName: "Bookby247",
     type: "website",
+    locale: "en_IN",
+    images: [
+      {
+        url: "https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png", // create this
+        width: 1200,
+        height: 630,
+        alt: "Book spa, salon and beauty services near you in India",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Book Spas & Salons Near You | Bookby247",
+    title: "Best Spas, Salons & Beauty Services in India | Bookby247",
     description:
-      "Discover and book premium spa and salon services near you with Bookby247.",
+      "Find top-rated spas, salons & beauty services near you across India. Compare prices, read real reviews & book instantly on Bookby247.",
+    images: ["https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png"], // must match OG image
+    creator: "@bookby247", // optional but recommended
   },
 };
- 
+
 const BusinessSection = dynamic(() => import("@/components/business/BusinessSection"), { ssr: true });
 const PartnerSection = dynamic(() => import("@/components/home/PartnerSection").then(m => m.PartnerSection));
 const FeatureSection = dynamic(() => import("@/components/home/FeatureSection"));

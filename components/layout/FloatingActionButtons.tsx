@@ -9,7 +9,7 @@ export const FloatingActionButtons = () => {
         <div className="hidden md:flex fixed right-0 top-1/2 -translate-y-1/2 z-50 flex-col gap-2 pointer-events-none">
             {/* Free Listing Button */}
             <Link
-                href="/business"
+                href="/free-listing"
                 className="pointer-events-auto bg-black text-white flex flex-col items-center gap-2 md:gap-4 py-4 px-2 md:py-6 md:px-3 rounded-l-xl md:rounded-l-2xl transition-colors hover:bg-zinc-900"
             >
                 <Store className="w-4 h-4 md:w-5 md:h-5" />
