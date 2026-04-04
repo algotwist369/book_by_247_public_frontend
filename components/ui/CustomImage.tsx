@@ -25,6 +25,9 @@ const UNOPTIMIZED_HOSTS = [
 ];
 
 const isHotlinkProtected = (src: string): boolean => {
+    if (!src || (!src.startsWith("http://") && !src.startsWith("https://"))) {
+        return false;
+    }
     try {
         const { hostname } = new URL(src);
         return UNOPTIMIZED_HOSTS.some((h) => hostname === h || hostname.endsWith("." + h));
@@ -42,16 +45,25 @@ const CustomImage = ({
     unoptimized,
     ...props
 }: CustomImageProps) => {
+    const normalizeSrc = (s: string | undefined): string => {
+        if (!s) return fallback;
+        if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("/")) {
+            return s;
+        }
+        return `/${s}`;
+    };
+
     // Auto-detect hotlink-protected sources and bypass the optimizer for them
-    const shouldUnoptimize = unoptimized ?? isHotlinkProtected(src as string ?? "");
-    const [imgSrc, setImgSrc] = useState<string>(src as string || fallback)
+    const shouldUnoptimize = unoptimized ?? isHotlinkProtected(normalizeSrc(src as string ?? ""));
+    const [imgSrc, setImgSrc] = useState<string>(normalizeSrc(src as string) || fallback)
     const [isLoading, setIsLoading] = useState(true)
     const [hasError, setHasError] = useState(false)
 
     // Reset state when src changes
     useEffect(() => {
+        const normalized = normalizeSrc(src as string);
         if (src) {
-            setImgSrc(src as string)
+            setImgSrc(normalized)
             setIsLoading(true)
             setHasError(false)
         } else {

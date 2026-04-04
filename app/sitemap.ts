@@ -57,6 +57,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     businessRoutes = [];
   }
 
-  return [...staticRoutes, ...businessRoutes];
+  // SEO Search Routes (Top Cities + Categories)
+  const topCities = ["delhi", "mumbai", "bangalore", "pune", "hyderabad", "chennai", "kolkata", "gurgaon", "noida"];
+  const topCategories = ["spa", "salon", "massage", "wellness", "beauty-parlour"];
+
+  const searchRoutes: MetadataRoute.Sitemap = topCities.flatMap((city) => 
+    topCategories.map((category) => ({
+      url: `${BASE_URL}/search/${city}/${category}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    }))
+  );
+
+  return [...staticRoutes, ...businessRoutes, ...searchRoutes];
 }
 

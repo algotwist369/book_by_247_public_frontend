@@ -89,5 +89,32 @@ export const businessApi = {
             if (value !== undefined) queryParams.append(key, value.toString());
         });
         return apiClient<any>(`/business/public/nearby?${queryParams.toString()}`);
+    },
+
+    /**
+     * Get businesses based on SEO routing (city, area, service, intent)
+     */
+    getSeoBusinesses: async (params: any) => {
+        const queryParams = new URLSearchParams();
+        Object.entries(params).forEach(([key, value]) => {
+            if (value !== undefined && value !== null && value !== '') {
+                queryParams.append(key, String(value));
+            }
+        });
+        return apiClient<any>(`/seo/businesses?${queryParams.toString()}`);
+    },
+
+    /**
+     * Get full business details by slug for SEO landing page
+     */
+    getSeoBusinessBySlug: async (slug: string) => {
+        return apiClient<any>(`/seo/business/${slug}`);
+    },
+
+    /**
+     * Get reviews by business slug for SEO pages
+     */
+    getSeoReviewsBySlug: async (slug: string) => {
+        return apiClient<any>(`/seo/reviews/${slug}`);
     }
 };

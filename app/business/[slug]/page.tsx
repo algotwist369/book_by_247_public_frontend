@@ -1,18 +1,18 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import BusinessDetailsContent from './BusinessDetailsContent';
+import { businessApi } from '@/api/public/business';
+import { Metadata } from 'next';
+import { safeJsonLdStringify } from '@/lib/utils';
+import { generateLocalBusinessJsonLd, generateBreadcrumbJsonLd } from '@/lib/seo-jsonld';
+
+export const revalidate = 3600;
 
 interface PageProps {
     params: Promise<{
         slug: string;
     }>
 }
-
-import { businessApi } from '@/api/public/business';
-import { Metadata } from 'next';
-import { safeJsonLdStringify } from '@/lib/utils';
-
-export const revalidate = 3600;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { slug } = await params;
@@ -26,14 +26,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
 
     const seo = business.seo || {};
+    const city = business.locationInfo?.city || business.city;
+    const area = business.locationInfo?.area || business.branch;
 
     const title =
-        seo.metaTitle || `${business.name} - ${business.city} | Bookby247`;
+        seo.metaTitle || `${business.name} - Best ${business.type || 'wellness center'} in ${area ? `${area}, ` : ''}${city} | Bookby247`;
     const description =
         seo.metaDescription ||
         (business.description
             ? business.description.substring(0, 157) + (business.description.length > 157 ? "..." : "")
-            : `Book appointments at ${business.name} in ${business.city}. Premium spa and salon services.`);
+            : `Book appointments at ${business.name} in ${area ? `${area}, ` : ''}${city}. Verified reviews, prices, and instant online booking for ${business.type || 'beauty services'}.`);
+    
     const canonicalPath = `/business/${business.slug || slug}`;
     const ogImage =
         seo.ogImage || business.images?.banner || business.images?.logo || business.images?.thumbnail || "";
@@ -41,7 +44,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
         title,
         description,
-        keywords: seo.keywords || [],
+        keywords: seo.keywords || [business.name, business.type, city, "booking", "spa", "salon"],
         authors: [{ name: "Bookby247 Team" }],
         alternates: {
             canonical: canonicalPath,
@@ -73,70 +76,35 @@ const BusinessDetailsPage = async ({ params }: PageProps) => {
 
     const business = businessData.data;
 
+    // Fetch reviews for SEO JSON-LD
+    const reviewsResponse = await businessApi.getSeoReviewsBySlug(slug).catch(() => null);
+    const seoReviews = reviewsResponse?.data || [];
+
     const jsonLd = {
         "@context": "https://schema.org",
         "@graph": [
             {
-                "@type": "LocalBusiness",
-                "@id": `https://bookby247.com/business/${business.slug || slug}#business`,
-                "name": business.name,
-                "description": business.description,
-                "image": [
-                    business.images?.banner,
-                    ...(business.images?.gallery || []),
-                    business.images?.logo,
-                    business.images?.thumbnail,
-                ].filter(Boolean),
-                "url": `https://bookby247.com/business/${business.slug || slug}`,
-                "telephone": business.phone,
-                "address": business.address
-                    ? {
-                        "@type": "PostalAddress",
-                        "streetAddress": business.address,
-                        "addressLocality": business.branch || business.city,
-                        "addressRegion": business.state,
-                        "postalCode": business.pincode,
-                        "addressCountry": "IN",
+                ...generateLocalBusinessJsonLd(business),
+                "review": seoReviews.map((r: any) => ({
+                    "@type": "Review",
+                    "author": {
+                        "@type": "Person",
+                        "name": r.guestName || "Anonymous"
+                    },
+                    "datePublished": r.createdAt,
+                    "reviewBody": r.review,
+                    "reviewRating": {
+                        "@type": "Rating",
+                        "ratingValue": r.rating,
+                        "bestRating": "5"
                     }
-                    : undefined,
-                "aggregateRating": business.ratings
-                    ? {
-                        "@type": "AggregateRating",
-                        "ratingValue": business.ratings.average,
-                        "reviewCount": business.ratings.totalReviews,
-                    }
-                    : undefined,
-                "geo": business.location?.coordinates
-                    ? {
-                        "@type": "GeoCoordinates",
-                        "latitude": business.location.coordinates[1],
-                        "longitude": business.location.coordinates[0],
-                    }
-                    : undefined,
+                }))
             },
-            {
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                    {
-                        "@type": "ListItem",
-                        "position": 1,
-                        "name": "Home",
-                        "item": "https://bookby247.com/",
-                    },
-                    {
-                        "@type": "ListItem",
-                        "position": 2,
-                        "name": "Explore",
-                        "item": "https://bookby247.com/explore",
-                    },
-                    {
-                        "@type": "ListItem",
-                        "position": 3,
-                        "name": business.name,
-                        "item": `https://bookby247.com/business/${business.slug || slug}`,
-                    },
-                ],
-            },
+            generateBreadcrumbJsonLd([
+                { name: "Home", item: "https://bookby247.com/" },
+                { name: "Explore", item: "https://bookby247.com/explore" },
+                { name: business.name, item: `https://bookby247.com/business/${business.slug || slug}` },
+            ])
         ],
     };
 
