@@ -126,30 +126,40 @@ const PromotionBanner = dynamic(() => import("@/components/promotion/PromotionBa
 
 export const revalidate = 3600;
 
+import { generateItemListJsonLd } from "@/lib/seo-jsonld";
+import { safeJsonLdStringify } from "@/lib/utils";
+
 export default async function Home() {
-  const businessData = await businessApi.getPublicBusinesses({ limit: 16 }).catch(() => null);
+  // Fetch initial data for SSR
+  const initialBusinessData = await businessApi.getPublicBusinesses({ limit: 16 }).catch((err) => {
+    console.error("Home page data fetch error:", err);
+    return null;
+  });
+
+  const businesses = (initialBusinessData as any)?.businesses || (initialBusinessData as any)?.data || [];
+  const jsonLd = generateItemListJsonLd(businesses, "India", "Spas and Salons");
 
   return (
     <div className="bg-white min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(jsonLd) }}
+      />
+      
       <HeroSection />
-      {/* <br />
-      <br />
-      <PromotionBanner />
-      <br />
-      <br />
-      <PromotionBanner /> */}
       <CategorySection />
 
-      {/* Featured Businesses */}
+      {/* Featured Businesses Section with SSR initial data */}
       <Suspense
         fallback={
-          <section className="w-full bg-linear-to-b from-white via-zinc-50 to-white">
-            <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 md:px-8 md:py-20">
+          <section className="w-full bg-linear-to-b from-white via-zinc-50 to-white px-4 py-20">
+            <div className="mx-auto max-w-7xl px-4 flex flex-col gap-8">
+              <div className="h-10 w-64 bg-zinc-100 rounded-lg animate-pulse" />
               <div className="grid grid-cols-2 gap-4 sm:gap-8 md:grid-cols-3 lg:grid-cols-4">
                 {[...Array(4)].map((_, i) => (
                   <div key={i} className="flex flex-col gap-3 rounded-2xl border border-zinc-100 bg-white/70 p-3">
-                    <div className="aspect-video w-full rounded-xl bg-zinc-100" />
-                    <div className="h-6 w-3/4 rounded-md bg-zinc-100" />
+                    <div className="aspect-video w-full rounded-xl bg-zinc-100 animate-pulse" />
+                    <div className="h-6 w-3/4 rounded-md bg-zinc-100 animate-pulse" />
                   </div>
                 ))}
               </div>
@@ -157,10 +167,11 @@ export default async function Home() {
           </section>
         }
       >
-        <BusinessSection initialData={businessData} />
+        <BusinessSection initialData={initialBusinessData} />
+        
       </Suspense>
 
-      {/* Below-fold — dynamically chunked */}
+      {/* Below-fold content */}
       <PartnerSection />
       <FeatureSection />
       <AppPromoSection />
