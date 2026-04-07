@@ -116,5 +116,16 @@ export const businessApi = {
      */
     getSeoReviewsBySlug: async (slug: string) => {
         return apiClient<any>(`/seo/reviews/${slug}`);
-    }
+    },
+
+    getBusinessTypes: async () => {
+        return apiClient<{ success: boolean; data: { slug: string; name: string }[] }>('/seo/metadata/types');
+    },
+
+    /**
+     * Get all unique cities where active businesses are located
+     */
+    getUniqueCities: async () => {
+        return apiClient<{ success: boolean; data: string[] }>('/business/public/cities');
+    },
 };

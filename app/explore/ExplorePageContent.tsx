@@ -8,6 +8,7 @@ import ExploreFilterModal, { FilterState } from '@/components/explore-business/E
 import { Map, List } from 'lucide-react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useInfiniteSearch } from '@/hooks/useInfiniteSearch';
+import { useBusinessTypes } from '@/hooks/useBusinessTypes';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { MapPin, ArrowLeft, Search, X as CloseIcon } from 'lucide-react';
 import { useLocationSuggestions } from '@/hooks/useLocationSuggestions';
@@ -136,9 +137,11 @@ const ExplorePageContent = () => {
         setCommittedLocation(loc !== undefined ? loc : locationQuery);
     }, [searchQuery, locationQuery]);
 
+    const { data: businessTypes } = useBusinessTypes();
     const categories = useMemo(() => {
-        return ['All', 'Spa', 'Salon', 'Massage', 'Wellness', 'Barber'];
-    }, []);
+        const types = businessTypes?.map(t => t.name) || [];
+        return ['All', ...types];
+    }, [businessTypes]);
 
     return (
         <div className="bg-white min-h-screen">
