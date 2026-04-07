@@ -7,9 +7,10 @@ import { CustomImage } from '../ui/CustomImage';
 
 interface BusinessGalleryProps {
     images: string[];
+    businessName?: string;
 }
 
-const BusinessGallery = ({ images }: BusinessGalleryProps) => {
+const BusinessGallery = ({ images, businessName = "Business" }: BusinessGalleryProps) => {
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
     const openModal = (index: number) => setSelectedIndex(index);
@@ -25,7 +26,7 @@ const BusinessGallery = ({ images }: BusinessGalleryProps) => {
                 >
                     <CustomImage
                         src={images[0]}
-                        alt="Gallery main"
+                        alt={`${businessName} main gallery image`}
                         fill
                         priority
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -40,9 +41,9 @@ const BusinessGallery = ({ images }: BusinessGalleryProps) => {
                             className="relative flex-1 bg-zinc-100 overflow-hidden group cursor-pointer"
                             onClick={() => openModal(1)}
                         >
-                            <CustomImage
+                             <CustomImage
                                 src={images[1]}
-                                alt="Gallery 1"
+                                alt={`${businessName} gallery image 2`}
                                 fill
                                 priority
                                 className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -56,9 +57,9 @@ const BusinessGallery = ({ images }: BusinessGalleryProps) => {
                             className="relative flex-1 bg-zinc-100 overflow-hidden group cursor-pointer"
                             onClick={() => openModal(2)}
                         >
-                            <CustomImage
+                             <CustomImage
                                 src={images[2]}
-                                alt="Gallery 2"
+                                alt={`${businessName} gallery image 3`}
                                 fill
                                 priority
                                 className={`object-cover transition-transform duration-700 group-hover:scale-105 ${images.length > 3 ? 'opacity-50' : ''}`}

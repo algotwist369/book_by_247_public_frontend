@@ -20,18 +20,17 @@ import { Button } from "../ui/Button"
 import { cn } from "@/lib/utils"
 import { motion, AnimatePresence } from "framer-motion"
 import { CATEGORIES_DATA } from "@/lib/constants"
+import { useCities } from "@/hooks/useCities"
 import Image from "next/image";
 
-const CITIES = [
-    "Bangalore", "Chennai", "Delhi", "Gurgaon", "Hyderabad",
-    "Kolkata", "Mumbai", "Noida", "Pune", "All Cities"
-]
+// Static CITIES removed in favor of useCities hook
 
 export const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
     const [showCities, setShowCities] = React.useState(false)
     const [showCategories, setShowCategories] = React.useState(false)
     const [scrolled, setScrolled] = React.useState(false)
+    const { data: cities = ["All Cities"] } = useCities()
     const router = useRouter()
 
     const handleSearch = (q?: string, loc?: string) => {
@@ -78,14 +77,14 @@ export const Navbar = () => {
             <div className="relative flex items-center justify-between px-3 sm:px-4 md:px-8 py-3 md:py-4 border-b border-zinc-50">
                 <div className="flex items-center gap-3 sm:gap-4 md:gap-8">
                     <Link href="/" className="shrink-0 flex items-center">
-                        <img
+                        {/* <img
                             src="https://res.cloudinary.com/dwsv275kv/image/upload/v1774790235/White_and_Black_Simple_Marketing_LinkedIn_Banner_f7aqfk.png" // put your logo inside public folder
                             alt="SPA ADVISOR Logo"
                             width={180}
                             height={60}
                             // priority
                             className="h-10 sm:h-12 md:h-14 w-auto object-contain"
-                        />
+                        /> */}
                     </Link>
 
                     {/* Info Blocks (Desktop Only) */}
@@ -172,14 +171,15 @@ export const Navbar = () => {
                         transition={{ duration: 0.2, ease: "easeInOut" }}
                         className="hidden md:block overflow-hidden bg-zinc-50 border-b border-zinc-100"
                     >
-                        <div className="flex items-center bg-zinc-50 px-4 md:px-8 py-3 overflow-x-auto no-scrollbar">
-                            <div className="flex items-center gap-4 lg:gap-8 mx-auto">
-                                {CITIES.map((city) => (
+                        <div className="flex items-center bg-zinc-50 border-b border-zinc-100 overflow-x-auto no-scrollbar scroll-smooth">
+                            <div className="flex items-center gap-6 md:gap-8 lg:gap-12 px-6 md:px-12 py-3.5 min-w-max mx-auto">
+                                {cities.map((city: string) => (
                                     <CityLink
                                         key={city}
                                         name={city}
                                         href={getCityHref(city)}
                                         onClick={handleLinkClick}
+                                        className="whitespace-nowrap transition-transform hover:scale-105 active:scale-95"
                                     />
                                 ))}
                             </div>
@@ -258,7 +258,7 @@ export const Navbar = () => {
                                             Discover By City
                                         </p>
                                         <div className="grid grid-cols-2 gap-2">
-                                            {CITIES.map(city => (
+                                            {cities.map((city: string) => (
                                                 <Link
                                                     key={city}
                                                     href={getCityHref(city)}

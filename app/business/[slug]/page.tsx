@@ -4,7 +4,7 @@ import BusinessDetailsContent from './BusinessDetailsContent';
 import { businessApi } from '@/api/public/business';
 import { Metadata } from 'next';
 import { safeJsonLdStringify } from '@/lib/utils';
-import { generateLocalBusinessJsonLd, generateBreadcrumbJsonLd } from '@/lib/seo-jsonld';
+import { generateLocalBusinessJsonLd, generateBreadcrumbJsonLd, generateServiceItemListJsonLd } from '@/lib/seo-jsonld';
 
 export const revalidate = 3600;
 
@@ -28,14 +28,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const seo = business.seo || {};
     const city = business.locationInfo?.city || business.city;
     const area = business.locationInfo?.area || business.branch;
+    const type = business.type || 'Wellness Center';
 
+    // Pro SEO Title: [Business Name] | Best [Type] in [Area], [City] | Online Booking
     const title =
-        seo.metaTitle || `${business.name} - Best ${business.type || 'wellness center'} in ${area ? `${area}, ` : ''}${city} | Bookby247`;
+        seo.metaTitle || `${business.name} | Best ${type} in ${area ? `${area}, ` : ''}${city} | Bookby247`;
+    
     const description =
         seo.metaDescription ||
-        (business.description
-            ? business.description.substring(0, 157) + (business.description.length > 157 ? "..." : "")
-            : `Book appointments at ${business.name} in ${area ? `${area}, ` : ''}${city}. Verified reviews, prices, and instant online booking for ${business.type || 'beauty services'}.`);
+        `Book appointments at ${business.name} in ${area ? `${area}, ` : ''}${city}. Verified reviews, latest prices, and instant online booking for ${type} services. Rated ${business.ratings?.average || 5}/5 by our community.`;
     
     const canonicalPath = `/business/${business.slug || slug}`;
     const ogImage =
@@ -44,8 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
         title,
         description,
-        keywords: seo.keywords || [business.name, business.type, city, "booking", "spa", "salon"],
-        authors: [{ name: "Bookby247 Team" }],
+        keywords: seo.keywords || [business.name, type, area, city, "online booking", "prices", "reviews"],
         alternates: {
             canonical: canonicalPath,
         },
@@ -55,13 +55,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             url: `https://bookby247.com${canonicalPath}`,
             siteName: "Bookby247",
             type: "website",
-            images: ogImage ? [ogImage] : [],
-        },
-        twitter: {
-            card: 'summary_large_image',
-            title,
-            description,
-            images: ogImage ? [ogImage] : [],
+            images: ogImage ? [{ url: ogImage, width: 1200, height: 630, alt: business.name }] : [],
         }
     };
 }
@@ -75,6 +69,8 @@ const BusinessDetailsPage = async ({ params }: PageProps) => {
     }
 
     const business = businessData.data;
+    const city = business.locationInfo?.city || business.city;
+    const citySlug = business.locationInfo?.citySlug || city?.toLowerCase().replace(/\s+/g, '-');
 
     // Fetch reviews for SEO JSON-LD
     const reviewsResponse = await businessApi.getSeoReviewsBySlug(slug).catch(() => null);
@@ -100,9 +96,10 @@ const BusinessDetailsPage = async ({ params }: PageProps) => {
                     }
                 }))
             },
+            generateServiceItemListJsonLd(business),
             generateBreadcrumbJsonLd([
                 { name: "Home", item: "https://bookby247.com/" },
-                { name: "Explore", item: "https://bookby247.com/explore" },
+                { name: city || "India", item: `https://bookby247.com/${citySlug || "india"}` },
                 { name: business.name, item: `https://bookby247.com/business/${business.slug || slug}` },
             ])
         ],
