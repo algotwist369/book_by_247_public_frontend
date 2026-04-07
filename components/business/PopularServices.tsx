@@ -29,7 +29,7 @@ interface PopularServicesProps {
     services: Service[];
 }
 
-const ServiceCard = ({ service }: { service: Service }) => {
+const ServiceCard = ({ service, businessName }: { service: Service; businessName: string }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const formatDuration = (mins: number) => {
@@ -57,7 +57,7 @@ const ServiceCard = ({ service }: { service: Service }) => {
                             <div className="relative w-full h-full rounded-full overflow-hidden">
                                 <CustomImage
                                     src={service.thumbnail}
-                                    alt={service.name}
+                                    alt={`${service.name} at ${businessName}`}
                                     fill
                                     className="object-cover"
                                 />
@@ -124,7 +124,12 @@ const ServiceCard = ({ service }: { service: Service }) => {
     );
 };
 
-const PopularServices = ({ services = [] }: PopularServicesProps) => {
+interface PopularServicesProps {
+    services: Service[];
+    businessName?: string;
+}
+
+const PopularServices = ({ services = [], businessName = "Business" }: PopularServicesProps) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     if (!services || services.length === 0) return null;
@@ -146,7 +151,7 @@ const PopularServices = ({ services = [] }: PopularServicesProps) => {
             </div>
             <div className="space-y-3 sm:space-y-4">
                 {visibleServices.map((service) => (
-                    <ServiceCard key={service.id || service._id} service={service} />
+                    <ServiceCard key={service.id || service._id} service={service} businessName={businessName} />
                 ))}
             </div>
         </section>

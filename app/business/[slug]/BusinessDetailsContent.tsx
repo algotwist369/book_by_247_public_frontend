@@ -367,7 +367,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                                         onTabChange={setGalleryTab}
                                     />
 
-                                    {galleryTab === 'Photos' && <BusinessGallery images={business.images} />}
+                                    {galleryTab === 'Photos' && <BusinessGallery images={business.images} businessName={business.name} />}
                                     {has360 && galleryTab === '360 Tours' && <Business360Tour />}
                                     {hasVideos && galleryTab === 'Videos' && <BusinessVideos />}
                                 </section>
@@ -408,7 +408,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
 
                         {/* Services Section */}
                         <div id="services" className="order-5">
-                            <PopularServices services={business.services || []} />
+                            <PopularServices services={business.services || []} businessName={business.name} />
                         </div>
 
                         {/* Categories & Tags Section */}
