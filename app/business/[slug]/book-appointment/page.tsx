@@ -86,8 +86,8 @@ const BookingPage = async ({ params }: PageProps) => {
         id: details.slug, // Using slug as id if needed, or _id if available in response
         name: details.name,
         slug: details.slug || slug,
-        images: media?.images?.gallery || [],
-        image: media?.images?.thumbnail || media?.images?.logo,
+        images: media?.images || [],
+        image: media?.images?.[0] || '',
         rating: details.avg_rating || 0,
         reviews: details.total_reviews || 0,
         address: contacts?.address,
