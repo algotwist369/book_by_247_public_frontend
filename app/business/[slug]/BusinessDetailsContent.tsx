@@ -410,7 +410,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialData }: Cl
                             </div>
                         </div>
                         {/* Sticky Navigation Tabs */}
-                        <div className={`sticky top-[64px] md:top-[72px] z-40 bg-white/95 backdrop-blur-md -mx-4 px-4 sm:mx-0 sm:px-0 border-b border-zinc-100 transition-all duration-300 ease-in-out ${isTabsVisible ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible pointer-events-none hidden'
+                        <div className={`sticky top-[64px] md:top-[72px] z-40 bg-white/95 backdrop-blur-md -mx-4 px-4 sm:mx-0 sm:px-0 border-b border-zinc-100 transition-all duration-300 ease-in-out ${isTabsVisible ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible pointer-events-none'
                             }`}>
                             <div className="flex items-center gap-6 overflow-x-auto no-scrollbar whitespace-nowrap">
                                 {([
@@ -465,8 +465,8 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialData }: Cl
                                     />
 
                                     {galleryTab === 'Photos' && <BusinessGallery images={galleryImages} businessName={businessName} />}
-                                    {has360 && galleryTab === '360 Tours' && <Business360Tour />}
-                                    {hasVideos && galleryTab === 'Videos' && <BusinessVideos />}
+                                    {has360 && galleryTab === '360 Tours' && <Business360Tour images_360={media.images_360} />}
+                                    {hasVideos && galleryTab === 'Videos' && <BusinessVideos videos={media.videos} />}
                                 </section>
                             );
                         })()}

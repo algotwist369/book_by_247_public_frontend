@@ -11,6 +11,8 @@ const normalizeResults = (results: any[]) =>
         const nestedGallery = Array.isArray(b.images?.gallery) ? b.images.gallery : [];
 
         const combinedImages = Array.from(new Set([
+            b.thumbnailImage,
+            b.logoImage,
             ...rawImages,
             ...galleryImages,
             ...nestedGallery,
@@ -24,10 +26,10 @@ const normalizeResults = (results: any[]) =>
             ...b,
             id: b.id || b._id,
             slug: b.slug,
-            rating: b.rating ?? b.ratings?.average ?? 0,
-            reviews: b.reviews ?? b.ratings?.totalReviews ?? 0,
+            rating: b.averageRating ?? b.rating ?? b.ratings?.average ?? 0,
+            reviews: b.totalReviews ?? b.reviews ?? b.ratings?.totalReviews ?? 0,
             images: combinedImages,
-            image: b.image || combinedImages[0] || "",
+            image: b.thumbnailImage || b.image || combinedImages[0] || "",
             coordinates: b.location?.coordinates
                 ? { lat: b.location.coordinates[1], lng: b.location.coordinates[0] }
                 : b.coordinates || { lat: 13.0418, lng: 80.2341 },
@@ -35,15 +37,17 @@ const normalizeResults = (results: any[]) =>
     });
 
 export const useInfiniteSearch = (params: any) => {
+    const { initialData, ...queryFilters } = params;
+    
     return useInfiniteQuery({
-        queryKey: ["business-search-infinite", params],
+        queryKey: ["business-search-infinite", queryFilters],
         queryFn: async ({ pageParam = 1 }) => {
             const response = await businessApi.searchBusinesses({
-                ...params,
+                ...queryFilters,
                 page: pageParam,
                 limit: PAGE_SIZE,
             });
-            const data = response?.payload?.decryptedData || response || {};
+            const data = response?.data || response?.payload?.decryptedData || response || {};
             return {
                 results: normalizeResults(data.results || data.businesses || []),
                 totalResults: data.totalResults ?? 0,
@@ -51,6 +55,10 @@ export const useInfiniteSearch = (params: any) => {
             };
         },
         initialPageParam: 1,
+        initialData: initialData ? {
+            pages: [initialData],
+            pageParams: [1],
+        } : undefined,
         getNextPageParam: (lastPage) => {
             const fetched = lastPage.page * PAGE_SIZE;
             return fetched < lastPage.totalResults ? lastPage.page + 1 : undefined;

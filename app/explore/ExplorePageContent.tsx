@@ -15,10 +15,10 @@ import { useLocationSuggestions } from '@/hooks/useLocationSuggestions';
 
 
 interface ExplorePageContentProps {
-    // No props needed
+    initialData?: any;
 }
 
-const ExplorePageContent = () => {
+const ExplorePageContent: React.FC<ExplorePageContentProps> = ({ initialData }) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -80,7 +80,7 @@ const ExplorePageContent = () => {
         hasNextPage,
         isFetchingNextPage,
         fetchNextPage,
-    } = useInfiniteSearch(searchFilters);
+    } = useInfiniteSearch({ ...searchFilters, initialData });
 
     // Flatten all pages into a single list
     const businesses = infiniteData?.pages.flatMap(p => p.results) ?? [];

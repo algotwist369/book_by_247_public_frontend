@@ -13,8 +13,12 @@ export interface Business {
     slug: string;
     images: string[];
     image?: string;
+    thumbnailImage?: string;
+    logoImage?: string;
     rating: number;
     reviews: number;
+    averageRating?: number;
+    totalReviews?: number;
     phone?: string;
     email?: string;
     website?: string;
@@ -48,6 +52,19 @@ export interface Business {
         average: number;
         totalReviews: number;
     };
+    seo?: {
+        metaTitle?: string;
+        metaDescription?: string;
+        keywords?: string[];
+        ogImage?: string;
+    };
+    seoScore?: any;
+    seoFlags?: {
+        isBest?: boolean;
+        isPopular?: boolean;
+        isTrending?: boolean;
+    };
+    relevanceScore?: number;
 }
 
  

@@ -19,6 +19,8 @@ export const usePublicBusinesses = (params: { type?: string; page?: number; limi
                 const nestedGallery = Array.isArray(business.images?.gallery) ? business.images.gallery : [];
 
                 const combinedImages = Array.from(new Set([
+                    business.thumbnailImage,
+                    business.logoImage,
                     ...rawImages,
                     ...galleryImages,
                     ...nestedGallery,
@@ -31,10 +33,10 @@ export const usePublicBusinesses = (params: { type?: string; page?: number; limi
                 return {
                     ...business,
                     id: business.id || business._id,
-                    rating: business.rating ?? business.ratings?.average ?? 0,
-                    reviews: business.reviews ?? business.ratings?.totalReviews ?? 0,
+                    rating: business.averageRating ?? business.rating ?? business.ratings?.average ?? 0,
+                    reviews: business.totalReviews ?? business.reviews ?? business.ratings?.totalReviews ?? 0,
                     images: combinedImages,
-                    image: business.image || combinedImages[0] || "",
+                    image: business.thumbnailImage || business.image || combinedImages[0] || "",
                 };
             });
             return {
@@ -56,20 +58,25 @@ export const useBusinessBySlug = (slug: string, initialData?: any) => {
             const business = response?.data;
             if (!business) return null;
 
+            const combinedImages = Array.from(new Set([
+                business.thumbnailImage,
+                business.logoImage,
+                ...(Array.isArray(business.images) ? business.images : []),
+                ...(Array.isArray(business.gallery) ? business.gallery : []),
+                ...(Array.isArray(business.images?.gallery) ? business.images.gallery : []),
+                business.image,
+                business.images?.banner,
+                business.images?.logo,
+                business.images?.thumbnail
+            ])).filter(Boolean) as string[];
+
             return {
                 ...business,
                 id: business.id || business._id,
-                rating: business.rating ?? business.ratings?.average ?? 0,
-                reviews: business.reviews ?? business.ratings?.totalReviews ?? 0,
-                images: Array.from(new Set([
-                    ...(Array.isArray(business.images) ? business.images : []),
-                    ...(Array.isArray(business.gallery) ? business.gallery : []),
-                    ...(Array.isArray(business.images?.gallery) ? business.images.gallery : []),
-                    business.image,
-                    business.images?.banner,
-                    business.images?.logo,
-                    business.images?.thumbnail
-                ])).filter(Boolean) as string[],
+                rating: business.averageRating ?? business.rating ?? business.ratings?.average ?? 0,
+                reviews: business.totalReviews ?? business.reviews ?? business.ratings?.totalReviews ?? 0,
+                images: combinedImages,
+                image: business.thumbnailImage || business.image || combinedImages[0] || "",
                 // Ensure categories and tags are arrays
                 categories: business.category ? [business.category] : (Array.isArray(business.categories) ? business.categories : []),
                 tags: Array.isArray(business.tags) ? business.tags : []
@@ -120,6 +127,8 @@ export const useNearbyBusinesses = (params: { lat: number; lng: number; maxDista
             const businesses = response?.data || [];
             const normalized = businesses.map((business: any) => {
                 const combinedImages = Array.from(new Set([
+                    business.thumbnailImage,
+                    business.logoImage,
                     ...(Array.isArray(business.images) ? business.images : []),
                     ...(Array.isArray(business.gallery) ? business.gallery : []),
                     ...(Array.isArray(business.images?.gallery) ? business.images.gallery : []),
@@ -132,15 +141,60 @@ export const useNearbyBusinesses = (params: { lat: number; lng: number; maxDista
                 return {
                     ...business,
                     id: business.id || business._id,
-                    rating: business.rating ?? business.ratings?.average ?? 0,
-                    reviews: business.reviews ?? business.ratings?.totalReviews ?? 0,
+                    rating: business.averageRating ?? business.rating ?? business.ratings?.average ?? 0,
+                    reviews: business.totalReviews ?? business.reviews ?? business.ratings?.totalReviews ?? 0,
+                    images: combinedImages,
+                    image: business.thumbnailImage || business.image || combinedImages[0] || "",
+                };
+            });
+            return {
+                ...response,
+                data: normalized
+            };
+        }
+    });
+};
+
+export const useSearchBusinesses = (params: any) => {
+    return useQuery({
+        queryKey: ["search-businesses", params],
+        queryFn: () => businessApi.searchBusinesses(params),
+        enabled: !!params,
+        staleTime: 5 * 60 * 1000,
+        select: (response: any) => {
+            const businesses = response?.data?.results || response?.results || [];
+            const normalized = businesses.map((business: any) => {
+                const rawImages = Array.isArray(business.images) ? business.images : [];
+                const galleryImages = Array.isArray(business.gallery) ? business.gallery : [];
+                const nestedGallery = Array.isArray(business.images?.gallery) ? business.images.gallery : [];
+
+                const combinedImages = Array.from(new Set([
+                    business.thumbnailImage,
+                    business.logoImage,
+                    ...rawImages,
+                    ...galleryImages,
+                    ...nestedGallery,
+                    business.image,
+                    business.images?.banner,
+                    business.images?.logo,
+                    business.images?.thumbnail
+                ])).filter(Boolean) as string[];
+
+                return {
+                    ...business,
+                    id: business.id || business._id,
+                    rating: business.averageRating ?? business.rating ?? business.ratings?.average ?? 0,
+                    reviews: business.totalReviews ?? business.reviews ?? business.ratings?.totalReviews ?? 0,
                     images: combinedImages,
                     image: business.image || combinedImages[0] || "",
                 };
             });
             return {
                 ...response,
-                data: normalized
+                data: {
+                    ...response?.data,
+                    results: normalized
+                }
             };
         }
     });

@@ -7,6 +7,7 @@ import { Star, Phone, Send } from 'lucide-react';
 import { Business } from '@/components/business/businessData';
 import { MapPin } from 'lucide-react';
 import { FaLocationArrow } from "react-icons/fa6";
+import { cn } from '@/lib/utils';
 
 interface ExploreBusinessCardProps {
     business: Business;
@@ -14,17 +15,22 @@ interface ExploreBusinessCardProps {
 }
 
 const ExploreBusinessCard = ({ business, index }: ExploreBusinessCardProps) => {
-    // Mock promotion data for demonstration as seen in source image
-    const hasPromotion = business.id === "1" || business.name.includes("Serenity");
-    console.log(business);
+    // Determine promotion based on backend SEO flags
+    const isBest = business.seoFlags?.isBest;
+    const isPopular = business.seoFlags?.isPopular;
+    const isTrending = business.seoFlags?.isTrending;
+    const hasPromotion = isBest || isPopular || isTrending;
 
     return (
         <div className="group bg-white border border-zinc-200 rounded-lg overflow-hidden transition-all hover:shadow-md flex flex-col h-full">
             {/* Promotion Banner */}
             {hasPromotion && (
-                <div className="bg-black py-2.5 px-6">
+                <div className={cn(
+                    "py-2.5 px-6",
+                    isBest ? "bg-black" : isPopular ? "bg-zinc-800" : "bg-zinc-700"
+                )}>
                     <p className="text-white text-[10px] font-bold uppercase tracking-widest text-center">
-                        Found {business.reviews}+ businesses • <span className="opacity-80">Premium Selection</span>
+                        {isBest ? "Best Rated Selection" : isPopular ? "Popular Choice" : "Trending Now"} • <span className="opacity-80">Premium</span>
                     </p>
                 </div>
             )}

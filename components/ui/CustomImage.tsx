@@ -22,6 +22,7 @@ const UNOPTIMIZED_HOSTS = [
     "images.unsplash.com",
     "cdn.pixabay.com",
     "halohealingtherapies.com",
+    "img.youtube.com",
 ];
 
 const isHotlinkProtected = (src: string): boolean => {

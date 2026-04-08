@@ -5,11 +5,16 @@ export const useBusinessTypes = () => {
     return useQuery({
         queryKey: ['business-types'],
         queryFn: async () => {
-            const response = await businessApi.getBusinessTypes();
-            if (response.success) {
-                return response.data;
+            try {
+                const response = await businessApi.getBusinessTypes();
+                if (response.success) {
+                    return response.data;
+                }
+                return [];
+            } catch (error) {
+                console.error('Error fetching business types:', error);
+                return []; // Return empty array instead of throwing to prevent page crash
             }
-            throw new Error('Failed to fetch business types');
         },
         staleTime: 1000 * 60 * 60, // 1 hour
     });

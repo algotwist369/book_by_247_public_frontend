@@ -3,23 +3,56 @@ import { apiClient } from "../apiClient";
 export interface PublicBusiness {
     id: string;
     name: string;
-    type: string;
-    branch: string;
-    city: string;
-    phone: string;
-    images: {
-        logo?: string;
-        banner?: string;
-        gallery?: string[];
-        thumbnail?: string;
-    };
-    ratings: {
-        average: number;
-        totalReviews: number;
-    };
-    seo: any;
     slug: string;
+    type: string;
+    description?: string;
+    branch: string;
+    address?: string;
+    city: string;
+    state?: string;
+    phone: string;
+    location?: {
+        type: string;
+        coordinates: number[];
+    };
+    distance?: number;
+    distanceText?: string;
+    locationInfo?: any;
+    category?: string;
+    tags?: string[];
+    image?: string;
+    logoImage?: string;
+    thumbnailImage?: string;
+    averageRating: number;
+    totalReviews: number;
+    seo: {
+        metaTitle?: string;
+        metaDescription?: string;
+        keywords?: string[];
+        ogImage?: string;
+    };
+    seoScore?: any;
+    seoFlags?: {
+        isBest?: boolean;
+        isPopular?: boolean;
+        isTrending?: boolean;
+    };
+    relevanceScore?: number;
     createdAt: string;
+}
+
+export interface SearchBusinessesResponse {
+    payload: any;
+    success: boolean;
+    message: string;
+    data: {
+        businesses: PublicBusiness[];
+        page: number;
+        limit: number;
+        totalResults: number;
+        results: PublicBusiness[];
+        searchType: string;
+    };
 }
 
 export interface PublicBusinessResponse {
@@ -70,7 +103,7 @@ export const businessApi = {
                 queryParams.append(key, String(value));
             }
         });
-        return apiClient<any>(`/business/public/explore?${queryParams.toString()}`);
+        return apiClient<SearchBusinessesResponse>(`/business/public/explore?${queryParams.toString()}`);
     },
 
     /**
@@ -119,7 +152,20 @@ export const businessApi = {
     },
 
     getBusinessTypes: async () => {
-        return apiClient<{ success: boolean; data: { slug: string; name: string }[] }>('/seo/metadata/types');
+        try {
+            return await apiClient<{ success: boolean; data: { slug: string; name: string }[] }>('/business/public/metadata/types');
+        } catch (error) {
+            // Fallback categories if API fails
+            return {
+                success: true,
+                data: [
+                    { slug: 'spa', name: 'Spa' },
+                    { slug: 'salon', name: 'Salon' },
+                    { slug: 'wellness', name: 'Wellness' },
+                    { slug: 'massage', name: 'Massage' }
+                ]
+            };
+        }
     },
 
     /**

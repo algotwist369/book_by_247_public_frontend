@@ -136,6 +136,7 @@ export interface BusinessSeo {
         metaTitle: string;
         metaDescription: string;
         keywords: string[];
+        ogImage?: string;
     };
     seo_routing: any;
     seo_score: any;

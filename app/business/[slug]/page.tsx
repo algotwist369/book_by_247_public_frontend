@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         `Book appointments at ${seoData.name} in ${area ? `${area}, ` : ''}${city}. Rated ${avgRating}/5 from ${totalReviews}+ verified reviews. Instant online booking, latest prices, and ${type} services. ${flags.isPopular ? 'Highly popular among locals.' : ''}`;
     
     const canonicalPath = `/business/${seoData.slug || slug}`;
-    const ogImage = Array.isArray(mediaData?.images) ? mediaData.images[0] : "";
+    const ogImage = seo.ogImage || (Array.isArray(mediaData?.images) ? mediaData.images[0] : "");
 
     const metadata: Metadata = {
         title,

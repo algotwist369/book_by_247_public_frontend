@@ -8,11 +8,36 @@ import { motion, AnimatePresence } from 'framer-motion';
 interface ImageSliderProps {
     images: string[];
     initialIndex?: number;
+    type?: 'image' | 'video' | '360';
 }
 
-const ImageSlider = ({ images, initialIndex = 0 }: ImageSliderProps) => {
+const ImageSlider = ({ images, initialIndex = 0, type = 'image' }: ImageSliderProps) => {
     const [currentIndex, setCurrentIndex] = useState(initialIndex);
     const [direction, setDirection] = useState(0);
+
+    const getEmbedUrl = (url: string) => {
+        if (!url) return '';
+        const cleanUrl = url.trim().replace(/[`]/g, '').trim();
+
+        if (type === 'video') {
+            let videoId = '';
+            if (cleanUrl.includes('youtube.com/shorts/')) {
+                videoId = cleanUrl.split('shorts/')[1]?.split('?')[0];
+            } else if (cleanUrl.includes('youtube.com/embed/')) {
+                videoId = cleanUrl.split('embed/')[1]?.split('?')[0];
+            } else if (cleanUrl.includes('v=')) {
+                videoId = cleanUrl.split('v=')[1]?.split('&')[0];
+            } else if (cleanUrl.includes('youtu.be/')) {
+                videoId = cleanUrl.split('youtu.be/')[1]?.split('?')[0];
+            }
+
+            if (videoId) {
+                const origin = typeof window !== 'undefined' ? window.location.origin : '';
+                return `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=1&mute=1&enablejsapi=1${origin ? `&origin=${encodeURIComponent(origin)}` : ''}`;
+            }
+        }
+        return cleanUrl;
+    };
 
     const slideVariants = {
         enter: (direction: number) => ({
@@ -47,6 +72,8 @@ const ImageSlider = ({ images, initialIndex = 0 }: ImageSliderProps) => {
         setCurrentIndex(nextIndex);
     };
 
+    const isEmbed = type === 'video' || type === '360';
+
     return (
         <div className="relative w-full h-full min-h-[50vh] md:min-h-[70vh] bg-black rounded-lg overflow-hidden flex items-center justify-center">
 
@@ -62,7 +89,7 @@ const ImageSlider = ({ images, initialIndex = 0 }: ImageSliderProps) => {
                         x: { type: "spring", stiffness: 300, damping: 30 },
                         opacity: { duration: 0.2 }
                     }}
-                    drag="x"
+                    drag={isEmbed ? false : "x"}
                     dragConstraints={{ left: 0, right: 0 }}
                     dragElastic={1}
                     onDragEnd={(e, { offset, velocity }) => {
@@ -76,13 +103,26 @@ const ImageSlider = ({ images, initialIndex = 0 }: ImageSliderProps) => {
                     }}
                     className="absolute w-full h-full"
                 >
-                    <CustomImage
-                        src={images[currentIndex]}
-                        alt={`Slide ${currentIndex + 1}`}
-                        fill
-                        className="object-contain"
-                        priority
-                    />
+                    {isEmbed ? (
+                        <div className="w-full h-full flex items-center justify-center p-4 md:p-12 bg-zinc-950">
+                            <iframe
+                                src={getEmbedUrl(images[currentIndex])}
+                                className="w-full h-full rounded-2xl border-0 shadow-2xl"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+                                allowFullScreen
+                                title={type === 'video' ? "YouTube video player" : "360 Tour player"}
+                                loading="lazy"
+                            />
+                        </div>
+                    ) : (
+                        <CustomImage
+                            src={images[currentIndex]}
+                            alt={`Slide ${currentIndex + 1}`}
+                            fill
+                            className="object-contain"
+                            priority
+                        />
+                    )}
                 </motion.div>
             </AnimatePresence>
 
