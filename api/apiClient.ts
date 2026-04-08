@@ -47,7 +47,9 @@ export async function apiClient<T>(
                 "Content-Type": "application/json",
                 ...(options.headers || {}),
             },
-            cache: "no-store", // important for Next.js SSR
+            // Use the cache option from options if provided, otherwise default to "no-store" for dynamic routes
+            // but allow Next.js memoization by not forcing no-store if not explicitly asked
+            cache: options.cache || "default", 
         });
     } catch (error) {
         console.error(`[apiClient] ❌ Network error → ${url}`, error);

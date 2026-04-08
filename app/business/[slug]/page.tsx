@@ -1,7 +1,7 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import BusinessDetailsContent from './BusinessDetailsContent';
-import { businessApi } from '@/api/public/business';
+import { businessDetailsApi } from '@/api/public/business.details.api';
 import { Metadata } from 'next';
 import { safeJsonLdStringify } from '@/lib/utils';
 import { generateLocalBusinessJsonLd, generateBreadcrumbJsonLd, generateServiceItemListJsonLd } from '@/lib/seo-jsonld';
@@ -16,36 +16,66 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { slug } = await params;
-    const response = await businessApi.getBusinessBySlug(slug).catch(() => null);
-    const business = response?.data;
+    
+    // Fetch SEO and Media data for metadata
+    const [seoRes, mediaRes] = await Promise.all([
+        businessDetailsApi.getSeo(slug).catch(() => null),
+        businessDetailsApi.getMedia(slug).catch(() => null)
+    ]);
 
-    if (!business) {
+    const seoData = seoRes?.data;
+    const mediaData = mediaRes?.data;
+
+    if (!seoData) {
         return {
             title: 'Business Not Found | Bookby247',
         };
     }
 
-    const seo = business.seo || {};
-    const city = business.locationInfo?.city || business.city;
-    const area = business.locationInfo?.area || business.branch;
-    const type = business.type || 'Wellness Center';
+    const seo = seoData.seo || {};
+    const city = seoData.location_info?.city || '';
+    const area = seoData.location_info?.area || '';
+    const type = seoData.search_profile?.spaTypes?.[0] || 'Wellness Center';
+    const flags = seoData.seo_flags || {};
 
-    // Pro SEO Title: [Business Name] | Best [Type] in [Area], [City] | Online Booking
+    // Dynamic SEO prefix based on flags
+    let prefix = 'Best';
+    if (flags.isTrending) prefix = 'Trending';
+    else if (flags.isPopular) prefix = 'Popular';
+    else if (flags.isBest) prefix = 'Best';
+
+    // Pro SEO Title: [Business Name] | [Prefix] [Type] in [Area], [City] | Online Booking
     const title =
-        seo.metaTitle || `${business.name} | Best ${type} in ${area ? `${area}, ` : ''}${city} | Bookby247`;
+        seo.metaTitle || `${seoData.name} | ${prefix} ${type} in ${area ? `${area}, ` : ''}${city} | Bookby247`;
+    
+    const avgRating = seoData.ratings?.average || 5;
+    const totalReviews = seoData.ratings?.totalReviews || 10;
     
     const description =
         seo.metaDescription ||
-        `Book appointments at ${business.name} in ${area ? `${area}, ` : ''}${city}. Verified reviews, latest prices, and instant online booking for ${type} services. Rated ${business.ratings?.average || 5}/5 by our community.`;
+        `Book appointments at ${seoData.name} in ${area ? `${area}, ` : ''}${city}. Rated ${avgRating}/5 from ${totalReviews}+ verified reviews. Instant online booking, latest prices, and ${type} services. ${flags.isPopular ? 'Highly popular among locals.' : ''}`;
     
-    const canonicalPath = `/business/${business.slug || slug}`;
-    const ogImage =
-        seo.ogImage || business.images?.banner || business.images?.logo || business.images?.thumbnail || "";
+    const canonicalPath = `/business/${seoData.slug || slug}`;
+    const ogImage = Array.isArray(mediaData?.images) ? mediaData.images[0] : "";
 
-    return {
+    const metadata: Metadata = {
         title,
         description,
-        keywords: seo.keywords || [business.name, type, area, city, "online booking", "prices", "reviews"],
+        keywords: [
+            ...(seo.keywords || []),
+            seoData.name, 
+            type, 
+            area, 
+            city, 
+            "online booking", 
+            "prices", 
+            "reviews", 
+            prefix.toLowerCase(),
+            `${type} near me`,
+            `best ${type} in ${city}`,
+            `${seoData.name} booking`,
+            `${seoData.name} reviews`
+        ].filter((v, i, a) => a.indexOf(v) === i), // deduplicate
         alternates: {
             canonical: canonicalPath,
         },
@@ -55,40 +85,79 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             url: `https://bookby247.com${canonicalPath}`,
             siteName: "Bookby247",
             type: "website",
-            images: ogImage ? [{ url: ogImage, width: 1200, height: 630, alt: business.name }] : [],
+            images: ogImage ? [{ url: ogImage, width: 1200, height: 630, alt: seoData.name }] : [],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title,
+            description,
+            images: ogImage ? [ogImage] : [],
         }
     };
+
+    console.log(`SEO Metadata for ${slug}:`, JSON.stringify(metadata, null, 2));
+
+    return metadata;
 }
 
 const BusinessDetailsPage = async ({ params }: PageProps) => {
     const { slug } = await params;
-    const businessData = await businessApi.getBusinessBySlug(slug).catch(() => null);
 
-    if (!businessData?.data) {
+    // Fetch all required data sections in parallel for SSR and JSON-LD
+    const [
+        detailsRes,
+        contactsRes,
+        workingHoursRes,
+        mediaRes,
+        servicesRes,
+        reviewsRes
+    ] = await Promise.all([
+        businessDetailsApi.getDetails(slug).catch(() => null),
+        businessDetailsApi.getContacts(slug).catch(() => null),
+        businessDetailsApi.getWorkingHours(slug).catch(() => null),
+        businessDetailsApi.getMedia(slug).catch(() => null),
+        businessDetailsApi.getServices(slug, 1, 10).catch(() => null),
+        businessDetailsApi.getReviews(slug, 1, 10).catch(() => null)
+    ]);
+
+    if (!detailsRes?.data) {
         notFound();
     }
 
-    const business = businessData.data;
-    const city = business.locationInfo?.city || business.city;
-    const citySlug = business.locationInfo?.citySlug || city?.toLowerCase().replace(/\s+/g, '-');
+    const details = detailsRes.data;
+    const contacts = contactsRes?.data;
+    const workingHours = workingHoursRes?.data;
+    const media = mediaRes?.data;
+    const services = servicesRes?.data?.services || [];
+    const reviews = reviewsRes?.data?.reviews || [];
+    const ratings = reviewsRes?.data?.ratings;
 
-    // Fetch reviews for SEO JSON-LD
-    const reviewsResponse = await businessApi.getSeoReviewsBySlug(slug).catch(() => null);
-    const seoReviews = reviewsResponse?.data || [];
+    // Construct a consolidated object for JSON-LD generators
+    const consolidatedBusiness = {
+        ...details,
+        ...contacts,
+        workingHours,
+        images: media?.images,
+        services,
+        ratings
+    };
+
+    const city = contacts?.city || '';
+    const citySlug = city.toLowerCase().replace(/\s+/g, '-');
 
     const jsonLd = {
         "@context": "https://schema.org",
         "@graph": [
             {
-                ...generateLocalBusinessJsonLd(business),
-                "review": seoReviews.map((r: any) => ({
+                ...generateLocalBusinessJsonLd(consolidatedBusiness),
+                "review": reviews.map((r: any) => ({
                     "@type": "Review",
                     "author": {
                         "@type": "Person",
-                        "name": r.guestName || "Anonymous"
+                        "name": r.customerName || "Anonymous"
                     },
                     "datePublished": r.createdAt,
-                    "reviewBody": r.review,
+                    "reviewBody": r.comment,
                     "reviewRating": {
                         "@type": "Rating",
                         "ratingValue": r.rating,
@@ -96,11 +165,11 @@ const BusinessDetailsPage = async ({ params }: PageProps) => {
                     }
                 }))
             },
-            generateServiceItemListJsonLd(business),
+            generateServiceItemListJsonLd(consolidatedBusiness),
             generateBreadcrumbJsonLd([
                 { name: "Home", item: "https://bookby247.com/" },
                 { name: city || "India", item: `https://bookby247.com/${citySlug || "india"}` },
-                { name: business.name, item: `https://bookby247.com/business/${business.slug || slug}` },
+                { name: details.name, item: `https://bookby247.com/business/${details.slug || slug}` },
             ])
         ],
     };
@@ -111,7 +180,17 @@ const BusinessDetailsPage = async ({ params }: PageProps) => {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(jsonLd) }}
             />
-            <BusinessDetailsContent slug={slug} initialBusiness={businessData} />
+            <BusinessDetailsContent 
+                slug={slug} 
+                initialData={{
+                    details: detailsRes,
+                    contacts: contactsRes,
+                    workingHours: workingHoursRes,
+                    media: mediaRes,
+                    services: servicesRes,
+                    reviews: reviewsRes
+                }} 
+            />
         </>
     );
 };

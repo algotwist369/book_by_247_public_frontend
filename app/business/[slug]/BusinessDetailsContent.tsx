@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Star, MapPin, Phone, Globe, Clock, Share2, Mail, Facebook, Instagram, Twitter, Wifi, Car, Wind, Coffee, BadgeCheck, ShieldCheck, Navigation, CreditCard, CalendarCheck } from 'lucide-react';
+import { Star, MapPin, Phone, Globe, Clock, Share2, Mail, Facebook, Instagram, Twitter, Wifi, Car, Wind, Coffee, BadgeCheck, ShieldCheck, Navigation, CreditCard, CalendarCheck, Linkedin, Youtube, Send, PhoneCall } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import DropdownSection from '@/components/ui/DropdownSection';
 import PopularServices from '@/components/business/PopularServices';
@@ -16,21 +16,55 @@ import BusinessVideos from '@/components/business/BusinessVideos';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import EnquiryModal from '@/components/business/EnquiryModal';
 
-import { useBusinessBySlug } from '@/hooks/useBusinesses';
+import {
+    useBusinessDetails,
+    useBusinessContacts,
+    useBusinessWorkingHours,
+    useBusinessSocialMedia,
+    useBusinessMedia,
+    useBusinessCategories,
+    useBusinessCapacity,
+    useBusinessServices,
+    useBusinessReviews
+} from '@/hooks/useBusinessDetails';
 
 interface ClientProps {
     slug: string;
     initialTab?: string;
-    initialBusiness?: any;
+    initialData?: {
+        details?: any;
+        contacts?: any;
+        workingHours?: any;
+        socialMedia?: any;
+        media?: any;
+        categories?: any;
+        capacity?: any;
+        services?: any;
+        reviews?: any;
+    };
 }
 
-const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }: ClientProps) => {
-    const { data: business, isLoading, error } = useBusinessBySlug(slug, initialBusiness);
+const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialData }: ClientProps) => {
+    // New granular hooks for each data section
+    const { data: details, isLoading: isDetailsLoading, error: detailsError } = useBusinessDetails(slug, initialData?.details);
+    const { data: contacts, isLoading: isContactsLoading } = useBusinessContacts(slug, initialData?.contacts);
+    const { data: workingHours, isLoading: isWorkingHoursLoading } = useBusinessWorkingHours(slug, initialData?.workingHours);
+    const { data: socialMedia, isLoading: isSocialMediaLoading } = useBusinessSocialMedia(slug, initialData?.socialMedia);
+    const { data: media, isLoading: isMediaLoading } = useBusinessMedia(slug, initialData?.media);
+    const { data: categoriesData, isLoading: isCategoriesLoading } = useBusinessCategories(slug, initialData?.categories);
+    const { data: capacity, isLoading: isCapacityLoading } = useBusinessCapacity(slug, initialData?.capacity);
+    const { data: servicesData, isLoading: isServicesLoading } = useBusinessServices(slug, 1, 10, initialData?.services);
+    const { data: reviewsData, isLoading: isReviewsLoading } = useBusinessReviews(slug, 1, 10, initialData?.reviews);
+
     const [galleryTab, setGalleryTab] = React.useState(initialTab);
     const [activeTab, setActiveTab] = React.useState('gallery');
     const [isTabsVisible, setIsTabsVisible] = React.useState(false);
     const [isShareModalOpen, setIsShareModalOpen] = React.useState(false);
     const [isEnquiryModalOpen, setIsEnquiryModalOpen] = React.useState(false);
+
+    // Consolidate loading state (optional, can be more granular in UI)
+    const isLoading = isDetailsLoading;
+    const error = detailsError;
 
     // Get current URL safely
     const [currentUrl, setCurrentUrl] = React.useState('');
@@ -45,7 +79,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                 setIsTabsVisible(window.scrollY > threshold);
 
                 // Active Tab Logic
-                const sections = ['gallery', 'services', 'reviews', 'about'];
+                const sections = ['gallery', 'about', 'services', 'reviews'];
                 const scrollPosition = window.scrollY + 120; // Adjusted for flush alignment
 
                 for (const section of sections) {
@@ -65,7 +99,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
         }
     }, []);
 
-    // Auto-trigger Enquiry Modal after 12 seconds
+    // Auto-trigger Enquiry Modal after 30 seconds
     React.useEffect(() => {
         const timer = setTimeout(() => {
             setIsEnquiryModalOpen(true);
@@ -83,7 +117,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
         );
     }
 
-    if (error || !business) {
+    if (error || !details) {
         return (
             <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-6 px-4">
                 <div className="text-center space-y-2">
@@ -100,6 +134,15 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
             </div>
         );
     }
+
+    // Prepare gallery images
+    const galleryImages = Array.isArray(media?.images) ? media.images : [];
+
+    const businessName = details.name;
+    const businessPhone = contacts?.phone;
+    const alternatePhone = contacts?.alternate_phone;
+    const businessAddress = contacts?.address || '';
+    const businessRatings = reviewsData?.ratings || { average: details.avg_rating, total_reviews: details.total_reviews };
 
     return (
         <div className="min-h-screen bg-white pb-20 relative">
@@ -138,9 +181,9 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                                                         if (action.label === 'Enquiry') {
                                                             setIsEnquiryModalOpen(true);
                                                         } else if (action.label === 'Call') {
-                                                            if (business.phone) window.location.href = `tel:${business.phone}`;
+                                                            if (businessPhone) window.location.href = `tel:${businessPhone}`;
                                                         } else if (action.label === 'WhatsApp') {
-                                                            if (business.phone) window.open(`https://wa.me/${business.phone.replace(/[^0-9]/g, '')}`, '_blank');
+                                                            if (businessPhone) window.open(`https://wa.me/${businessPhone.replace(/[^0-9]/g, '')}`, '_blank');
                                                         }
                                                     }}
                                                     className={`flex flex-col md:flex-row lg:flex-col xl:flex-row items-center justify-center p-2 h-auto gap-1 border-zinc-200 hover:bg-zinc-50 ${action.border} group`}
@@ -166,31 +209,36 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                                     <div className="space-y-4 pt-2">
                                         <button
                                             onClick={() => {
-                                                const mapUrl = business.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${business.name} ${business.address}`)}`;
+                                                const mapUrl = contacts?.google_maps_url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${businessName} ${businessAddress}`)}`;
                                                 window.open(mapUrl, '_blank');
                                             }}
                                             className="flex items-start gap-3 text-left hover:text-black transition-colors group"
                                         >
                                             <MapPin className="w-5 h-5 text-zinc-400 mt-0.5 shrink-0 group-hover:text-black transition-colors" />
-                                            <p className="text-sm text-zinc-600 group-hover:text-black transition-colors">{business.address}</p>
+                                            <p className="text-sm text-zinc-600 group-hover:text-black transition-colors">{businessAddress}</p>
                                         </button>
                                         <div className="flex items-center gap-3">
                                             <Phone className="w-5 h-5 text-zinc-400 shrink-0" />
-                                            {business.phone && (
-                                                <a href={`tel:${business.phone}`} className="text-sm text-zinc-600 hover:text-black transition-colors">{business.phone}</a>
-                                            )}
+                                            <div className="flex flex-col">
+                                                {businessPhone && (
+                                                    <a href={`tel:${businessPhone}`} className="text-sm text-zinc-600 hover:text-black transition-colors">{businessPhone}</a>
+                                                )}
+                                                {alternatePhone && (
+                                                    <a href={`tel:${alternatePhone}`} className="text-xs text-zinc-400 hover:text-black transition-colors">{alternatePhone} (Alt)</a>
+                                                )}
+                                            </div>
                                         </div>
-                                        {business.email && (
+                                        {contacts?.email && (
                                             <div className="flex items-center gap-3">
                                                 <Mail className="w-5 h-5 text-zinc-400 shrink-0" />
-                                                <a href={`mailto:${business.email}`} className="text-sm text-zinc-600 hover:text-black transition-colors">{business.email}</a>
+                                                <a href={`mailto:${contacts.email}`} className="text-sm text-zinc-600 hover:text-black transition-colors">{contacts.email}</a>
                                             </div>
                                         )}
-                                        {business.website && (
+                                        {contacts?.website && (
                                             <div className="flex items-center gap-3">
                                                 <Globe className="w-5 h-5 text-zinc-400 shrink-0" />
-                                                <a href={business.website} target="_blank" rel="noopener noreferrer" className="text-sm text-zinc-600 hover:text-black transition-colors">
-                                                    {business.website.replace(/^https?:\/\//, '')}
+                                                <a href={contacts.website} target="_blank" rel="noopener noreferrer" className="text-sm text-zinc-600 hover:text-black transition-colors">
+                                                    {contacts.website.replace(/^https?:\/\//, '')}
                                                 </a>
                                             </div>
                                         )}
@@ -199,23 +247,46 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
 
                                 {/* Working Hours Accordion */}
                                 <DropdownSection title="Working Hours" icon={<Clock className="w-5 h-5 text-zinc-900" />}>
-                                    <div className="space-y-2 pt-2">
-                                        {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => {
-                                            const dayLower = day.toLowerCase();
-                                            const isOpen = business.workingHours?.days?.includes(dayLower);
-                                            const timeRange = (isOpen && business.workingHours)
-                                                ? `${business.workingHours.open} - ${business.workingHours.close}`
-                                                : 'Closed';
+                                    <div className="space-y-4 pt-2">
+                                        <div className="space-y-2">
+                                            {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => {
+                                                const dayLower = day.toLowerCase();
+                                                const isOpen = workingHours?.working_hours?.days?.includes(dayLower);
+                                                const timeRange = (isOpen && workingHours?.working_hours)
+                                                    ? `${workingHours.working_hours.open} - ${workingHours.working_hours.close}`
+                                                    : 'Closed';
 
-                                            return (
-                                                <div key={day} className="flex justify-between text-sm">
-                                                    <span className="text-zinc-500">{day}</span>
-                                                    <span className={`font-medium ${!isOpen ? 'text-red-500' : 'text-zinc-900'}`}>
-                                                        {timeRange}
-                                                    </span>
-                                                </div>
-                                            );
-                                        })}
+                                                return (
+                                                    <div key={day} className="flex justify-between text-sm">
+                                                        <span className="text-zinc-500">{day}</span>
+                                                        <span className={`font-medium ${!isOpen ? 'text-red-500' : 'text-zinc-900'}`}>
+                                                            {timeRange}
+                                                        </span>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+
+                                        {(workingHours?.days_off?.length > 0 || workingHours?.holidays?.length > 0) && (
+                                            <div className="pt-3 border-t border-zinc-100 space-y-2">
+                                                {workingHours.days_off?.length > 0 && (
+                                                    <div className="flex items-start gap-2">
+                                                        <CalendarCheck className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
+                                                        <p className="text-[10px] text-zinc-500 leading-tight">
+                                                            <span className="font-bold text-zinc-700 uppercase">Days Off:</span> {workingHours.days_off.join(', ')}
+                                                        </p>
+                                                    </div>
+                                                )}
+                                                {workingHours.holidays?.length > 0 && (
+                                                    <div className="flex items-start gap-2">
+                                                        <Clock className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+                                                        <p className="text-[10px] text-zinc-500 leading-tight">
+                                                            <span className="font-bold text-zinc-700 uppercase">Holidays:</span> {workingHours.holidays.join(', ')}
+                                                        </p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
                                     </div>
                                 </DropdownSection>
                             </div>
@@ -223,12 +294,30 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                             {/* Follow Us */}
                             <div className="p-6 rounded-3xl border border-zinc-100 bg-white text-center space-y-4">
                                 <h4 className="font-bold text-zinc-900 text-sm uppercase tracking-wide">Follow Us</h4>
-                                <div className="flex justify-center gap-4">
-                                    {[Facebook, Instagram, Twitter].map((Icon, i) => (
-                                        <a key={i} href="#" className="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-400 hover:bg-black hover:text-white transition-all transform hover:scale-110">
-                                            <Icon className="w-5 h-5" />
+                                <div className="flex flex-wrap justify-center gap-3">
+                                    {[
+                                        { Icon: Facebook, url: socialMedia?.facebook, name: "Facebook", color: "hover:bg-[#1877F2]" },
+                                        { Icon: Instagram, url: socialMedia?.instagram, name: "Instagram", color: "hover:bg-[#E4405F]" },
+                                        { Icon: Twitter, url: socialMedia?.twitter, name: "Twitter", color: "hover:bg-[#000000]" },
+                                        { Icon: Linkedin, url: socialMedia?.linkedin, name: "Linkedin", color: "hover:bg-[#0077B5]" },
+                                        { Icon: Youtube, url: socialMedia?.youtube, name: "Youtube", color: "hover:bg-[#FF0000]" },
+                                        { Icon: PhoneCall, url: socialMedia?.whatsapp ? `https://wa.me/${socialMedia.whatsapp.replace(/[^0-9]/g, '')}` : null, name: "WhatsApp", color: "hover:bg-[#25D366]" },
+                                        { Icon: Send, url: socialMedia?.telegram ? `https://t.me/${socialMedia.telegram.replace('@', '')}` : null, name: "Telegram", color: "hover:bg-[#24A1DE]" }
+                                    ].map((social, i) => social.url ? (
+                                        <a
+                                            key={i}
+                                            href={social.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            title={social.name}
+                                            className={`w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-400 hover:text-white transition-all transform hover:scale-110 ${social.color} group relative`}
+                                        >
+                                            <social.Icon className="w-5 h-5" />
+                                            <span className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-black text-white text-[10px] font-bold rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-xl z-10">
+                                                {social.name}
+                                            </span>
                                         </a>
-                                    ))}
+                                    ) : null)}
                                 </div>
                             </div>
                         </div>
@@ -238,9 +327,9 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                     <div className="lg:col-span-2 flex flex-col gap-y-2 sm:gap-y-10">
 
                         {/* Top Bar - Breadcrumbs & Share */}
-                        <div className="flex items-center justify-between gap-4 order-1">
+                        <div className="flex items-center justify-between gap-4">
                             <Breadcrumbs
-                                items={[{ label: business.name }]}
+                                items={[{ label: businessName }]}
                             />
                             <button
                                 onClick={() => setIsShareModalOpen(true)}
@@ -252,12 +341,20 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                         </div>
 
                         {/* Identity Block - Business Name, Badges & Meta */}
-                        <div className="space-y-4 order-3 lg:order-2">
+                        <div className="space-y-4 mb-2">
                             {/* Title & Badges */}
                             <div className="flex flex-wrap items-center gap-2 sm:flex-col sm:items-start sm:gap-3">
-                                <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-zinc-900 tracking-tight leading-tight">
-                                    {business.name}
-                                </h1>
+                                <div className="space-y-1">
+                                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-zinc-900 tracking-tight leading-tight">
+                                        {businessName}
+                                    </h1>
+                                    {details.business_branch && (
+                                        <p className="text-sm sm:text-base font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-2">
+                                            <MapPin className="w-3.5 h-3.5" />
+                                            {details.business_branch}
+                                        </p>
+                                    )}
+                                </div>
                                 <div className="flex flex-wrap items-center gap-2">
                                     {/* Verified Badge */}
                                     <div className="flex items-center gap-1 sm:bg-zinc-100 sm:px-2 sm:py-1 sm:rounded-md sm:border sm:border-zinc-200 shrink-0">
@@ -276,31 +373,31 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                             <div className="flex flex-wrap items-center gap-x-4 gap-y-3 text-sm text-zinc-600">
                                 <div className="flex items-center gap-1.5">
                                     <MapPin className="w-4 h-4 text-zinc-400" />
-                                    <span>{business.address.split(',')[0]}</span>
+                                    <span>{businessAddress.split(',')[0]}</span>
                                 </div>
 
                                 <div className="hidden sm:block w-1 h-1 rounded-full bg-zinc-300" />
 
                                 <div className="flex items-center gap-1.5">
                                     <Clock className="w-4 h-4 text-zinc-400" />
-                                    <span className="text-zinc-500 font-medium">Open until 09:00 PM</span>
+                                    <span className="text-zinc-500 font-medium">Open until {workingHours?.working_hours?.close || '09:00 PM'}</span>
                                 </div>
 
                                 <div className="hidden sm:block w-1 h-1 rounded-full bg-zinc-300" />
 
                                 <div className="flex items-center gap-2 bg-zinc-50 px-2.5 py-1 rounded-lg border border-zinc-100">
                                     <div className="flex items-center gap-1">
-                                        <span className="font-bold text-zinc-900">{business.ratings?.average || 0}</span>
+                                        <span className="font-bold text-zinc-900">{businessRatings.average || 0}</span>
                                         <Star className="w-3.5 h-3.5 text-black fill-black" />
                                     </div>
                                     <span className="w-px h-3 bg-zinc-200" />
-                                    <span className="text-black font-bold text-xs underline underline-offset-2">{business.ratings?.totalReviews || 0} reviews</span>
+                                    <span className="text-black font-bold text-xs underline underline-offset-2">{businessRatings.total_reviews || 0} reviews</span>
                                 </div>
 
                                 <div className="ml-auto">
                                     <button
                                         onClick={() => {
-                                            const mapUrl = business.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${business.name} ${business.address}`)}`;
+                                            const mapUrl = contacts?.google_maps_url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${businessName} ${businessAddress}`)}`;
                                             window.open(mapUrl, '_blank');
                                         }}
                                         className="flex items-center gap-1.5 text-zinc-900 font-bold hover:underline whitespace-nowrap bg-zinc-100 px-3 py-1 rounded-full border border-zinc-200"
@@ -313,16 +410,17 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                             </div>
                         </div>
                         {/* Sticky Navigation Tabs */}
-                        <div className={`sticky top-[64px] md:top-[72px] z-40 bg-white/95 backdrop-blur-md -mx-4 px-4 sm:mx-0 sm:px-0 border-b border-zinc-100 mb-6 order-4 transition-all duration-300 ease-in-out ${isTabsVisible ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible pointer-events-none'
+                        <div className={`sticky top-[64px] md:top-[72px] z-40 bg-white/95 backdrop-blur-md -mx-4 px-4 sm:mx-0 sm:px-0 border-b border-zinc-100 transition-all duration-300 ease-in-out ${isTabsVisible ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible pointer-events-none hidden'
                             }`}>
                             <div className="flex items-center gap-6 overflow-x-auto no-scrollbar whitespace-nowrap">
                                 {([
                                     { label: 'Gallery', id: 'gallery' },
+                                    { label: 'About', id: 'about' },
                                     { label: 'Services', id: 'services' },
-                                    ...((business.reviewsList?.length ?? 0) > 0 || (business.ratings?.totalReviews ?? 0) > 0
+                                    ...((reviewsData?.reviews?.length ?? 0) > 0 || (businessRatings.total_reviews ?? 0) > 0
                                         ? [{ label: 'Reviews', id: 'reviews' }]
                                         : []),
-                                    { label: 'About', id: 'about' }
+
                                 ] as { label: string; id: string }[]).map((tab) => (
                                     <button
                                         key={tab.id}
@@ -349,25 +447,24 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                                 ))}
                             </div>
                         </div>
-
                         {/* Gallery Grid */}
-                        {business.images.length > 0 && (() => {
-                            const has360 = Array.isArray(business.tours) && business.tours.length > 0;
-                            const hasVideos = Array.isArray(business.videos) && business.videos.length > 0;
+                        {galleryImages.length > 0 && (() => {
+                            const has360 = media?.images_360 && media.images_360.length > 0;
+                            const hasVideos = media?.videos && media.videos.length > 0;
                             const galleryTabs = [
-                                { label: 'Photos', count: business.images.length },
+                                { label: 'Photos', count: galleryImages.length },
                                 ...(has360 ? [{ label: '360 Tours' }] : []),
                                 ...(hasVideos ? [{ label: 'Videos' }] : []),
                             ];
                             return (
-                                <section id="gallery" className="order-2 lg:order-3">
+                                <section id="gallery">
                                     <TabNavigation
                                         tabs={galleryTabs}
                                         activeTab={galleryTab}
                                         onTabChange={setGalleryTab}
                                     />
 
-                                    {galleryTab === 'Photos' && <BusinessGallery images={business.images} businessName={business.name} />}
+                                    {galleryTab === 'Photos' && <BusinessGallery images={galleryImages} businessName={businessName} />}
                                     {has360 && galleryTab === '360 Tours' && <Business360Tour />}
                                     {hasVideos && galleryTab === 'Videos' && <BusinessVideos />}
                                 </section>
@@ -375,59 +472,91 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
                         })()}
 
                         {/* About Section */}
-                        <section id="about" className="order-7 lg:order-4 mt-4 md:mt-0">
+                        <section id="about" className="mt-4 md:mt-0">
                             <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 mb-4">About</h2>
                             <p className="text-zinc-600 leading-relaxed text-sm sm:text-base md:text-lg">
-                                {business.description}
+                                {details.description}
                             </p>
 
-                            {business.amenities && business.amenities.length > 0 && (
-                                <div className="mt-6 sm:mt-8 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-                                    {business.amenities.map((amenity: string, i: number) => {
-                                        const getIcon = (name: string) => {
-                                            const lowerName = name.toLowerCase();
-                                            if (lowerName.includes('wifi') || lowerName.includes('wi-fi')) return Wifi;
-                                            if (lowerName.includes('parking')) return Car;
-                                            if (lowerName.includes('ac') || lowerName.includes('air conditioning')) return Wind;
-                                            if (lowerName.includes('beverage') || lowerName.includes('coffee')) return Coffee;
-                                            if (lowerName.includes('card') || lowerName.includes('payment')) return CreditCard;
-                                            if (lowerName.includes('booking') || lowerName.includes('online')) return CalendarCheck;
-                                            return ShieldCheck; // Fallback icon
-                                        };
-                                        const Icon = getIcon(amenity);
-                                        return (
-                                            <div key={i} className="flex items-center gap-3 text-zinc-600 bg-zinc-50 p-3 rounded-xl border border-zinc-100 hover:bg-white hover:shadow-sm transition-all">
-                                                <Icon className="w-4 h-4 text-zinc-900" />
-                                                <span className="text-xs sm:text-sm font-medium">{amenity}</span>
+                            {/* Features & Amenities */}
+                            {(capacity?.features?.length > 0 || capacity?.amenities?.length > 0) && (
+                                <div className="mt-8 space-y-6">
+                                    {capacity.features?.length > 0 && (
+                                        <div className="space-y-3">
+                                            <h3 className="text-sm font-bold text-zinc-400 uppercase tracking-wider">Key Features</h3>
+                                            <div className="flex flex-wrap gap-2">
+                                                {capacity.features.map((feature: string, i: number) => (
+                                                    <span key={i} className="px-3 py-1 bg-zinc-100 text-zinc-900 font-bold rounded-lg text-xs border border-zinc-200">
+                                                        {feature}
+                                                    </span>
+                                                ))}
                                             </div>
-                                        );
-                                    })}
+                                        </div>
+                                    )}
+
+                                    {capacity.amenities?.length > 0 && (
+                                        <div className="space-y-3">
+                                            <h3 className="text-sm font-bold text-zinc-400 uppercase tracking-wider">Amenities</h3>
+                                            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                                                {capacity.amenities.map((amenity: string, i: number) => {
+                                                    const getIcon = (name: string) => {
+                                                        const lowerName = name.toLowerCase();
+                                                        if (lowerName.includes('wifi') || lowerName.includes('wi-fi')) return Wifi;
+                                                        if (lowerName.includes('parking')) return Car;
+                                                        if (lowerName.includes('ac') || lowerName.includes('air conditioning')) return Wind;
+                                                        if (lowerName.includes('beverage') || lowerName.includes('coffee')) return Coffee;
+                                                        if (lowerName.includes('card') || lowerName.includes('payment')) return CreditCard;
+                                                        if (lowerName.includes('booking') || lowerName.includes('online')) return CalendarCheck;
+                                                        return ShieldCheck; // Fallback icon
+                                                    };
+                                                    const Icon = getIcon(amenity);
+                                                    return (
+                                                        <div key={i} className="flex items-center gap-3 text-zinc-600 bg-zinc-50 p-3 rounded-xl border border-zinc-100 hover:bg-white hover:shadow-sm transition-all">
+                                                            <Icon className="w-4 h-4 text-zinc-900" />
+                                                            <span className="text-xs sm:text-sm font-medium">{amenity}</span>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </section>
 
                         {/* Services Section */}
-                        <div id="services" className="order-5">
-                            <PopularServices services={business.services || []} businessName={business.name} />
+                        <div id="services" >
+                            <PopularServices services={servicesData?.services || []} businessName={businessName} slug={slug} />
                         </div>
 
                         {/* Categories & Tags Section */}
-                        <div className="order-8 lg:order-6">
+                        <div>
                             <BusinessCategories
-                                categories={business.categories}
-                                tags={business.tags}
+                                categories={categoriesData?.categories ? [categoriesData.categories] : []}
+                                subCategories={categoriesData?.sub_categories ? [categoriesData.sub_categories] : []}
+                                tags={categoriesData?.tags || []}
+                                specialties={categoriesData?.specialties || []}
+                                languages={categoriesData?.languages || []}
                             />
                         </div>
 
                         {/* Reviews Section */}
-                        {((business.reviewsList?.length ?? 0) > 0 || (business.ratings?.totalReviews ?? 0) > 0) && (
-                            <div id="reviews" className="order-6 lg:order-7">
+                        {((reviewsData?.reviews?.length ?? 0) > 0 || (businessRatings.total_reviews ?? 0) > 0) && (
+                            <div id="reviews">
                                 <BusinessReviews
-                                    reviews={business.reviewsList}
-                                    rating={business.ratings?.average || 0}
-                                    reviewCount={business.ratings?.totalReviews || 0}
+                                    reviews={reviewsData?.reviews?.map((r: any) => ({
+                                        id: r.createdAt, // Using createdAt as id if _id is missing
+                                        author: r.customerName,
+                                        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(r.customerName)}&background=random`,
+                                        rating: r.rating,
+                                        content: r.comment,
+                                        date: new Date(r.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
+                                        helpfulPercentage: 0
+                                    })) || []}
+                                    rating={businessRatings.average || 0}
+                                    reviewCount={businessRatings.total_reviews || 0}
                                     slug={slug}
-                                    businessName={business.name || 'businessname'}
+                                    businessName={businessName || 'businessname'}
                                 />
                             </div>
                         )}
@@ -438,17 +567,17 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
             {/* Sticky Mobile Actions Footer */}
             <div className="lg:hidden fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-md border-t border-zinc-100 z-50">
                 <div className="flex items-center gap-3">
-                    {business.phone && (
+                    {businessPhone && (
                         <>
                             <a
-                                href={`tel:${business.phone}`}
+                                href={`tel:${businessPhone}`}
                                 className="flex items-center justify-center w-12 h-12 rounded-xl bg-zinc-100 text-zinc-900 border border-zinc-200 transition-all active:scale-95 shrink-0"
                                 aria-label="Call business"
                             >
                                 <Phone className="w-5 h-5" />
                             </a>
                             <a
-                                href={`https://wa.me/${business.phone.replace(/[^0-9]/g, '')}`}
+                                href={`https://wa.me/${businessPhone.replace(/[^0-9]/g, '')}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center justify-center w-12 h-12 rounded-xl bg-zinc-100 text-black border border-zinc-200 transition-all active:scale-95 shrink-0"
@@ -480,7 +609,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialBusiness }
             <EnquiryModal
                 isOpen={isEnquiryModalOpen}
                 onClose={() => setIsEnquiryModalOpen(false)}
-                businessName={business.name}
+                businessName={businessName}
             />
         </div >
     );

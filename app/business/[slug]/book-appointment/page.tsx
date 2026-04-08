@@ -1,6 +1,6 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import { businessApi } from '@/api/public/business';
+import { businessDetailsApi } from '@/api/public/business.details.api';
 import BookingPageContent from '@/app/business/[slug]/book-appointment/BookingPageContent';
 import type { Metadata } from 'next';
 
@@ -15,10 +15,10 @@ export const revalidate = 3600;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { slug } = await params;
-    const response = await businessApi.getBusinessBySlug(slug).catch(() => null);
-    const business = response?.data;
+    const response = await businessDetailsApi.getSeo(slug).catch(() => null);
+    const seoData = response?.data;
 
-    if (!business) {
+    if (!seoData) {
         return {
             title: "Book Appointment | Bookby247",
             description: "Securely book spa and salon appointments online with Bookby247.",
@@ -29,9 +29,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         };
     }
 
-    const title = `Book Appointment at ${business.name} | Bookby247`;
-    const description = `Choose your preferred slot and instantly book an appointment at ${business.name} in ${business.city}.`;
-    const canonicalPath = `/business/${business.slug || slug}/book-appointment`;
+    const title = `Book Appointment at ${seoData.name} | Bookby247`;
+    const description = `Choose your preferred slot and instantly book an appointment at ${seoData.name} in ${seoData.location_info?.city || ''}.`;
+    const canonicalPath = `/business/${seoData.slug || slug}/book-appointment`;
 
     return {
         title,
@@ -62,35 +62,46 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 const BookingPage = async ({ params }: PageProps) => {
     const { slug } = await params;
 
-    // Fetch live business data
-    const response = await businessApi.getBusinessBySlug(slug).catch(() => null);
-    const businessData = response?.data;
+    // Fetch live business data required for booking
+    const [detailsRes, contactsRes, mediaRes, servicesRes, capacityRes] = await Promise.all([
+        businessDetailsApi.getDetails(slug).catch(() => null),
+        businessDetailsApi.getContacts(slug).catch(() => null),
+        businessDetailsApi.getMedia(slug).catch(() => null),
+        businessDetailsApi.getServices(slug, 1, 50).catch(() => null),
+        businessDetailsApi.getCapacity(slug).catch(() => null)
+    ]);
 
-    if (!businessData) {
+    if (!detailsRes?.data) {
         notFound();
     }
 
-    // Normalize API data to match Business interface
+    const details = detailsRes.data;
+    const contacts = contactsRes?.data;
+    const media = mediaRes?.data;
+    const services = servicesRes?.data?.services || [];
+    const capacity = capacityRes?.data;
+
+    // Normalize API data to match Business interface for BookingPageContent
     const business: any = {
-        id: businessData.id || businessData._id,
-        name: businessData.name,
-        slug: businessData.slug || slug, // Fallback to params slug
-        images: businessData.images?.gallery || [],
-        image: businessData.images?.thumbnail || businessData.images?.logo,
-        rating: businessData.ratings?.average || 0,
-        reviews: businessData.ratings?.totalReviews || 0,
-        address: businessData.address,
-        city: businessData.city,
-        branch: businessData.branch,
-        price: businessData.price || 0, // Fallback if price is missing in API
-        amenities: businessData.amenities || [],
-        gender: businessData.gender || 'Unisex',
-        coordinates: businessData.location?.coordinates ? {
-            lat: businessData.location.coordinates[1],
-            lng: businessData.location.coordinates[0]
+        id: details.slug, // Using slug as id if needed, or _id if available in response
+        name: details.name,
+        slug: details.slug || slug,
+        images: media?.images?.gallery || [],
+        image: media?.images?.thumbnail || media?.images?.logo,
+        rating: details.avg_rating || 0,
+        reviews: details.total_reviews || 0,
+        address: contacts?.address,
+        city: contacts?.city,
+        branch: details.business_branch,
+        price: 0, // Will be calculated from services
+        amenities: capacity?.amenities || [],
+        gender: 'Unisex', // Default
+        coordinates: contacts?.location?.coordinates ? {
+            lat: contacts.location.coordinates[1],
+            lng: contacts.location.coordinates[0]
         } : { lat: 0, lng: 0 },
-        description: businessData.description,
-        services: businessData.services || [] // Ensure services are passed
+        description: details.description,
+        services: services
     };
 
     return <BookingPageContent business={business} />;
