@@ -30,6 +30,8 @@ const isHotlinkProtected = (src: string): boolean => {
     }
     try {
         const { hostname } = new URL(src);
+        // Explicitly block mock domains to avoid Next.js optimizer 500 errors
+        if (hostname.includes("example.com")) return true; 
         return UNOPTIMIZED_HOSTS.some((h) => hostname === h || hostname.endsWith("." + h));
     } catch {
         return false;
@@ -46,7 +48,7 @@ const CustomImage = ({
     ...props
 }: CustomImageProps) => {
     const normalizeSrc = (s: string | undefined): string => {
-        if (!s) return fallback;
+        if (!s || s.includes("example.com")) return fallback;
         if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("/")) {
             return s;
         }

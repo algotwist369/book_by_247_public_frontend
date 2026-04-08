@@ -7,33 +7,49 @@ interface PageProps {
     }>
 }
 
-import { businessApi } from '@/api/public/business';
+import { businessDetailsApi } from '@/api/public/business.details.api';
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { safeJsonLdStringify } from '@/lib/utils';
 
 export const revalidate = 3600;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { slug } = await params;
-    const response = await businessApi.getBusinessBySlug(slug).catch(() => null);
-    const business = response?.data;
+    
+    // Fetch SEO and Media data for metadata
+    const [seoRes, mediaRes] = await Promise.all([
+        businessDetailsApi.getSeo(slug).catch(() => null),
+        businessDetailsApi.getMedia(slug).catch(() => null)
+    ]);
 
-    if (!business) {
+    const seoData = seoRes?.data;
+    const mediaData = mediaRes?.data;
+
+    if (!seoData) {
         return {
             title: 'Reviews Not Found | Bookby247',
         };
     }
 
-    const seo = business.seo || {};
+    const seo = seoData.seo || {};
+    const city = seoData.location_info?.city || '';
+    const type = seoData.search_profile?.spaTypes?.[0] || 'Wellness Center';
 
-    const title = `Customer Reviews: ${seo.metaTitle || business.name} | Bookby247`;
-    const description = `Read verified customer reviews for ${business.name} in ${business.city}. ${seo.metaDescription || ''}`.slice(0, 159);
-    const canonicalPath = `/business/${business.slug || slug}/reviews`;
+    // Pro SEO Title for Reviews
+    const title = `Customer Reviews: ${seoData.name} | Verified Ratings in ${city} | Bookby247`;
+    
+    const description = 
+        `Read verified customer reviews and ratings for ${seoData.name} in ${city}. Find out what people are saying about their ${type} services and book online.`;
 
-    return {
+    const canonicalPath = `/business/${seoData.slug || slug}/reviews`;
+    const ogImage =
+        mediaData?.images?.[0] || "";
+
+    const metadata: Metadata = {
         title,
         description,
-        keywords: [...(seo.keywords || []), 'reviews', 'ratings', business.name],
+        keywords: [...(seo.keywords || []), 'reviews', 'ratings', seoData.name, city, type, 'verified reviews'],
         authors: [{ name: "Bookby247 Team" }],
         alternates: {
             canonical: canonicalPath,
@@ -44,26 +60,35 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             url: `https://bookby247.com${canonicalPath}`,
             siteName: "Bookby247",
             type: "article",
+            images: ogImage ? [{ url: ogImage, width: 1200, height: 630, alt: `Reviews for ${seoData.name}` }] : [],
         },
         twitter: {
-            card: "summary",
+            card: "summary_large_image",
             title,
             description,
+            images: ogImage ? [ogImage] : [],
         },
     };
+
+    console.log(`SEO Metadata for ${slug} Reviews:`, JSON.stringify(metadata, null, 2));
+
+    return metadata;
 }
 
 const BusinessReviewsPage = async ({ params }: PageProps) => {
     const { slug } = await params;
-    const businessData = await businessApi.getBusinessBySlug(slug).catch(() => null);
-    const businessId = businessData?.data?.id || businessData?.data?._id;
+    
+    // Fetch initial business details and reviews in parallel
+    const [detailsRes, reviewsRes] = await Promise.all([
+        businessDetailsApi.getDetails(slug).catch(() => null),
+        businessDetailsApi.getReviews(slug, 1, 10).catch(() => null)
+    ]);
 
-    let initialReviews = null;
-    if (businessId) {
-        initialReviews = await businessApi.getBusinessReviews(businessId, 1, 20).catch(() => null);
+    if (!detailsRes?.data) {
+        notFound();
     }
 
-    const business = businessData.data;
+    const details = detailsRes?.data || null;
 
     const jsonLd = {
         "@context": "https://schema.org",
@@ -80,22 +105,22 @@ const BusinessReviewsPage = async ({ params }: PageProps) => {
                     {
                         "@type": "ListItem",
                         "position": 2,
-                        "name": business.name,
-                        "item": `https://bookby247.com/business/${business.slug || slug}`,
+                        "name": details?.name || '',
+                        "item": `https://bookby247.com/business/${details?.slug || slug}`,
                     },
                     {
                         "@type": "ListItem",
                         "position": 3,
                         "name": "Reviews",
-                        "item": `https://bookby247.com/business/${business.slug || slug}/reviews`,
+                        "item": `https://bookby247.com/business/${details?.slug || slug}/reviews`,
                     },
                 ],
             },
             {
                 "@type": "CollectionPage",
-                "name": `Reviews for ${business.name}`,
+                "name": `Reviews for ${details?.name || ''}`,
                 "about": {
-                    "@id": `https://bookby247.com/business/${business.slug || slug}#business`,
+                    "@id": `https://bookby247.com/business/${details?.slug || slug}#business`,  
                 },
             },
         ],
@@ -107,9 +132,16 @@ const BusinessReviewsPage = async ({ params }: PageProps) => {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(jsonLd) }}
             />
-            <BusinessReviewsPageContent slug={slug} initialBusiness={businessData} initialReviews={initialReviews} />
+            <BusinessReviewsPageContent 
+                slug={slug} 
+                initialData={{
+                    details: detailsRes,
+                    reviews: reviewsRes
+                }} 
+            />
         </>
     );
 };
 
 export default BusinessReviewsPage;
+

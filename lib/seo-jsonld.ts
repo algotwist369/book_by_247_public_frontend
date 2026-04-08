@@ -5,54 +5,62 @@ export const generateLocalBusinessJsonLd = (business: any) => {
   const baseUrl = "https://bookby247.com";
 
   // Map working hours to Schema.org format
-  const openingHoursSpecification = business.workingHours?.days?.map((day: string) => ({
+  const openingHoursSpecification = business.workingHours?.working_hours?.days?.map((day: string) => ({
     "@type": "OpeningHoursSpecification",
     "dayOfWeek": day.charAt(0).toUpperCase() + day.slice(1),
-    "opens": business.workingHours.open,
-    "closes": business.workingHours.close
+    "opens": business.workingHours.working_hours.open || business.workingHours.open,
+    "closes": business.workingHours.working_hours.close || business.workingHours.close
   })) || [];
+
+  const images = Array.isArray(business.images) ? business.images : [];
 
   return {
     "@type": "LocalBusiness",
     "@id": `${baseUrl}/business/${slug}#business`,
     "name": business.name || business.business_title,
     "description": business.description || business.business_dec,
-    "image": [
-      business.images?.banner,
-      ...(business.images?.gallery || []),
-      business.images?.logo,
-      business.images?.thumbnail,
-    ].filter(Boolean),
+    "image": images.length > 0 ? images : ["https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png"],
     "url": `${baseUrl}/business/${slug}`,
     "telephone": business.phone || business.business_contacts,
-    "address": business.address
-      ? {
-        "@type": "PostalAddress",
-        "streetAddress": business.address,
-        "addressLocality": business.branch || business.city || business.business_location?.split(",")[0],
-        "addressRegion": business.state,
-        "postalCode": business.pincode,
-        "addressCountry": "IN",
-      }
-      : undefined,
-    "aggregateRating": (business.ratings?.average || business.business_avg_tating)
+    "email": business.email,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": business.address || "",
+      "addressLocality": business.city || business.branch || business.business_location?.split(",")[0],
+      "addressRegion": business.state || "",
+      "postalCode": business.zip_code || business.pincode || "",
+      "addressCountry": "IN",
+    },
+    "aggregateRating": (business.ratings?.average || business.avg_rating || business.business_avg_tating)
       ? {
         "@type": "AggregateRating",
-        "ratingValue": business.ratings?.average || business.business_avg_tating,
-        "reviewCount": business.ratings?.totalReviews || business.business_reviws_len,
+        "ratingValue": business.ratings?.average || business.avg_rating || business.business_avg_tating,
+        "reviewCount": business.ratings?.totalReviews || business.total_reviews || business.business_reviws_len,
         "bestRating": "5",
         "worstRating": "1"
       }
       : undefined,
-    "geo": (business.locationInfo?.coordinates || business.location?.coordinates)
+    "geo": (business.location?.coordinates || business.locationInfo?.coordinates)
       ? {
         "@type": "GeoCoordinates",
-        "latitude": business.locationInfo?.coordinates?.lat || business.location?.coordinates?.[1],
-        "longitude": business.locationInfo?.coordinates?.lng || business.location?.coordinates?.[0],
+        "latitude": business.location?.coordinates?.[1] || business.locationInfo?.coordinates?.lat,
+        "longitude": business.location?.coordinates?.[0] || business.locationInfo?.coordinates?.lng,
       }
       : undefined,
     "openingHoursSpecification": openingHoursSpecification,
     "priceRange": business.searchProfile?.priceCategory === "luxury" ? "$$$" : business.searchProfile?.priceCategory === "mid" ? "$$" : "$",
+    "sameAs": [
+      business.facebook,
+      business.instagram,
+      business.twitter,
+      business.linkedin,
+      business.youtube,
+    ].filter(Boolean),
+    "amenityFeature": business.amenities?.map((amenity: string) => ({
+      "@type": "LocationFeatureSpecification",
+      "name": amenity,
+      "value": true
+    }))
   };
 };
 

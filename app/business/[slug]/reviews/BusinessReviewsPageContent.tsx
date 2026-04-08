@@ -9,18 +9,30 @@ import ShareModal from '@/components/business/ShareModal';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 
 import Link from 'next/link';
-import { useBusinessBySlug, useBusinessReviews } from '@/hooks/useBusinesses';
+import { 
+    useBusinessDetails, 
+    useBusinessContacts, 
+    useBusinessWorkingHours, 
+    useBusinessReviews 
+} from '@/hooks/useBusinessDetails';
 
 interface ReviewsPageProps {
     slug: string;
-    initialBusiness?: any;
-    initialReviews?: any;
+    initialData?: {
+        details?: any;
+        contacts?: any;
+        workingHours?: any;
+        reviews?: any;
+    };
 }
 
-const BusinessReviewsPageContent = ({ slug, initialBusiness, initialReviews }: ReviewsPageProps) => {
-    const { data: business, isLoading: isBusinessLoading, error: businessError } = useBusinessBySlug(slug, initialBusiness);
+const BusinessReviewsPageContent = ({ slug, initialData }: ReviewsPageProps) => {
+    const { data: details, isLoading: isBusinessLoading, error: businessError } = useBusinessDetails(slug, initialData?.details);
+    const { data: contacts, isLoading: isContactsLoading } = useBusinessContacts(slug, initialData?.contacts);
+    const { data: workingHours, isLoading: isWorkingHoursLoading } = useBusinessWorkingHours(slug, initialData?.workingHours);
+    
     const [page, setPage] = React.useState(1);
-    const { data: reviewsData, isLoading: isReviewsLoading } = useBusinessReviews(business?.id || '', page, 20, initialReviews);
+    const { data: reviewsData, isLoading: isReviewsLoading } = useBusinessReviews(slug, page, 10, initialData?.reviews);
 
     const [allReviews, setAllReviews] = React.useState<any[]>([]);
     const [isShareModalOpen, setIsShareModalOpen] = React.useState(false);
@@ -34,8 +46,18 @@ const BusinessReviewsPageContent = ({ slug, initialBusiness, initialReviews }: R
 
     React.useEffect(() => {
         if (reviewsData?.reviews) {
+            const normalizedReviews = reviewsData.reviews.map((r: any) => ({
+                id: r.createdAt, // Using createdAt as id if _id is missing
+                author: r.customerName,
+                avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(r.customerName)}&background=random`,
+                rating: r.rating,
+                content: r.comment,
+                date: new Date(r.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
+                helpfulPercentage: 0
+            }));
+
             setAllReviews(prev => {
-                const combined = page === 1 ? reviewsData.reviews : [...prev, ...reviewsData.reviews];
+                const combined = page === 1 ? normalizedReviews : [...prev, ...normalizedReviews];
                 // Use a Map to deduplicate reviews by ID
                 const uniqueMap = new Map();
                 combined.forEach((review: any) => {
@@ -55,7 +77,7 @@ const BusinessReviewsPageContent = ({ slug, initialBusiness, initialReviews }: R
         );
     }
 
-    if (businessError || !business) {
+    if (businessError || !details) {
         return (
             <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-6 px-4">
                 <h1 className="text-3xl font-black text-zinc-900">Business Not Found</h1>
@@ -67,6 +89,11 @@ const BusinessReviewsPageContent = ({ slug, initialBusiness, initialReviews }: R
             </div>
         );
     }
+
+    const businessName = details.name;
+    const businessPhone = contacts?.phone;
+    const businessAddress = contacts?.address || '';
+    const businessRatings = reviewsData?.ratings || { average: details.avg_rating, total_reviews: details.total_reviews };
 
     return (
         <div className="min-h-screen bg-white pb-20">
@@ -98,17 +125,19 @@ const BusinessReviewsPageContent = ({ slug, initialBusiness, initialReviews }: R
                                     <div className="space-y-4 pt-2">
                                         <button
                                             onClick={() => {
-                                                const mapUrl = business.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${business.name} ${business.address}`)}`;
+                                                const mapUrl = contacts?.google_maps_url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${businessName} ${businessAddress}`)}`;
                                                 window.open(mapUrl, '_blank');
                                             }}
                                             className="flex items-start gap-3 text-left hover:text-black transition-colors group"
                                         >
                                             <MapPin className="w-5 h-5 text-zinc-400 mt-0.5 shrink-0 group-hover:text-black transition-colors" />
-                                            <p className="text-sm text-zinc-600 group-hover:text-black transition-colors">{business.address}</p>
+                                            <p className="text-sm text-zinc-600 group-hover:text-black transition-colors">{businessAddress}</p>
                                         </button>
                                         <div className="flex items-center gap-3">
                                             <Phone className="w-5 h-5 text-zinc-400 shrink-0" />
-                                            <a href={`tel:${business.phone}`} className="text-sm text-zinc-600 hover:text-black transition-colors">{business.phone}</a>
+                                            {businessPhone && (
+                                                <a href={`tel:${businessPhone}`} className="text-sm text-zinc-600 hover:text-black transition-colors">{businessPhone}</a>
+                                            )}
                                         </div>
                                     </div>
                                 </DropdownSection>
@@ -117,9 +146,9 @@ const BusinessReviewsPageContent = ({ slug, initialBusiness, initialReviews }: R
                                     <div className="space-y-2 pt-2">
                                         {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => {
                                             const dayLower = day.toLowerCase();
-                                            const isOpen = business.workingHours?.days?.includes(dayLower);
-                                            const timeRange = (isOpen && business.workingHours)
-                                                ? `${business.workingHours.open} - ${business.workingHours.close}`
+                                            const isOpen = workingHours?.working_hours?.days?.includes(dayLower);
+                                            const timeRange = (isOpen && workingHours?.working_hours)
+                                                ? `${workingHours.working_hours.open} - ${workingHours.working_hours.close}`
                                                 : 'Closed';
 
                                             return (
@@ -143,7 +172,7 @@ const BusinessReviewsPageContent = ({ slug, initialBusiness, initialReviews }: R
                         <div className="flex items-center justify-between gap-4">
                             <Breadcrumbs
                                 items={[
-                                    { label: business.name, href: `/business/${slug}` },
+                                    { label: businessName, href: `/business/${slug}` },
                                     { label: 'Reviews' }
                                 ]}
                             />
@@ -159,7 +188,7 @@ const BusinessReviewsPageContent = ({ slug, initialBusiness, initialReviews }: R
                         <div className="space-y-4">
                             <div className="flex items-center gap-3">
                                 <h1 className="text-3xl md:text-4xl font-black text-zinc-900 tracking-tight">
-                                    Reviews for {business.name}
+                                    Reviews for {businessName}
                                 </h1>
                                 <div className="flex items-center gap-1 bg-zinc-100 px-2 py-1 rounded-md border border-zinc-200 shrink-0">
                                     <BadgeCheck className="w-4 h-4 text-black fill-black/10" />
@@ -168,17 +197,17 @@ const BusinessReviewsPageContent = ({ slug, initialBusiness, initialReviews }: R
                             </div>
 
                             <div className="flex items-center gap-2 bg-zinc-50 px-4 py-2 rounded-xl border border-zinc-100 w-fit">
-                                <span className="text-xl font-bold text-zinc-900">{business.rating}</span>
+                                <span className="text-xl font-bold text-zinc-900">{businessRatings.average}</span>
                                 <div className="flex gap-0.5">
                                     {[...Array(5)].map((_, i) => (
                                         <Star
                                             key={i}
-                                            className={`w-4 h-4 ${i < Math.floor(business.rating) ? 'text-black fill-black' : 'text-zinc-200'}`}
+                                            className={`w-4 h-4 ${i < Math.floor(businessRatings.average) ? 'text-black fill-black' : 'text-zinc-200'}`}
                                         />
                                     ))}
                                 </div>
                                 <span className="w-px h-4 bg-zinc-200 mx-2" />
-                                <span className="text-sm font-bold text-zinc-500">{business.reviews} Total Reviews</span>
+                                <span className="text-sm font-bold text-zinc-500">{businessRatings.total_reviews} Total Reviews</span>
                             </div>
                         </div>
 
@@ -186,27 +215,23 @@ const BusinessReviewsPageContent = ({ slug, initialBusiness, initialReviews }: R
                         <div className="bg-white rounded-3xl border border-zinc-100 overflow-hidden">
                             <BusinessReviews
                                 reviews={allReviews}
-                                rating={business.rating}
-                                reviewCount={business.reviews}
-                                slug={business.slug}
-                                businessName={business.name}
+                                rating={businessRatings.average}
+                                reviewCount={businessRatings.total_reviews}
+                                slug={slug}
+                                businessName={businessName}
                                 showViewAll={false}
                             />
 
                             {/* Load More Button */}
-                            {reviewsData?.pagination?.hasMore && (
+                            {reviewsData?.pagination?.hasNextPage && (
                                 <div className="p-8 pt-0 text-center">
                                     <Button
                                         variant="outline"
                                         onClick={() => setPage(prev => prev + 1)}
                                         disabled={isReviewsLoading}
-                                        className="min-w-[200px] border-zinc-200 font-bold hover:bg-zinc-50"
+                                        className="rounded-xl border-zinc-200 hover:bg-zinc-50 font-bold px-8"
                                     >
-                                        {isReviewsLoading ? (
-                                            <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin mx-auto" />
-                                        ) : (
-                                            'Load More Reviews'
-                                        )}
+                                        Load More Reviews
                                     </Button>
                                 </div>
                             )}
