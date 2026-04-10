@@ -57,19 +57,105 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     businessRoutes = [];
   }
 
+  // Dynamic SEO Listing Routes from database
+  let dynamicSeoRoutes: MetadataRoute.Sitemap = [];
+  let businessDetailRoutes: MetadataRoute.Sitemap = [];
+  
+  try {
+    const sitemapDataResponse = await businessApi.getSeoSitemapData();
+    if (sitemapDataResponse?.success && sitemapDataResponse.data) {
+      const { cities, types, areas, services, businessSlugs } = sitemapDataResponse.data;
+
+      // 0. City Landing Pages
+      cities.forEach(city => {
+        dynamicSeoRoutes.push({
+          url: `${BASE_URL}/${city}`,
+          lastModified: new Date(),
+          changeFrequency: "weekly",
+          priority: 0.8,
+        });
+      });
+
+      // 1. Dynamic SEO Listings (City + Category + Area/Service)
+      // ... (existing city/category/area/service logic)
+      cities.forEach(city => {
+        types.forEach(type => {
+          dynamicSeoRoutes.push({
+            url: `${BASE_URL}/seo/listing/${city}/${type}`,
+            lastModified: new Date(),
+            changeFrequency: "weekly",
+            priority: 0.8,
+          });
+        });
+      });
+
+      cities.slice(0, 10).forEach(city => {
+        types.forEach(type => {
+          areas.slice(0, 50).forEach(area => {
+            dynamicSeoRoutes.push({
+              url: `${BASE_URL}/seo/listing/${city}/${type}/${area}`,
+              lastModified: new Date(),
+              changeFrequency: "weekly",
+              priority: 0.7,
+            });
+          });
+        });
+      });
+      
+      cities.slice(0, 10).forEach(city => {
+        types.forEach(type => {
+          services.slice(0, 50).forEach(service => {
+            dynamicSeoRoutes.push({
+              url: `${BASE_URL}/seo/listing/${city}/${type}/${service}`,
+              lastModified: new Date(),
+              changeFrequency: "weekly",
+              priority: 0.7,
+            });
+          });
+        });
+      });
+
+      // 2. Business Details Sub-pages (from business.detials.controller.js)
+      const detailSubPaths = [
+        'contacts', 'working-hours', 'social-media', 'media', 
+        'categories', 'capacity', 'services', 'seo', 'reviews'
+      ];
+
+      businessSlugs.slice(0, 500).forEach(slug => {
+        // Main business profile
+        businessDetailRoutes.push({
+          url: `${BASE_URL}/business/${slug}`,
+          lastModified: new Date(),
+          changeFrequency: "daily",
+          priority: 0.9,
+        });
+
+        // Sub-pages for the business
+        detailSubPaths.forEach(subPath => {
+          businessDetailRoutes.push({
+            url: `${BASE_URL}/business/${slug}/${subPath}`,
+            lastModified: new Date(),
+            changeFrequency: "weekly",
+            priority: 0.6,
+          });
+        });
+
+        // Booking page
+        businessDetailRoutes.push({
+          url: `${BASE_URL}/business/${slug}/book-appointment`,
+          lastModified: new Date(),
+          changeFrequency: "weekly",
+          priority: 0.5,
+        });
+      });
+    }
+  } catch (err) {
+    console.error("Error fetching sitemap data:", err);
+  }
+
   // SEO Search Routes (Top Cities + Categories)
   const topCities = ["delhi", "mumbai", "bangalore", "pune", "hyderabad", "chennai", "kolkata", "gurgaon", "noida"];
   const topCategories = ["spa", "salon", "massage", "wellness", "beauty-parlour"];
-
-  // Dynamic SEO Routes (City / Category / Area)
-  const dynamicSeoRoutes: MetadataRoute.Sitemap = topCities.flatMap((city) => 
-    topCategories.map((category) => ({
-      url: `${BASE_URL}/${city}/${category}`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.8,
-    }))
-  );
 
   const searchRoutes: MetadataRoute.Sitemap = topCities.flatMap((city) => 
     topCategories.map((category) => ({
@@ -80,6 +166,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   );
 
-  return [...staticRoutes, ...businessRoutes, ...dynamicSeoRoutes, ...searchRoutes];
+  return [...staticRoutes, ...businessRoutes, ...dynamicSeoRoutes, ...businessDetailRoutes, ...searchRoutes];
 }
 

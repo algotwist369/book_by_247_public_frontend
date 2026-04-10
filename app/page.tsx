@@ -6,7 +6,7 @@ import { CategorySection } from "@/components/home/CategorySection";
 import { businessApi } from "@/api/public/business";
 
 export const metadata: Metadata = {
-  title: "Book Spas, Salons & Beauty Services Near You Across India | Bookby247",
+  title: "Book Top Rated Spas, Salons & Beauty Services Near You Across India | Bookby247",
   description:
     "Discover, compare, and book top-rated spas, salons & beauty services near you with Bookby247. Verified businesses, real reviews, and seamless online booking.",
   keywords: [

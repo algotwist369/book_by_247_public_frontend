@@ -185,6 +185,22 @@ export const businessApi = {
     },
 
     /**
+     * Get data for sitemap generation (cities, areas, types, services)
+     */
+    getSeoSitemapData: async () => {
+        return apiClient<{
+            success: boolean;
+            data: {
+                cities: string[];
+                areas: string[];
+                types: string[];
+                services: string[];
+                businessSlugs: string[];
+            };
+        }>('/v1/seo/sitemap-data');
+    },
+
+    /**
      * Get all unique cities where active businesses are located
      */
     getUniqueCities: async () => {
