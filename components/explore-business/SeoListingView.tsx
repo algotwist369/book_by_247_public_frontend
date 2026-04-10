@@ -19,6 +19,7 @@ interface SeoListingViewProps {
     initialCity?: string;
     initialArea?: string;
     initialCategory?: string;
+    initialNearMe?: string;
     isTop10?: boolean;
     viewType?: 'business' | 'service';
     title?: string;
@@ -29,6 +30,7 @@ const SeoListingView = ({
     initialCity,
     initialArea,
     initialCategory,
+    initialNearMe,
     isTop10 = false,
     viewType = 'business',
     title,
@@ -73,6 +75,12 @@ const SeoListingView = ({
 
     const { getPosition, latitude, longitude, isFetching: isLocating } = useGeolocation();
 
+    useEffect(() => {
+        if (initialNearMe && !latitude && !longitude) {
+            getPosition();
+        }
+    }, [initialNearMe, latitude, longitude, getPosition]);
+
     const urlLat = searchParams.get('lat');
     const urlLng = searchParams.get('lng');
 
@@ -92,11 +100,12 @@ const SeoListingView = ({
         radius: activeLat && activeLng ? radius : null,
         citySlug: initialCity?.toLowerCase(),
         areaSlug: initialArea?.toLowerCase(),
+        nearMeSlug: initialNearMe,
         sort: activeFilters.sortBy === 'Recommended' ? (isTop10 ? 'rating' : null) :
             activeFilters.sortBy === 'Rating (High to Low)' ? 'rating' :
                 activeFilters.sortBy === 'Price (Low to High)' ? 'price_low' : 'price_high',
         limit: isTop10 ? 10 : 20
-    }), [committedSearch, committedLocation, selectedCategory, activeFilters, minRating, activeLat, activeLng, radius, initialCity, initialArea, isTop10]);
+    }), [committedSearch, committedLocation, selectedCategory, activeFilters, minRating, activeLat, activeLng, radius, initialCity, initialArea, initialNearMe, isTop10]);
 
     const {
         data: infiniteBusinessData,

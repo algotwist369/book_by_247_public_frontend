@@ -94,6 +94,22 @@ export const businessApi = {
     },
 
     /**
+     * Fetch "Near Me" businesses by category and location
+     */
+    getNearMeBusinesses: async (categoryNearMe: string, params: { lat?: number; lng?: number; page?: number; limit?: number; minRating?: number; price?: string; audience?: string } = {}) => {
+        const queryParams = new URLSearchParams();
+        if (params.lat) queryParams.append("lat", params.lat.toString());
+        if (params.lng) queryParams.append("lng", params.lng.toString());
+        if (params.page) queryParams.append("page", params.page.toString());
+        if (params.limit) queryParams.append("limit", params.limit.toString());
+        if (params.minRating) queryParams.append("minRating", params.minRating.toString());
+        if (params.price) queryParams.append("price", params.price);
+        if (params.audience) queryParams.append("audience", params.audience);
+
+        return apiClient<any>(`/v1/seo/${categoryNearMe}?${queryParams.toString()}`);
+    },
+
+    /**
      * Advanced search with filters and weighted relevance
      */
     searchBusinesses: async (params: any) => {

@@ -31,6 +31,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         return { robots: { index: false, follow: false } };
     }
 
+    // Handle "Near Me" routes
+    if (city.endsWith('-near-me')) {
+        const category = city.replace('-near-me', '').replace(/-/g, ' ');
+        const categoryTitle = category.charAt(0).toUpperCase() + category.slice(1);
+        
+        return {
+            title: `${categoryTitle} Near Me - Best ${categoryTitle} Services Near You | Bookby247`,
+            description: `Find top-rated ${category} centers near you. Compare prices, ratings, and book your appointment online instantly.`,
+            keywords: [`${category} near me`, `best ${category}`, `${category} booking`],
+            alternates: {
+                canonical: `/${city}`,
+            },
+        };
+    }
+
     const cityName = city.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
     return {
@@ -63,18 +78,32 @@ export default async function CityPage({ params }: Props) {
         return notFound();
     }
 
-    const cityName = city.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    const isNearMe = city.endsWith('-near-me');
+    let title = "";
+    let businesses = [];
+    let cityName = "";
+    let seoMetadata = null;
 
-    // Fetch initial data for JSON-LD
-    const response = await businessApi.getSeoBusinesses({ city: city, limit: 20 }).catch(() => null);
-    const businesses = (response as any)?.data || (response as any)?.results || (response as any)?.businesses || [];
+    if (isNearMe) {
+        const response = await businessApi.getNearMeBusinesses(city).catch(() => null);
+        businesses = (response as any)?.data || [];
+        seoMetadata = (response as any)?.seo_metadata;
+        const category = city.replace('-near-me', '').replace(/-/g, ' ');
+        title = `${category.charAt(0).toUpperCase() + category.slice(1)} Near Me`;
+        cityName = (response as any)?.detected_city || "Near You";
+    } else {
+        cityName = city.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+        const response = await businessApi.getSeoBusinesses({ city: city, limit: 20 }).catch(() => null);
+        businesses = (response as any)?.data || (response as any)?.results || (response as any)?.businesses || [];
+        title = `Best Wellness Centers`;
+    }
 
     const jsonLd = [
-        generateItemListJsonLd(businesses, cityName),
+        generateItemListJsonLd(businesses, isNearMe ? title : cityName),
         generateBreadcrumbJsonLd([
             { name: "Home", item: "https://bookby247.com/" },
             { name: "Explore", item: "https://bookby247.com/explore" },
-            { name: cityName, item: `https://bookby247.com/${city}` },
+            { name: isNearMe ? title : cityName, item: `https://bookby247.com/${city}` },
         ])
     ];
 
@@ -91,9 +120,13 @@ export default async function CityPage({ params }: Props) {
                     </div>
                 }>
                     <SeoListingView 
-                        initialCity={cityName} 
-                        title={`Best Wellness Centers`}
-                        subtitle={`Find the most high-rated spas, salons and beauty centers across ${cityName}`}
+                        initialCity={isNearMe ? "" : cityName} 
+                        initialNearMe={isNearMe ? city : undefined}
+                        title={isNearMe ? title : `Best Wellness Centers`}
+                        subtitle={isNearMe 
+                            ? `Find the best rated ${title.toLowerCase()} in ${cityName}` 
+                            : `Find the most high-rated spas, salons and beauty centers across ${cityName}`
+                        }
                     />
                 </Suspense>
             </main>

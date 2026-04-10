@@ -42,11 +42,20 @@ export const useInfiniteSearch = (params: any) => {
     return useInfiniteQuery({
         queryKey: ["business-search-infinite", queryFilters],
         queryFn: async ({ pageParam = 1 }) => {
-            const response = await businessApi.searchBusinesses({
-                ...queryFilters,
-                page: pageParam,
-                limit: PAGE_SIZE,
-            });
+            let response;
+            if (queryFilters.nearMeSlug) {
+                response = await businessApi.getNearMeBusinesses(queryFilters.nearMeSlug, {
+                    ...queryFilters,
+                    page: pageParam,
+                    limit: PAGE_SIZE,
+                });
+            } else {
+                response = await businessApi.searchBusinesses({
+                    ...queryFilters,
+                    page: pageParam,
+                    limit: PAGE_SIZE,
+                });
+            }
             const data = response?.data || response?.payload?.decryptedData || response || {};
             return {
                 results: normalizeResults(data.results || data.businesses || []),
