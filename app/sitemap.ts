@@ -159,13 +159,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const searchRoutes: MetadataRoute.Sitemap = topCities.flatMap((city) => 
     topCategories.map((category) => ({
-      url: `${BASE_URL}/search/${city}/${category}`,
+      url: `${BASE_URL}/${city}/${category}`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.8,
     }))
   );
 
-  return [...staticRoutes, ...businessRoutes, ...dynamicSeoRoutes, ...businessDetailRoutes, ...searchRoutes];
+  // 3. Near Me SEO Routes
+  const nearMeCategories = [
+    'spa', 'massage', 'couple-spa', 'thai-massage', 'ayurvedic-spa',
+    'salon', 'beauty-parlour', 'wellness-centre', 'gym'
+  ];
+
+  const nearMeRoutes: MetadataRoute.Sitemap = nearMeCategories.map((category) => ({
+    url: `${BASE_URL}/${category}-near-me`,
+    lastModified: new Date(),
+    changeFrequency: "daily" as const,
+    priority: 0.9,
+  }));
+
+  return [...staticRoutes, ...businessRoutes, ...dynamicSeoRoutes, ...businessDetailRoutes, ...searchRoutes, ...nearMeRoutes];
 }
 
