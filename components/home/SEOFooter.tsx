@@ -10,7 +10,7 @@ const SEOFooter = () => {
           </h2>
 
           <p className="mt-3 text-sm leading-relaxed text-zinc-600 sm:text-base">
-            Discover, compare, and book the best spas and salons near you.
+            Discover, compare, and book the Best Spas, Salons and Beauty Centers near you.
             Bookby247 connects customers with verified beauty professionals,
             making self-care simple, transparent, and accessible.
           </p>

@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     if (intent) titleParts.push(intent.charAt(0).toUpperCase() + intent.slice(1));
     if (service) titleParts.push(service.charAt(0).toUpperCase() + service.slice(1));
     else if (type) titleParts.push(type.toUpperCase());
-    else titleParts.push("Best Wellness Centers");
+    else titleParts.push(`Best ${service || type || 'Wellness'} Centers`);
 
     if (area) titleParts.push(`in ${area.charAt(0).toUpperCase() + area.slice(1)}`);
     if (city) titleParts.push(area ? city.charAt(0).toUpperCase() + city.slice(1) : `in ${city.charAt(0).toUpperCase() + city.slice(1)}`);

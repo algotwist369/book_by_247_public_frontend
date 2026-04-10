@@ -61,6 +61,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const topCities = ["delhi", "mumbai", "bangalore", "pune", "hyderabad", "chennai", "kolkata", "gurgaon", "noida"];
   const topCategories = ["spa", "salon", "massage", "wellness", "beauty-parlour"];
 
+  // Dynamic SEO Routes (City / Category / Area)
+  const dynamicSeoRoutes: MetadataRoute.Sitemap = topCities.flatMap((city) => 
+    topCategories.map((category) => ({
+      url: `${BASE_URL}/${city}/${category}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    }))
+  );
+
   const searchRoutes: MetadataRoute.Sitemap = topCities.flatMap((city) => 
     topCategories.map((category) => ({
       url: `${BASE_URL}/search/${city}/${category}`,
@@ -70,6 +80,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   );
 
-  return [...staticRoutes, ...businessRoutes, ...searchRoutes];
+  return [...staticRoutes, ...businessRoutes, ...dynamicSeoRoutes, ...searchRoutes];
 }
 

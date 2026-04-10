@@ -209,7 +209,7 @@ export const metadata: Metadata = {
     telephone: true,
   },
   openGraph: {
-    title: "Bookby247 | Discover & Book Top Spas, Salons and Beauty Services",
+    title: "Discover & Book Top Spas, Salons and Beauty Services Near You | Bookby247",
     description:
       "Find verified spas, salons, and beauty services near you. Compare reviews, explore services, and book appointments online.",
     url: "https://bookby247.com",
@@ -227,7 +227,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bookby247 | Discover & Book Top Spas, Salons and Beauty Services",
+    title: "Discover & Book Top Spas, Salons and Beauty Services Near You | Bookby247",
     description:
       "Explore trusted spas, salons, and beauty businesses near you with Bookby247.",
     images: [
@@ -296,20 +296,18 @@ export default function RootLayout({
               src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
               strategy="afterInteractive"
             />
-            <Script id="ga-init" strategy="afterInteractive">
+            <Script id="google-analytics" strategy="afterInteractive">
               {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
-                  page_path: window.location.pathname,
-                });
+                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
               `}
             </Script>
           </>
         )}
 
-        {process.env.NEXT_PUBLIC_GTM_ID && (
+        {process.env.NEXT_PUBLIC_GTM_ID && process.env.NEXT_PUBLIC_GTM_ID.startsWith('GTM-') && (
           <Script id="gtm-init" strategy="afterInteractive">
             {`
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

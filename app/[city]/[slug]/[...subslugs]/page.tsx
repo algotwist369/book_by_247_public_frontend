@@ -1,0 +1,163 @@
+import React from 'react';
+import { Metadata } from 'next';
+import { notFound, redirect } from 'next/navigation';
+import { businessApi } from '@/api/public/business';
+import SeoListingView from '@/components/explore-business/SeoListingView';
+import { generateBreadcrumbJsonLd, generateLocalBusinessJsonLd } from '@/lib/seo-jsonld';
+import { safeJsonLdStringify } from '@/lib/utils';
+
+export const revalidate = 3600; // Revalidate every hour
+
+interface PageProps {
+    params: Promise<{
+        city: string;
+        slug: string; // This is our 'category'
+        subslugs: string[]; // This is our 'area' and 'service'
+    }>;
+}
+
+/**
+ * Validates if the path segments look like valid SEO routes
+ */
+const isValidSeoRoute = (city: string, slug: string) => {
+    // Ignore internal Next.js/System files
+    if (city.startsWith('.') || city.startsWith('_') || city === 'api') return false;
+    if (slug.startsWith('.') || slug.startsWith('_')) return false;
+    // Ignore files with extensions (e.g., .json, .js, .ico)
+    if (city.includes('.') || slug.includes('.')) return false;
+    return true;
+};
+
+/**
+ * Enhanced Metadata Generation for Dynamic SEO Routes
+ */
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const { city, slug, subslugs = [] } = await params;
+    
+    if (!isValidSeoRoute(city, slug)) {
+        return { robots: { index: false, follow: false } };
+    }
+    
+    // Fetch dynamic listing info to identify correct slugs and canonical URL
+    const response = await businessApi.getDynamicListing(city, slug, subslugs[0], subslugs[1]).catch(() => null);
+    
+    if (!response || !response.success) {
+        return { title: 'Not Found | Bookby247' };
+    }
+
+    const { filters, canonicalUrl } = response;
+    const capitalize = (s: string) => s.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+
+    const cityName = capitalize(filters.citySlug);
+    const categoryName = capitalize(filters.categorySlug);
+    const areaName = filters.areaSlug ? capitalize(filters.areaSlug) : '';
+    const serviceName = filters.serviceSlug ? capitalize(filters.serviceSlug) : '';
+
+    // Build SEO Title
+    let title = `Best ${categoryName}`;
+    if (serviceName) title = `Best ${serviceName} ${categoryName}`;
+    if (areaName) title += ` in ${areaName}`;
+    title += ` ${areaName ? cityName : `in ${cityName}`} | Online Booking | Bookby247`;
+
+    // Build SEO Description
+    const description = `Find top-rated ${categoryName.toLowerCase()} ${serviceName ? `offering ${serviceName.toLowerCase()} ` : ''}in ${areaName || cityName}. Read reviews, check prices, and book your appointment online instantly on Bookby247.`;
+
+    const fullCanonicalUrl = `https://bookby247.com${canonicalUrl}`;
+
+    return {
+        title,
+        description,
+        alternates: {
+            canonical: fullCanonicalUrl,
+        },
+        openGraph: {
+            title,
+            description,
+            url: fullCanonicalUrl,
+            siteName: 'Bookby247',
+            type: 'website',
+        },
+        robots: {
+            index: true,
+            follow: true,
+        }
+    };
+}
+
+/**
+ * Dynamic SEO Listing Page Component (Server Component)
+ */
+export default async function DynamicSeoListingPage({ params }: PageProps) {
+    const { city, slug, subslugs = [] } = await params;
+
+    // Fast-fail for system/file requests
+    if (!isValidSeoRoute(city, slug)) {
+        return notFound();
+    }
+    
+    // Initial fetch for SSR
+    const response = await businessApi.getDynamicListing(city, slug, subslugs[0], subslugs[1], { limit: 12 }).catch(() => null);
+    
+    if (!response || !response.success) {
+        return notFound();
+    }
+
+    const { filters, canonicalUrl, data: businesses, total } = response;
+    const currentPath = `/${city}/${slug}${subslugs.length > 0 ? `/${subslugs.join('/')}` : ''}`;
+
+    // SEO Optimization: Redirect to canonical URL if order is wrong
+    if (currentPath.toLowerCase() !== canonicalUrl.toLowerCase()) {
+        redirect(canonicalUrl);
+    }
+
+    const capitalize = (s: string) => s.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    const cityName = capitalize(filters.citySlug);
+    const categoryName = capitalize(filters.categorySlug);
+    const areaName = filters.areaSlug ? capitalize(filters.areaSlug) : '';
+    const serviceName = filters.serviceSlug ? capitalize(filters.serviceSlug) : '';
+
+    // Generate JSON-LD for SEO
+    const jsonLd = [
+        // Breadcrumbs
+        generateBreadcrumbJsonLd([
+            { name: 'Home', item: 'https://bookby247.com/' },
+            { name: cityName, item: `https://bookby247.com/${filters.citySlug}` },
+            { name: categoryName, item: `https://bookby247.com/${filters.citySlug}/${filters.categorySlug}` },
+            ...(filters.areaSlug ? [{ name: areaName, item: `https://bookby247.com/${filters.citySlug}/${filters.categorySlug}/${filters.areaSlug}` }] : []),
+            ...(filters.serviceSlug ? [{ name: serviceName, item: `https://bookby247.com/${filters.citySlug}/${filters.categorySlug}/${filters.areaSlug || ''}/${filters.serviceSlug}`.replace('//', '/') }] : []),
+        ]),
+        // List Items (First few businesses)
+        {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "itemListElement": businesses.slice(0, 10).map((b: any, index: number) => ({
+                "@type": "ListItem",
+                "position": index + 1,
+                "item": generateLocalBusinessJsonLd(b)
+            }))
+        }
+    ];
+
+    const displayTitle = serviceName 
+        ? `Best ${serviceName} ${categoryName} in ${areaName || cityName}`
+        : `Best ${categoryName} in ${areaName || cityName}`;
+
+    return (
+        <main className="min-h-screen bg-gray-50">
+            {/* Inject JSON-LD */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(jsonLd) }}
+            />
+
+            <SeoListingView 
+                initialCity={filters.citySlug}
+                initialArea={filters.areaSlug}
+                initialCategory={filters.categorySlug}
+                title={displayTitle}
+                subtitle={`Top rated ${categoryName.toLowerCase()} in ${areaName || cityName}. ${total} results found.`}
+                viewType="business"
+            />
+        </main>
+    );
+}

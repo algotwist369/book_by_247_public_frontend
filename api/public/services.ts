@@ -40,14 +40,14 @@ export const serviceApi = {
                 queryParams.append(key, String(value));
             }
         });
-        return apiClient<SeoServicesResponse>(`/seo/services?${queryParams.toString()}`);
+        return apiClient<SeoServicesResponse>(`/v1/seo/services?${queryParams.toString()}`);
     },
 
     /**
      * Get service details by slug for SEO landing page
      */
     getSeoServiceBySlug: async (slug: string) => {
-        return apiClient<{ success: boolean; data: any }>(`/seo/service/${slug}`);
+        return apiClient<{ success: boolean; data: any }>(`/v1/seo/service/${slug}`);
     },
 
     /**
@@ -60,6 +60,6 @@ export const serviceApi = {
                 categories: { slug: string; name: string }[];
                 tags: string[];
             }
-        }>('/seo/service-metadata/categories');
+        }>('/v1/seo/service-metadata/categories');
     }
 };

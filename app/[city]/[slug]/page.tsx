@@ -5,6 +5,7 @@ import { businessApi } from '@/api/public/business';
 import { serviceApi } from '@/api/public/services';
 import { safeJsonLdStringify } from '@/lib/utils';
 import { generateItemListJsonLd, generateBreadcrumbJsonLd, generateGlobalServiceItemListJsonLd } from '@/lib/seo-jsonld';
+import { notFound } from 'next/navigation';
 
 export const revalidate = 3600;
 
@@ -13,6 +14,18 @@ interface Props {
 }
 
 const COMMON_BUSINESS_TYPES = ['salon', 'spa', 'clinic', 'wellness', 'massage-center', 'beauty-parlour', 'gym', 'yoga-studio', 'dentist', 'dermatologist'];
+
+/**
+ * Validates if the path segments look like valid SEO routes
+ */
+const isValidSeoRoute = (city: string, slug: string) => {
+    // Ignore internal Next.js/System files
+    if (city.startsWith('.') || city.startsWith('_') || city === 'api') return false;
+    if (slug.startsWith('.') || slug.startsWith('_')) return false;
+    // Ignore files with extensions (e.g., .json, .js, .ico)
+    if (city.includes('.') || slug.includes('.')) return false;
+    return true;
+};
 
 const parseSlug = (slug: string) => {
     let isTop10 = false;
@@ -51,6 +64,11 @@ const parseSlug = (slug: string) => {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { city, slug } = await params;
+    
+    if (!isValidSeoRoute(city, slug)) {
+        return { robots: { index: false, follow: false } };
+    }
+
     const info = parseSlug(slug);
     const cityName = city.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
@@ -84,6 +102,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function DetailSeoPage({ params }: Props) {
     const { city, slug } = await params;
+
+    if (!isValidSeoRoute(city, slug)) {
+        return notFound();
+    }
+
     const info = parseSlug(slug);
     const cityName = city.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
@@ -121,7 +144,7 @@ export default async function DetailSeoPage({ params }: Props) {
             sort: info.isTop10 ? 'rating' : undefined
         }).catch(() => null);
         
-        items = (response as any)?.results || (response as any)?.businesses || [];
+        items = (response as any)?.data || (response as any)?.results || (response as any)?.businesses || [];
         
         jsonLd = [
             generateItemListJsonLd(items, info.areaName || cityName, info.categoryName),

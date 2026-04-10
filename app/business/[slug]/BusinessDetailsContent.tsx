@@ -341,19 +341,14 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialData }: Cl
                         </div>
 
                         {/* Identity Block - Business Name, Badges & Meta */}
-                        <div className="space-y-4 mb-2">
+                        <div className="space-y-4 mb-2 md:block hidden">
                             {/* Title & Badges */}
-                            <div className="flex flex-wrap items-center gap-2 sm:flex-col sm:items-start sm:gap-3">
+                            <div className="flex flex-wrap items-center gap-2 sm:flex-col sm:items-start sm:gap-3 ">
                                 <div className="space-y-1">
                                     <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-zinc-900 tracking-tight leading-tight">
                                         {businessName}
                                     </h1>
-                                    {details.business_branch && (
-                                        <p className="text-sm sm:text-base font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-2">
-                                            <MapPin className="w-3.5 h-3.5" />
-                                            {details.business_branch}
-                                        </p>
-                                    )}
+
                                 </div>
                                 <div className="flex flex-wrap items-center gap-2">
                                     {/* Verified Badge */}
@@ -366,6 +361,12 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialData }: Cl
                                         <ShieldCheck className="w-5 h-5 sm:w-3.5 sm:h-3.5 text-black fill-black/10" />
                                         <span className="hidden sm:inline text-[10px] font-bold text-black uppercase tracking-wide">Trusted</span>
                                     </div>
+                                    {details.business_branch && (
+                                        <p className="text-sm sm:text-base font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-2">
+                                            <MapPin className="w-3.5 h-3.5" />
+                                            {details.business_branch}
+                                        </p>
+                                    )}
                                 </div>
                             </div>
 
@@ -410,7 +411,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialData }: Cl
                             </div>
                         </div>
                         {/* Sticky Navigation Tabs */}
-                        <div className={`sticky top-[64px] md:top-[72px] z-40 bg-white/95 backdrop-blur-md -mx-4 px-4 sm:mx-0 sm:px-0 border-b border-zinc-100 transition-all duration-300 ease-in-out ${isTabsVisible ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible pointer-events-none'
+                        <div className={`sticky top-[64px] md:top-[72px] z-40 bg-white/95 backdrop-blur-md -mx-4 px-4 sm:mx-0 sm:px-0 border-b border-zinc-100 transition-all duration-300 ease-in-out ${isTabsVisible ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible pointer-events-none hidden'
                             }`}>
                             <div className="flex items-center gap-6 overflow-x-auto no-scrollbar whitespace-nowrap">
                                 {([
@@ -470,64 +471,134 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialData }: Cl
                                 </section>
                             );
                         })()}
+                        {/* Identity Block - Business Name, Badges & Meta */}
+                        <div className="space-y-4 mt-2 md:hidden">
+                            {/* Title & Badges */}
+                            <div className="flex flex-wrap items-center gap-2 sm:flex-col sm:items-start sm:gap-3 ">
+                                <div className="space-y-1">
+                                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-zinc-900 tracking-tight leading-tight">
+                                        {businessName}
+                                    </h1>
+
+                                </div>
+                                <div className="flex flex-wrap items-center gap-2">
+                                    {/* Verified Badge */}
+                                    <div className="flex items-center gap-1 sm:bg-zinc-100 sm:px-2 sm:py-1 sm:rounded-md sm:border sm:border-zinc-200 shrink-0">
+                                        <BadgeCheck className="w-5 h-5 sm:w-3.5 sm:h-3.5 text-black fill-black/10" />
+                                        <span className="hidden sm:inline text-[10px] font-bold text-black uppercase tracking-wide">Verified</span>
+                                    </div>
+                                    {/* Trusted Badge */}
+                                    <div className="flex items-center gap-1 sm:bg-zinc-100 sm:px-2 sm:py-1 sm:rounded-md sm:border sm:border-zinc-200 shrink-0">
+                                        <ShieldCheck className="w-5 h-5 sm:w-3.5 sm:h-3.5 text-black fill-black/10" />
+                                        <span className="hidden sm:inline text-[10px] font-bold text-black uppercase tracking-wide">Trusted</span>
+                                    </div>
+                                    {details.business_branch && (
+                                        <p className="text-sm sm:text-base font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-2">
+                                            <MapPin className="w-3.5 h-3.5" />
+                                            {details.business_branch}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Meta Info Row */}
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-3 text-sm text-zinc-600">
+                                <div className="flex items-center gap-1.5">
+                                    <MapPin className="w-4 h-4 text-zinc-400" />
+                                    <span>{businessAddress.split(',')[0]}</span>
+                                </div>
+
+                                <div className="hidden sm:block w-1 h-1 rounded-full bg-zinc-300" />
+
+                                <div className="flex items-center gap-1.5">
+                                    <Clock className="w-4 h-4 text-zinc-400" />
+                                    <span className="text-zinc-500 font-medium">Open until {workingHours?.working_hours?.close || '09:00 PM'}</span>
+                                </div>
+
+                                <div className="hidden sm:block w-1 h-1 rounded-full bg-zinc-300" />
+
+                                <div className="flex items-center gap-2 bg-zinc-50 px-2.5 py-1 rounded-lg border border-zinc-100">
+                                    <div className="flex items-center gap-1">
+                                        <span className="font-bold text-zinc-900">{businessRatings.average || 0}</span>
+                                        <Star className="w-3.5 h-3.5 text-black fill-black" />
+                                    </div>
+                                    <span className="w-px h-3 bg-zinc-200" />
+                                    <span className="text-black font-bold text-xs underline underline-offset-2">{businessRatings.total_reviews || 0} reviews</span>
+                                </div>
+
+                                <div className="ml-auto">
+                                    <button
+                                        onClick={() => {
+                                            const mapUrl = contacts?.google_maps_url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${businessName} ${businessAddress}`)}`;
+                                            window.open(mapUrl, '_blank');
+                                        }}
+                                        className="flex items-center gap-1.5 text-zinc-900 font-bold hover:underline whitespace-nowrap bg-zinc-100 px-3 py-1 rounded-full border border-zinc-200"
+                                        aria-label="Get directions to business"
+                                    >
+                                        <Navigation className="w-3.5 h-3.5 fill-current" />
+                                        Direction
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
 
                         {/* About Section */}
-                        <section id="about" className="mt-4 md:mt-0">
+                        <section id="about" className="mt-4 md:mt-2">
                             <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 mb-4">About</h2>
                             <p className="text-zinc-600 leading-relaxed text-sm sm:text-base md:text-lg">
                                 {details.description}
                             </p>
-
-                            {/* Features & Amenities */}
-                            {(capacity?.features?.length > 0 || capacity?.amenities?.length > 0) && (
-                                <div className="mt-8 space-y-6">
-                                    {capacity.features?.length > 0 && (
-                                        <div className="space-y-3">
-                                            <h3 className="text-sm font-bold text-zinc-400 uppercase tracking-wider">Key Features</h3>
-                                            <div className="flex flex-wrap gap-2">
-                                                {capacity.features.map((feature: string, i: number) => (
-                                                    <span key={i} className="px-3 py-1 bg-zinc-100 text-zinc-900 font-bold rounded-lg text-xs border border-zinc-200">
-                                                        {feature}
-                                                    </span>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {capacity.amenities?.length > 0 && (
-                                        <div className="space-y-3">
-                                            <h3 className="text-sm font-bold text-zinc-400 uppercase tracking-wider">Amenities</h3>
-                                            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-                                                {capacity.amenities.map((amenity: string, i: number) => {
-                                                    const getIcon = (name: string) => {
-                                                        const lowerName = name.toLowerCase();
-                                                        if (lowerName.includes('wifi') || lowerName.includes('wi-fi')) return Wifi;
-                                                        if (lowerName.includes('parking')) return Car;
-                                                        if (lowerName.includes('ac') || lowerName.includes('air conditioning')) return Wind;
-                                                        if (lowerName.includes('beverage') || lowerName.includes('coffee')) return Coffee;
-                                                        if (lowerName.includes('card') || lowerName.includes('payment')) return CreditCard;
-                                                        if (lowerName.includes('booking') || lowerName.includes('online')) return CalendarCheck;
-                                                        return ShieldCheck; // Fallback icon
-                                                    };
-                                                    const Icon = getIcon(amenity);
-                                                    return (
-                                                        <div key={i} className="flex items-center gap-3 text-zinc-600 bg-zinc-50 p-3 rounded-xl border border-zinc-100 hover:bg-white hover:shadow-sm transition-all">
-                                                            <Icon className="w-4 h-4 text-zinc-900" />
-                                                            <span className="text-xs sm:text-sm font-medium">{amenity}</span>
-                                                        </div>
-                                                    );
-                                                })}
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
                         </section>
 
                         {/* Services Section */}
                         <div id="services" >
                             <PopularServices services={servicesData?.services || []} businessName={businessName} slug={slug} />
                         </div>
+
+                        {/* Features & Amenities */}
+                        {(capacity?.features?.length > 0 || capacity?.amenities?.length > 0) && (
+                            <div className="mt-8 space-y-6">
+                                {capacity.features?.length > 0 && (
+                                    <div className="space-y-3">
+                                        <h3 className="text-sm font-bold text-zinc-400 uppercase tracking-wider">Key Features</h3>
+                                        <div className="flex flex-wrap gap-2">
+                                            {capacity.features.map((feature: string, i: number) => (
+                                                <span key={i} className="px-3 py-1 bg-zinc-100 text-zinc-900 font-bold rounded-lg text-xs border border-zinc-200">
+                                                    {feature}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {capacity.amenities?.length > 0 && (
+                                    <div className="space-y-3">
+                                        <h3 className="text-sm font-bold text-zinc-400 uppercase tracking-wider">Amenities</h3>
+                                        <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                                            {capacity.amenities.map((amenity: string, i: number) => {
+                                                const getIcon = (name: string) => {
+                                                    const lowerName = name.toLowerCase();
+                                                    if (lowerName.includes('wifi') || lowerName.includes('wi-fi')) return Wifi;
+                                                    if (lowerName.includes('parking')) return Car;
+                                                    if (lowerName.includes('ac') || lowerName.includes('air conditioning')) return Wind;
+                                                    if (lowerName.includes('beverage') || lowerName.includes('coffee')) return Coffee;
+                                                    if (lowerName.includes('card') || lowerName.includes('payment')) return CreditCard;
+                                                    if (lowerName.includes('booking') || lowerName.includes('online')) return CalendarCheck;
+                                                    return ShieldCheck; // Fallback icon
+                                                };
+                                                const Icon = getIcon(amenity);
+                                                return (
+                                                    <div key={i} className="flex items-center gap-3 text-zinc-600 bg-zinc-50 p-3 rounded-xl border border-zinc-100 hover:bg-white hover:shadow-sm transition-all">
+                                                        <Icon className="w-4 h-4 text-zinc-900" />
+                                                        <span className="text-xs sm:text-sm font-medium">{amenity}</span>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
 
                         {/* Categories & Tags Section */}
                         <div>

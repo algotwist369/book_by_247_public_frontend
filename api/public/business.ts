@@ -134,26 +134,42 @@ export const businessApi = {
                 queryParams.append(key, String(value));
             }
         });
-        return apiClient<any>(`/seo/businesses?${queryParams.toString()}`);
+        return apiClient<any>(`/v1/seo/businesses?${queryParams.toString()}`);
+    },
+
+    /**
+     * Fetch dynamic SEO listing using route segments
+     */
+    getDynamicListing: async (city: string, category: string, segment1?: string, segment2?: string, params: any = {}) => {
+        const queryParams = new URLSearchParams();
+        Object.entries(params).forEach(([key, value]) => {
+            if (value !== undefined && value !== null && value !== '') {
+                queryParams.append(key, String(value));
+            }
+        });
+
+        const segments = [segment1, segment2].filter(Boolean).join('/');
+        const path = `/v1/seo/listing/${city}/${category}${segments ? `/${segments}` : ''}`;
+        return apiClient<any>(`${path}?${queryParams.toString()}`);
     },
 
     /**
      * Get full business details by slug for SEO landing page
      */
     getSeoBusinessBySlug: async (slug: string) => {
-        return apiClient<any>(`/seo/business/${slug}`);
+        return apiClient<any>(`/v1/seo/business/${slug}`);
     },
 
     /**
      * Get reviews by business slug for SEO pages
      */
     getSeoReviewsBySlug: async (slug: string) => {
-        return apiClient<any>(`/seo/reviews/${slug}`);
+        return apiClient<any>(`/v1/seo/reviews/${slug}`);
     },
 
     getBusinessTypes: async () => {
         try {
-            return await apiClient<{ success: boolean; data: { slug: string; name: string }[] }>('/business/public/metadata/types');
+            return await apiClient<{ success: boolean; data: { slug: string; name: string }[] }>('/v1/seo/metadata/types');
         } catch (error) {
             // Fallback categories if API fails
             return {
