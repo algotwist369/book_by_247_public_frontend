@@ -19,44 +19,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  let businessRoutes: MetadataRoute.Sitemap = [];
-
-  try {
-    const response = await businessApi.getPublicBusinesses({ limit: 200 }).catch(() => null);
-    const businesses = (response as any)?.businesses || (response as any)?.data || [];
-
-    businessRoutes = businesses.flatMap((b: any) => {
-      const slug = b.slug;
-      if (!slug) return [];
-
-      const updatedAt = b.updatedAt || b.createdAt || new Date().toISOString();
-
-      return [
-        {
-          url: `${BASE_URL}/business/${slug}`,
-          lastModified: updatedAt,
-          changeFrequency: "daily" as const,
-          priority: 0.9,
-        },
-        {
-          url: `${BASE_URL}/business/${slug}/reviews`,
-          lastModified: updatedAt,
-          changeFrequency: "weekly" as const,
-          priority: 0.6,
-        },
-        {
-          url: `${BASE_URL}/business/${slug}/book-appointment`,
-          lastModified: updatedAt,
-          changeFrequency: "weekly" as const,
-          priority: 0.5,
-        },
-      ];
-    });
-  } catch {
-    // If the API is unavailable, still serve the static sitemap entries
-    businessRoutes = [];
-  }
-
   // Dynamic SEO Listing Routes from database
   let dynamicSeoRoutes: MetadataRoute.Sitemap = [];
   let businessDetailRoutes: MetadataRoute.Sitemap = [];
@@ -116,6 +78,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
 
       // 2. Business Details Sub-pages (from business.detials.controller.js)
+      // These paths match the valid subpaths in public_frontend/app/business/[slug]/[...subpath]/page.tsx
       const detailSubPaths = [
         'contacts', 'working-hours', 'social-media', 'media', 
         'categories', 'capacity', 'services', 'seo', 'reviews'
@@ -179,6 +142,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.9,
   }));
 
-  return [...staticRoutes, ...businessRoutes, ...dynamicSeoRoutes, ...businessDetailRoutes, ...searchRoutes, ...nearMeRoutes];
+  return [...staticRoutes, ...dynamicSeoRoutes, ...businessDetailRoutes, ...searchRoutes, ...nearMeRoutes];
 }
 
