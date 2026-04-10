@@ -79,7 +79,7 @@ export const Navbar = () => {
                     <Link href="/" className="shrink-0 flex items-center">
                         <img
                             src="https://res.cloudinary.com/dwsv275kv/image/upload/v1774790235/White_and_Black_Simple_Marketing_LinkedIn_Banner_f7aqfk.png" // put your logo inside public folder
-                            alt="SPA ADVISOR Logo"
+                            alt="BOOKBY247 Logo"
                             width={180}
                             height={60}
                             // priority
@@ -235,7 +235,7 @@ export const Navbar = () => {
                             <div className="flex flex-col h-full">
                                 {/* Header */}
                                 <div className="flex items-center justify-between p-4 border-b border-zinc-100">
-                                    <span className="text-2xl font-black italic tracking-tighter text-zinc-900 border-2 border-zinc-900 px-2">SPA ADVISOR</span>
+                                    <span className="text-2xl font-black italic tracking-tighter text-zinc-900 border-2 border-zinc-900 px-2">BOOKBY247</span>
                                     <button
                                         onClick={() => setIsMobileMenuOpen(false)}
                                         className="p-2 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-full transition-colors"

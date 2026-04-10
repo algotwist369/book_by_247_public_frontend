@@ -67,7 +67,7 @@ const Footer = () => {
                         <Link href="/" className="shrink-0 flex items-center">
                             <img
                                 src="https://res.cloudinary.com/dwsv275kv/image/upload/v1774690800/WhatsApp_Image_2026-03-28_at_3_imgupscaler.ai_General_8K_x8h19z.jpg" // put your logo inside public folder
-                                alt="SPA ADVISOR Logo"
+                                alt="BOOKBY247 Logo"
                                 width={180}
                                 height={60}
                                 // priority

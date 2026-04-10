@@ -2,7 +2,7 @@
  * Resolve API base URL safely
  */
 const API_BASE_URL =
-    (process.env.NEXT_PUBLIC_API_URL || "http://localhost:9004/api").replace(/\/$/, ""); // remove trailing slash
+    (process.env.NEXT_PUBLIC_API_URL || "https://api.bookby247.com/api").replace(/\/$/, ""); // remove trailing slash
 
 /**
  * Normalize endpoint to avoid bugs like:
