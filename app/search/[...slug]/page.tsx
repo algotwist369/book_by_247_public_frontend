@@ -51,8 +51,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     if (area) titleParts.push(`in ${area.charAt(0).toUpperCase() + area.slice(1)}`);
     if (city) titleParts.push(area ? city.charAt(0).toUpperCase() + city.slice(1) : `in ${city.charAt(0).toUpperCase() + city.slice(1)}`);
 
-    const title = `${titleParts.join(" ")} | Book Appointments Online | Bookby247`;
-    const description = `Discover and book top-rated ${service || type || 'wellness services'} in ${area ? `${area}, ` : ''}${city || 'your city'}. Compare prices, reviews, and book instantly on Bookby247.`;
+    const title = `${titleParts.join(" ")} - Book Appointments Online - Bookby247`;
+    const description = `Discover and book top-rated ${service || type || 'wellness services'} in ${area ? `${area}, ` : ''}${city || 'your city'}. Compare prices, read reviews, and book instantly on Bookby247.`;
 
     const canonicalPath = `/search/${slug.join("/")}`;
 

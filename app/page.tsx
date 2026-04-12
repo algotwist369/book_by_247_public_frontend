@@ -6,9 +6,9 @@ import { CategorySection } from "@/components/home/CategorySection";
 import { businessApi } from "@/api/public/business";
 
 export const metadata: Metadata = {
-  title: "Book Top Rated Spas, Salons & Beauty Services Near You Across India | Bookby247",
+  title: "Book Top-Rated Spas, Salons & Beauty Services Near You - Online Booking - Bookby247",
   description:
-    "Discover, compare, and book top-rated spas, salons & beauty services near you with Bookby247. Verified businesses, real reviews, and seamless online booking.",
+    "Discover the best spas, salons, and beauty services near you. Compare prices, read verified reviews, and book appointments online for full body massage, hair spa, facial, and more with Bookby247.",
   keywords: [
     "spa near me",
     "salon near me",
@@ -89,7 +89,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Best Spas, Salons & Beauty Services in India | Bookby247",
+    title: "Best Spas, Salons & Beauty Services in India - Bookby247",
     description:
       "Discover top-rated spas, salons, and beauty services near you across India. Compare prices, read real reviews, and book appointments instantly on Bookby247.",
     url: "https://bookby247.com/",
@@ -107,7 +107,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Best Spas, Salons & Beauty Services in India | Bookby247",
+    title: "Best Spas, Salons & Beauty Services in India - Bookby247",
     description:
       "Find top-rated spas, salons & beauty services near you across India. Compare prices, read real reviews & book instantly on Bookby247.",
     images: ["https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png"], // must match OG image

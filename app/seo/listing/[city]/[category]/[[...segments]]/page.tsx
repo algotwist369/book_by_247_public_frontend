@@ -26,10 +26,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const response = await businessApi.getDynamicListing(city, category, segments[0], segments[1]).catch(() => null);
     
     if (!response || !response.success) {
-        return { title: 'Not Found | Bookby247' };
+        return { title: 'Not Found - Bookby247' };
     }
 
-    const { filters, canonicalUrl } = response;
+    const { filters, canonicalUrl, total = 0 } = response;
     const capitalize = (s: string) => s.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
     const cityName = capitalize(filters.citySlug);
@@ -37,14 +37,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const areaName = filters.areaSlug ? capitalize(filters.areaSlug) : '';
     const serviceName = filters.serviceSlug ? capitalize(filters.serviceSlug) : '';
 
-    // Build SEO Title
-    let title = `Best ${categoryName}`;
-    if (serviceName) title = `Best ${serviceName} ${categoryName}`;
-    if (areaName) title += ` in ${areaName}`;
-    title += ` ${areaName ? cityName : `in ${cityName}`} | Online Booking | Bookby247`;
+    const locationName = areaName ? `${areaName}, ${cityName}` : cityName;
 
-    // Build SEO Description
-    const description = `Find top-rated ${categoryName.toLowerCase()} ${serviceName ? `offering ${serviceName.toLowerCase()} ` : ''}in ${areaName || cityName}. Read reviews, check prices, and book your appointment online instantly on Bookby247.`;
+    // 🚀 Best SEO Title: [Prefix] [Service] [Category] in [Location] - [CTR Trigger]
+    let title = `Best ${serviceName ? `${serviceName} ` : ''}${categoryName} in ${locationName} - Top Rated & Verified`;
+    
+    // Ensure title is within 60 characters if possible
+    if (title.length > 60) {
+        title = `Best ${serviceName ? `${serviceName} ` : ''}${categoryName} in ${locationName} - Bookby247`;
+    }
+
+    // 🚀 Best SEO Description: [Value Prop] + [Social Proof] + [CTA]
+    const description = `Discover the ${total > 0 ? `top ${total} ` : 'best '}rated ${categoryName.toLowerCase()} ${serviceName ? `offering ${serviceName.toLowerCase()} ` : ''}in ${locationName}. Compare prices, read verified customer reviews, and enjoy instant online booking with Bookby247!`;
 
     const fullCanonicalUrl = `https://bookby247.com/seo/listing/${city}/${category}${segments.length > 0 ? `/${segments.join('/')}` : ''}`;
 

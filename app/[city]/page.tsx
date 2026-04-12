@@ -37,9 +37,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         const categoryTitle = category.charAt(0).toUpperCase() + category.slice(1);
         
         return {
-            title: `${categoryTitle} Near Me - Best ${categoryTitle} Services Near You | Bookby247`,
-            description: `Find top-rated ${category} centers near you. Compare prices, ratings, and book your appointment online instantly.`,
-            keywords: [`${category} near me`, `best ${category}`, `${category} booking`],
+            title: `${categoryTitle} Near Me - Best ${categoryTitle} Services - Top Rated & Verified`,
+            description: `Looking for the best ${category} near you? Compare top-rated centers, read verified customer reviews, and book your appointment online instantly with Bookby247.`,
+            keywords: [`${category} near me`, `best ${category}`, `${category} booking`, `top rated ${category}`, `${category} services`],
             alternates: {
                 canonical: `/${city}`,
             },
@@ -49,8 +49,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const cityName = city.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
     return {
-        title: `Best Spas, Salons and Beauty Centers in ${cityName} | Bookby247`,
-        description: `Discover top-rated spas, salons, and wellness centers in ${cityName}. Compare prices, ratings, and book your appointment online instantly.`,
+        title: `Best Spas, Salons & Wellness Centers in ${cityName} - Book Online`,
+        description: `Find top-rated spas, beauty salons, and wellness centers in ${cityName}. Compare service prices, read verified reviews, and book your appointment online today!`,
         keywords: [
             `spas in ${cityName}`,
             `salons in ${cityName}`,
@@ -58,13 +58,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             `wellness centers ${cityName}`,
             "spa booking",
             "salon booking",
+            `best beauty parlour in ${cityName}`,
+            "online appointment booking"
         ],
         alternates: {
             canonical: `/${city}`,
         },
         openGraph: {
-            title: `Best Spas, Salons and Beauty Centers in ${cityName} | Bookby247`,
-            description: `Find the perfect spa or salon experience in ${cityName}.`,
+            title: `Best Spas, Salons & Wellness Centers in ${cityName || "Near You"} - Bookby247`,
+            description: `Discover the best spa and salon experiences in ${cityName}. Rated & Verified.`,
             url: `https://bookby247.com/${city}`,
             type: "website",
         },

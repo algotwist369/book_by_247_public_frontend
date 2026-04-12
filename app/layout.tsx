@@ -4,8 +4,8 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://bookby247.com"),
   title: {
-    default: "Bookby247 | Discover & Book Top Spas, Salons and Beauty Services Near You with Bookby247",
-    template: "%s | Bookby247"
+    default: "Bookby247 - Discover & Book Top Spas, Salons and Beauty Services Near You",
+    template: "%s - Bookby247"
   },
   description: "Book & discover top-rated spas, salons, and beauty services across India Near You. Explore verified businesses, compare services, check reviews, and book appointments online with Bookby247.",
   keywords: [
@@ -209,7 +209,7 @@ export const metadata: Metadata = {
     telephone: true,
   },
   openGraph: {
-    title: "Discover & Book Top Spas, Salons and Beauty Services Near You | Bookby247",
+    title: "Discover & Book Top Spas, Salons and Beauty Services Near You - Bookby247",
     description:
       "Find verified spas, salons, and beauty services near you. Compare reviews, explore services, and book appointments online.",
     url: "https://bookby247.com",
@@ -227,7 +227,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Discover & Book Top Spas, Salons and Beauty Services Near You | Bookby247",
+    title: "Discover & Book Top Spas, Salons and Beauty Services Near You - Bookby247",
     description:
       "Explore trusted spas, salons, and beauty businesses near you with Bookby247.",
     images: [

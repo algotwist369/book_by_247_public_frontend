@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     if (!seoData) {
         return {
-            title: 'Reviews Not Found | Bookby247',
+            title: 'Reviews Not Found - Bookby247',
         };
     }
 
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const type = seoData.search_profile?.spaTypes?.[0] || 'Wellness Center';
 
     // Pro SEO Title for Reviews
-    const title = `Customer Reviews: ${seoData.name} | Verified Ratings in ${city} | Bookby247`;
+    const title = `Verified Reviews: ${seoData.name} - Ratings in ${city} - Bookby247`;
     
     const description = 
         `Read verified customer reviews and ratings for ${seoData.name} in ${city}. Find out what people are saying about their ${type} services and book online.`;

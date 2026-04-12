@@ -16,19 +16,19 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
     const location = typeof params.location === 'string' ? params.location : '';
     const category = typeof params.category === 'string' ? params.category : '';
 
-    let title = 'Explore Top Spas, Salons and Beauty Centers Near You | Bookby247';
-    let description = 'Compare and book top-rated spas, salons, and beauty centers near you with powerful filters for rating, category, and location.';
+    let title = 'Explore Top Spas, Salons & Beauty Centers Near You - Bookby247';
+    let description = 'Compare and book top-rated spas, salons, and beauty centers near you. Powerful filters for rating, category, and location for the best booking experience.';
 
     if (q || location || category) {
         const parts = [];
         if (category) parts.push(`Best ${category}`);
         else if (q) parts.push(`Search results for "${q}"`);
-        else parts.push('Top Spas, Salons and Beauty Centers');
+        else parts.push('Top Spas, Salons & Beauty Centers');
 
         if (location) parts.push(`in ${location}`);
 
-        title = `${parts.join(' ')} | Bookby247`;
-        description = `Discover and book the highest-rated ${category || 'beauty centers'} ${location ? `in ${location}` : 'near you'}. ${q ? `Results for: ${q}.` : ''} Instant booking, verified reviews, and premium services.`;
+        title = `${parts.join(' ')} - Bookby247`;
+        description = `Discover and book the highest-rated ${category || 'beauty centers'} ${location ? `in ${location}` : 'near you'}. ${q ? `Results for: ${q}.` : ''} Instant booking, verified reviews, and premium services on Bookby247.`;
     }
 
     return {

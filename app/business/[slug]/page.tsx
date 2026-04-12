@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     if (!seoData) {
         return {
-            title: 'Business Not Found | Bookby247',
+            title: 'Business Not Found - Bookby247',
         };
     }
 
@@ -44,9 +44,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     else if (flags.isPopular) prefix = 'Popular';
     else if (flags.isBest) prefix = 'Best';
 
-    // Pro SEO Title: [Business Name] | [Prefix] [Type] in [Area], [City] | Online Booking
+    // Pro SEO Title: [Business Name] - [Prefix] [Type] in [Area], [City] - Online Booking
     const title =
-        seo.metaTitle || `${seoData.name} | ${prefix} ${type} in ${area ? `${area}, ` : ''}${city} | Bookby247`;
+        seo.metaTitle || `${seoData.name} - ${prefix} ${type} in ${area ? `${area}, ` : ''}${city} - Bookby247`;
     
     const avgRating = seoData.ratings?.average || 5;
     const totalReviews = seoData.ratings?.totalReviews || 10;

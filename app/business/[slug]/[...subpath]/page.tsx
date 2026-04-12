@@ -20,18 +20,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const currentSubpath = subpath[0];
 
     if (!VALID_SUBPATHS.includes(currentSubpath)) {
-        return { title: 'Not Found | Bookby247' };
+        return { title: 'Not Found - Bookby247' };
     }
 
     const seoRes = await businessDetailsApi.getSeo(slug).catch(() => null);
     const seoData = seoRes?.data;
 
     if (!seoData) {
-        return { title: 'Business Not Found | Bookby247' };
+        return { title: 'Business Not Found - Bookby247' };
     }
 
     const subpathLabel = capitalize(currentSubpath);
-    const title = `${subpathLabel} - ${seoData.name} | Bookby247`;
+    const title = `${subpathLabel} - ${seoData.name} - Bookby247`;
     const description = `View ${currentSubpath.replace('-', ' ')} for ${seoData.name} in ${seoData.location_info?.city || ''}. Book appointments online and get the latest updates.`;
 
     return {

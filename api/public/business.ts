@@ -208,10 +208,10 @@ export const businessApi = {
             success: boolean;
             data: {
                 cities: string[];
-                areas: string[];
                 types: string[];
-                services: string[];
                 businessSlugs: string[];
+                cityAreaCombinations: { city: string; area: string }[];
+                cityServiceCombinations: { city: string; service: string }[];
             };
         }>('/v1/seo/sitemap-data');
     },
