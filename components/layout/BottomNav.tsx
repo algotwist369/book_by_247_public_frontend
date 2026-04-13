@@ -17,15 +17,20 @@ const NAV_ITEMS = [
     { label: "For Business", icon: Briefcase, href: "/free-listing", external: true },
     { label: "Search", icon: Search, href: "/explore" },
     { label: "Demo", icon: Calendar, href: "https://business.bookby247.com/book-demo", external: true },
-    { label: "Status", icon: CalendarRange, href: "https://business.bookby247.com/my-status", external: true },
+    { label: "Status", icon: CalendarRange, href: "/booking-status" },
 ]
 
 export const BottomNav = () => {
     const pathname = usePathname()
 
-    // Only show BottomNav on the home page
-    const isHome = pathname === "/" || pathname === ""
-    if (!isHome) return null
+    // Show BottomNav on selected customer-facing routes
+    const showBottomNav =
+        pathname === "/" ||
+        pathname === "" ||
+        pathname === "/booking-status" ||
+        pathname.startsWith("/booking-status/");
+
+    if (!showBottomNav) return null
 
     return (
         <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-zinc-100 px-4 py-2 z-50">

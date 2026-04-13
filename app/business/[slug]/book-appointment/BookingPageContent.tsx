@@ -14,15 +14,41 @@ import BookingDetails from './components/BookingDetails';
 import BookingPayment from './components/BookingPayment';
 import BookingSummary from './components/BookingSummary';
 import BookingSuccess from './components/BookingSuccess';
-import BookingOTP from './components/BookingOTP';
 
 interface BookingPageContentProps {
     business: Business;
 }
 
-type BookingStep = 'services' | 'schedule' | 'details' | 'payment' | 'otp' | 'success';
+type BookingStep = 'services' | 'schedule' | 'details' | 'payment' | 'success';
 
 const STORAGE_KEY = 'appointment_booking_data';
+
+interface ConfirmedAppointment {
+    appointmentDate?: string;
+    startTime?: string;
+    endTime?: string;
+    status?: string;
+    paymentMethod?: string;
+    paymentStatus?: string;
+    totalAmount?: number;
+    customer?: {
+        firstName?: string;
+        lastName?: string;
+        phone?: string;
+    };
+    business?: {
+        name?: string;
+        branch?: string;
+        address?: string;
+        phone?: string;
+    };
+    services?: Array<{
+        _id?: string;
+        name?: string;
+        price?: number;
+        duration?: number;
+    }>;
+}
 
 const BookingPageContent = ({ business }: BookingPageContentProps) => {
     const [step, setStep] = useState<BookingStep>('services');
@@ -32,6 +58,7 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
     const [formData, setFormData] = useState({ name: '', phone: '', notes: '' });
     const [paymentMethod, setPaymentMethod] = useState<'cash' | 'online' | ''>('');
     const [confirmationCode, setConfirmationCode] = useState<string>('');
+    const [confirmedAppointment, setConfirmedAppointment] = useState<ConfirmedAppointment | null>(null);
     const [isLoaded, setIsLoaded] = useState(false);
 
     // Mutations
@@ -39,31 +66,16 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
         mutationFn: (data: BookingData) => appointmentApi.bookAppointment(business.slug, data),
         onSuccess: (response) => {
             if (response.success) {
-                if (response.requiresOTP) {
-                    setStep('otp');
-                } else {
-                    const code = response.data?.confirmationCode || response.data?.appointment?.bookingNumber || 'CONFIRMED';
-                    setConfirmationCode(code);
-                    setStep('success');
-                }
-            }
-        }
-    });
-
-    const verifyMutation = useMutation({
-        mutationFn: (otp: string) => appointmentApi.verifyOTP(business.slug, formData.phone, otp),
-        onSuccess: (response) => {
-            if (response.success) {
                 const code = response.data?.confirmationCode || response.data?.appointment?.bookingNumber || 'CONFIRMED';
                 setConfirmationCode(code);
+                setConfirmedAppointment(response.data?.appointment || null);
                 setStep('success');
             }
         }
     });
 
-    const isSubmitting = bookingMutation.isPending || verifyMutation.isPending;
+    const isSubmitting = bookingMutation.isPending;
     const bookingError = bookingMutation.error?.message || (bookingMutation.data && !bookingMutation.data.success ? bookingMutation.data.message : null);
-    const verifyError = verifyMutation.error?.message || (verifyMutation.data && !verifyMutation.data.success ? verifyMutation.data.message : null);
 
     // Persistence: Load data from localStorage
     useEffect(() => {
@@ -77,7 +89,7 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
                     setSelectedTime(parsed.selectedTime || '');
                     setFormData(parsed.formData || { name: '', phone: '', notes: '' });
                     setPaymentMethod(parsed.paymentMethod || '');
-                    if (parsed.step && parsed.step !== 'success' && parsed.step !== 'otp') {
+                    if (parsed.step && parsed.step !== 'success') {
                         setStep(parsed.step);
                     }
                 }
@@ -90,7 +102,7 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
 
     // Persistence: Save data to localStorage
     useEffect(() => {
-        if (isLoaded && step !== 'success' && step !== 'otp') {
+        if (isLoaded && step !== 'success') {
             const dataToSave = {
                 businessSlug: business.slug,
                 selectedServices,
@@ -132,7 +144,6 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
         if (step === 'schedule') setStep('services');
         else if (step === 'details') setStep('schedule');
         else if (step === 'payment') setStep('details');
-        else if (step === 'otp') setStep('payment');
     };
 
     const updateForm = (data: Partial<typeof formData>) => {
@@ -174,21 +185,48 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
 
     // Construct Booking Data
     const getBookingData = (): BookingData => {
-        const addMinutesToTime = (timeStr: string, minsToAdd: number) => {
-            try {
-                const [time, period] = timeStr.split(' ');
-                let [hours, minutes] = time.split(':').map(Number);
+        const normalizeTo24HourTime = (rawTime: string): string => {
+            const timeValue = rawTime.trim();
+
+            // Already in HH:mm format
+            if (/^\d{2}:\d{2}$/.test(timeValue)) {
+                return timeValue;
+            }
+
+            // Accept common 12-hour formats like "9:30 PM" or "09:30 am"
+            const match = timeValue.match(/^(\d{1,2}):(\d{2})\s*([AP]M)$/i);
+            if (match) {
+                let hours = Number(match[1]);
+                const minutes = Number(match[2]);
+                const period = match[3].toUpperCase();
+
                 if (period === 'PM' && hours !== 12) hours += 12;
                 if (period === 'AM' && hours === 12) hours = 0;
 
-                const date = new Date();
-                date.setHours(hours, minutes + minsToAdd, 0, 0);
-
-                return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-            } catch (e) {
-                return timeStr; // Fallback
+                return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
             }
+
+            return timeValue;
         };
+
+        const addMinutesToTime = (timeStr: string, minsToAdd: number): string => {
+            const normalizedTime = normalizeTo24HourTime(timeStr);
+            const [hoursPart = "0", minutesPart = "0"] = normalizedTime.split(":");
+            const hours = Number(hoursPart);
+            const minutes = Number(minutesPart);
+
+            if (!Number.isFinite(hours) || !Number.isFinite(minutes)) {
+                return normalizedTime;
+            }
+
+            const totalMinutes = ((hours * 60 + minutes + minsToAdd) % (24 * 60) + (24 * 60)) % (24 * 60);
+            const nextHours = Math.floor(totalMinutes / 60);
+            const nextMinutes = totalMinutes % 60;
+
+            return `${String(nextHours).padStart(2, '0')}:${String(nextMinutes).padStart(2, '0')}`;
+        };
+
+        const normalizedStartTime = normalizeTo24HourTime(selectedTime);
 
         return {
             customerInfo: {
@@ -196,8 +234,8 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
                 phone: formData.phone,
             },
             appointmentDate: selectedDate,
-            startTime: selectedTime,
-            endTime: addMinutesToTime(selectedTime, durationTotal),
+            startTime: normalizedStartTime,
+            endTime: addMinutesToTime(normalizedStartTime, durationTotal),
             services: selectedServices.map(s => {
                 const details = getServiceDetails(s.serviceId, s.optionIdx);
                 return {
@@ -215,10 +253,6 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
         bookingMutation.mutate(getBookingData());
     };
 
-    const handleVerifyOTP = (otp: string) => {
-        verifyMutation.mutate(otp);
-    };
-
     const isNextEnabled =
         (step === 'services' && selectedServices.length > 0) ||
         (step === 'schedule' && selectedDate && selectedTime) ||
@@ -229,7 +263,7 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
         step === 'services' ? 'Select Slot' :
             step === 'schedule' ? 'Continue' :
                 step === 'details' ? 'Payment' :
-                    step === 'otp' ? 'Verify' : 'Confirm';
+                    'Confirm';
 
     if (!isLoaded) return null; // Avoid hydration mismatch or flickering
 
@@ -238,7 +272,7 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
             <BookingHeader business={business} />
 
             <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
-                <BookingProgress step={step === 'otp' ? 'payment' : step} />
+                <BookingProgress step={step} />
 
                 <div className={`${step === 'success' ? 'block' : 'grid grid-cols-1 lg:grid-cols-3 gap-8 items-start'}`}>
                     <div className={`${step === 'success' ? '' : 'lg:col-span-2 space-y-6'}`}>
@@ -274,16 +308,6 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
                             />
                         )}
 
-                        {step === 'otp' && (
-                            <BookingOTP
-                                phone={formData.phone}
-                                onVerify={handleVerifyOTP}
-                                onResend={handleConfirm}
-                                isLoading={isSubmitting}
-                                error={verifyError}
-                            />
-                        )}
-
                         {step === 'success' && (
                             <BookingSuccess
                                 business={business}
@@ -292,6 +316,7 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
                                 totalPrice={totalPrice}
                                 selectedServiceDetails={selectedServiceDetails}
                                 confirmationCode={confirmationCode}
+                                confirmedAppointment={confirmedAppointment}
                             />
                         )}
                     </div>
@@ -319,7 +344,7 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
             </div>
 
             {/* Mobile Sticky Action Bar */}
-            {step !== 'success' && step !== 'otp' && (
+            {step !== 'success' && (
                 <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-zinc-200 p-4 z-50 lg:hidden">
                     <div className="max-w-xl mx-auto flex items-center justify-between gap-3">
                         <div className="flex flex-col shrink-0">

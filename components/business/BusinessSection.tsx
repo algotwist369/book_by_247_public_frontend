@@ -125,10 +125,11 @@ const BusinessSection: React.FC<BusinessSectionProps> = ({ initialData }) => {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 md:gap-6 lg:grid-cols-4 xl:gap-8">
-                    {businesses.map((business: any) => (
+                    {businesses.map((business: any, index: number) => (
                         <BusinessCard
                             key={business.id}
                             business={business}
+                            priority={index < 2}
                         />
                     ))}
                 </div>

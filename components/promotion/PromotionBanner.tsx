@@ -22,7 +22,7 @@ const PromotionBanner = ({
                     alt={title}
                     fill
                     className="object-cover"
-                    priority
+                    priority={false}
                 />
 
                 <div className="absolute inset-0 bg-black/40" />

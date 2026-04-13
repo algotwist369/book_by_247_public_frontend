@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import {
     Briefcase,
     ChevronDown,
@@ -18,10 +17,8 @@ import { CityLink } from "../navigation/CityLink"
 import { CategoryLink } from "../navigation/CategoryLink"
 import { Button } from "../ui/Button"
 import { cn } from "@/lib/utils"
-import { motion, AnimatePresence } from "framer-motion"
 import { CATEGORIES_DATA } from "@/lib/constants"
 import { useCities } from "@/hooks/useCities"
-import Image from "next/image";
 
 // Static CITIES removed in favor of useCities hook
 
@@ -31,37 +28,41 @@ export const Navbar = () => {
     const [showCategories, setShowCategories] = React.useState(false)
     const [scrolled, setScrolled] = React.useState(false)
     const { data: cities = ["All Cities"] } = useCities()
-    const router = useRouter()
-
-    const handleSearch = (q?: string, loc?: string) => {
-        const params = new URLSearchParams()
-        if (q) params.set('q', q)
-        if (loc) params.set('location', loc)
-        router.push(`/explore?${params.toString()}`)
-    }
 
     React.useEffect(() => {
+        let ticking = false
         const handleScroll = () => {
-            if (window.scrollY > 150) {
-                setScrolled(true)
-            } else {
-                setScrolled(false)
-            }
+            if (ticking) return
+            ticking = true
+            window.requestAnimationFrame(() => {
+                setScrolled(window.scrollY > 150)
+                ticking = false
+            })
         }
 
-        window.addEventListener("scroll", handleScroll)
+        window.addEventListener("scroll", handleScroll, { passive: true })
         return () => window.removeEventListener("scroll", handleScroll)
     }, [])
 
     // Helper function to generate city redirect URL
     const getCityHref = (city: string) => {
         if (city === "All Cities") return "/explore"
-        return `/explore?location=${encodeURIComponent(city)}`
+        const citySlug = city
+            .trim()
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-+|-+$/g, "");
+        return `/${citySlug}`;
     }
 
     // Helper function to generate category redirect URL
     const getCategoryHref = (category: string) => {
-        return `/explore?category=${encodeURIComponent(category)}`
+        const categorySlug = (category || "")
+            .trim()
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-+|-+$/g, "");
+        return `/${categorySlug}-near-me`;
     }
 
     // Close menus when clicking link
@@ -77,14 +78,14 @@ export const Navbar = () => {
             <div className="relative flex items-center justify-between px-3 sm:px-4 md:px-8 py-3 md:py-4 border-b border-zinc-50">
                 <div className="flex items-center gap-3 sm:gap-4 md:gap-8">
                     <Link href="/" className="shrink-0 flex items-center">
-                        <img
+                        {/* <img
                             src="https://res.cloudinary.com/dwsv275kv/image/upload/v1774790235/White_and_Black_Simple_Marketing_LinkedIn_Banner_f7aqfk.png" // put your logo inside public folder
                             alt="BOOKBY247 Logo"
                             width={180}
                             height={60}
                             // priority
                             className="h-10 sm:h-12 md:h-14 w-auto object-contain"
-                        />
+                        /> */}
                     </Link>
 
                     {/* Info Blocks (Desktop Only) */}
@@ -162,77 +163,51 @@ export const Navbar = () => {
             </div>
 
             {/* Bottom Tier (Cities - Desktop Only) */}
-            <AnimatePresence>
-                {showCities && (
-                    <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.2, ease: "easeInOut" }}
-                        className="hidden md:block overflow-hidden bg-zinc-50 border-b border-zinc-100"
-                    >
-                        <div className="flex items-center bg-zinc-50 border-b border-zinc-100 overflow-x-auto no-scrollbar scroll-smooth">
-                            <div className="flex items-center gap-6 md:gap-8 lg:gap-12 px-6 md:px-12 py-3.5 min-w-max mx-auto">
-                                {cities.map((city: string) => (
-                                    <CityLink
-                                        key={city}
-                                        name={city}
-                                        href={getCityHref(city)}
-                                        onClick={handleLinkClick}
-                                        className="whitespace-nowrap transition-transform hover:scale-105 active:scale-95"
-                                    />
-                                ))}
-                            </div>
+            {showCities && (
+                <div className="hidden md:block overflow-hidden bg-zinc-50 border-b border-zinc-100">
+                    <div className="flex items-center bg-zinc-50 border-b border-zinc-100 overflow-x-auto no-scrollbar scroll-smooth">
+                        <div className="flex items-center gap-6 md:gap-8 lg:gap-12 px-6 md:px-12 py-3.5 min-w-max mx-auto">
+                            {cities.map((city: string) => (
+                                <CityLink
+                                    key={city}
+                                    name={city}
+                                    href={getCityHref(city)}
+                                    onClick={handleLinkClick}
+                                    className="whitespace-nowrap transition-transform hover:scale-105 active:scale-95"
+                                />
+                            ))}
                         </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                    </div>
+                </div>
+            )}
 
             {/* Bottom Tier (Categories - Desktop Only) */}
-            <AnimatePresence>
-                {showCategories && (
-                    <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.2, ease: "easeInOut" }}
-                        className="hidden md:block overflow-hidden bg-zinc-50 border-b border-zinc-100"
-                    >
-                        <div className="flex items-center bg-zinc-50 px-4 md:px-8 py-3 overflow-x-auto no-scrollbar">
-                            <div className="flex items-center gap-4 lg:gap-8 mx-auto">
-                                {CATEGORIES_DATA.map((cat) => (
-                                    <CategoryLink
-                                        key={cat.id}
-                                        name={cat.label}
-                                        href={getCategoryHref(cat.id)}
-                                        onClick={handleLinkClick}
-                                    />
-                                ))}
-                            </div>
+            {showCategories && (
+                <div className="hidden md:block overflow-hidden bg-zinc-50 border-b border-zinc-100">
+                    <div className="flex items-center bg-zinc-50 px-4 md:px-8 py-3 overflow-x-auto no-scrollbar">
+                        <div className="flex items-center gap-4 lg:gap-8 mx-auto">
+                            {CATEGORIES_DATA.map((cat) => (
+                                <CategoryLink
+                                    key={cat.id}
+                                    name={cat.label}
+                                    href={getCategoryHref(cat.id)}
+                                    onClick={handleLinkClick}
+                                />
+                            ))}
                         </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                    </div>
+                </div>
+            )}
 
             {/* Mobile Menu Overlay */}
-            <AnimatePresence>
-                {isMobileMenuOpen && (
-                    <>
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="fixed inset-0 bg-black/20 z-40 md:hidden"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        />
-                        <motion.div
-                            initial={{ x: "100%" }}
-                            animate={{ x: 0 }}
-                            exit={{ x: "100%" }}
-                            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="fixed top-0 right-0 h-full w-[85%] max-w-sm bg-white z-50 md:hidden shadow-2xl overflow-y-auto"
-                        >
-                            <div className="flex flex-col h-full">
+            {isMobileMenuOpen && (
+                <>
+                    <div
+                        className="fixed inset-0 bg-black/20 z-40 md:hidden"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    />
+                    <div className="fixed top-0 right-0 h-full w-[85%] max-w-sm bg-white z-50 md:hidden shadow-2xl overflow-y-auto">
+                        <div className="flex flex-col h-full">
                                 {/* Header */}
                                 <div className="flex items-center justify-between p-4 border-b border-zinc-100">
                                     <span className="text-2xl font-black italic tracking-tighter text-zinc-900 border-2 border-zinc-900 px-2">BOOKBY247</span>
@@ -320,11 +295,10 @@ export const Navbar = () => {
                                         </a>
                                     </div>
                                 </div>
-                            </div>
-                        </motion.div>
-                    </>
-                )}
-            </AnimatePresence>
+                        </div>
+                    </div>
+                </>
+            )}
         </nav>
     )
 }

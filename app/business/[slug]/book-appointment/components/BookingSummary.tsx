@@ -18,7 +18,7 @@ interface Service {
 }
 
 interface BookingSummaryProps {
-    step: 'services' | 'schedule' | 'details' | 'payment' | 'otp';
+    step: 'services' | 'schedule' | 'details' | 'payment';
     selectedServices: { serviceId: string | number; optionIdx: number }[];
     availableServices: Service[];
     selectedDate: string;
@@ -75,7 +75,7 @@ const BookingSummary = ({
                 step === 'details' ? 'Payment' :
                     step === 'payment' ? 'Confirm Booking' : '';
 
-    const showActionButton = step !== 'otp';
+    const showActionButton = true;
 
     return (
         <div className="lg:col-span-1 space-y-4">

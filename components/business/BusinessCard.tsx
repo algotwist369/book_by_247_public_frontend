@@ -11,9 +11,10 @@ import { FaLocationArrow } from "react-icons/fa6";
 interface BusinessCardProps {
     business: Business;
     className?: string;
+    priority?: boolean;
 }
 
-const BusinessCard: React.FC<BusinessCardProps> = ({ business, className }) => {
+const BusinessCard: React.FC<BusinessCardProps> = ({ business, className, priority = false }) => {
     return (
         <div className={cn("flex flex-col gap-3 group cursor-pointer", className)}>
             <Link href={`/business/${business.slug}`} className="block h-full">
@@ -24,7 +25,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ business, className }) => {
                         alt={`${business.name} thumbnail`}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        priority={true}
+                        priority={priority}
                     />
                     {/* Distance Badge */}
                     {business.distanceKm !== undefined && (

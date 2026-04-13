@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
     Facebook,
     Instagram,
@@ -29,31 +30,34 @@ const Footer = () => {
     ];
 
     const quickLinks = [
-        "About Us",
-        "Contact Us",
-        "Become a Partner",
-        "Careers",
-        "Blog"
+        { label: "About Us", href: "#" },
+        { label: "Contact Us", href: "#" },
+        { label: "Become a Partner", href: "#" },
+        { label: "Careers", href: "/careers" },
+        { label: "Blog", href: "#" }
     ];
 
     const bottomLinks = [
-        "Privacy Policy",
-        "Terms of Service",
-        "Cookies Settings"
+        { label: "Privacy Policy", href: "/privacy-policy" },
+        { label: "Terms of Service", href: "/terms-of-service" },
+        { label: "Cookies Settings", href: "/cookies-settings" }
     ];
 
-    const renderLinks = (links: any[]) =>
-        links.map((item) => (
-            <li key={item}>
+    const renderLinks = (links: Array<string | { label: string; href: string }>) =>
+        links.map((item) => {
+            const label = typeof item === "string" ? item : item.label;
+            const href = typeof item === "string" ? "#" : item.href;
+            return (
+            <li key={label}>
                 <Link
-                    href="#"
+                    href={href}
                     className="text-sm hover:text-white transition-colors flex items-center gap-2 group"
                 >
                     <ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
-                    {item}
+                    {label}
                 </Link>
             </li>
-        ));
+        )});
 
     return (
         <footer className="bg-zinc-950 text-zinc-400 border-t border-white/5 py-10">
@@ -65,12 +69,12 @@ const Footer = () => {
                     {/* Brand */}
                     <div className="space-y-5">
                         <Link href="/" className="shrink-0 flex items-center">
-                            <img
-                                src="https://res.cloudinary.com/dwsv275kv/image/upload/v1774690800/WhatsApp_Image_2026-03-28_at_3_imgupscaler.ai_General_8K_x8h19z.jpg" // put your logo inside public folder
+                            <Image
+                                src="https://res.cloudinary.com/dwsv275kv/image/upload/f_auto,q_auto,w_360/v1774690800/WhatsApp_Image_2026-03-28_at_3_imgupscaler.ai_General_8K_x8h19z.jpg"
                                 alt="BOOKBY247 Logo"
                                 width={180}
                                 height={60}
-                                // priority
+                                loading="lazy"
                                 className="h-10 sm:h-12 md:h-14 w-auto object-contain rounded-lg"
                             />
                         </Link>
@@ -143,7 +147,7 @@ const Footer = () => {
                 {/* 🔥 CONTACT */}
                 <div className="border-y border-white/5 py-6 mt-10 text-center md:text-left">
                     <p className="text-sm text-white">
-                        Support: support@bookby247.com
+                        Need help? - <a href="mailto:support@bookby247.com" className="text-white hover:text-zinc-400 transition-colors">support@bookby247.com</a>
                     </p>
                 </div>
 
@@ -156,11 +160,11 @@ const Footer = () => {
                     <div className="flex flex-wrap justify-center md:justify-end gap-5">
                         {bottomLinks.map((item) => (
                             <Link
-                                key={item}
-                                href="#"
+                                key={item.label}
+                                href={item.href}
                                 className="text-xs hover:text-white transition-colors"
                             >
-                                {item}
+                                {item.label}
                             </Link>
                         ))}
                     </div>

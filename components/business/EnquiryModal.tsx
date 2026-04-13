@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState } from 'react';
-import { User, Phone, Mail, MessageSquare, Send, CheckCircle2 } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
+import { FiMail, FiMessageSquare, FiPhone, FiUser } from 'react-icons/fi';
 import Modal from '@/components/ui/Modal';
 import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
 
 interface EnquiryModalProps {
     isOpen: boolean;
@@ -50,119 +52,100 @@ const EnquiryModal = ({ isOpen, onClose, businessName }: EnquiryModalProps) => {
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} className="max-w-lg px-4 sm:px-0">
-            <div className="bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
+            <div className="bg-white rounded-xl border border-zinc-200 overflow-hidden">
                 {!isSuccess ? (
-                    <div className="p-6 sm:p-10 space-y-6 sm:space-y-8">
-                        {/* Header */}
-                        <div className="text-center space-y-2">
-                            <h2 className="text-2xl sm:text-3xl font-black text-zinc-900 tracking-tight">Send Enquiry</h2>
-                            <p className="text-sm text-zinc-500 font-medium">
-                                Get in touch with <span className="text-zinc-900 font-bold">{businessName}</span>
+                    <div className="p-5 sm:p-7 space-y-6">
+                        <div className="space-y-1">
+                            <p className="text-xs uppercase tracking-wide text-zinc-500 font-medium">Customer Enquiry</p>
+                            <h2 className="text-xl sm:text-2xl font-bold text-zinc-900">Send enquiry to - <span className="underline font-semibold">{businessName}</span></h2>
+                            <p className="text-sm text-zinc-600">
+                                Fill your details and the business team will contact you shortly.
                             </p>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-                            {/* Name Input */}
+                        <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="space-y-1.5">
-                                <label className="text-xs font-bold text-zinc-900 uppercase tracking-wider ml-1">Full Name</label>
-                                <div className="relative group">
-                                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-zinc-900 transition-colors">
-                                        <User className="w-5 h-5" />
-                                    </div>
-                                    <input
-                                        required
-                                        type="text"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        placeholder="Enter your name"
-                                        className="w-full h-12 sm:h-14 pl-12 pr-4 rounded-xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-black/10 focus:border-black outline-none transition-all text-zinc-900 placeholder:text-zinc-400 font-medium"
-                                    />
-                                </div>
+                                <label className="text-xs font-medium text-zinc-700 uppercase tracking-wide">Full Name</label>
+                                <Input
+                                    required
+                                    type="text"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    placeholder="Enter your name"
+                                    icon={<FiUser className="w-4 h-4 text-zinc-400" />}
+                                    className="h-11 border-zinc-300 text-sm text-black focus-visible:ring-0 focus-visible:outline-none focus:border-zinc-300"
+                                />
                             </div>
 
-                            {/* Phone Input */}
                             <div className="space-y-1.5">
-                                <label className="text-xs font-bold text-zinc-900 uppercase tracking-wider ml-1">Phone Number</label>
-                                <div className="relative group">
-                                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-zinc-900 transition-colors">
-                                        <Phone className="w-5 h-5" />
-                                    </div>
-                                    <input
-                                        required
-                                        type="tel"
-                                        name="phone"
-                                        value={formData.phone}
-                                        onChange={handleChange}
-                                        placeholder="Enter your mobile number"
-                                        className="w-full h-12 sm:h-14 pl-12 pr-4 rounded-xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-black/10 focus:border-black outline-none transition-all text-zinc-900 placeholder:text-zinc-400 font-medium"
-                                    />
-                                </div>
+                                <label className="text-xs font-medium text-zinc-700 uppercase tracking-wide">Phone Number</label>
+                                <Input
+                                    required
+                                    type="tel"
+                                    name="phone"
+                                    value={formData.phone}
+                                    onChange={handleChange}
+                                    placeholder="Enter your mobile number"
+                                    icon={<FiPhone className="w-4 h-4 text-zinc-400" />}
+                                    className="h-11 border-zinc-300 text-sm text-black focus-visible:ring-0 focus-visible:outline-none focus:border-zinc-300"
+                                />
                             </div>
 
-                            {/* Email Input */}
                             <div className="space-y-1.5">
-                                <label className="text-xs font-bold text-zinc-900 uppercase tracking-wider ml-1">Email (Optional)</label>
-                                <div className="relative group">
-                                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-zinc-900 transition-colors">
-                                        <Mail className="w-5 h-5" />
-                                    </div>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        placeholder="Enter your email address"
-                                        className="w-full h-12 sm:h-14 pl-12 pr-4 rounded-xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-black/10 focus:border-black outline-none transition-all text-zinc-900 placeholder:text-zinc-400 font-medium"
-                                    />
-                                </div>
+                                <label className="text-xs font-medium text-zinc-700 uppercase tracking-wide">Email (Optional)</label>
+                                <Input
+                                    type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    placeholder="Enter your email address"
+                                    icon={<FiMail className="w-4 h-4 text-zinc-400" />}
+                                    className="h-11 border-zinc-300 text-sm text-black focus-visible:ring-0 focus-visible:outline-none focus:border-zinc-300"
+                                />
                             </div>
 
-                            {/* Message Input */}
                             <div className="space-y-1.5">
-                                <label className="text-xs font-bold text-zinc-900 uppercase tracking-wider ml-1">Message</label>
-                                <div className="relative group">
-                                    <div className="absolute left-4 top-4 text-zinc-400 group-focus-within:text-zinc-900 transition-colors">
-                                        <MessageSquare className="w-5 h-5" />
+                                <label className="text-xs font-medium text-zinc-700 uppercase tracking-wide">Message</label>
+                                <div className="relative">
+                                    <div className="absolute left-3 top-3 text-zinc-400">
+                                        <FiMessageSquare className="w-4 h-4" />
                                     </div>
                                     <textarea
                                         name="message"
                                         value={formData.message}
                                         onChange={handleChange}
                                         placeholder="Describe your requirement..."
-                                        className="w-full h-28 sm:h-32 pl-12 pr-4 py-4 rounded-xl border border-zinc-200 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-black/10 focus:border-black outline-none transition-all text-zinc-900 placeholder:text-zinc-400 font-medium resize-none"
+                                        className="w-full h-28 sm:h-32 pl-10 pr-3 py-2.5 rounded-md border border-zinc-300 bg-white focus:border-zinc-300 focus:outline-none text-sm text-black placeholder:text-zinc-400 resize-none"
                                     />
                                 </div>
                             </div>
 
-                            {/* Submit Button */}
-                            <div className="pt-2">
+                            <div className="pt-1">
                                 <Button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className={`w-full h-14 font-black text-base sm:text-lg transition-all rounded-xl gap-2 shadow-lg ${isSubmitting ? 'bg-zinc-400' : 'bg-black hover:bg-zinc-800 shadow-black/20'
-                                        }`}
+                                    className="w-full h-11 text-sm font-semibold rounded-md"
                                 >
-                                    {isSubmitting ? 'Sending Request...' : 'Send Enquiry'}
-                                    {!isSubmitting && <Send className="w-5 h-5" />}
+                                    {isSubmitting ? 'Sending enquiry...' : 'Send Enquiry'}
                                 </Button>
-                                <p className="text-[10px] text-center text-zinc-400 mt-4 leading-relaxed px-4">
+                                <p className="text-[11px] text-zinc-500 mt-3 leading-relaxed">
                                     By clicking Send Enquiry, you agree to our <span className="underline cursor-pointer">Terms</span> and <span className="underline cursor-pointer">Privacy Policy</span>.
                                 </p>
                             </div>
                         </form>
                     </div>
                 ) : (
-                    <div className="p-10 sm:p-16 text-center space-y-6">
+                    <div className="p-8 sm:p-10 text-center space-y-4">
                         <div className="flex justify-center">
-                            <div className="w-20 h-20 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-900 animate-bounce">
-                                <CheckCircle2 className="w-12 h-12" />
+                            <div className="w-14 h-14 rounded-full border border-zinc-200 bg-white flex items-center justify-center text-zinc-900">
+                                <CheckCircle2 className="w-8 h-8" />
                             </div>
                         </div>
-                        <div className="space-y-2">
-                            <h3 className="text-2xl font-black text-zinc-900">Enquiry Sent!</h3>
-                            <p className="text-zinc-500 font-medium">
-                                Thank you for your interest. <span className="text-zinc-900 font-bold">{businessName}</span> will contact you shortly.
+                        <div className="space-y-1">
+                            <h3 className="text-xl font-semibold text-zinc-900">Enquiry Sent</h3>
+                            <p className="text-sm text-zinc-600">
+                                Thank you for your interest. {businessName} will contact you shortly.
                             </p>
                         </div>
                     </div>

@@ -267,7 +267,6 @@ import { BottomNav } from "@/components/layout/BottomNav";
 import StructuredData from "@/components/seo/StructuredData";
 import Script from "next/script";
 import QueryProvider from "@/providers/QueryProvider";
-import { LazyMotion, domAnimation } from "framer-motion";
 
 export default function RootLayout({
   children,
@@ -319,18 +318,16 @@ export default function RootLayout({
           </Script>
         )}
 
-        <LazyMotion features={domAnimation}>
-          <QueryProvider>
-            <StructuredData />
-            <Navbar />
-            <FloatingActionButtons />
-            <main className="flex-1 pb-16 md:pb-0">
-              {children}
-            </main>
-            <Footer />
-            <BottomNav />
-          </QueryProvider>
-        </LazyMotion>
+        <QueryProvider>
+          <StructuredData />
+          <Navbar />
+          <FloatingActionButtons />
+          <main className="flex-1 pb-16 md:pb-0">
+            {children}
+          </main>
+          <Footer />
+          <BottomNav />
+        </QueryProvider>
       </body>
     </html>
   );
