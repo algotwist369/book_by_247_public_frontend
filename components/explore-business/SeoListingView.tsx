@@ -183,6 +183,15 @@ const SeoListingView = ({
 
     return (
         <div className="bg-white min-h-screen">
+            {/* CSS to hide global navbar on mobile */}
+            <style jsx global>{`
+                @media (max-width: 1024px) {
+                    nav.sticky.top-0 {
+                        display: none !important;
+                    }
+                }
+            `}</style>
+
             {/* Mobile-Only Header */}
             <div className="lg:hidden flex items-center justify-between px-4 py-3 border-b border-zinc-100 sticky top-0 bg-white z-[60]">
                 <button onClick={() => router.back()} className="p-2 -ml-2 text-zinc-600 active:bg-zinc-50 rounded-full">

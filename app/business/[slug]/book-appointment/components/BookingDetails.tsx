@@ -35,13 +35,13 @@ const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
 
             <div className="space-y-4">
                 <div>
-                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 block">Full Name</label>
+                    <label className="text-xs font-semibold text-black uppercase tracking-wider mb-1.5 block">Full Name</label>
                     <div className="relative">
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input
                             type="text"
                             placeholder="John Doe"
-                            className="w-full h-11 pl-10 pr-3 bg-white border border-gray-200 rounded-lg focus:border-black outline-none text-sm"
+                            className="w-full h-11 pl-10 pr-3 bg-white border border-gray-200 rounded-lg focus:border-black outline-none text-sm text-black placeholder:text-gray-400"
                             value={formData.name}
                             onChange={(e) => onUpdateForm({ name: e.target.value })}
                         />
@@ -49,7 +49,7 @@ const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
                 </div>
 
                 <div>
-                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 block">Phone Number</label>
+                    <label className="text-xs font-semibold text-black uppercase tracking-wider mb-1.5 block">Phone Number</label>
                     <div className="relative">
                         <Phone className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 ${showPhoneError ? 'text-red-400' : 'text-gray-400'}`} />
                         <input
@@ -57,7 +57,7 @@ const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
                             inputMode="numeric"
                             maxLength={10}
                             placeholder="10-digit mobile number"
-                            className={`w-full h-11 pl-10 pr-3 bg-white border rounded-lg outline-none text-sm ${showPhoneError ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-black'}`}
+                            className={`w-full h-11 pl-10 pr-3 bg-white border rounded-lg outline-none text-sm text-black placeholder:text-gray-400 ${showPhoneError ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-black'}`}
                             value={formData.phone}
                             onChange={(e) => handlePhoneChange(e.target.value)}
                         />
@@ -71,10 +71,10 @@ const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
                 </div>
 
                 <div>
-                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 block">Special Instructions <span className="text-gray-400 normal-case tracking-normal">(optional)</span></label>
+                    <label className="text-xs font-semibold text-black uppercase tracking-wider mb-1.5 block">Special Instructions <span className="text-gray-500 normal-case tracking-normal">(optional)</span></label>
                     <textarea
                         placeholder="Any special requirements..."
-                        className="w-full h-28 p-3 bg-white border border-gray-200 rounded-lg focus:border-black outline-none text-sm resize-none"
+                        className="w-full h-28 p-3 bg-white border border-gray-200 rounded-lg focus:border-black outline-none text-sm text-black placeholder:text-gray-400 resize-none"
                         value={formData.notes}
                         onChange={(e) => onUpdateForm({ notes: e.target.value })}
                     />

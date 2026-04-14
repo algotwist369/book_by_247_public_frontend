@@ -29,7 +29,7 @@ const BookingProgress = ({ step }: BookingProgressProps) => {
                     <React.Fragment key={s.id}>
                         <div className="flex flex-col items-center gap-3 relative z-10">
                             {/* Icon Circle */}
-                            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${isCurrent
+                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${isCurrent
                                 ? 'bg-zinc-900 text-white'
                                 : isCompleted
                                     ? 'bg-zinc-900 text-white'

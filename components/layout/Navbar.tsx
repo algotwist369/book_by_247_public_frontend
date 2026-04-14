@@ -78,14 +78,14 @@ export const Navbar = () => {
             <div className="relative flex items-center justify-between px-3 sm:px-4 md:px-8 py-3 md:py-4 border-b border-zinc-50">
                 <div className="flex items-center gap-3 sm:gap-4 md:gap-8">
                     <Link href="/" className="shrink-0 flex items-center">
-                        {/* <img
+                        <img
                             src="https://res.cloudinary.com/dwsv275kv/image/upload/v1774790235/White_and_Black_Simple_Marketing_LinkedIn_Banner_f7aqfk.png" // put your logo inside public folder
                             alt="BOOKBY247 Logo"
                             width={180}
                             height={60}
                             // priority
                             className="h-10 sm:h-12 md:h-14 w-auto object-contain"
-                        /> */}
+                        />
                     </Link>
 
                     {/* Info Blocks (Desktop Only) */}
@@ -208,93 +208,93 @@ export const Navbar = () => {
                     />
                     <div className="fixed top-0 right-0 h-full w-[85%] max-w-sm bg-white z-50 md:hidden shadow-2xl overflow-y-auto">
                         <div className="flex flex-col h-full">
-                                {/* Header */}
-                                <div className="flex items-center justify-between p-4 border-b border-zinc-100">
-                                    <span className="text-2xl font-black italic tracking-tighter text-zinc-900 border-2 border-zinc-900 px-2">BOOKBY247</span>
-                                    <button
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                        className="p-2 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-full transition-colors"
-                                        aria-label="Close mobile menu"
+                            {/* Header */}
+                            <div className="flex items-center justify-between p-4 border-b border-zinc-100">
+                                <span className="text-2xl font-black italic tracking-tighter text-zinc-900 border-2 border-zinc-900 px-2">BOOKBY247</span>
+                                <button
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="p-2 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-full transition-colors"
+                                    aria-label="Close mobile menu"
+                                >
+                                    <X className="w-6 h-6" />
+                                </button>
+                            </div>
+
+                            {/* Content */}
+                            <div className="flex-1 p-4 space-y-6">
+                                {/* Login Button */}
+                                <Button variant="primary" className="w-full h-12 font-bold">
+                                    Login / Signup
+                                </Button>
+
+                                {/* Cities */}
+                                <div className="space-y-3">
+                                    <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest px-1">
+                                        Discover By City
+                                    </p>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        {cities.map((city: string) => (
+                                            <Link
+                                                key={city}
+                                                href={getCityHref(city)}
+                                                onClick={handleLinkClick}
+                                                className="px-3 py-2.5 text-sm font-semibold text-zinc-700 hover:text-zinc-900 bg-zinc-50 hover:bg-zinc-100 rounded-lg transition-colors text-center"
+                                            >
+                                                {city}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Categories */}
+                                <div className="space-y-3">
+                                    <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest px-1">
+                                        Discover By Category
+                                    </p>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        {CATEGORIES_DATA.map(cat => (
+                                            <Link
+                                                key={cat.id}
+                                                href={getCategoryHref(cat.id)}
+                                                onClick={handleLinkClick}
+                                                className="px-3 py-2.5 text-sm font-semibold text-zinc-700 hover:text-zinc-900 bg-zinc-50 hover:bg-zinc-100 rounded-lg transition-colors text-center"
+                                            >
+                                                {cat.label}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Business Links */}
+                                <div className="space-y-3 pt-4 border-t border-zinc-100">
+                                    <a
+                                        href="https://business.bookby247.com"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onClick={handleLinkClick}
+                                        className="flex items-center gap-3 p-3 hover:bg-zinc-50 rounded-lg transition-colors group"
                                     >
-                                        <X className="w-6 h-6" />
-                                    </button>
-                                </div>
-
-                                {/* Content */}
-                                <div className="flex-1 p-4 space-y-6">
-                                    {/* Login Button */}
-                                    <Button variant="primary" className="w-full h-12 font-bold">
-                                        Login / Signup
-                                    </Button>
-
-                                    {/* Cities */}
-                                    <div className="space-y-3">
-                                        <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest px-1">
-                                            Discover By City
-                                        </p>
-                                        <div className="grid grid-cols-2 gap-2">
-                                            {cities.map((city: string) => (
-                                                <Link
-                                                    key={city}
-                                                    href={getCityHref(city)}
-                                                    onClick={handleLinkClick}
-                                                    className="px-3 py-2.5 text-sm font-semibold text-zinc-700 hover:text-zinc-900 bg-zinc-50 hover:bg-zinc-100 rounded-lg transition-colors text-center"
-                                                >
-                                                    {city}
-                                                </Link>
-                                            ))}
+                                        <Briefcase className="w-5 h-5 text-zinc-500 group-hover:text-zinc-700" />
+                                        <div>
+                                            <p className="text-sm font-bold text-zinc-900">LOGO for Business</p>
+                                            <p className="text-xs text-zinc-500">Trusted by 5000 Business</p>
                                         </div>
-                                    </div>
-
-                                    {/* Categories */}
-                                    <div className="space-y-3">
-                                        <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest px-1">
-                                            Discover By Category
-                                        </p>
-                                        <div className="grid grid-cols-2 gap-2">
-                                            {CATEGORIES_DATA.map(cat => (
-                                                <Link
-                                                    key={cat.id}
-                                                    href={getCategoryHref(cat.id)}
-                                                    onClick={handleLinkClick}
-                                                    className="px-3 py-2.5 text-sm font-semibold text-zinc-700 hover:text-zinc-900 bg-zinc-50 hover:bg-zinc-100 rounded-lg transition-colors text-center"
-                                                >
-                                                    {cat.label}
-                                                </Link>
-                                            ))}
+                                    </a>
+                                    <a
+                                        href="https://business.bookby247.com/book-demo"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onClick={handleLinkClick}
+                                        className="flex items-center gap-3 p-3 hover:bg-zinc-50 rounded-lg transition-colors group"
+                                    >
+                                        <Handshake className="w-5 h-5 text-zinc-500 group-hover:text-zinc-700" />
+                                        <div>
+                                            <p className="text-sm font-bold text-zinc-900">Become A Partner</p>
+                                            <p className="text-xs text-zinc-500">Start receiving qualified leads</p>
                                         </div>
-                                    </div>
-
-                                    {/* Business Links */}
-                                    <div className="space-y-3 pt-4 border-t border-zinc-100">
-                                        <a
-                                            href="https://business.bookby247.com"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            onClick={handleLinkClick}
-                                            className="flex items-center gap-3 p-3 hover:bg-zinc-50 rounded-lg transition-colors group"
-                                        >
-                                            <Briefcase className="w-5 h-5 text-zinc-500 group-hover:text-zinc-700" />
-                                            <div>
-                                                <p className="text-sm font-bold text-zinc-900">LOGO for Business</p>
-                                                <p className="text-xs text-zinc-500">Trusted by 5000 Business</p>
-                                            </div>
-                                        </a>
-                                        <a
-                                            href="https://business.bookby247.com/book-demo"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            onClick={handleLinkClick}
-                                            className="flex items-center gap-3 p-3 hover:bg-zinc-50 rounded-lg transition-colors group"
-                                        >
-                                            <Handshake className="w-5 h-5 text-zinc-500 group-hover:text-zinc-700" />
-                                            <div>
-                                                <p className="text-sm font-bold text-zinc-900">Become A Partner</p>
-                                                <p className="text-xs text-zinc-500">Start receiving qualified leads</p>
-                                            </div>
-                                        </a>
-                                    </div>
+                                    </a>
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </>

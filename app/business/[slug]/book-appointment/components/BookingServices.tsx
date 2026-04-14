@@ -61,17 +61,17 @@ const ServiceCard = ({
     const serviceId = service._id || service.id;
 
     return (
-        <div className="border border-zinc-100 rounded-2xl overflow-hidden bg-white hover:border-zinc-200 transition-colors group">
+        <div className="border border-zinc-200 rounded-xl overflow-hidden bg-white">
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="w-full flex items-center justify-between p-4 text-left gap-4"
             >
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-400 group-hover:bg-zinc-900/5 group-hover:text-black transition-colors shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-500 shrink-0">
                         <Star className="w-4 h-4" />
                     </div>
                     <div>
-                        <h3 className="font-bold text-zinc-900 text-sm sm:text-base group-hover:text-black transition-colors leading-tight">{service.name}</h3>
+                        <h3 className="font-semibold text-zinc-900 text-sm sm:text-base leading-tight">{service.name}</h3>
                         <p className="text-[10px] sm:text-xs text-zinc-500 mt-0.5 max-w-[200px] truncate">{service.description || "Service"}</p>
                     </div>
                 </div>
@@ -82,7 +82,7 @@ const ServiceCard = ({
                         </span>
                         {options.length > 1 && <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-tighter">onwards</span>}
                     </div>
-                    <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-colors ${isOpen ? 'bg-zinc-900/10 text-black' : 'text-zinc-300'}`}>
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center ${isOpen ? 'bg-zinc-100 text-zinc-900' : 'text-zinc-400'}`}>
                         {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                     </div>
                 </div>
@@ -90,13 +90,13 @@ const ServiceCard = ({
 
 
             {isOpen && (
-                <div className="overflow-hidden bg-zinc-50/50">
+                <div className="overflow-hidden bg-zinc-50">
                     <div className="p-4 sm:p-5 pt-0 space-y-3">
                         <div className="h-px bg-zinc-100 mb-4" />
                         {options.map((option, idx) => {
                             const isSelected = selectedOptions.includes(idx);
                             return (
-                                <div key={idx} className={`flex flex-col xs:flex-row items-start xs:items-center justify-between p-3 rounded-xl bg-white border transition-colors gap-3 ${isSelected ? 'border-black/50 bg-zinc-50' : 'border-zinc-100'}`}>
+                                <div key={idx} className={`flex flex-col xs:flex-row items-start xs:items-center justify-between p-3 rounded-lg bg-white border gap-3 ${isSelected ? 'border-zinc-900 bg-zinc-50' : 'border-zinc-200'}`}>
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-500">
                                             <Clock className="w-4 h-4" />
@@ -108,7 +108,7 @@ const ServiceCard = ({
                                         <Button
                                             size="sm"
                                             onClick={() => onToggle(idx)}
-                                            className={`${isSelected ? 'bg-black' : 'bg-zinc-900'} text-white hover:opacity-90 transition-colors px-5 sm:px-6 rounded-full font-bold h-8 sm:h-9 text-xs sm:text-sm flex items-center gap-2`}
+                                            className={`${isSelected ? 'bg-black' : 'bg-zinc-900'} text-white px-5 sm:px-6 rounded-md font-semibold h-8 sm:h-9 text-xs sm:text-sm flex items-center gap-2`}
                                         >
                                             {isSelected && <CheckCircle2 className="w-4 h-4" />}
                                             {isSelected ? 'Selected' : 'Select'}
@@ -126,9 +126,9 @@ const ServiceCard = ({
 
 const BookingServices = ({ services, selectedServices, onToggleService }: BookingServicesProps) => {
     return (
-        <div className="bg-white rounded-3xl border border-zinc-100 p-6 sm:p-8 space-y-8">
+        <div className="bg-white rounded-xl border border-zinc-200 p-5 sm:p-6 space-y-6">
             <div>
-                <h2 className="text-2xl font-black text-zinc-900 tracking-tight">Select Services</h2>
+                <h2 className="text-xl sm:text-2xl font-semibold text-zinc-900">Select Services</h2>
                 <p className="text-zinc-500 text-sm mt-1">Choose the treatments you'd like to book</p>
             </div>
 

@@ -268,14 +268,21 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
     if (!isLoaded) return null; // Avoid hydration mismatch or flickering
 
     return (
-        <div className="min-h-screen bg-zinc-50 pb-32 sm:pb-20">
+        <div className="min-h-screen bg-white pb-20 md:pb-0">
+            <style jsx global>{`
+                nav.sticky.top-0 {
+                    display: none !important;
+                }
+            `}</style>
             <BookingHeader business={business} />
 
-            <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
-                <BookingProgress step={step} />
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
+                <div className="mb-6 md:mb-8">
+                    <BookingProgress step={step} />
+                </div>
 
-                <div className={`${step === 'success' ? 'block' : 'grid grid-cols-1 lg:grid-cols-3 gap-8 items-start'}`}>
-                    <div className={`${step === 'success' ? '' : 'lg:col-span-2 space-y-6'}`}>
+                <div className={`${step === 'success' ? 'block' : 'grid grid-cols-1 lg:grid-cols-3 gap-6 xl:gap-8 items-start'}`}>
+                    <div className={`${step === 'success' ? '' : 'lg:col-span-2 space-y-5 md:space-y-6'}`}>
                         {step === 'services' && (
                             <BookingServices
                                 services={business.services || []}
@@ -345,17 +352,17 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
 
             {/* Mobile Sticky Action Bar */}
             {step !== 'success' && (
-                <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-zinc-200 p-4 z-50 lg:hidden">
+                <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-zinc-200 px-4 py-3 z-50 lg:hidden">
                     <div className="max-w-xl mx-auto flex items-center justify-between gap-3">
-                        <div className="flex flex-col shrink-0">
-                            <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider leading-none mb-1">Total</span>
-                            <span className="text-lg font-bold text-black leading-none">₹{totalPrice.toLocaleString('en-IN')}</span>
+                        <div className="flex flex-col shrink-0 min-w-[88px]">
+                            <span className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider leading-none mb-1">Total</span>
+                            <span className="text-lg font-semibold text-zinc-900 leading-none">₹{totalPrice.toLocaleString('en-IN')}</span>
                         </div>
                         <div className="flex items-center gap-2 flex-1">
                             {step !== 'services' && (
                                 <button
                                     onClick={handleBack}
-                                    className="h-12 px-5 rounded-lg border border-gray-200 text-sm font-medium text-gray-600 hover:border-gray-300"
+                                    className="h-11 px-4 rounded-md border border-zinc-300 text-sm font-medium text-zinc-700 bg-white"
                                 >
                                     Back
                                 </button>
@@ -363,7 +370,7 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
                             <button
                                 disabled={!isNextEnabled || isSubmitting}
                                 onClick={step === 'payment' ? handleConfirm : handleNext}
-                                className={`flex-1 h-12 rounded-lg text-sm font-semibold ${isNextEnabled ? 'bg-black text-white' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                className={`flex-1 h-11 rounded-md text-sm font-semibold ${isNextEnabled ? 'bg-zinc-900 text-white' : 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
                                     }`}
                             >
                                 {isSubmitting ? 'Processing...' : actionButtonText}

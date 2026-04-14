@@ -131,7 +131,7 @@ const BookingSummary = ({
                             <button
                                 disabled={!isNextEnabled || isSubmitting}
                                 onClick={step === 'payment' ? onConfirm : onNext}
-                                className={`w-full h-11 rounded-lg text-sm font-semibold ${isNextEnabled ? 'bg-black text-white hover:bg-zinc-900' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                className={`w-full h-11 rounded-lg text-sm font-semibold ${isNextEnabled ? 'bg-black text-white' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                                     }`}
                             >
                                 {isSubmitting ? 'Processing...' : actionButtonText}
@@ -141,7 +141,7 @@ const BookingSummary = ({
                         {step !== 'services' && (
                             <button
                                 onClick={onBack}
-                                className="w-full h-10 rounded-lg text-sm font-medium text-gray-500 border border-gray-200 hover:border-gray-300"
+                                className="w-full h-10 rounded-lg text-sm font-medium text-gray-500 border border-gray-200"
                             >
                                 Back
                             </button>

@@ -1,38 +1,81 @@
 "use client";
 
 import React, { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import { CheckCircle2 } from 'lucide-react';
 import { FiMail, FiMessageSquare, FiPhone, FiUser } from 'react-icons/fi';
 import Modal from '@/components/ui/Modal';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import { inquiryApi } from '@/api/public/inquiry';
 
 interface EnquiryModalProps {
     isOpen: boolean;
     onClose: () => void;
     businessName: string;
+    businessId?: string;
+    businessSlug?: string;
 }
 
-const EnquiryModal = ({ isOpen, onClose, businessName }: EnquiryModalProps) => {
+const EnquiryModal = ({ isOpen, onClose, businessName, businessId, businessSlug }: EnquiryModalProps) => {
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
         email: '',
         message: ''
     });
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [submitError, setSubmitError] = useState('');
+
+    const inquiryMutation = useMutation({
+        mutationFn: (payload: {
+            business_id?: string;
+            business_slug?: string;
+            user_name: string;
+            phone: string;
+            inquiry_type: string;
+        }) =>
+            inquiryApi.createInquiry(payload)
+    });
+
+    const isSubmitting = inquiryMutation.isPending;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsSubmitting(true);
+        setSubmitError('');
+        console.log('[EnquiryModal] submit payload preview', {
+            businessId,
+            businessSlug,
+            businessName,
+            formData
+        });
 
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        let sentSuccessfully = false;
+        try {
+            if (!businessId && !businessSlug) {
+                throw new Error('Missing business id/slug at submit time');
+            }
 
-        console.log('Enquiry Submitted:', formData);
-        setIsSubmitting(false);
-        setIsSuccess(true);
+            await inquiryMutation.mutateAsync({
+                business_id: businessId,
+                business_slug: businessSlug,
+                user_name: formData.name,
+                phone: formData.phone,
+                inquiry_type: formData.message || 'General'
+            });
+            setIsSuccess(true);
+            sentSuccessfully = true;
+        } catch (error: any) {
+            console.error('[EnquiryModal] submit failed', {
+                error,
+                businessId,
+                businessSlug,
+                formData
+            });
+            setSubmitError(error?.message || 'Failed to send enquiry. Please try again.');
+        }
+
+        if (!sentSuccessfully) return;
 
         // Close modal after showing success message
         setTimeout(() => {
@@ -129,6 +172,9 @@ const EnquiryModal = ({ isOpen, onClose, businessName }: EnquiryModalProps) => {
                                 >
                                     {isSubmitting ? 'Sending enquiry...' : 'Send Enquiry'}
                                 </Button>
+                                {submitError && (
+                                    <p className="text-[12px] text-red-600 mt-2">{submitError}</p>
+                                )}
                                 <p className="text-[11px] text-zinc-500 mt-3 leading-relaxed">
                                     By clicking Send Enquiry, you agree to our <span className="underline cursor-pointer">Terms</span> and <span className="underline cursor-pointer">Privacy Policy</span>.
                                 </p>

@@ -216,7 +216,7 @@ const BookingSuccess = ({
                                     type="button"
                                     onClick={handleCopyCode}
                                     aria-label="Copy confirmation code"
-                                    className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-zinc-300 text-zinc-600 hover:bg-zinc-50"
+                                    className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-zinc-300 text-zinc-600"
                                 >
                                     {copied ? <FiCheck size={14} /> : <FiCopy size={14} />}
                                 </button>
@@ -309,7 +309,7 @@ const BookingSuccess = ({
                         <button
                             type="button"
                             onClick={handleDownloadInvoice}
-                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 h-10 px-4 rounded-md border border-zinc-300 text-zinc-900 text-sm font-medium hover:bg-zinc-50"
+                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 h-10 px-4 rounded-md border border-zinc-300 text-zinc-900 text-sm font-medium"
                         >
                             <Download className="w-4 h-4" />
                             Download Invoice
@@ -321,19 +321,19 @@ const BookingSuccess = ({
             <div className="mt-4 sm:mt-5 lg:mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <Link
                     href={`/booking-status/${confirmationCode}`}
-                    className="h-11 inline-flex items-center justify-center rounded-md border border-zinc-900 text-zinc-900 text-sm font-medium hover:bg-zinc-50"
+                    className="h-11 inline-flex items-center justify-center rounded-md border border-zinc-900 text-zinc-900 text-sm font-medium"
                 >
                     Track Booking Status
                 </Link>
                 <Link
                     href="/"
-                    className="h-11 inline-flex items-center justify-center rounded-md bg-zinc-900 text-white text-sm font-medium hover:bg-zinc-800"
+                    className="h-11 inline-flex items-center justify-center rounded-md bg-zinc-900 text-white text-sm font-medium"
                 >
                     Return Home
                 </Link>
                 <Link
                     href={`/business/${business.slug}`}
-                    className="h-11 inline-flex items-center justify-center rounded-md border border-zinc-300 text-zinc-900 text-sm font-medium hover:bg-zinc-50"
+                    className="h-11 inline-flex items-center justify-center rounded-md border border-zinc-300 text-zinc-900 text-sm font-medium"
                 >
                     View Profile
                 </Link>

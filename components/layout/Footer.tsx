@@ -22,11 +22,11 @@ const Footer = () => {
     ];
 
     const categories = [
-        "Spa & Wellness",
-        "Hair Salons",
-        "Massage Therapy",
-        "Nail Care",
-        "Facial & Skin"
+        { label: "Spa & Wellness", href: "/explore?category=spa%20%26%20wellness" },
+        { label: "Hair Salons", href: "/explore?category=hair%20salons" },
+        { label: "Massage Therapy", href: "/explore?category=massage%20therapy" },
+        { label: "Nail Care", href: "/explore?category=nail%20care" },
+        { label: "Facial & Skin", href: "/explore?category=facial%20%26%20skin" }
     ];
 
     const quickLinks = [
@@ -34,7 +34,7 @@ const Footer = () => {
         { label: "Contact Us", href: "#" },
         { label: "Become a Partner", href: "#" },
         { label: "Careers", href: "/careers" },
-        { label: "Blog", href: "#" }
+        // { label: "Blog", href: "#" }
     ];
 
     const bottomLinks = [

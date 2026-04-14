@@ -38,6 +38,15 @@ const SeoSearchContent = ({ params, initialData, slug }: SeoSearchContentProps) 
 
     return (
         <div className="bg-white min-h-screen">
+            {/* CSS to hide global navbar on mobile */}
+            <style jsx global>{`
+                @media (max-width: 1024px) {
+                    nav.sticky.top-0 {
+                        display: none !important;
+                    }
+                }
+            `}</style>
+
             {/* SEO Page Header */}
             <header className="border-b border-zinc-100 bg-white sticky top-0 z-50">
                 <div className="max-w-[1600px] mx-auto px-4 sm:px-8 py-4 flex items-center justify-between gap-4">

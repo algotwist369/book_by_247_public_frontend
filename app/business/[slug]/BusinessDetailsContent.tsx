@@ -140,10 +140,24 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialData }: Cl
     const galleryImages = Array.isArray(media?.images) ? media.images : [];
 
     const businessName = details.name;
+    const resolvedBusinessId =
+        details?._id ||
+        details?.id ||
+        details?.business_id ||
+        details?.businessId;
     const businessPhone = contacts?.phone;
     const alternatePhone = contacts?.alternate_phone;
     const businessAddress = contacts?.address || '';
     const businessRatings = reviewsData?.ratings || { average: details.avg_rating, total_reviews: details.total_reviews };
+
+    React.useEffect(() => {
+        console.log('[BusinessDetailsContent] resolved business id', {
+            slug,
+            resolvedBusinessId,
+            detailKeys: details ? Object.keys(details) : [],
+            details
+        });
+    }, [slug, resolvedBusinessId, details]);
 
     return (
         <div className="min-h-screen bg-white pb-20 relative">
@@ -683,6 +697,8 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialData }: Cl
                 isOpen={isEnquiryModalOpen}
                 onClose={() => setIsEnquiryModalOpen(false)}
                 businessName={businessName}
+                businessId={resolvedBusinessId}
+                businessSlug={slug}
             />
         </div >
     );
