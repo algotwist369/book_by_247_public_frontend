@@ -6,14 +6,33 @@ const SEOFooter = () => {
       <div className="flex max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20 flex-col gap-10 lg:gap-14">
         <div className="max-w-4xl">
           <h2 className="text-2xl font-bold leading-tight text-zinc-900 sm:text-3xl lg:text-4xl">
-          Bookby247 - Your Trusted Beauty & Wellness Booking Platform
+          Bookby247 - India&apos;s Premier Spa & Salon Booking Platform
           </h2>
 
           <p className="mt-3 text-sm leading-relaxed text-zinc-600 sm:text-base">
-            Discover, compare, and book the Best Spas, Salons and Beauty Centers near you.
-            Bookby247 connects customers with verified beauty professionals,
-            making self-care simple, transparent, and accessible.
+            Bookby247 is a dedicated wellness discovery and appointment booking platform designed for users across India.
+            Whether you are looking for a relaxing massage in Mumbai, a trendy haircut in Delhi, or premium skincare in Bangalore,
+            our platform connects you with thousands of verified beauty professionals and wellness centers.
           </p>
+        </div>
+
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div className="space-y-2">
+            <h3 className="font-bold text-zinc-900">What is Bookby247?</h3>
+            <p className="text-sm text-zinc-600">A comprehensive marketplace for discovering and booking the best beauty and wellness services instantly.</p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="font-bold text-zinc-900">Who is it for?</h3>
+            <p className="text-sm text-zinc-600">Designed for individuals seeking quality self-care, from busy professionals to beauty enthusiasts looking for trusted services.</p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="font-bold text-zinc-900">Where we serve?</h3>
+            <p className="text-sm text-zinc-600">Available in major Indian cities including Mumbai, Delhi, Bangalore, Pune, Hyderabad, and growing nationwide.</p>
+          </div>
+          <div className="space-y-2">
+            <h3 className="font-bold text-zinc-900">What can you do?</h3>
+            <p className="text-sm text-zinc-600">Search by location, compare prices, read verified reviews, and book appointments 24/7 with instant confirmation.</p>
+          </div>
         </div>
 
         <div className="rounded-2xl border border-zinc-200 bg-linear-to-br from-white via-zinc-50 to-rose-50/60 p-6 sm:p-8">

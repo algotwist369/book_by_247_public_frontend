@@ -109,7 +109,6 @@ export const generateServiceItemListJsonLd = (business: any) => {
 export const generateGlobalServiceItemListJsonLd = (services: any[], city?: string, category?: string) => {
     const baseUrl = "https://bookby247.com";
     return {
-      "@context": "https://schema.org",
       "@type": "ItemList",
       "name": `${category || "Services"} in ${city || "India"}`,
       "description": `Compare prices and reviews for ${category || "wellness services"} in ${city || "your area"}.`,
@@ -147,7 +146,6 @@ export const generateGlobalServiceItemListJsonLd = (services: any[], city?: stri
 export const generateItemListJsonLd = (businesses: any[], city?: string, service?: string) => {
   const baseUrl = "https://bookby247.com";
   return {
-    "@context": "https://schema.org",
     "@type": "ItemList",
     "name": `${service || "Spas and Salons"} in ${city || "India"}`,
     "description": `List of top-rated ${service || "beauty services"} available in ${city || "your area"}.`,
@@ -164,8 +162,23 @@ export const generateOrganizationJsonLd = () => {
   return {
     "@type": "Organization",
     "name": "Bookby247",
+    "alternateName": "Book by 24/7",
     "url": "https://bookby247.com",
     "logo": "https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png",
+    "description": "Bookby247 is India's premier beauty and wellness booking platform. It connects users with top-rated spas, salons, and beauty professionals for instant appointment booking, price comparison, and verified review reading.",
+    "areaServed": {
+      "@type": "Country",
+      "name": "India"
+    },
+    "knowsAbout": [
+      "Spa Services",
+      "Salon Appointments",
+      "Beauty Treatments",
+      "Massage Therapy",
+      "Hair Styling",
+      "Skincare",
+      "Wellness Booking"
+    ],
     "sameAs": [
       "https://www.facebook.com/bookby247",
       "https://www.instagram.com/bookby247",
@@ -174,7 +187,21 @@ export const generateOrganizationJsonLd = () => {
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": "+91-8542153652",
-      "contactType": "customer service"
+      "contactType": "customer service",
+      "availableLanguage": ["English", "Hindi", "Marathi"]
+    }
+  };
+};
+
+export const generateWebSiteJsonLd = () => {
+  return {
+    "@type": "WebSite",
+    "name": "Bookby247",
+    "url": "https://bookby247.com",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://bookby247.com/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
     }
   };
 };

@@ -230,18 +230,20 @@ const SeoListingView = ({
                 <div className={`w-full transition-all duration-500 ease-in-out ${showMap ? 'lg:w-[55%]' : 'lg:w-full'} px-4 sm:px-8 md:px-12 py-4 lg:py-16`}>
                     <div className={`${showMap ? 'max-w-4xl' : 'max-w-[1600px]'} mx-auto transition-all duration-500`}>
                         {/* Header & Toggle Section */}
-                        <div className="flex items-center justify-between mb-0 lg:mb-10">
-                            <div className="hidden lg:block">
-                                <h1 className="text-4xl font-black text-zinc-900 tracking-tight leading-tight">
-                                    {displayTitle}
-                                    {initialCity && <span className="text-zinc-400"> in {initialCity}</span>}
-                                </h1>
-                                <p className="text-zinc-500 text-lg font-medium mt-2">{displaySubtitle}</p>
-                            </div>
+                        <div className="mb-0 lg:mb-10">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-zinc-900 tracking-tight leading-tight">
+                                        {displayTitle}
+                                        {initialCity && <span className="text-zinc-400"> in {initialCity}</span>}
+                                    </h1>
+                                    <p className="text-zinc-500 text-base sm:text-lg font-medium mt-2">{displaySubtitle}</p>
+                                </div>
 
-                            <button onClick={() => setShowMap(!showMap)} className="hidden lg:flex items-center gap-2 bg-zinc-900 text-white px-5 py-2.5 rounded-2xl hover:bg-zinc-800 transition-all active:scale-95 shadow-lg shadow-zinc-900/10">
-                                {showMap ? <><List className="w-4 h-4" /><span className="text-xs font-bold uppercase tracking-wider">Hide Map</span></> : <><Map className="w-4 h-4" /><span className="text-xs font-bold uppercase tracking-wider">Show Map</span></>}
-                            </button>
+                                <button onClick={() => setShowMap(!showMap)} className="hidden lg:flex items-center gap-2 bg-zinc-900 text-white px-5 py-2.5 rounded-2xl hover:bg-zinc-800 transition-all active:scale-95 shadow-lg shadow-zinc-900/10">
+                                    {showMap ? <><List className="w-4 h-4" /><span className="text-xs font-bold uppercase tracking-wider">Hide Map</span></> : <><Map className="w-4 h-4" /><span className="text-xs font-bold uppercase tracking-wider">Show Map</span></>}
+                                </button>
+                            </div>
                         </div>
 
                         {/* Filters & Search */}

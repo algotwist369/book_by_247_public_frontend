@@ -21,12 +21,12 @@ const HeroSection = () => {
                         </div>
 
                         <h1 className="md:mt-5 text-balance text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
-                            Find your next wellness day
-                            <span className="block text-rose-700">in minutes</span>
+                            India&apos;s leading platform to find &amp; book
+                            <span className="block text-rose-700">wellness services</span>
                         </h1>
 
                         <p className="hidden md:block mt-4 max-w-2xl text-pretty text-base leading-relaxed text-slate-700 sm:text-lg lg:max-w-xl">
-                            Browse top salons, compare services, and schedule appointments with a smooth, reliable booking flow.
+                            Discover the best spas, salons, and beauty parlours in India. Search by location, compare prices, read reviews, and book your appointment online with Bookby247.
                         </p>
 
                         <div className="mt-7 max-w-2xl lg:max-w-xl">

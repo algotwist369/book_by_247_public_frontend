@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 import { businessApi } from '@/api/public/business';
 import SeoListingView from '@/components/explore-business/SeoListingView';
-import { generateBreadcrumbJsonLd, generateLocalBusinessJsonLd } from '@/lib/seo-jsonld';
+import { generateBreadcrumbJsonLd, generateLocalBusinessJsonLd, generateOrganizationJsonLd, generateWebSiteJsonLd } from '@/lib/seo-jsonld';
 import { safeJsonLdStringify } from '@/lib/utils';
 
 export const revalidate = 3600; // Revalidate every hour
@@ -55,16 +55,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     const locationName = areaName ? `${areaName}, ${cityName}` : cityName;
 
-    // 🚀 Best SEO Title: [Prefix] [Service] [Category] in [Location] - [CTR Trigger]
-    let title = `Best ${serviceName ? `${serviceName} ` : ''}${categoryName} in ${locationName} - Top Rated & Verified Business`;
+    // Best SEO Title: [Prefix] [Service] [Category] in [Location] - [CTR Trigger]
+    let title = `Best ${serviceName ? `${serviceName} ` : ''}${categoryName} in ${locationName} - Top Rated & Verified`;
     
     // Ensure title is within 60 characters if possible
     if (title.length > 60) {
-        title = `Best ${serviceName ? `${serviceName} ` : ''}${categoryName} in ${locationName} - Bookby247`;
+        title = `Best ${serviceName ? `${serviceName} ` : ''}${categoryName} in ${locationName}`;
     }
 
-    // 🚀 Best SEO Description: [Value Prop] + [Social Proof] + [CTA]
-    const description = `Discover the ${total > 0 ? `top ${total} ` : 'best '}rated ${categoryName.toLowerCase()} ${serviceName ? `offering ${serviceName.toLowerCase()} ` : ''}in ${locationName}. Compare prices, read verified customer reviews, and enjoy instant online booking with Bookby247!`;
+    // Best SEO Description: [Value Prop] + [Social Proof] + [CTA]
+    const description = `Bookby247 is the top platform for finding the ${total > 0 ? `top ${total} ` : 'best '}rated ${categoryName.toLowerCase()} ${serviceName ? `offering ${serviceName.toLowerCase()} ` : ''}in ${locationName}. Compare prices, read verified reviews, and book appointments online instantly.`;
 
     const fullCanonicalUrl = `https://bookby247.com${canonicalUrl}`;
 
@@ -80,10 +80,31 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             url: fullCanonicalUrl,
             siteName: 'Bookby247',
             type: 'website',
+            locale: 'en_IN',
+            images: [
+                {
+                    url: 'https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png',
+                    width: 1200,
+                    height: 630,
+                    alt: `Best ${categoryName} in ${locationName} - Bookby247`,
+                },
+            ],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title,
+            description,
+            images: ['https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png'],
+            creator: '@bookby247',
         },
         robots: {
             index: true,
             follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+                'max-image-preview': 'large',
+            },
         }
     };
 }
@@ -121,26 +142,30 @@ export default async function DynamicSeoListingPage({ params }: PageProps) {
     const serviceName = filters.serviceSlug ? capitalize(filters.serviceSlug) : '';
 
     // Generate JSON-LD for SEO
-    const jsonLd = [
-        // Breadcrumbs
-        generateBreadcrumbJsonLd([
-            { name: 'Home', item: 'https://bookby247.com/' },
-            { name: cityName, item: `https://bookby247.com/${filters.citySlug}` },
-            { name: categoryName, item: `https://bookby247.com/${filters.citySlug}/${filters.categorySlug}` },
-            ...(filters.areaSlug ? [{ name: areaName, item: `https://bookby247.com/${filters.citySlug}/${filters.categorySlug}/${filters.areaSlug}` }] : []),
-            ...(filters.serviceSlug ? [{ name: serviceName, item: `https://bookby247.com/${filters.citySlug}/${filters.categorySlug}/${filters.areaSlug || ''}/${filters.serviceSlug}`.replace('//', '/') }] : []),
-        ]),
-        // List Items (First few businesses)
-        {
-            "@context": "https://schema.org",
-            "@type": "ItemList",
-            "itemListElement": businesses.slice(0, 10).map((b: any, index: number) => ({
-                "@type": "ListItem",
-                "position": index + 1,
-                "item": generateLocalBusinessJsonLd(b)
-            }))
-        }
-    ];
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@graph": [
+            // Breadcrumbs
+            generateBreadcrumbJsonLd([
+                { name: 'Home', item: 'https://bookby247.com/' },
+                { name: cityName, item: `https://bookby247.com/${filters.citySlug}` },
+                { name: categoryName, item: `https://bookby247.com/${filters.citySlug}/${filters.categorySlug}` },
+                ...(filters.areaSlug ? [{ name: areaName, item: `https://bookby247.com/${filters.citySlug}/${filters.categorySlug}/${filters.areaSlug}` }] : []),
+                ...(filters.serviceSlug ? [{ name: serviceName, item: `https://bookby247.com/${filters.citySlug}/${filters.categorySlug}/${filters.areaSlug || ''}/${filters.serviceSlug}`.replace('//', '/') }] : []),
+            ]),
+            // List Items (First few businesses)
+            {
+                "@type": "ItemList",
+                "itemListElement": businesses.slice(0, 10).map((b: any, index: number) => ({
+                    "@type": "ListItem",
+                    "position": index + 1,
+                    "item": generateLocalBusinessJsonLd(b)
+                }))
+            },
+            generateOrganizationJsonLd(),
+            generateWebSiteJsonLd()
+        ]
+    };
 
     const displayTitle = serviceName 
         ? `Best ${serviceName} ${categoryName} in ${areaName || cityName}`
@@ -162,6 +187,38 @@ export default async function DynamicSeoListingPage({ params }: PageProps) {
                 subtitle={`Top rated ${categoryName.toLowerCase()} in ${areaName || cityName}. ${total} results found.`}
                 viewType="business"
             />
+
+            {/* AI Search Readability Section */}
+            <section className="border-t border-zinc-100 bg-zinc-50/30 py-16 px-4">
+                <div className="max-w-7xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div className="space-y-3">
+                            <h2 className="text-lg font-bold text-zinc-900">What is Bookby247?</h2>
+                            <p className="text-sm text-zinc-600 leading-relaxed">
+                                Bookby247 is India&apos;s leading beauty and wellness booking platform. We provide a curated marketplace where users can discover, compare, and book the best spas, salons, and wellness services instantly.
+                            </p>
+                        </div>
+                        <div className="space-y-3">
+                            <h2 className="text-lg font-bold text-zinc-900">Who is it for?</h2>
+                            <p className="text-sm text-zinc-600 leading-relaxed">
+                                Our platform is for individuals looking for high-quality self-care services from trusted professionals. From busy professionals to beauty enthusiasts, we make booking appointments simple and reliable.
+                            </p>
+                        </div>
+                        <div className="space-y-3">
+                            <h2 className="text-lg font-bold text-zinc-900">Best {categoryName} in {areaName || cityName}</h2>
+                            <p className="text-sm text-zinc-600 leading-relaxed">
+                                In {areaName || cityName}, we feature a wide range of verified {categoryName.toLowerCase()} offering premium treatments. Our platform ensures you find the highest-rated services with transparent pricing.
+                            </p>
+                        </div>
+                        <div className="space-y-3">
+                            <h2 className="text-lg font-bold text-zinc-900">What can you do?</h2>
+                            <p className="text-sm text-zinc-600 leading-relaxed">
+                                Users can search for specific services, filter by ratings or price, read verified reviews, and book their preferred appointment slot online with 24/7 instant confirmation.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
     );
 }
