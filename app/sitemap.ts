@@ -3,6 +3,8 @@ import { businessApi } from "@/api/public/business";
 
 const BASE_URL = "https://bookby247.com";
 
+export const revalidate = 3600;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -16,6 +18,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/free-listing`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/careers`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    {
+      url: `${BASE_URL}/privacy-policy`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.3,
+    },
+    {
+      url: `${BASE_URL}/terms-of-service`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.3,
     },
   ];
 
@@ -132,8 +158,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error("Error fetching sitemap data:", err);
   }
 
-  // 3. Near Me SEO Routes
+  // 3. Near Me SEO Routes (Cleaned up list of high-intent categories)
   const nearMeCategories = [
+
+      "spa", "massage", "salon", "beauty-parlour", "hair-salon",
+    "unisex-salon", "ladies-salon", "mens-salon",
     // 🔹 Core Services
     "spa", "massage", "body-massage", "full-body-massage",
     "couple-spa", "couple-massage", "wellness-centre",
@@ -179,7 +208,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // 🔹 Gender-Based
     "spa-for-men", "spa-for-women",
-    "massage-for-men", "massage-for-women"
+    "massage-for-men", "massage-for-women",
+
+       "couple-spa", "couple-massage", "full-body-massage",
+    "ayurvedic-spa", "kerala-massage", "hair-spa", "facial",
+    "bridal-makeup", "makeup-artist"
   ];
 
   const nearMeRoutes: MetadataRoute.Sitemap = nearMeCategories.map((category) => ({
