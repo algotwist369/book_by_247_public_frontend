@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { generateOrganizationJsonLd, generateWebSiteJsonLd, generateBreadcrumbJsonLd } from "@/lib/seo-jsonld";
 
 export const metadata: Metadata = {
   title: "Free Business Listing - Register Your Salon, Spa & Beauty Business - Bookby247",
@@ -47,27 +48,37 @@ export default function FreeListingLayout({
 }) {
   return (
     <section>
-      {/* JSON-LD Structured Data for Business Service */}
+      {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            "name": "Bookby24/7 Business Portal",
-            "operatingSystem": "Web",
-            "applicationCategory": "BusinessApplication",
-            "description": "Professional appointment management and business growth platform for salons and spas.",
-            "offers": {
-              "@type": "Offer",
-              "price": "0",
-              "priceCurrency": "INR"
-            },
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "4.9",
-              "reviewCount": "1250"
-            }
+            "@graph": [
+              {
+                "@type": "SoftwareApplication",
+                "name": "Bookby24/7 Business Portal",
+                "operatingSystem": "Web",
+                "applicationCategory": "BusinessApplication",
+                "description": "Professional appointment management and business growth platform for salons and spas.",
+                "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "INR"
+                },
+                "aggregateRating": {
+                  "@type": "AggregateRating",
+                  "ratingValue": "4.9",
+                  "reviewCount": "1250"
+                }
+              },
+              generateBreadcrumbJsonLd([
+                { name: "Home", item: "https://bookby247.com/" },
+                { name: "Free Listing", item: "https://bookby247.com/free-listing" },
+              ]),
+              generateOrganizationJsonLd(),
+              generateWebSiteJsonLd()
+            ]
           })
         }}
       />

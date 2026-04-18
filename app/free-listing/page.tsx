@@ -8,6 +8,7 @@ import Step2PersonalDetails from "@/components/freelisting/Step2PersonalDetails"
 import Step3BusinessDetails from "@/components/freelisting/Step3BusinessDetails";
 import SuccessScreen from "@/components/freelisting/SuccessScreen";
 import { submitListing, ListingPayload } from "@/lib/freelisting-api";
+import AiReadabilitySection from "@/components/seo/AiReadabilitySection";
 
 const STEPS = [
   { label: "Mobile Number" },
@@ -236,6 +237,11 @@ export default function FreeListingPage() {
           </p>
         </div>
       </main>
+
+      <AiReadabilitySection 
+        aboutTitle="Grow Your Business with Us"
+        aboutContent="Bookby247 provides a powerful platform for salon and spa owners to list their business, manage appointments, and reach a wider audience. Join India's fastest-growing wellness network and transform your digital presence today."
+      />
     </div>
   );
 }

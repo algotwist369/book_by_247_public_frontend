@@ -1,6 +1,8 @@
 import { apiClient } from "../apiClient";
 
 export interface BusinessDetails {
+    location_info: any;
+    search_profile: any;
     name: string;
     slug: string;
     business_link: string;
@@ -13,6 +15,7 @@ export interface BusinessDetails {
 }
 
 export interface BusinessContacts {
+    area: any;
     phone: string;
     alternate_phone: string;
     email: string;

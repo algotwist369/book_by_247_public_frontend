@@ -3,7 +3,8 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { businessApi } from '@/api/public/business';
 import { safeJsonLdStringify } from '@/lib/utils';
-import { generateItemListJsonLd, generateBreadcrumbJsonLd } from '@/lib/seo-jsonld';
+import { generateItemListJsonLd, generateBreadcrumbJsonLd, generateOrganizationJsonLd, generateWebSiteJsonLd } from '@/lib/seo-jsonld';
+import AiReadabilitySection from '@/components/seo/AiReadabilitySection';
 import SeoSearchContent from './SeoSearchContent';
 
 interface PageProps {
@@ -62,12 +63,37 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         alternates: {
             canonical: canonicalPath,
         },
+        robots: {
+            index: true,
+            follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+                'max-image-preview': 'large',
+            },
+        },
         openGraph: {
             title,
             description,
             url: `https://bookby247.com${canonicalPath}`,
             siteName: "Bookby247",
             type: "website",
+            locale: "en_IN",
+            images: [
+                {
+                    url: "https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png",
+                    width: 1200,
+                    height: 630,
+                    alt: "Book verified spa, salon, and beauty services near you in India",
+                },
+            ],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title,
+            description,
+            images: ["https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png"],
+            creator: "@bookby247",
         }
     };
 }
@@ -87,14 +113,22 @@ const SeoSearchPage = async ({ params }: PageProps) => {
     const total = response?.total || 0;
 
     // Generate JSON-LD
-    const jsonLd = [
-        generateItemListJsonLd(businesses, seoParams.city, seoParams.service || seoParams.type),
-        generateBreadcrumbJsonLd([
-            { name: "Home", item: "https://bookby247.com/" },
-            { name: "Explore", item: "https://bookby247.com/explore" },
-            { name: seoParams.city || "Search", item: `https://bookby247.com/search/${seoParams.city || ""}` }
-        ])
-    ];
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@graph": [
+            generateItemListJsonLd(businesses, seoParams.city, seoParams.service || seoParams.type),
+            generateBreadcrumbJsonLd([
+                { name: "Home", item: "https://bookby247.com/" },
+                { name: "Explore", item: "https://bookby247.com/explore" },
+                { name: seoParams.city || "Search", item: `https://bookby247.com/search/${seoParams.city || ""}` }
+            ]),
+            generateOrganizationJsonLd(),
+            generateWebSiteJsonLd()
+        ]
+    };
+
+    const cityName = seoParams.city ? seoParams.city.charAt(0).toUpperCase() + seoParams.city.slice(1) : "";
+    const serviceName = seoParams.service ? seoParams.service.charAt(0).toUpperCase() + seoParams.service.slice(1) : (seoParams.type ? seoParams.type.toUpperCase() : "");
 
     return (
         <>
@@ -102,11 +136,21 @@ const SeoSearchPage = async ({ params }: PageProps) => {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(jsonLd) }}
             />
-            <SeoSearchContent 
-                params={seoParams} 
-                initialData={response} 
-                slug={slug}
-            />
+            <main className="min-h-screen bg-white">
+                <SeoSearchContent 
+                    params={seoParams}
+                    initialData={response}
+                    slug={slug}
+                />
+                
+                <AiReadabilitySection 
+                    aboutTitle={cityName ? `Best Wellness in ${cityName}` : "Search Local Wellness"}
+                    aboutContent={cityName 
+                        ? `Discover the highest-rated ${serviceName || 'wellness services'} in ${cityName}. Our platform connects you with verified professionals for instant online booking.`
+                        : "Our search tool helps you find verified spas, salons, and beauty parlours across India. Compare prices, read reviews, and book your next appointment in minutes."
+                    }
+                />
+            </main>
         </>
     );
 };

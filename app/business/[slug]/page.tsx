@@ -4,7 +4,8 @@ import BusinessDetailsContent from './BusinessDetailsContent';
 import { businessDetailsApi } from '@/api/public/business.details.api';
 import { Metadata } from 'next';
 import { safeJsonLdStringify } from '@/lib/utils';
-import { generateLocalBusinessJsonLd, generateBreadcrumbJsonLd, generateServiceItemListJsonLd } from '@/lib/seo-jsonld';
+import { generateLocalBusinessJsonLd, generateBreadcrumbJsonLd, generateServiceItemListJsonLd, generateOrganizationJsonLd, generateWebSiteJsonLd } from '@/lib/seo-jsonld';
+import AiReadabilitySection from '@/components/seo/AiReadabilitySection';
 
 export const revalidate = 3600;
 
@@ -74,10 +75,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             `${type} near me`,
             `best ${type} in ${city}`,
             `${seoData.name} booking`,
-            `${seoData.name} reviews`
+            `${seoData.name} reviews`,
+            "bookby247"
         ].filter((v, i, a) => a.indexOf(v) === i), // deduplicate
         alternates: {
             canonical: canonicalPath,
+        },
+        robots: {
+            index: true,
+            follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+                'max-image-preview': 'large',
+            },
         },
         openGraph: {
             title,
@@ -85,6 +96,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             url: `https://bookby247.com${canonicalPath}`,
             siteName: "Bookby247",
             type: "website",
+            locale: "en_IN",
             images: ogImage ? [{ url: ogImage, width: 1200, height: 630, alt: seoData.name }] : [],
         },
         twitter: {
@@ -92,6 +104,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             title,
             description,
             images: ogImage ? [ogImage] : [],
+            creator: "@bookby247",
         }
     };
 
@@ -170,7 +183,9 @@ const BusinessDetailsPage = async ({ params }: PageProps) => {
                 { name: "Home", item: "https://bookby247.com/" },
                 { name: city || "India", item: `https://bookby247.com/${citySlug || "india"}` },
                 { name: details.name, item: `https://bookby247.com/business/${details.slug || slug}` },
-            ])
+            ]),
+            generateOrganizationJsonLd(),
+            generateWebSiteJsonLd()
         ],
     };
 
@@ -190,6 +205,11 @@ const BusinessDetailsPage = async ({ params }: PageProps) => {
                     services: servicesRes,
                     reviews: reviewsRes
                 }} 
+            />
+
+            <AiReadabilitySection 
+                aboutTitle={`About ${details.name}`} 
+                aboutContent={`${details.name} is a verified ${details.search_profile?.spaTypes?.[0] || 'wellness partner'} on Bookby247, located in ${contacts?.area ? `${contacts.area}, ` : ''}${contacts?.city}. They offer professional services with transparent pricing and verified customer reviews.`} 
             />
         </>
     );

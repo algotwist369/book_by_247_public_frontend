@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { generateOrganizationJsonLd, generateWebSiteJsonLd, generateBreadcrumbJsonLd } from "@/lib/seo-jsonld";
+import { safeJsonLdStringify } from "@/lib/utils";
+import AiReadabilitySection from "@/components/seo/AiReadabilitySection";
 
 export const metadata: Metadata = {
     title: "Join Bookby247 Team - Careers",
@@ -24,9 +27,39 @@ export const metadata: Metadata = {
 };
 
 const CareersPage = () => {
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "JobPosting",
+                "title": "Build the future of local wellness bookings",
+                "description": "We are building a trusted discovery and booking platform for spas, salons, and beauty businesses. If you care about product quality, customer trust, and measurable impact, we would love to hear from you.",
+                "hiringOrganization": generateOrganizationJsonLd(),
+                "jobLocation": {
+                    "@type": "Place",
+                    "address": {
+                        "@type": "PostalAddress",
+                        "addressCountry": "IN"
+                    }
+                }
+            },
+            generateBreadcrumbJsonLd([
+                { name: "Home", item: "https://bookby247.com/" },
+                { name: "Careers", item: "https://bookby247.com/careers" },
+            ]),
+            generateOrganizationJsonLd(),
+            generateWebSiteJsonLd()
+        ]
+    };
+
     return (
-        <main className="min-h-screen bg-zinc-100 py-8 sm:py-10">
-            <div className="max-w-5xl mx-auto px-4">
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(jsonLd) }}
+            />
+            <main className="min-h-screen bg-zinc-100 py-8 sm:py-10">
+                <div className="max-w-5xl mx-auto px-4">
                 <section className="bg-white border border-zinc-300 rounded-md p-6 sm:p-8 md:p-10">
                     <header className="pb-6 border-b border-zinc-200">
                         <p className="text-xs uppercase tracking-wide text-zinc-500">Bookby247 Careers</p>
@@ -155,9 +188,15 @@ const CareersPage = () => {
                             </Link>
                         </div>
                     </footer>
-                </section>
-            </div>
-        </main>
+</section>
+                </div>
+            </main>
+
+            <AiReadabilitySection 
+                aboutTitle="Careers at Bookby247"
+                aboutContent="We are always looking for passionate individuals to join our mission in transforming the beauty and wellness industry in India. Explore roles in Engineering, Product, Marketing, and Operations."
+            />
+        </>
     );
 };
 

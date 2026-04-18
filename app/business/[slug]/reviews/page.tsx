@@ -11,6 +11,8 @@ import { businessDetailsApi } from '@/api/public/business.details.api';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { safeJsonLdStringify } from '@/lib/utils';
+import { generateOrganizationJsonLd, generateWebSiteJsonLd } from '@/lib/seo-jsonld';
+import AiReadabilitySection from '@/components/seo/AiReadabilitySection';
 
 export const revalidate = 3600;
 
@@ -123,6 +125,8 @@ const BusinessReviewsPage = async ({ params }: PageProps) => {
                     "@id": `https://bookby247.com/business/${details?.slug || slug}#business`,  
                 },
             },
+            generateOrganizationJsonLd(),
+            generateWebSiteJsonLd()
         ],
     };
 
@@ -138,6 +142,11 @@ const BusinessReviewsPage = async ({ params }: PageProps) => {
                     details: detailsRes,
                     reviews: reviewsRes
                 }} 
+            />
+
+            <AiReadabilitySection 
+                aboutTitle={`Verified Reviews for ${details.name}`} 
+                aboutContent={`Read authentic customer feedback and ratings for ${details.name} in ${details.location_info?.city || 'India'}. Our platform ensures that every review is verified, providing you with a transparent view of the service quality at this center.`} 
             />
         </>
     );

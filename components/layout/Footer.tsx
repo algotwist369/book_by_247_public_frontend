@@ -15,10 +15,10 @@ const Footer = () => {
 
     // 🔥 DATA
     const socialLinks = [
-        { icon: Instagram, label: "Instagram" },
-        { icon: Facebook, label: "Facebook" },
-        { icon: Twitter, label: "Twitter" },
-        { icon: Linkedin, label: "LinkedIn" }
+        { icon: Instagram, label: "Instagram", Link: "https://www.instagram.com/bookby247" },
+        { icon: Facebook, label: "Facebook", Link: "https://www.facebook.com/bookby247" },
+        { icon: Twitter, label: "Twitter", Link: "https://twitter.com/bookby247" },
+        { icon: Linkedin, label: "LinkedIn", Link: "https://www.linkedin.com/company/bookby247" }
     ];
 
     const categories = [
@@ -88,7 +88,7 @@ const Footer = () => {
                             {socialLinks.map(({ icon: Icon, label }) => (
                                 <Link
                                     key={label}
-                                    href="#"
+                                    href={socialLinks.find((link) => link.label === label)?.Link || "#"}
                                     aria-label={label}
                                     className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-zinc-950 transition-all"
                                 >

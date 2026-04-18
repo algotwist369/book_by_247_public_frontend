@@ -99,6 +99,7 @@ export const revalidate = 3600;
 
 import { generateItemListJsonLd, generateOrganizationJsonLd, generateWebSiteJsonLd } from "@/lib/seo-jsonld";
 import { safeJsonLdStringify } from "@/lib/utils";
+import AiReadabilitySection from "@/components/seo/AiReadabilitySection";
 
 export default async function Home() {
   // Fetch initial data for SSR
@@ -168,6 +169,7 @@ export default async function Home() {
       <AppPromoSection />
       <ForBusinesses />
       <ReviewsSection />
+      <AiReadabilitySection />
       <SEOFooter />
     </div>
   );

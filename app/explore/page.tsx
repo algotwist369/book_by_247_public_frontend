@@ -3,6 +3,8 @@ import { Metadata } from 'next';
 import ExplorePageContent from './ExplorePageContent';
 import { businessApi } from '@/api/public/business';
 import { safeJsonLdStringify } from '@/lib/utils';
+import { generateBreadcrumbJsonLd, generateItemListJsonLd, generateOrganizationJsonLd, generateWebSiteJsonLd } from '@/lib/seo-jsonld';
+import AiReadabilitySection from '@/components/seo/AiReadabilitySection';
 
 export const revalidate = 3600;
 
@@ -49,18 +51,30 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
         alternates: {
             canonical: "/explore",
         },
+        robots: {
+            index: true,
+            follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+                'max-image-preview': 'large',
+            },
+        },
         openGraph: {
             title,
             description,
-            images: ['https://thaiodyssey.co.in/assets/img/blog/475003.jpg'],
+            images: ['https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png'],
             url: "https://bookby247.com/explore",
             type: "website",
             siteName: "Bookby247",
+            locale: "en_IN",
         },
         twitter: {
             card: "summary_large_image",
             title,
             description,
+            images: ['https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png'],
+            creator: "@bookby247",
         },
     };
 }
@@ -104,60 +118,22 @@ export default async function ExplorePage({ searchParams }: PageProps) {
             gender: b.gender ?? 'Any',
             categories: b.category ? [b.category] : (Array.isArray(b.categories) ? b.categories : []),
             description: b.description || b.seo?.metaDescription || "Experience premium wellness treatments and relaxation therapies.",
-            coordinates: b.coordinates || b.location?.coordinates || { lat: 13.0418, lng: 80.2341 }
+            coordinates: b.coordinates || b.location?.coordinates || { lat: 13.0418, lng: 80.2341 },
+            slug: b.slug || b.bussiness_slug,
         };
     });
 
-    const location = typeof params.location === 'string' ? params.location : '';
-    const category = typeof params.category === 'string' ? params.category : '';
-
-    // Senior SEO: Injecting JSON-LD for LocalBusiness list
     const jsonLd = {
         "@context": "https://schema.org",
         "@graph": [
-            {
-                "@type": "ItemList",
-                "name": `Explore ${category || 'spas and salons'} ${location ? `in ${location}` : ''}`,
-                "url": "https://bookby247.com/explore",
-                "itemListElement": businesses.map((b: any, i: number) => ({
-                    "@type": "ListItem",
-                    "position": i + 1,
-                    "item": {
-                        "@type": "LocalBusiness",
-                        "name": b.name,
-                        "image": b.image,
-                        "url": `https://bookby247.com/business/${b.slug}`,
-                        "aggregateRating": {
-                            "@type": "AggregateRating",
-                            "ratingValue": b.rating,
-                            "reviewCount": b.reviews,
-                        },
-                        "address": {
-                            "@type": "PostalAddress",
-                            "streetAddress": b.address,
-                            "addressLocality": b.branch || b.city,
-                        },
-                    },
-                })),
-            },
-            {
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                    {
-                        "@type": "ListItem",
-                        "position": 1,
-                        "name": "Home",
-                        "item": "https://bookby247.com/",
-                    },
-                    {
-                        "@type": "ListItem",
-                        "position": 2,
-                        "name": "Explore",
-                        "item": "https://bookby247.com/explore",
-                    },
-                ],
-            },
-        ],
+            generateItemListJsonLd(businesses, "India", "Wellness Centers"),
+            generateBreadcrumbJsonLd([
+                { name: "Home", item: "https://bookby247.com/" },
+                { name: "Explore", item: "https://bookby247.com/explore" },
+            ]),
+            generateOrganizationJsonLd(),
+            generateWebSiteJsonLd()
+        ]
     };
 
     const initialData = {
@@ -180,6 +156,11 @@ export default async function ExplorePage({ searchParams }: PageProps) {
                 }>
                     <ExplorePageContent initialData={initialData} />
                 </Suspense>
+
+                <AiReadabilitySection 
+                    aboutTitle="Explore Wellness Anywhere"
+                    aboutContent="Our explore page allows you to filter through thousands of verified spas, salons, and beauty parlours across India. Whether you are looking for specific services or local favorites, Bookby247 provides a seamless discovery experience."
+                />
             </main>
         </>
     );
