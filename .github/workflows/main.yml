@@ -3,20 +3,20 @@ name: 🚀 Deploy BookBy247 Frontend
 on:
   push:
     branches:
-      - master
+      - master   # change if needed
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: SSH Deploy
+      - name: 🚀 Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
+          username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.PORT }}
+          port: 22
 
           script: |
             cd /var/www/book_by_247_public_frontend
@@ -34,4 +34,4 @@ jobs:
             echo "♻️ Restart app"
             pm2 reload bookby247-frontend
 
-            echo "✅ Done"
+            echo "✅ Deployment completed"
