@@ -41,7 +41,7 @@ const ServiceCard = ({ service, slug }: { service: Service; slug: string }) => {
         // Pre-select service in localStorage for the booking page
         const bookingData = {
             businessSlug: slug,
-            selectedServices: [{ serviceId, optionIdx: idx }],
+            selectedServices: [{ serviceId, optionIdx: idx, addOnIds: [] }],
             step: 'schedule' // Skip the service selection step
         };
         
@@ -119,12 +119,12 @@ const ServiceCard = ({ service, slug }: { service: Service; slug: string }) => {
 
                                 <div className="flex items-center gap-3 sm:gap-4 shrink-0">
                                     <div className="text-right">
-                                        <p className="font-semibold text-zinc-900 text-sm sm:text-base leading-none">
-                                            ₹{option.price.toLocaleString('en-IN')}
+                                        <p className="font-semibold text-red-600 text-sm sm:text-base leading-none">
+                                            ₹{option.price?.toLocaleString('en-IN')}
                                         </p>
-                                        {option.originalPrice && option.originalPrice > option.price && (
+                                        {option.price && (
                                             <p className="text-[10px] text-zinc-400 line-through mt-1">
-                                                ₹{option.originalPrice.toLocaleString('en-IN')}
+                                                ₹{option.originalPrice?.toLocaleString('en-IN')}
                                             </p>
                                         )}
                                     </div>

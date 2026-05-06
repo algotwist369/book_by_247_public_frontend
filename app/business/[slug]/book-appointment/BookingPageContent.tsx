@@ -14,12 +14,13 @@ import BookingDetails from './components/BookingDetails';
 import BookingPayment from './components/BookingPayment';
 import BookingSummary from './components/BookingSummary';
 import BookingSuccess from './components/BookingSuccess';
+import BookingOTP from './components/BookingOTP';
 
 interface BookingPageContentProps {
     business: Business;
 }
 
-type BookingStep = 'services' | 'schedule' | 'details' | 'payment' | 'success';
+type BookingStep = 'services' | 'schedule' | 'details' | 'payment' | 'otp' | 'success';
 
 const STORAGE_KEY = 'appointment_booking_data';
 
@@ -52,7 +53,7 @@ interface ConfirmedAppointment {
 
 const BookingPageContent = ({ business }: BookingPageContentProps) => {
     const [step, setStep] = useState<BookingStep>('services');
-    const [selectedServices, setSelectedServices] = useState<{ serviceId: string | number; optionIdx: number }[]>([]);
+    const [selectedServices, setSelectedServices] = useState<{ serviceId: string | number; optionIdx: number; addOnIds: string[] }[]>([]);
     const [selectedDate, setSelectedDate] = useState<string>('');
     const [selectedTime, setSelectedTime] = useState<string>('');
     const [formData, setFormData] = useState({ name: '', phone: '', notes: '' });
@@ -60,21 +61,43 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
     const [confirmationCode, setConfirmationCode] = useState<string>('');
     const [confirmedAppointment, setConfirmedAppointment] = useState<ConfirmedAppointment | null>(null);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [otpError, setOtpError] = useState<string | null>(null);
 
     // Mutations
     const bookingMutation = useMutation({
         mutationFn: (data: BookingData) => appointmentApi.bookAppointment(business.slug, data),
         onSuccess: (response) => {
             if (response.success) {
-                const code = response.data?.confirmationCode || response.data?.appointment?.bookingNumber || 'CONFIRMED';
-                setConfirmationCode(code);
-                setConfirmedAppointment(response.data?.appointment || null);
-                setStep('success');
+                if (response.requiresOTP) {
+                    setStep('otp');
+                } else {
+                    const code = response.data?.confirmationCode || response.data?.appointment?.bookingNumber || 'CONFIRMED';
+                    setConfirmationCode(code);
+                    setConfirmedAppointment(response.data?.appointment || null);
+                    setStep('success');
+                }
             }
         }
     });
 
-    const isSubmitting = bookingMutation.isPending;
+    const verifyOtpMutation = useMutation({
+        mutationFn: (otp: string) => appointmentApi.verifyOTP(business.slug, formData.phone, otp),
+        onSuccess: (response) => {
+            if (response.success) {
+                const code = response.data?.confirmationCode || response.data?.appointment?.bookingNumber || 'CONFIRMED';
+                setConfirmationCode(code);
+                setConfirmedAppointment(response.data?.appointment || null);
+                setStep('success');
+            } else {
+                setOtpError(response.message || "Invalid OTP");
+            }
+        },
+        onError: (error: any) => {
+            setOtpError(error.message || "Verification failed");
+        }
+    });
+
+    const isSubmitting = bookingMutation.isPending || verifyOtpMutation.isPending;
     const bookingError = bookingMutation.error?.message || (bookingMutation.data && !bookingMutation.data.success ? bookingMutation.data.message : null);
 
     // Persistence: Load data from localStorage
@@ -84,7 +107,14 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
             try {
                 const parsed = JSON.parse(savedData);
                 if (parsed.businessSlug === business.slug) {
-                    setSelectedServices(parsed.selectedServices || []);
+                    const parsedServices = Array.isArray(parsed.selectedServices)
+                        ? parsed.selectedServices.map((s: any) => ({
+                            serviceId: s.serviceId,
+                            optionIdx: s.optionIdx,
+                            addOnIds: Array.isArray(s.addOnIds) ? s.addOnIds : []
+                        }))
+                        : [];
+                    setSelectedServices(parsedServices);
                     setSelectedDate(parsed.selectedDate || '');
                     setSelectedTime(parsed.selectedTime || '');
                     setFormData(parsed.formData || { name: '', phone: '', notes: '' });
@@ -125,13 +155,35 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
 
     const toggleService = (serviceId: string | number, optionIdx: number) => {
         setSelectedServices(prev => {
-            const exists = prev.find(s => s.serviceId === serviceId && s.optionIdx === optionIdx);
-            if (exists) {
-                return prev.filter(s => !(s.serviceId === serviceId && s.optionIdx === optionIdx));
+            const existingEntry = prev.find(s => s.serviceId === serviceId);
+            if (existingEntry) {
+                if (existingEntry.optionIdx === optionIdx) {
+                    return prev.filter(s => s.serviceId !== serviceId);
+                } else {
+                    return prev.map(s =>
+                        s.serviceId === serviceId
+                            ? { ...s, optionIdx, addOnIds: [] }
+                            : s
+                    );
+                }
             } else {
-                return [...prev, { serviceId, optionIdx }];
+                return [...prev, { serviceId, optionIdx, addOnIds: [] }];
             }
         });
+    };
+
+    const toggleServiceAddOn = (serviceId: string | number, optionIdx: number, addOnId: string) => {
+        setSelectedServices(prev => prev.map(selection => {
+            if (selection.serviceId !== serviceId || selection.optionIdx !== optionIdx) return selection;
+            const currentAddOns = Array.isArray(selection.addOnIds) ? selection.addOnIds : [];
+            const hasAddOn = currentAddOns.includes(addOnId);
+            return {
+                ...selection,
+                addOnIds: hasAddOn
+                    ? currentAddOns.filter(id => id !== addOnId)
+                    : [...currentAddOns, addOnId]
+            };
+        }));
     };
 
     const handleNext = () => {
@@ -161,23 +213,41 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
         if (rawOptions.length > 0) {
             options = rawOptions.map((opt: any) => ({
                 duration: opt.duration ? `${opt.duration} Mins` : (opt.time ? `${opt.time} Mins` : "60 Mins"),
-                price: opt.price || opt.amount || 0
+                price: opt.price || opt.amount || 0, // sellingPrice
+                originalPrice: opt.originalPrice || 0 // previousPrice
             }));
         } else if (service.price !== undefined) {
-            options = [{ duration: `${service.duration || 60} Mins`, price: service.price }];
+            options = [{ 
+                duration: `${service.duration || 60} Mins`, 
+                price: service.price, // sellingPrice
+                originalPrice: (service as any).originalPrice || 0 // previousPrice
+            }];
         }
 
         const option = options[optionIdx];
         return {
             name: service.name,
             duration: option?.duration,
-            price: option?.price,
+            price: option?.price || 0,
+            originalPrice: option?.originalPrice || 0,
             originalService: service
         };
     };
 
     const selectedServiceDetails = selectedServices.map(s => {
-        return getServiceDetails(s.serviceId, s.optionIdx) || { name: 'Unknown', duration: '0', price: 0 };
+        const details = getServiceDetails(s.serviceId, s.optionIdx);
+        if (!details) return { name: 'Unknown', duration: '0', price: 0, originalPrice: 0 };
+        const service = details.originalService as any;
+        const addOns = ((service?.addOns || []) as any[]).filter(addon => (s.addOnIds || []).includes(String(addon?._id)));
+        const addOnsPrice = addOns.reduce((sum, addon) => sum + Number(addon?.price || 0), 0);
+        const addOnsDuration = addOns.reduce((sum, addon) => sum + Number(addon?.duration || 0), 0);
+        return {
+            ...details,
+            price: Number(details.price || 0) + addOnsPrice,
+            originalPrice: Number(details.originalPrice || 0) + addOnsPrice,
+            duration: `${parseInt(details.duration || '0') + addOnsDuration}`,
+            addOns
+        };
     });
 
     const totalPrice = selectedServiceDetails.reduce((acc, s) => acc + (s.price || 0), 0);
@@ -238,8 +308,15 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
             endTime: addMinutesToTime(normalizedStartTime, durationTotal),
             services: selectedServices.map(s => {
                 const details = getServiceDetails(s.serviceId, s.optionIdx);
+                const service = details?.originalService as any;
+                const rawOptions = service?.options || service?.pricingOptions || [];
+                const selectedOption = rawOptions[s.optionIdx];
+                const selectedVariantId = selectedOption?._id ? String(selectedOption._id) : undefined;
+                const selectedAddOns = Array.isArray(s.addOnIds) ? s.addOnIds : [];
                 return {
                     serviceId: String(s.serviceId),
+                    variantId: selectedVariantId ? [selectedVariantId] : [],
+                    selectedAddOns,
                     price: details?.price,
                     duration: parseInt(details?.duration || '0'),
                 };
@@ -274,7 +351,13 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
                     display: none !important;
                 }
             `}</style>
-            <BookingHeader business={business} />
+            <BookingHeader business={business} stepTitle={
+                step === 'services' ? 'Select Services' :
+                step === 'schedule' ? 'Select Schedule' :
+                step === 'details' ? 'Your Details' :
+                step === 'payment' ? 'Payment' : 
+                step === 'otp' ? 'Verification' : 'Booking'
+            } />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
                 <div className="mb-6 md:mb-8">
@@ -288,6 +371,7 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
                                 services={business.services || []}
                                 selectedServices={selectedServices}
                                 onToggleService={toggleService}
+                                onToggleAddOn={toggleServiceAddOn}
                             />
                         )}
 
@@ -315,6 +399,16 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
                             />
                         )}
 
+                        {step === 'otp' && (
+                            <BookingOTP
+                                phone={formData.phone}
+                                onVerify={(otp) => verifyOtpMutation.mutate(otp)}
+                                onResend={() => bookingMutation.mutate(getBookingData())}
+                                isLoading={verifyOtpMutation.isPending}
+                                error={otpError}
+                            />
+                        )}
+
                         {step === 'success' && (
                             <BookingSuccess
                                 business={business}
@@ -329,12 +423,13 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
                     </div>
 
 
-                    {step !== 'success' && (
+                    {!['success', 'otp'].includes(step) && (
                         <div className="hidden lg:block">
                             <BookingSummary
                                 step={step}
                                 selectedServices={selectedServices}
                                 availableServices={business.services || []}
+                                businessName={business.name}
                                 selectedDate={selectedDate}
                                 selectedTime={selectedTime}
                                 formData={formData}
@@ -351,7 +446,7 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
             </div>
 
             {/* Mobile Sticky Action Bar */}
-            {step !== 'success' && (
+            {!['success', 'otp'].includes(step) && (
                 <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-zinc-200 px-4 py-3 z-50 lg:hidden">
                     <div className="max-w-xl mx-auto flex items-center justify-between gap-3">
                         <div className="flex flex-col shrink-0 min-w-[88px]">

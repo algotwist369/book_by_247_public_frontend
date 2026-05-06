@@ -18,6 +18,10 @@ const bookingDataSchema = z.object({
     endTime: timeSchema,
     services: z.array(z.object({
         serviceId: z.string().trim().min(1).max(50),
+        variantId: z.union([z.string().trim().min(1).max(50), z.array(z.string().trim().min(1).max(50))]).optional(),
+        pricingOptionId: z.union([z.string().trim().min(1).max(50), z.array(z.string().trim().min(1).max(50))]).optional(),
+        addOnId: z.union([z.string().trim().min(1).max(50), z.array(z.string().trim().min(1).max(50))]).optional(),
+        selectedAddOns: z.array(z.string().trim().min(1).max(50)).optional(),
         price: z.number().min(0).max(1_000_000).optional(),
         duration: z.number().int().min(0).max(24 * 60).optional()
     })).min(1).max(20),

@@ -93,6 +93,7 @@ export interface BusinessService {
     currency: string;
     pricingType: string;
     pricingOptions: any[];
+    variants?: any[];
     serviceType: string;
     duration: number;
     bufferTime: number;
@@ -119,14 +120,11 @@ export interface BusinessService {
 
 export interface BusinessServicesResponse {
     services: BusinessService[];
-    is_active: boolean;
     pagination: {
         total: number;
         page: number;
         limit: number;
         totalPages: number;
-        hasNextPage: boolean;
-        hasPrevPage: boolean;
     };
 }
 
@@ -214,8 +212,45 @@ export const businessDetailsApi = {
     getCapacity: (slug: string) => 
         apiClient<ApiResponse<BusinessCapacity>>(`/v1/business/${slug}/capacity`),
     
-    getServices: (slug: string, page = 1, limit = 10) => 
-        apiClient<ApiResponse<BusinessServicesResponse>>(`/v1/business/${slug}/services?page=${page}&limit=${limit}`),
+    getServices: async (slug: string, page = 1, limit = 10) => {
+        const response = await apiClient<any>(`/v1/business/services/public/${slug}?page=${page}&limit=${limit}`);
+        const rawServices = Array.isArray(response?.data) ? response.data : [];
+
+        const normalizedServices: BusinessService[] = rawServices.map((service: any) => {
+            const variants = Array.isArray(service?.variants) ? service.variants : [];
+            const pricingOptions = variants.map((variant: any) => ({
+                _id: variant?._id,
+                name: variant?.name,
+                price: variant?.price ?? 0,
+                duration: variant?.duration ?? service?.duration ?? 0,
+                originalPrice: variant?.originalPrice,
+                isActive: variant?.isActive,
+                sortOrder: variant?.sortOrder,
+            }));
+
+            return {
+                ...service,
+                description: service?.description || service?.shortDescription || "",
+                pricingOptions,
+                variants
+            } as BusinessService;
+        });
+
+        return {
+            success: Boolean(response?.success),
+            data_source: "services-public-slug",
+            message: "",
+            data: {
+                services: normalizedServices,
+                pagination: response?.pagination || {
+                    total: normalizedServices.length,
+                    page,
+                    limit,
+                    totalPages: 1
+                }
+            }
+        } as ApiResponse<BusinessServicesResponse>;
+    },
     
     getSeo: (slug: string) => 
         apiClient<ApiResponse<BusinessSeo>>(`/v1/business/${slug}/seo`),

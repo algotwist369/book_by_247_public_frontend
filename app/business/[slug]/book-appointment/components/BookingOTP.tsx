@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Loader2, ArrowRight } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Loader2, ArrowRight, MessageSquare } from 'lucide-react';
 
 interface BookingOTPProps {
     phone: string;
@@ -11,101 +11,123 @@ interface BookingOTPProps {
 
 const BookingOTP = ({ phone, onVerify, onResend, isLoading, error = null }: BookingOTPProps) => {
     const [otp, setOtp] = useState(['', '', '', '']);
+    const inputRefs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
 
-    const handleChange = (element: HTMLInputElement, index: number) => {
-        if (isNaN(Number(element.value))) return false;
+    useEffect(() => {
+        // Auto focus first input
+        inputRefs[0].current?.focus();
+    }, []);
 
-        setOtp([...otp.map((d, idx) => (idx === index ? element.value : d))]);
+    const handleChange = (value: string, index: number) => {
+        if (isNaN(Number(value))) return;
+
+        const newOtp = [...otp];
+        newOtp[index] = value.substring(value.length - 1);
+        setOtp(newOtp);
 
         // Focus next input
-        if (element.nextSibling && element.value !== "") {
-            (element.nextSibling as HTMLInputElement).focus();
+        if (value && index < 3) {
+            inputRefs[index + 1].current?.focus();
         }
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-        if (e.key === "Backspace" && otp[index] === "" && index > 0) {
-            const prevInput = (e.target as HTMLInputElement).previousSibling as HTMLInputElement;
-            if (prevInput) prevInput.focus();
+        if (e.key === "Backspace" && !otp[index] && index > 0) {
+            inputRefs[index - 1].current?.focus();
         }
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        onVerify(otp.join(''));
+        if (otp.every(digit => digit !== '')) {
+            onVerify(otp.join(''));
+        }
     };
 
     const isComplete = otp.every(digit => digit !== '');
 
     return (
-        <div className="bg-white rounded-lg border border-gray-200 p-6 sm:p-8 space-y-8">
-            <div className="text-center space-y-2">
-                <h2 className="text-xl font-black text-gray-900 tracking-tight">Verify Your Phone</h2>
-                <p className="text-gray-500 text-sm">
-                    Enter the 4-digit code sent to <span className="font-bold text-gray-900">{phone}</span>
-                </p>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-8">
-                <div className="flex justify-center gap-4 sm:gap-6">
-                    {otp.map((data, index) => (
-                        <input
-                            className="w-14 h-16 border-2 border-gray-100 rounded-xl text-center text-2xl font-black text-zinc-900 focus:border-black focus:bg-zinc-50 outline-none transition-all duration-200"
-                            type="text"
-                            inputMode="numeric"
-                            autoComplete="one-time-code"
-                            maxLength={1}
-                            key={index}
-                            value={data}
-                            onChange={e => handleChange(e.target, index)}
-                            onKeyDown={e => handleKeyDown(e, index)}
-                            onFocus={e => e.target.select()}
-                        />
-                    ))}
-                </div>
-
-                {error && (
-                    <div className="bg-red-50 border border-red-100/50 rounded-xl p-4 flex items-center gap-3">
-                        <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-                        <p className="text-xs text-red-600 font-bold uppercase tracking-tight">{error}</p>
+        <div className="max-w-md mx-auto">
+            <div className="bg-white rounded-xl border border-zinc-200 p-6 sm:p-8 shadow-sm">
+                <div className="flex flex-col items-center text-center mb-8">
+                    <div className="w-12 h-12 bg-zinc-50 rounded-full flex items-center justify-center mb-4">
+                        <MessageSquare className="w-6 h-6 text-zinc-900" />
                     </div>
-                )}
-
-                <div className="flex flex-col gap-4">
-                    <button
-                        type="submit"
-                        disabled={!isComplete || isLoading}
-                        className={`w-full h-14 rounded-xl text-sm font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all duration-300 ${isComplete && !isLoading
-                            ? 'bg-black text-white hover:bg-zinc-900 shadow-lg shadow-black/20'
-                            : 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
-                            }`}
-                    >
-                        {isLoading ? (
-                            <>
-                                <Loader2 className="w-5 h-5 animate-spin" />
-                                <span>Verifying...</span>
-                            </>
-                        ) : (
-                            <>
-                                <span>Verify & Confirm</span>
-                                <ArrowRight className="w-5 h-5" />
-                            </>
-                        )}
-                    </button>
-
-                    <button
-                        type="button"
-                        onClick={onResend}
-                        disabled={isLoading}
-                        className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 hover:text-zinc-900 transition-colors text-center"
-                    >
-                        Didn't receive code? <span className="text-black decoration-2 underline-offset-4 hover:underline cursor-pointer">Resend OTP</span>
-                    </button>
+                    <h2 className="text-lg font-black text-zinc-900 tracking-tight">Verify Your Phone</h2>
+                    <p className="text-zinc-500 text-xs mt-2 leading-relaxed">
+                        We've sent a 4-digit verification code to <br />
+                        <span className="font-bold text-zinc-900">+91 {phone}</span>
+                    </p>
                 </div>
-            </form>
+
+                <form onSubmit={handleSubmit} className="space-y-8">
+                    <div className="flex justify-center gap-3 sm:gap-4">
+                        {otp.map((data, index) => (
+                            <input
+                                key={index}
+                                ref={inputRefs[index]}
+                                className={`w-10 h-10 sm:w-12 sm:h-12 border-2 rounded-md text-center text-lg font-black transition-all outline-none ${
+                                    data 
+                                        ? 'border-zinc-900 bg-white text-zinc-900' 
+                                        : 'border-zinc-100 bg-zinc-50 text-zinc-400 focus:border-zinc-300'
+                                }`}
+                                type="text"
+                                inputMode="numeric"
+                                autoComplete="one-time-code"
+                                maxLength={1}
+                                value={data}
+                                onChange={e => handleChange(e.target.value, index)}
+                                onKeyDown={e => handleKeyDown(e, index)}
+                                onFocus={e => e.target.select()}
+                            />
+                        ))}
+                    </div>
+
+                    {error && (
+                        <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg text-[11px] font-bold text-center uppercase tracking-wider">
+                            {error}
+                        </div>
+                    )}
+
+                    <div className="space-y-4">
+                        <button
+                            type="submit"
+                            disabled={!isComplete || isLoading}
+                            className={`w-full h-12 rounded-lg text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 transition-all ${
+                                isComplete && !isLoading
+                                    ? 'bg-zinc-900 text-white hover:bg-black'
+                                    : 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
+                            }`}
+                        >
+                            {isLoading ? (
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                                <>
+                                    <span>Verify & Confirm</span>
+                                    <ArrowRight className="w-4 h-4" />
+                                </>
+                            )}
+                        </button>
+
+                        <div className="text-center">
+                            <button
+                                type="button"
+                                onClick={onResend}
+                                disabled={isLoading}
+                                className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 hover:text-zinc-900 transition-colors"
+                            >
+                                Resend Code
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <p className="text-center text-[10px] text-zinc-400 mt-6 uppercase tracking-[0.2em] font-medium">
+                Secure Verification by Bookby247
+            </p>
         </div>
     );
 };
 
 export default BookingOTP;
-

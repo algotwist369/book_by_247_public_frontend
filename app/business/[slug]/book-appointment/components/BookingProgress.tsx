@@ -1,63 +1,57 @@
 import React from 'react';
-import { Check, ClipboardList, Calendar, User, CreditCard } from 'lucide-react';
 
 interface BookingProgressProps {
-    step: 'services' | 'schedule' | 'details' | 'payment' | 'success';
+    step: 'services' | 'schedule' | 'details' | 'payment' | 'otp' | 'success';
 }
 
 const BookingProgress = ({ step }: BookingProgressProps) => {
     if (step === 'success') return null;
 
     const steps = [
-        { id: 'services', label: 'Services', icon: ClipboardList },
-        { id: 'schedule', label: 'Schedule', icon: Calendar },
-        { id: 'details', label: 'Details', icon: User },
-        { id: 'payment', label: 'Payment', icon: CreditCard }
+        { id: 'services', label: 'Services' },
+        { id: 'schedule', label: 'Schedule' },
+        { id: 'details', label: 'Details' },
+        { id: 'payment', label: 'Payment' }
     ];
 
+    const displayStep = step === 'otp' ? 'payment' : step;
+    const currentIndex = steps.findIndex(s => s.id === displayStep);
+
     return (
-        <div className="flex items-center justify-between mb-12 max-w-2xl mx-auto px-4">
+        <div className="flex items-center justify-center gap-2 mb-8">
             {steps.map((s, i) => {
-                const Icon = s.icon;
-                const isCurrent = step === s.id;
-                const isCompleted =
-                    (step === 'schedule' && i < 1) ||
-                    (step === 'details' && i < 2) ||
-                    (step === 'payment' && i < 3);
+                const isCompleted = i < currentIndex;
+                const isCurrent = i === currentIndex;
 
                 return (
                     <React.Fragment key={s.id}>
-                        <div className="flex flex-col items-center gap-3 relative z-10">
-                            {/* Icon Circle */}
-                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${isCurrent
-                                ? 'bg-zinc-900 text-white'
-                                : isCompleted
-                                    ? 'bg-zinc-900 text-white'
-                                    : 'bg-zinc-50 text-zinc-400 border border-zinc-100'
-                                }`}>
+                        <div className="flex items-center gap-2">
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black transition-all ${
+                                isCompleted
+                                    ? 'bg-emerald-500 text-white'
+                                    : isCurrent
+                                        ? 'bg-zinc-900 text-white'
+                                        : 'bg-zinc-100 text-zinc-400'
+                            }`}>
                                 {isCompleted ? (
-                                    <Check className="w-6 h-6 stroke-3" />
+                                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
                                 ) : (
-                                    <Icon className="w-5 h-5" />
+                                    i + 1
                                 )}
                             </div>
-
-                            {/* Label */}
-                            <span className={`text-[10px] font-bold uppercase tracking-widest ${isCurrent ? 'text-zinc-900' : 'text-zinc-400'
-                                }`}>
+                            <span className={`text-xs font-bold tracking-tight hidden sm:block ${
+                                isCurrent ? 'text-zinc-900' : isCompleted ? 'text-emerald-600' : 'text-zinc-400'
+                            }`}>
                                 {s.label}
                             </span>
                         </div>
 
-                        {/* Connector Line */}
-                        {i < 3 && (
-                            <div className="flex-1 px-2 mb-6">
-                                <div className="h-[2px] w-full bg-zinc-100 rounded-full overflow-hidden">
-                                    <div
-                                        className={`h-full ${isCompleted ? 'w-full bg-zinc-900' : 'w-0'}`}
-                                    />
-                                </div>
-                            </div>
+                        {i < steps.length - 1 && (
+                            <div className={`w-8 sm:w-12 h-[2px] rounded-full transition-all ${
+                                isCompleted ? 'bg-emerald-500' : 'bg-zinc-200'
+                            }`} />
                         )}
                     </React.Fragment>
                 );

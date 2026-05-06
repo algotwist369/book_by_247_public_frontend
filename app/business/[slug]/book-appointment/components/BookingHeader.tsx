@@ -1,36 +1,26 @@
 import React from 'react';
-import { ShieldCheck, Star } from 'lucide-react';
 import { Business } from '@/components/business/businessData';
 import BackButton from './BackButton';
 
-
 interface BookingHeaderProps {
     business: Business;
+    stepTitle?: string;
 }
 
-const BookingHeader = ({ business }: BookingHeaderProps) => {
+const BookingHeader = ({ business, stepTitle = 'Book Appointment' }: BookingHeaderProps) => {
     return (
         <div className="bg-white border-b border-zinc-100 sticky top-0 z-50">
-            <div className="max-w-5xl mx-auto px-4 h-14 sm:h-16 flex items-center justify-between">
+            <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
                 <BackButton href={`/business/${business.slug}`} />
 
+                <h1 className="text-sm sm:text-base font-black text-zinc-900 tracking-tight">
+                    {stepTitle}
+                </h1>
 
-                <div className="flex items-center gap-3">
-                    <div className="text-right">
-                        <h1 className="text-xs sm:text-sm font-black text-zinc-900 leading-tight truncate max-w-[150px] sm:max-w-none">{business.name}</h1>
-                        <div className="flex items-center justify-end gap-1 text-[9px] text-zinc-400 font-bold uppercase tracking-wider">
-                            <Star className="w-2 h-2 text-black fill-current" />
-                            <span>{business.rating} • {business.reviews} Reviews</span>
-                        </div>
-                    </div>
-                    <div className="w-8 h-8 rounded-full bg-zinc-900 flex items-center justify-center text-white">
-                        <ShieldCheck className="w-5 h-5" />
-                    </div>
-                </div>
+                <div className="w-6 h-6" />
             </div>
         </div>
     );
 };
-
 
 export default BookingHeader;

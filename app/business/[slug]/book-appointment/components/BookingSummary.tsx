@@ -4,6 +4,7 @@ import { CheckCircle } from 'lucide-react';
 interface ServiceOption {
     duration: string;
     price: number;
+    originalPrice?: number;
 }
 
 interface Service {
@@ -18,9 +19,10 @@ interface Service {
 }
 
 interface BookingSummaryProps {
-    step: 'services' | 'schedule' | 'details' | 'payment';
-    selectedServices: { serviceId: string | number; optionIdx: number }[];
+    step: 'services' | 'schedule' | 'details' | 'payment' | 'otp' | 'success';
+    selectedServices: { serviceId: string | number; optionIdx: number; addOnIds: string[] }[];
     availableServices: Service[];
+    businessName: string;
     selectedDate: string;
     selectedTime: string;
     formData: { name: string; phone: string };
@@ -36,6 +38,7 @@ const BookingSummary = ({
     step,
     selectedServices,
     availableServices,
+    businessName,
     selectedDate,
     selectedTime,
     formData,
@@ -53,12 +56,27 @@ const BookingSummary = ({
         const options = rawOptions.length > 0
             ? rawOptions.map((opt: any) => ({
                 duration: opt.duration ? `${opt.duration} Mins` : (opt.time ? `${opt.time} Mins` : (service?.duration ? `${service.duration} Mins` : "60 Mins")),
-                price: opt.price || opt.amount || 0
+                price: opt.price || opt.amount || 0, // sellingPrice
+                originalPrice: opt.originalPrice || 0 // previousPrice
             }))
-            : (service?.price !== undefined ? [{ duration: `${service.duration || 60} Mins`, price: service.price }] : []);
+            : (service?.price !== undefined ? [{ 
+                duration: `${service.duration || 60} Mins`, 
+                price: service.price, // sellingPrice
+                originalPrice: (service as any).originalPrice || 0 // previousPrice
+            }] : []);
 
         const option = options[s.optionIdx];
-        return { name: service?.name, price: option?.price, duration: option?.duration };
+        const addOns = ((service as any)?.addOns || []).filter((addon: any) =>
+            (s.addOnIds || []).includes(String(addon?._id))
+        );
+        const addOnsPrice = addOns.reduce((sum: number, addon: any) => sum + Number(addon?.price || 0), 0);
+        return {
+            name: service?.name,
+            price: (option?.price || 0) + addOnsPrice,
+            originalPrice: option?.originalPrice || 0,
+            duration: option?.duration,
+            addOns
+        };
     });
 
     const totalPrice = selectedServiceDetails.reduce((acc, s) => acc + (s.price || 0), 0);
@@ -75,78 +93,106 @@ const BookingSummary = ({
                 step === 'details' ? 'Payment' :
                     step === 'payment' ? 'Confirm Booking' : '';
 
-    const showActionButton = true;
+
+    const totalDuration = selectedServiceDetails.reduce((acc, s) => {
+        const d = parseInt(s.duration || '0');
+        return acc + (isNaN(d) ? 0 : d);
+    }, 0);
 
     return (
-        <div className="lg:col-span-1 space-y-4">
-            <div className="bg-white rounded-lg border border-gray-200 p-5 sticky top-28">
-                <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Booking Summary</h3>
+        <div className="lg:col-span-1">
+            <div className="bg-white rounded-lg border border-zinc-200 overflow-hidden sticky top-28 shadow-sm">
+                <div className="p-5 border-b border-zinc-100">
+                    <h3 className="text-lg font-bold text-zinc-900">Booking Summary</h3>
+                </div>
 
-                <div className="space-y-4">
-                    {selectedServiceDetails.length > 0 ? (
-                        <div className="space-y-2">
-                            {selectedServiceDetails.map((s, idx) => (
-                                <div key={idx} className="flex justify-between items-center text-sm">
-                                    <div>
-                                        <span className="font-medium text-gray-800">{s.name}</span>
-                                        <span className="text-xs text-gray-400 ml-1.5">{s.duration}</span>
-                                    </div>
-                                    <span className="font-semibold text-zinc-900">₹{s.price?.toLocaleString('en-IN')}</span>
-                                </div>
-                            ))}
-                            <div className="h-px bg-gray-100 my-3" />
-                            <div className="flex justify-between items-center">
-                                <span className="text-sm text-gray-500">Total</span>
-                                <span className="text-base font-bold text-zinc-900">
-                                    ₹{totalPrice.toLocaleString('en-IN')}
-                                </span>
-                            </div>
+                <div className="p-5 space-y-4">
+                    <div className="space-y-3">
+                        <div className="flex justify-between items-center text-sm">
+                            <span className="text-zinc-500 font-medium">Business</span>
+                            <span className="text-zinc-900 font-bold uppercase tracking-tight text-right ml-4">{businessName}</span>
                         </div>
-                    ) : (
-                        <p className="text-sm text-gray-400">No services selected yet.</p>
-                    )}
+                        <div className="flex justify-between items-center text-sm">
+                            <span className="text-zinc-500 font-medium">Services Selected</span>
+                            <span className="text-zinc-900 font-bold">{selectedServices.length}</span>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                            <span className="text-zinc-500 font-medium">Estimated Duration</span>
+                            <span className="text-zinc-900 font-bold">{totalDuration > 0 ? `${totalDuration} Mins` : '--'}</span>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                            <span className="text-zinc-500 font-medium">Estimated Price</span>
+                            <span className="text-zinc-900 font-black text-lg">₹{totalPrice.toLocaleString('en-IN')}</span>
+                        </div>
+                    </div>
+
+                    <div className="h-px bg-zinc-100 my-4" />
+
+                    <div className="space-y-3">
+                        <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Selected Services:</p>
+                        {selectedServiceDetails.length > 0 ? (
+                            <div className="space-y-3">
+                                {selectedServiceDetails.map((s, idx) => (
+                                    <div key={idx} className="flex flex-col text-xs">
+                                        <span className="font-bold text-zinc-800">{s.name}</span>
+                                        <div className="flex justify-between items-center mt-1">
+                                            <span className="text-zinc-400">{s.duration}</span>
+                                            <div className="text-right flex items-center gap-1.5">
+                                                {s.originalPrice > 0 && (
+                                                    <span className="text-[10px] text-zinc-400 line-through">₹{s.originalPrice.toLocaleString('en-IN')}</span>
+                                                )}
+                                                <span className="font-bold text-zinc-900">₹{s.price?.toLocaleString('en-IN')}</span>
+                                            </div>
+                                        </div>
+                                        {s.addOns?.length > 0 && (
+                                            <p className="text-[10px] text-zinc-400 mt-1 pl-2 border-l border-zinc-200">
+                                                + {s.addOns.map((a: any) => a.name).join(', ')}
+                                            </p>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="text-xs text-zinc-400 italic">No services selected yet.</p>
+                        )}
+                    </div>
 
                     {selectedDate && selectedTime && (
-                        <div className="bg-gray-50 p-3 rounded-lg">
-                            <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Slot</p>
-                            <p className="text-sm font-medium text-gray-800">{selectedDate} · {selectedTime}</p>
-                        </div>
-                    )}
-
-                    {paymentMethod && (
-                        <div className="bg-gray-50 p-3 rounded-lg">
-                            <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Payment</p>
-                            <p className="text-sm font-medium text-gray-800 capitalize">{paymentMethod === 'cash' ? 'Cash at Venue' : 'Online Payment'}</p>
+                        <div className="bg-zinc-50 p-3 rounded-md border border-zinc-100">
+                            <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Slot Information</p>
+                            <p className="text-xs font-bold text-zinc-800">{selectedDate} · {selectedTime}</p>
                         </div>
                     )}
 
                     {error && (
-                        <div className="bg-red-50 border border-red-100 rounded-lg p-3">
-                            <p className="text-xs text-red-600 font-medium">{error}</p>
+                        <div className="bg-red-50 border border-red-100 rounded-md p-3">
+                            <p className="text-[10px] text-red-600 font-bold leading-tight">{error}</p>
                         </div>
                     )}
 
-                    <div className="pt-2 flex flex-col gap-2">
-                        {showActionButton && (
-                            <button
-                                disabled={!isNextEnabled || isSubmitting}
-                                onClick={step === 'payment' ? onConfirm : onNext}
-                                className={`w-full h-11 rounded-lg text-sm font-semibold ${isNextEnabled ? 'bg-black text-white' : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                    }`}
-                            >
-                                {isSubmitting ? 'Processing...' : actionButtonText}
-                            </button>
-                        )}
+                    <button
+                        disabled={!isNextEnabled || isSubmitting}
+                        onClick={step === 'payment' ? onConfirm : onNext}
+                        className={`w-full py-4 rounded-md font-bold text-sm flex items-center justify-center gap-3 transition-all ${
+                            isNextEnabled 
+                                ? 'bg-zinc-900 text-white hover:bg-black' 
+                                : 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
+                        }`}
+                    >
+                        {isSubmitting ? 'Processing...' : actionButtonText}
+                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </button>
 
-                        {step !== 'services' && (
-                            <button
-                                onClick={onBack}
-                                className="w-full h-10 rounded-lg text-sm font-medium text-gray-500 border border-gray-200"
-                            >
-                                Back
-                            </button>
-                        )}
-                    </div>
+                    {step !== 'services' && (
+                        <button
+                            onClick={onBack}
+                            className="w-full py-2 text-xs font-bold text-zinc-400 hover:text-zinc-600 transition-colors uppercase tracking-widest"
+                        >
+                            Go Back
+                        </button>
+                    )}
                 </div>
             </div>
 

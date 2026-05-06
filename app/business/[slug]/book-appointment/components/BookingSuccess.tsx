@@ -9,7 +9,7 @@ interface BookingSuccessProps {
     selectedTime: string;
     servicesCount: number;
     totalPrice: number;
-    selectedServiceDetails: { name?: string; duration?: string }[];
+    selectedServiceDetails: { name?: string; duration?: string; price?: number; originalPrice?: number }[];
     confirmationCode: string;
     confirmedAppointment?: {
         appointmentDate?: string;
@@ -22,23 +22,47 @@ interface BookingSuccessProps {
         bookingNumber?: string;
         formattedBookingNumber?: string;
         createdAt?: string;
-        customer?: {
-            firstName?: string;
-            lastName?: string;
-            phone?: string;
-        };
         business?: {
             name?: string;
             branch?: string;
             address?: string;
             phone?: string;
         };
+        customer?: {
+            _id?: string;
+            name?: string;
+            phone?: string;
+            email?: string;
+        };
         services?: Array<{
             _id?: string;
             name?: string;
             price?: number;
+            originalPrice?: number;
             duration?: number;
+            variant?: {
+                name?: string;
+                price?: number;
+                originalPrice?: number;
+            };
+            addOns?: Array<{
+                name?: string;
+                price?: number;
+            }>;
         }>;
+        pricing?: {
+            servicePrice?: number;
+            addOnsPrice?: number;
+            tax?: number;
+            totalAmount?: number;
+            discount?: number;
+        };
+        remainingAmount?: number;
+        serviceSnapshot?: {
+            name?: string;
+            variantName?: string;
+            addOnsNames?: string[];
+        };
     } | null;
 }
 
@@ -94,15 +118,22 @@ const BookingSuccess = ({
         ? confirmedAppointment.services.map((item) => ({
             name: item.name || 'Service',
             duration: item.duration ? `${item.duration} mins` : '-',
-            price: item.price || 0
+            price: item.price || 0, // sellingPrice
+            originalPrice: item.originalPrice || 0, // previousPrice
+            variantName: item.variant?.name,
+            addOns: item.addOns
         }))
         : selectedServiceDetails.map((item) => ({
             name: item.name || 'Service',
             duration: item.duration || '-',
-            price: 0
+            price: item.price || 0,
+            originalPrice: item.originalPrice || 0,
+            variantName: undefined,
+            addOns: undefined
         }));
 
-    const displayTotal = confirmedAppointment?.totalAmount ?? totalPrice;
+    const pricing = confirmedAppointment?.pricing;
+    const displayTotal = pricing?.totalAmount ?? totalPrice;
     const startTime = confirmedAppointment?.startTime || selectedTime;
     const endTime = confirmedAppointment?.endTime || '-';
     const totalDuration = displayServices.reduce((sum, item) => {
@@ -110,7 +141,9 @@ const BookingSuccess = ({
         return sum + (match ? Number(match[0]) : 0);
     }, 0);
     const bookingId = confirmedAppointment?.formattedBookingNumber || confirmedAppointment?.bookingNumber;
-    const customerName = [confirmedAppointment?.customer?.firstName, confirmedAppointment?.customer?.lastName].filter(Boolean).join(' ').trim() || '-';
+    const customerName = confirmedAppointment?.customer?.name || confirmedAppointment?.customer?.name || 'Guest User';
+    const customerPhone = confirmedAppointment?.customer?.phone || confirmedAppointment?.customer?.phone || '-';
+    const customerEmail = confirmedAppointment?.customer?.email || confirmedAppointment?.customer?.email;
     const venueName = confirmedAppointment?.business?.name || business.name;
     const venueAddress = confirmedAppointment?.business?.address || business.address;
     const venuePhone = confirmedAppointment?.business?.phone || '-';
@@ -119,9 +152,21 @@ const BookingSuccess = ({
     const handleDownloadInvoice = () => {
         const servicesRows = displayServices.map((service) => `
             <tr>
-                <td style="padding:10px;border:1px solid #ddd;">${service.name}</td>
+                <td style="padding:10px;border:1px solid #ddd;">
+                    <div style="font-weight:bold;">${service.name}</div>
+                    ${service.variantName ? `<div style="font-size:11px;color:#666;margin-top:2px;">Variant: ${service.variantName}</div>` : ''}
+                    ${service.addOns && service.addOns.length > 0 ? `
+                        <div style="margin-top:5px;padding-left:10px;border-left:2px solid #eee;">
+                            <div style="font-size:10px;color:#999;text-transform:uppercase;font-weight:bold;">Add-ons:</div>
+                            ${service.addOns.map(a => `<div style="font-size:11px;color:#444;">${a.name} (+₹${a.price?.toLocaleString('en-IN')})</div>`).join('')}
+                        </div>
+                    ` : ''}
+                </td>
                 <td style="padding:10px;border:1px solid #ddd;text-align:center;">${service.duration}</td>
-                <td style="padding:10px;border:1px solid #ddd;text-align:center;">${service.price.toLocaleString('en-IN')}</td>
+                <td style="padding:10px;border:1px solid #ddd;text-align:right;">
+                    ${service.originalPrice > 0 ? `<span style="text-decoration:line-through;color:#a1a1aa;font-size:12px;margin-right:8px;">₹${service.originalPrice.toLocaleString('en-IN')}</span>` : ''}
+                    <span style="font-weight:bold;">₹${service.price.toLocaleString('en-IN')}</span>
+                </td>
             </tr>
         `).join('');
 
@@ -129,55 +174,114 @@ const BookingSuccess = ({
             <html>
                 <head>
                     <title>Invoice ${bookingId || confirmationCode}</title>
+                    <style>
+                        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #18181b; }
+                        .container { max-width: 800px; margin: auto; border: 1px solid #e4e4e7; padding: 40px; border-radius: 8px; }
+                        .header { display: flex; justify-content: space-between; border-bottom: 2px solid #f4f4f5; padding-bottom: 20px; margin-bottom: 20px; }
+                        .business-info h2 { margin: 0; font-size: 24px; font-weight: 900; }
+                        .business-info p { margin: 4px 0; color: #71717a; font-size: 13px; }
+                        .invoice-meta { text-align: right; }
+                        .invoice-meta h3 { margin: 0; font-size: 20px; font-weight: 900; color: #18181b; }
+                        .invoice-meta p { margin: 4px 0; font-size: 13px; color: #71717a; }
+                        .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 30px; }
+                        .section-title { font-size: 11px; font-weight: 900; text-transform: uppercase; color: #a1a1aa; margin-bottom: 8px; letter-spacing: 0.05em; }
+                        .info-box p { margin: 4px 0; font-size: 14px; }
+                        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                        th { background: #f4f4f5; text-align: left; padding: 12px; font-size: 12px; text-transform: uppercase; font-weight: 900; color: #71717a; border: 1px solid #e4e4e7; }
+                        td { padding: 12px; border: 1px solid #e4e4e7; font-size: 14px; }
+                        .totals { margin-top: 30px; margin-left: auto; width: 300px; }
+                        .total-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 13px; color: #71717a; }
+                        .total-row.grand-total { border-top: 2px solid #f4f4f5; margin-top: 10px; padding-top: 15px; font-size: 18px; font-weight: 900; color: #18181b; }
+                        .footer { margin-top: 50px; text-align: center; border-top: 1px solid #f4f4f5; padding-top: 20px; font-size: 12px; color: #a1a1aa; }
+                    </style>
                 </head>
-                <body style="background:#fff;padding:20px;">
-                    <div style="max-width:700px;margin:auto;font-family:Arial,sans-serif;border:1px solid #eee;padding:20px;border-radius:10px;">
-                        <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #eee;padding-bottom:10px;">
-                            <div>
-                                <h2 style="margin:0;">${venueName}</h2>
-                                <p style="margin:2px 0;">${venueAddress}</p>
-                                <p style="margin:2px 0;">Phone: ${venuePhone}</p>
+                <body>
+                    <div class="container">
+                        <div class="header">
+                            <div class="business-info">
+                                <h2>${venueName}</h2>
+                                ${confirmedAppointment?.business?.branch ? `<p>Branch: ${confirmedAppointment.business.branch}</p>` : ''}
+                                <p>${venueAddress}</p>
+                                <p>Phone: ${venuePhone}</p>
                             </div>
-                            <div style="text-align:right;">
-                                <h3 style="margin:0;">INVOICE</h3>
-                                <p style="margin:2px 0;">Booking ID: <strong>${bookingId || confirmationCode}</strong></p>
-                                <p style="margin:2px 0;">Date: ${invoiceDate}</p>
+                            <div class="invoice-meta">
+                                <h3>INVOICE</h3>
+                                <p>No: <strong>${bookingId || confirmationCode}</strong></p>
+                                <p>Date: ${invoiceDate}</p>
                             </div>
                         </div>
-                        <div style="margin-top:15px;">
-                            <h4 style="margin-bottom:5px;">Bill To:</h4>
-                            <p style="margin:0;"><strong>${customerName}</strong></p>
-                            <p style="margin:0;">Phone: ${confirmedAppointment?.customer?.phone || '-'}</p>
+
+                        <div class="details-grid">
+                            <div class="info-box">
+                                <div class="section-title">Bill To</div>
+                                <p><strong>${customerName}</strong></p>
+                                <p>${customerPhone}</p>
+                                ${customerEmail ? `<p>${customerEmail}</p>` : ''}
+                            </div>
+                            <div class="info-box">
+                                <div class="section-title">Appointment</div>
+                                <p><strong>${formatDate(confirmedAppointment?.appointmentDate)}</strong></p>
+                                <p>${formatDayName(confirmedAppointment?.appointmentDate)} | ${formatTime12Hour(startTime)} - ${formatTime12Hour(endTime)}</p>
+                                <p>Total Duration: ${totalDuration} mins</p>
+                            </div>
                         </div>
-                        <div style="margin-top:15px;">
-                            <h4 style="margin-bottom:5px;">Appointment Details:</h4>
-                            <p style="margin:0;">Date: ${formatDate(confirmedAppointment?.appointmentDate)} (${formatDayName(confirmedAppointment?.appointmentDate)})</p>
-                            <p style="margin:0;">Time: ${formatTime12Hour(startTime)} - ${formatTime12Hour(endTime)}</p>
-                            <p style="margin:0;">Duration: ${totalDuration} mins</p>
-                        </div>
-                        <table style="width:100%;margin-top:20px;border-collapse:collapse;">
+
+                        <table>
                             <thead>
-                                <tr style="background:#f5f5f5;">
-                                    <th style="padding:10px;border:1px solid #ddd;text-align:left;">Service</th>
-                                    <th style="padding:10px;border:1px solid #ddd;">Duration</th>
-                                    <th style="padding:10px;border:1px solid #ddd;">Price (₹)</th>
+                                <tr>
+                                    <th>Description</th>
+                                    <th style="text-align:center;width:100px;">Duration</th>
+                                    <th style="text-align:right;width:120px;">Amount (₹)</th>
                                 </tr>
                             </thead>
                             <tbody>${servicesRows}</tbody>
                         </table>
-                        <div style="margin-top:20px;text-align:right;">
-                            <p style="margin:5px 0;">Subtotal: ₹${displayTotal.toLocaleString('en-IN')}</p>
-                            <p style="margin:5px 0;">Discount: ₹0</p>
-                            <p style="margin:5px 0;">Tax: ₹0</p>
-                            <h3 style="margin:10px 0;">Total: ₹${displayTotal.toLocaleString('en-IN')}</h3>
+
+                        <div class="totals">
+                            <div class="total-row">
+                                <span>Service Total</span>
+                                <span>₹${pricing?.servicePrice?.toLocaleString('en-IN') || displayTotal.toLocaleString('en-IN')}</span>
+                            </div>
+                            ${pricing?.addOnsPrice ? `
+                                <div class="total-row">
+                                    <span>Add-ons Total</span>
+                                    <span>₹${pricing.addOnsPrice.toLocaleString('en-IN')}</span>
+                                </div>
+                            ` : ''}
+                            ${pricing?.tax ? `
+                                <div class="total-row">
+                                    <span>Tax (GST)</span>
+                                    <span>₹${pricing.tax.toLocaleString('en-IN')}</span>
+                                </div>
+                            ` : ''}
+                            ${pricing?.discount ? `
+                                <div class="total-row" style="color:#10b981;">
+                                    <span>Discount</span>
+                                    <span>-₹${pricing.discount.toLocaleString('en-IN')}</span>
+                                </div>
+                            ` : ''}
+                            <div class="total-row grand-total">
+                                <span>Total Amount</span>
+                                <span>₹${displayTotal.toLocaleString('en-IN')}</span>
+                            </div>
+                            ${confirmedAppointment?.remainingAmount && confirmedAppointment.remainingAmount < displayTotal ? `
+                                <div class="total-row" style="font-style:italic;">
+                                    <span>Remaining to Pay</span>
+                                    <span>₹${confirmedAppointment.remainingAmount.toLocaleString('en-IN')}</span>
+                                </div>
+                            ` : ''}
                         </div>
-                        <div style="margin-top:10px;">
-                            <p style="margin:0;">Payment Method: ${prettyValue(confirmedAppointment?.paymentMethod)}</p>
-                            <p style="margin:0;">Payment Status: ${prettyValue(confirmedAppointment?.paymentStatus)}</p>
+
+                        <div style="margin-top:40px;font-size:13px;">
+                            <div class="section-title">Payment Info</div>
+                            <p style="margin:4px 0;">Method: <strong>${prettyValue(confirmedAppointment?.paymentMethod)}</strong></p>
+                            <p style="margin:4px 0;">Status: <strong>${prettyValue(confirmedAppointment?.paymentStatus)}</strong></p>
                         </div>
-                        <div style="margin-top:20px;border-top:1px solid #eee;padding-top:10px;text-align:center;">
-                            <p style="margin:0;">Thank you for choosing ${venueName}!</p>
-                            <p style="margin:4px 0 0 0;">Support: support@bookby247.com</p>
+
+                        <div class="footer">
+                            <p>Thank you for choosing ${venueName}!</p>
+                            <p style="margin-top:8px;">This is a computer generated invoice and does not require a signature.</p>
+                            <p>Support: support@bookby247.com | bookby247.com</p>
                         </div>
                     </div>
                     <script>window.onload = function(){ window.print(); }</script>
@@ -234,7 +338,12 @@ const BookingSuccess = ({
                                     <MapPin className="w-4 h-4 text-zinc-500 mt-0.5" />
                                     <div>
                                         <p className="text-xs uppercase tracking-wide text-zinc-500">Location</p>
-                                        <p className="text-sm font-medium text-zinc-900 mt-1">{venueName}</p>
+                                        <p className="text-sm font-medium text-zinc-900 mt-1">
+                                            {venueName}
+                                            {confirmedAppointment?.business?.branch && (
+                                                <span className="text-zinc-400 font-normal ml-1.5">({confirmedAppointment.business.branch})</span>
+                                            )}
+                                        </p>
                                         <p className="text-sm text-zinc-600 mt-1 break-words">{venueAddress}</p>
                                     </div>
                                 </div>
@@ -259,8 +368,11 @@ const BookingSuccess = ({
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                             <div className="border border-zinc-200 rounded-md p-4 space-y-2">
                                 <p className="text-xs uppercase tracking-wide text-zinc-500">Customer</p>
-                                <p className="text-sm text-zinc-900 break-words">{customerName}</p>
-                                <p className="text-sm text-zinc-600">{confirmedAppointment?.customer?.phone || '-'}</p>
+                                <p className="text-sm text-zinc-900 font-bold break-words">{customerName}</p>
+                                <p className="text-sm text-zinc-600">{customerPhone}</p>
+                                {customerEmail && (
+                                    <p className="text-sm text-zinc-600 mt-0.5">{customerEmail}</p>
+                                )}
                             </div>
                             <div className="border border-zinc-200 rounded-md p-4 space-y-2">
                                 <p className="text-xs uppercase tracking-wide text-zinc-500">Payment & Status</p>
@@ -280,23 +392,90 @@ const BookingSuccess = ({
                             </div>
                             <span className="text-xs sm:text-sm text-zinc-600 whitespace-nowrap">{displayServices.length || servicesCount} service{(displayServices.length || servicesCount) > 1 ? 's' : ''}</span>
                         </div>
-                        <div className="border border-zinc-200 rounded-md divide-y divide-zinc-200">
-                            {displayServices.map((service, idx) => (
-                                <div key={idx} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-3 sm:px-4 py-3">
-                                    <div className="flex items-start sm:items-center gap-2 min-w-0">
-                                        <Check className="w-4 h-4 text-zinc-500" />
-                                        <span className="text-sm font-medium text-zinc-900 break-words">{service.name}</span>
+                        <div className="border border-zinc-200 rounded-md overflow-hidden">
+                            <div className="divide-y divide-zinc-200">
+                                {displayServices.map((service, idx) => (
+                                    <div key={idx} className="p-3 sm:p-4 bg-white">
+                                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                                            <div className="min-w-0">
+                                                <div className="flex items-center gap-2">
+                                                    <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                                                    <span className="text-sm font-bold text-zinc-900 break-words">{service.name}</span>
+                                                </div>
+                                                {service.variantName && (
+                                                    <p className="text-[11px] text-zinc-500 ml-6 font-medium uppercase tracking-wider mt-0.5">
+                                                        Variant: {service.variantName}
+                                                    </p>
+                                                )}
+                                                {service.addOns && service.addOns.length > 0 && (
+                                                    <div className="ml-6 mt-1.5 space-y-1">
+                                                        <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Add-ons:</p>
+                                                        {service.addOns.map((addon, aIdx) => (
+                                                            <div key={aIdx} className="flex justify-between items-center text-[11px]">
+                                                                <span className="text-zinc-600">{addon.name}</span>
+                                                                <span className="text-zinc-900 font-semibold">+₹{addon.price?.toLocaleString('en-IN')}</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="text-left sm:text-right pl-6 sm:pl-0 shrink-0">
+                                                <span className="text-xs font-medium text-zinc-400 block mb-1">{service.duration}</span>
+                                                <div className="flex flex-col items-end">
+                                                    <p className="text-sm text-zinc-900 font-bold leading-none">₹{service.price.toLocaleString('en-IN')}</p>
+                                                    {service.originalPrice > 0 && (
+                                                        <p className="text-[10px] text-zinc-400 line-through mt-1">₹{service.originalPrice.toLocaleString('en-IN')}</p>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="text-left sm:text-right pl-6 sm:pl-0">
-                                        <span className="text-sm text-zinc-600">{service.duration}</span>
-                                        {service.price > 0 && <p className="text-xs text-zinc-500">₹{service.price.toLocaleString('en-IN')}</p>}
-                                    </div>
-                                </div>
-                            ))}
-                            <div className="flex items-center justify-between px-3 sm:px-4 py-3 bg-zinc-50">
-                                <span className="text-sm font-medium text-zinc-700">Total Amount</span>
-                                <span className="text-lg font-semibold text-zinc-900">₹{displayTotal.toLocaleString('en-IN')}</span>
+                                ))}
                             </div>
+
+                            {pricing && (
+                                <div className="bg-zinc-50 p-4 border-t border-zinc-200 space-y-2">
+                                    <div className="flex justify-between items-center text-xs text-zinc-500">
+                                        <span>Service Total</span>
+                                        <span className="font-medium text-zinc-900">₹{pricing.servicePrice?.toLocaleString('en-IN')}</span>
+                                    </div>
+                                    {pricing.addOnsPrice !== undefined && pricing.addOnsPrice > 0 && (
+                                        <div className="flex justify-between items-center text-xs text-zinc-500">
+                                            <span>Add-ons Total</span>
+                                            <span className="font-medium text-zinc-900">₹{pricing.addOnsPrice.toLocaleString('en-IN')}</span>
+                                        </div>
+                                    )}
+                                    {pricing.tax !== undefined && pricing.tax > 0 && (
+                                        <div className="flex justify-between items-center text-xs text-zinc-500">
+                                            <span>Tax (GST)</span>
+                                            <span className="font-medium text-zinc-900">₹{pricing.tax.toLocaleString('en-IN')}</span>
+                                        </div>
+                                    )}
+                                    {pricing.discount !== undefined && pricing.discount > 0 && (
+                                        <div className="flex justify-between items-center text-xs text-emerald-600">
+                                            <span>Discount</span>
+                                            <span className="font-medium">-₹{pricing.discount.toLocaleString('en-IN')}</span>
+                                        </div>
+                                    )}
+                                    <div className="flex items-center justify-between pt-2 border-t border-zinc-200">
+                                        <span className="text-sm font-bold text-zinc-900">Total Amount</span>
+                                        <span className="text-lg font-black text-zinc-900">₹{displayTotal.toLocaleString('en-IN')}</span>
+                                    </div>
+                                    {confirmedAppointment.remainingAmount !== undefined && confirmedAppointment.remainingAmount > 0 && confirmedAppointment.remainingAmount !== displayTotal && (
+                                        <div className="flex items-center justify-between pt-1 text-xs text-zinc-500 italic">
+                                            <span>Remaining to Pay</span>
+                                            <span>₹{confirmedAppointment.remainingAmount.toLocaleString('en-IN')}</span>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                            {!pricing && (
+                                <div className="flex items-center justify-between px-3 sm:px-4 py-3 bg-zinc-50 border-t border-zinc-200">
+                                    <span className="text-sm font-bold text-zinc-900">Total Amount</span>
+                                    <span className="text-lg font-black text-zinc-900">₹{displayTotal.toLocaleString('en-IN')}</span>
+                                </div>
+                            )}
                         </div>
                     </section>
 
