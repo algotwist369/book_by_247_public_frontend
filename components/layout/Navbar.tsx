@@ -77,7 +77,7 @@ export const Navbar = () => {
             {/* Top Tier */}
             <div className="relative flex items-center justify-between px-3 sm:px-4 md:px-8 py-3 md:py-4 border-b border-zinc-50">
                 <div className="flex items-center gap-3 sm:gap-4 md:gap-8">
-                    {/* <Link href="/" className="shrink-0 flex items-center">
+                    <Link href="/" className="shrink-0 flex items-center">
                         <img
                             src="https://res.cloudinary.com/dwsv275kv/image/upload/v1774790235/White_and_Black_Simple_Marketing_LinkedIn_Banner_f7aqfk.png" // put your logo inside public folder
                             alt="BOOKBY247 Logo"
@@ -86,7 +86,7 @@ export const Navbar = () => {
                             // priority
                             className="h-10 sm:h-12 md:h-14 w-auto object-contain"
                         />
-                    </Link> */}
+                    </Link>
 
                     {/* Info Blocks (Desktop Only) */}
                     <div className="hidden lg:flex items-center">
