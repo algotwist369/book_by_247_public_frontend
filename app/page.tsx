@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import HeroSection from "@/components/home/HeroSection";
 import { CategorySection } from "@/components/home/CategorySection";
 import { businessApi } from "@/api/public/business";
+import HomeSeoTags from "@/components/seo/HomeSeoTags";
 
 export const metadata: Metadata = {
   title: "Book Top Spas, Salons & Beauty Services Near Me - Online Booking | Bookby247",
@@ -97,7 +98,7 @@ const PromotionBanner = dynamic(() => import("@/components/promotion/PromotionBa
 
 export const revalidate = 3600;
 
-import { generateItemListJsonLd, generateOrganizationJsonLd, generateWebSiteJsonLd } from "@/lib/seo-jsonld";
+import { generateItemListJsonLd, generateOrganizationJsonLd, generateWebSiteJsonLd, generateSeoTagsItemListJsonLd } from "@/lib/seo-jsonld";
 import { safeJsonLdStringify } from "@/lib/utils";
 import AiReadabilitySection from "@/components/seo/AiReadabilitySection";
 
@@ -108,7 +109,13 @@ export default async function Home() {
     return null;
   });
 
+  const seoTagsData = await businessApi.getSeoTags().catch((err) => {
+    console.error("SEO tags data fetch error:", err);
+    return null;
+  });
+
   const businesses = (initialBusinessData as any)?.businesses || (initialBusinessData as any)?.data || [];
+  const tags = seoTagsData?.data || [];
   
   const itemListJsonLd = {
     "@context": "https://schema.org",
@@ -121,6 +128,10 @@ export default async function Home() {
   const websiteJsonLd = {
     "@context": "https://schema.org",
     ...generateWebSiteJsonLd()
+  };
+  const seoTagsItemListJsonLd = {
+    "@context": "https://schema.org",
+    ...generateSeoTagsItemListJsonLd(tags)
   };
 
   return (
@@ -137,6 +148,12 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(websiteJsonLd) }}
       />
+      {tags.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(seoTagsItemListJsonLd) }}
+        />
+      )}
       
       <HeroSection />
       <CategorySection />
@@ -162,6 +179,9 @@ export default async function Home() {
         <BusinessSection initialData={initialBusinessData} />
         
       </Suspense>
+
+      {/* SEO Tags Section */}
+      {tags.length > 0 && <HomeSeoTags tags={tags} />}
 
       {/* Below-fold content */}
       <PartnerSection />

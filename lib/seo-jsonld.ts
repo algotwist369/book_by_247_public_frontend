@@ -205,3 +205,23 @@ export const generateWebSiteJsonLd = () => {
     }
   };
 };
+
+export const generateSeoTagsItemListJsonLd = (tags: { slug: string; name: string; seo: { title: string; description: string } }[]) => {
+  const baseUrl = "https://bookby247.com";
+  return {
+    "@type": "ItemList",
+    "name": "Popular Wellness Tags",
+    "description": "Explore popular wellness and beauty service tags on Bookby247",
+    "url": baseUrl,
+    "itemListElement": tags.map((tag, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "Thing",
+        "name": tag.name.charAt(0).toUpperCase() + tag.name.slice(1),
+        "description": tag.seo.description,
+        "url": `${baseUrl}/search?tag=${encodeURIComponent(tag.slug)}`
+      }
+    }))
+  };
+};

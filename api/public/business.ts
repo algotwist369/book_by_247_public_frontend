@@ -222,4 +222,40 @@ export const businessApi = {
     getUniqueCities: async () => {
         return apiClient<{ success: boolean; data: string[] }>('/business/public/cities');
     },
+
+    getSeoTags: async () => {
+        return apiClient<{
+            success: boolean;
+            source: string;
+            data: {
+                slug: string;
+                name: string;
+                count: number;
+                seo: {
+                    title: string;
+                    description: string;
+                    keywords: string;
+                };
+            }[];
+        }>('/v1/seo/metadata/tags');
+    },
+
+    getBusinessesByTag: async (tag: string) => {
+        return apiClient<{
+            success: boolean;
+            source: string;
+            count: number;
+            total: number;
+            page: number;
+            pages: number;
+            tag: string;
+            tagSlug: string;
+            seo_metadata: {
+                title: string;
+                description: string;
+                keywords: string;
+            };
+            data: any[];
+        }>(`/v1/seo/businesses/tag/${tag}`);
+    },
 };

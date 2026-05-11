@@ -16,9 +16,10 @@ import { useLocationSuggestions } from '@/hooks/useLocationSuggestions';
 
 interface ExplorePageContentProps {
     initialData?: any;
+    tagName?: string;
 }
 
-const ExplorePageContent: React.FC<ExplorePageContentProps> = ({ initialData }) => {
+const ExplorePageContent: React.FC<ExplorePageContentProps> = ({ initialData, tagName }) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -339,7 +340,9 @@ const ExplorePageContent: React.FC<ExplorePageContentProps> = ({ initialData }) 
                         <div className="flex items-center justify-between mb-0 lg:mb-10">
                             <div className="hidden lg:block">
                                 <div className="flex items-center gap-3">
-                                    <h1 className="text-3xl font-black text-zinc-900 tracking-tight">Explore Wellness</h1>
+                                    <h1 className="text-3xl font-black text-zinc-900 tracking-tight">
+                                        {tagName ? `${tagName} Services` : "Explore Wellness"}
+                                    </h1>
                                     {(activeLat && activeLng) && (
                                         <div className="flex items-center gap-1.5 px-3 py-1 bg-black/10 text-black rounded-full text-[10px] font-bold">
                                             <MapPin className="w-3 h-3" />
@@ -347,7 +350,11 @@ const ExplorePageContent: React.FC<ExplorePageContentProps> = ({ initialData }) 
                                         </div>
                                     )}
                                 </div>
-                                <p className="text-zinc-500 text-sm font-medium">Find your perfect spa or salon experience</p>
+                                <p className="text-zinc-500 text-sm font-medium">
+                                    {tagName 
+                                        ? `Discover top-rated ${tagName} services near you` 
+                                        : "Find your perfect spa or salon experience"}
+                                </p>
                             </div>
 
                             <button
