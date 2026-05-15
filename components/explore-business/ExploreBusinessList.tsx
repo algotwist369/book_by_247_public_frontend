@@ -27,7 +27,7 @@ const ExploreBusinessList = ({
 }: ExploreBusinessListProps) => {
     const sentinelRef = useRef<HTMLDivElement>(null);
 
-    // IntersectionObserver — triggers onLoadMore when sentinel comes into view
+    // IntersectionObserver - triggers onLoadMore when sentinel comes into view
     useEffect(() => {
         if (!onLoadMore) return;
         const observer = new IntersectionObserver(

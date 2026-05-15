@@ -29,7 +29,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
         const tagName = slugToTitleCase(tag);
         const displayCount = count || '10';
         title = `Top ${displayCount} Best ${tagName} Services Near Me | Book Online 24/7`;
-        description = `Find and book the best ${tagName} professionals in your area. Compare verified reviews, transparent pricing, and instant availability. Skip the wait—book your ${tagName} appointment online via Bookby247 today.`;
+        description = `Find and book the best ${tagName} professionals in your area. Compare verified reviews, transparent pricing, and instant availability. Skip the wait-book your ${tagName} appointment online via Bookby247 today.`;
         keywords = [
             `${tag}`,
             `${tag} services near me`,

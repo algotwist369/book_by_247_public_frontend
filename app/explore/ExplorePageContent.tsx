@@ -60,7 +60,7 @@ const ExplorePageContent: React.FC<ExplorePageContentProps> = ({ initialData, ta
     // Effective coordinates
     const activeLat = latitude || (urlLat ? parseFloat(urlLat) : null);
     const activeLng = longitude || (urlLng ? parseFloat(urlLng) : null);
-    // Infinite search — loads page by page as the user scrolls
+    // Infinite search - loads page by page as the user scrolls
     const searchFilters = {
         q: committedSearch,
         location: committedLocation,
@@ -375,7 +375,7 @@ const ExplorePageContent: React.FC<ExplorePageContentProps> = ({ initialData, ta
                             </button>
                         </div>
 
-                        {/* Filters & Search — sticky on scroll */}
+                        {/* Filters & Search - sticky on scroll */}
                         <div className="sticky top-0 lg:top-0 z-30 bg-white pb-2 -mx-4 px-4 lg:-mx-0 lg:px-0">
                             <ExploreFilters
                                 categories={categories}

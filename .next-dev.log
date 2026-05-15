@@ -1,0 +1,14 @@
+
+> public_frontend@0.1.0 dev
+> next dev --port 3002
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3002
+- Network:       http://192.168.200.48:3002
+- Environments: .env
+- Experiments (use with caution):
+  · optimizePackageImports
+
+✓ Starting...
+✓ Ready in 1850ms
+ GET /blog 200 in 1662ms (compile: 697ms, render: 965ms)

@@ -13,6 +13,7 @@ const bookingDataSchema = z.object({
         email: z.string().trim().email().optional(),
         gender: z.string().trim().optional()
     }),
+    otpChannel: z.enum(["email", "sms"] as const).optional(),
     appointmentDate: dateSchema,
     startTime: timeSchema,
     endTime: timeSchema,
@@ -43,6 +44,7 @@ export interface BookingData {
         email?: string;
         gender?: string;
     };
+    otpChannel?: 'email' | 'sms';
     appointmentDate: string; // YYYY-MM-DD
     startTime: string; // HH:mm
     endTime: string; // HH:mm
@@ -78,6 +80,7 @@ export const appointmentApi = {
     bookAppointment: async (businessSlug: string, data: BookingData) => {
         slugSchema.parse(businessSlug);
         const validated = bookingDataSchema.parse(data);
+        console.log('✅ Zod validated booking payload:', validated);
         return apiClient<any>(`/appointments/business/${businessSlug}/book`, {
             method: 'POST',
             body: JSON.stringify(validated)
@@ -87,13 +90,20 @@ export const appointmentApi = {
     /**
      * Verify OTP to confirm booking
      */
-    verifyOTP: async (businessSlug: string, phone: string, otp: string) => {
+    verifyOTP: async (businessSlug: string, data: { phone?: string; email?: string; otp: string }) => {
         slugSchema.parse(businessSlug);
-        phoneSchema.parse(phone);
-        z.string().trim().regex(/^\d{4,8}$/).parse(otp);
+        z.string().trim().regex(/^\d{4,8}$/).parse(data.otp);
+        
+        const payload: any = { otp: data.otp };
+        if (data.phone) {
+            payload.phone = data.phone;
+        } else if (data.email) {
+            payload.email = data.email;
+        }
+        
         return apiClient<any>(`/appointments/business/${businessSlug}/book/verify`, {
             method: 'POST',
-            body: JSON.stringify({ phone, otp })
+            body: JSON.stringify(payload)
         });
     },
 

@@ -1,121 +1,154 @@
-/**
- * Resolve API base URL safely
- */
-const API_BASE_URL =
-    (process.env.NEXT_PUBLIC_API_URL || "https://api.bookby247.com/api").replace(/\/$/, ""); // remove trailing slash
+export interface ApiClientOptions extends RequestInit {
+    baseUrl?: string
+    authToken?: string | null
+    /** Called when the server returns 401 and a Bearer token was sent (e.g. expired session). */
+    onUnauthorized?: () => void
+}
 
-/**
- * Normalize endpoint to avoid bugs like:
- * - missing leading slash
- * - double /api
- */
+const DEFAULT_API_BASE_URL =
+    (process.env.NEXT_PUBLIC_API_URL || "https://api.bookby247.com/api").replace(/\/$/, "")
+
 const normalizeEndpoint = (endpoint: string) => {
-    if (!endpoint) throw new Error("Endpoint is required");
+    if (!endpoint) throw new Error("Endpoint is required")
 
-    // Ensure leading slash
     if (!endpoint.startsWith("/")) {
-        endpoint = "/" + endpoint;
+        endpoint = `/${endpoint}`
     }
 
-    // Prevent double /api
     if (endpoint.startsWith("/api/")) {
-        endpoint = endpoint.replace(/^\/api/, "");
+        endpoint = endpoint.replace(/^\/api/, "")
     }
 
-    return endpoint;
-};
+    return endpoint
+}
 
-/**
- * Enhanced fetch wrapper
- */
+const csrfTokenCache: Record<string, string> = {}
+
+const fetchCsrfToken = async (baseUrl: string, credentials: RequestCredentials = "include") => {
+    const baseOrigin = new URL(baseUrl).origin
+    if (csrfTokenCache[baseOrigin]) {
+        return csrfTokenCache[baseOrigin]
+    }
+
+    const tokenUrl = `${baseOrigin}/csrf-token`
+    const tokenResponse = await fetch(tokenUrl, {
+        method: "GET",
+        credentials,
+        headers: {
+            Accept: "application/json",
+        },
+    })
+
+    if (!tokenResponse.ok) {
+        let errorData = {}
+        try {
+            errorData = await tokenResponse.json()
+        } catch { }
+        console.error(`[apiClient] CSRF token fetch failed -> ${tokenUrl}`, errorData)
+        throw new Error("Unable to retrieve CSRF token")
+    }
+
+    const tokenBody = await tokenResponse.json()
+    if (!tokenBody?.csrfToken) {
+        throw new Error("Invalid CSRF token response")
+    }
+
+    csrfTokenCache[baseOrigin] = tokenBody.csrfToken
+    return tokenBody.csrfToken
+}
+
 export async function apiClient<T>(
     endpoint: string,
-    options: RequestInit = {}
+    options: ApiClientOptions = {}
 ): Promise<T> {
-    const normalizedEndpoint = normalizeEndpoint(endpoint);
-    const url = `${API_BASE_URL}${normalizedEndpoint}`;
+    const { baseUrl, authToken, onUnauthorized, ...requestInit } = options
+    const normalizedEndpoint = normalizeEndpoint(endpoint)
+    const apiBaseUrl = (baseUrl || DEFAULT_API_BASE_URL).replace(/\/$/, "")
+    const url = `${apiBaseUrl}${normalizedEndpoint}`
 
-    // 🔥 Debug (remove in production)
-    console.log("🌐 API CALL →", url);
+    let response: Response
 
-    let response: Response;
+    const method = (requestInit.method || "GET").toString().toUpperCase()
+    const headers = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+        ...(requestInit.headers || {}),
+    } as Record<string, string>
+
+    if (!["GET", "HEAD", "OPTIONS"].includes(method) && !headers["x-csrf-token"]) {
+        const csrfToken = await fetchCsrfToken(apiBaseUrl, (requestInit.credentials as RequestCredentials) || "include")
+        headers["x-csrf-token"] = csrfToken
+    }
 
     try {
         response = await fetch(url, {
-            ...options,
-            headers: {
-                "Content-Type": "application/json",
-                ...(options.headers || {}),
-            },
-            // Use the cache option from options if provided, otherwise default to "no-store" for dynamic routes
-            // but allow Next.js memoization by not forcing no-store if not explicitly asked
-            cache: options.cache || "default", 
-        });
+            ...requestInit,
+            headers,
+            cache: requestInit.cache || "default",
+        })
     } catch (error) {
-        console.error(`[apiClient] ❌ Network error → ${url}`, error);
-        throw new Error("Network error: Unable to reach server");
+        console.error(`[apiClient] Network error -> ${url}`, error)
+        throw new Error("Network error: Unable to reach server")
     }
 
-    // Handle non-2xx responses
     if (!response.ok) {
-        let errorData: any = {};
+        let errorData: any = {}
         try {
-            errorData = await response.json();
+            errorData = await response.json()
         } catch { }
 
-        console.error(
-            `[apiClient] ❌ API Error ${response.status} → ${url}`,
-            errorData
-        );
-
-        throw new Error(
-            errorData?.message || `API Error: ${response.status}`
-        );
+        console.error(`[apiClient] API Error ${response.status} -> ${url}`, errorData)
+        if (response.status === 401 && authToken) {
+            try {
+                onUnauthorized?.()
+            } catch {
+                /* ignore listener errors */
+            }
+        }
+        throw new Error(errorData?.message || `API Error: ${response.status}`)
     }
 
-    // Parse JSON safely
-    let data: any;
+    let data: any
     try {
-        data = await response.json();
+        data = await response.json()
     } catch (error) {
-        console.error("[apiClient] ❌ Invalid JSON:", error);
-        throw new Error("Invalid JSON response");
+        console.error("[apiClient] Invalid JSON:", error)
+        throw new Error("Invalid JSON response")
     }
 
-    // Handle encrypted response
-    let encryptedStr: string | null = null;
+    let encryptedStr: string | null = null
 
     if (typeof data === "string") {
-        encryptedStr = data;
+        encryptedStr = data
     } else if (data?.payload && typeof data.payload === "string") {
-        encryptedStr = data.payload;
+        encryptedStr = data.payload
     }
 
     if (encryptedStr) {
         try {
-            const key = "secure-reviews-key";
-            const keyLen = key.length;
+            const key = "secure-reviews-key"
+            const keyLen = key.length
+            const keyCodes = new Uint8Array(keyLen)
 
-            const keyCodes = new Uint8Array(keyLen);
             for (let i = 0; i < keyLen; i++) {
-                keyCodes[i] = key.charCodeAt(i);
+                keyCodes[i] = key.charCodeAt(i)
             }
 
-            const binaryString = atob(encryptedStr);
-            const len = binaryString.length;
-            const bytes = new Uint8Array(len);
+            const binaryString = atob(encryptedStr)
+            const bytes = new Uint8Array(binaryString.length)
 
-            for (let i = 0; i < len; i++) {
-                bytes[i] = binaryString.charCodeAt(i) ^ keyCodes[i % keyLen];
+            for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i) ^ keyCodes[i % keyLen]
             }
 
-            const decoded = new TextDecoder().decode(bytes);
-            return JSON.parse(decoded) as T;
-        } catch (e) {
-            console.error("[apiClient] ❌ Decryption failed:", e);
-            return data as T;
+            const decoded = new TextDecoder().decode(bytes)
+            return JSON.parse(decoded) as T
+        } catch (error) {
+            console.error("[apiClient] Decryption failed:", error)
+            return data as T
         }
     }
 
-    return data as T;
+    return data as T
 }

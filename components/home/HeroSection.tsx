@@ -4,7 +4,7 @@ import { HeroSearch } from './HeroSearch'
 
 const HeroSection = () => {
     return (
-        <section aria-label="Hero — Book spas and salons" className="relative isolate overflow-hidden">
+        <section aria-label="Hero - Book spas and salons" className="relative isolate overflow-hidden">
             <div className="absolute inset-0 bg-linear-to-b from-rose-50 via-white to-fuchsia-50" aria-hidden="true" />
             <div className="absolute inset-0" aria-hidden="true">
                 <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-fuchsia-300/40 blur-3xl" />

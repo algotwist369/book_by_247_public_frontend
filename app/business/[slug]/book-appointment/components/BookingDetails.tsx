@@ -1,9 +1,9 @@
 import React from 'react';
-import { User, Phone } from 'lucide-react';
+import { User, Phone, Mail, MessageSquare, Smartphone } from 'lucide-react';
 
 interface BookingDetailsProps {
-    formData: { name: string; phone: string; notes: string };
-    onUpdateForm: (data: Partial<{ name: string; phone: string; notes: string }>) => void;
+    formData: { name: string; phone: string; email: string; notes: string; otpChannel: 'email' | 'sms' };
+    onUpdateForm: (data: Partial<{ name: string; phone: string; email: string; notes: string; otpChannel: 'email' | 'sms' }>) => void;
 }
 
 const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
@@ -13,8 +13,8 @@ const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
         if (digitsOnly.length === 0) return '';
         if (digitsOnly.length < 10) return `Enter ${10 - digitsOnly.length} more digit${10 - digitsOnly.length > 1 ? 's' : ''}`;
         if (!/^[6-9]/.test(digitsOnly)) return 'Must start with 6, 7, 8, or 9';
-        if (/^(\d)\1{9}$/.test(digitsOnly)) return 'Invalid number — all digits are the same';
-        if (/^(0123456789|1234567890|9876543210)$/.test(digitsOnly)) return 'Invalid number — sequential digits';
+        if (/^(\d)\1{9}$/.test(digitsOnly)) return 'Invalid number - all digits are the same';
+        if (/^(0123456789|1234567890|9876543210)$/.test(digitsOnly)) return 'Invalid number - sequential digits';
         return '';
     };
 
@@ -23,9 +23,13 @@ const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
     const showPhoneError = digitsOnly.length > 0 && !!phoneError;
 
     const handlePhoneChange = (value: string) => {
-        // Strip everything except digits
         const cleaned = value.replace(/\D/g, '').slice(0, 10);
         onUpdateForm({ phone: cleaned });
+    };
+
+    const handleOtpChannelChange = (channel: 'email' | 'sms') => {
+        console.log('🎯 OTP channel selected:', channel);
+        onUpdateForm({ otpChannel: channel });
     };
 
     return (
@@ -68,6 +72,54 @@ const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
                     {isPhoneValid && (
                         <p className="text-xs text-black mt-1">✓ Valid phone number</p>
                     )}
+                </div>
+
+                <div>
+                    <label className="text-xs font-semibold text-black uppercase tracking-wider mb-1.5 block">Email Address <span className="text-gray-500 normal-case tracking-normal">(optional)</span></label>
+                    <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <input
+                            type="email"
+                            placeholder="you@example.com"
+                            className="w-full h-11 pl-10 pr-3 bg-white border border-gray-200 rounded-lg focus:border-black outline-none text-sm text-black placeholder:text-gray-400"
+                            value={formData.email}
+                            onChange={(e) => onUpdateForm({ email: e.target.value })}
+                        />
+                    </div>
+                </div>
+
+                <div>
+                    <label className="text-xs font-semibold text-black uppercase tracking-wider mb-1.5 block">Send OTP via</label>
+                    <div className="flex items-center gap-6">
+                        <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                                type="radio"
+                                name="otpChannel"
+                                value="email"
+                                checked={formData.otpChannel === 'email'}
+                                onChange={() => handleOtpChannelChange('email')}
+                                className="w-4 h-4 text-zinc-900 bg-gray-100 border-gray-300 focus:ring-zinc-900"
+                            />
+                            <span className="text-sm text-gray-700 flex items-center gap-1">
+                                <Mail className="w-3.5 h-3.5" />
+                                Email
+                            </span>
+                        </label>
+                        <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                                type="radio"
+                                name="otpChannel"
+                                value="sms"
+                                checked={formData.otpChannel === 'sms'}
+                                onChange={() => handleOtpChannelChange('sms')}
+                                className="w-4 h-4 text-zinc-900 bg-gray-100 border-gray-300 focus:ring-zinc-900"
+                            />
+                            <span className="text-sm text-gray-700 flex items-center gap-1">
+                                <Smartphone className="w-3.5 h-3.5" />
+                                SMS
+                            </span>
+                        </label>
+                    </div>
                 </div>
 
                 <div>

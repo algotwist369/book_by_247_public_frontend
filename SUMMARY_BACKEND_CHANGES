@@ -1,0 +1,79 @@
+## 📋 Complete Summary of All Backend Updates
+### 1. AWS SES Integration (Primary Email Service)
+- Replaced nodemailer with AWS SES in utils/sendMail.js
+- Uses existing AWS credentials: AWS_ACCESS_KEY_ID , AWS_SECRET_ACCESS_KEY , AWS_REGION
+- Sender Email : notify@bookby247.com (default, can override with SES_SENDER_EMAIL or EMAIL_FROM env vars)
+- All existing email templates continue to work exactly as before
+- Maintains queuing, concurrency, and fallback mechanisms
+### 2. OTP Verification Email Template
+- Created emailTemplates/otpVerification.js - simple black & white design
+- Variables: {{ otp }} , {{ expiryMinutes }}
+- Sender : no-reply@bookby247.com (configurable with OTP_SENDER_EMAIL env var)
+- Includes copy button and hint text for better UX
+### 3. OTP Channel Selection Feature (New!)
+Users can now choose between email or sms for OTP verification.
+
+APIs Updated:
+
+- All APIs accept otpChannel parameter (values: "email" or "sms" )
+- Default mode : email (if no otpChannel specified)
+Which APIs Support This:
+
+1. Auth OTP ( POST /api/auth/send-otp )
+2. Inquiry OTP (inquiry related endpoints)
+3. Appointment Booking OTP (public booking flow)
+### 4. Frontend Changes Needed: For OTP Sending:
+Add otpChannel parameter to your OTP request payloads:
+
+```
+// Option 1: Send OTP via Email (DEFAULT)
+{
+  email: "user@example.com",
+  // otpChannel not needed - defaults to "email"
+}
+
+// OR
+
+{
+  phone: "9876543210",
+  otpChannel: "email" // will send OTP to customer's email if available
+}
+
+// Option 2: Send OTP via SMS
+{
+  phone: "9876543210",
+  otpChannel: "sms"
+}
+``` For OTP Verification:
+Also updated to accept both phone and email for verification:
+
+```
+// Verify via Email
+{
+  email: "user@example.com",
+  otp: "1234"
+}
+
+// Verify via Phone
+{
+  phone: "9876543210",
+  otp: "1234"
+}
+```
+### 5. Appointment Confirmation Template Fixed:
+Updated appointmentController.js to pass all required variables to the template:
+
+- Added: duration , amount , status , statusCheckUrl
+- Both createAppointment and confirmAppointment functions now send complete data
+### 6. Template Compilation Enhanced:
+Updated compileTemplate in utils/sendMail.js to handle spaces in variables like {{ otp }} (not just {{otp}} )
+
+### Quick Reference:
+Feature Details Email Provider AWS SES Default OTP Channel Email OTP Email Sender no-reply@bookby247.com Appointment Email Sender notify@bookby247.com otpChannel Values "email" or "sms" Backward Compatible ✅ Yes - no breaking changes
+
+Your frontend should:
+
+1. Add OTP channel selection UI (Email / SMS)
+2. Send otpChannel parameter when requesting OTP
+3. Support both email and phone for OTP verification
+All other functionality remains exactly the same! 🎉

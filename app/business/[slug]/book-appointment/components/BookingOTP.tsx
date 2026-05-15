@@ -1,20 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Loader2, ArrowRight, MessageSquare } from 'lucide-react';
+import { Loader2, ArrowRight, MessageSquare, Mail } from 'lucide-react';
 
 interface BookingOTPProps {
-    phone: string;
+    otpChannel: 'email' | 'sms';
+    phone?: string;
+    email?: string;
     onVerify: (otp: string) => Promise<void> | void;
     onResend: () => void;
     isLoading: boolean;
     error?: string | null;
 }
 
-const BookingOTP = ({ phone, onVerify, onResend, isLoading, error = null }: BookingOTPProps) => {
+const BookingOTP = ({ otpChannel, phone, email, onVerify, onResend, isLoading, error = null }: BookingOTPProps) => {
     const [otp, setOtp] = useState(['', '', '', '']);
     const inputRefs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
 
     useEffect(() => {
-        // Auto focus first input
         inputRefs[0].current?.focus();
     }, []);
 
@@ -25,7 +26,6 @@ const BookingOTP = ({ phone, onVerify, onResend, isLoading, error = null }: Book
         newOtp[index] = value.substring(value.length - 1);
         setOtp(newOtp);
 
-        // Focus next input
         if (value && index < 3) {
             inputRefs[index + 1].current?.focus();
         }
@@ -51,12 +51,20 @@ const BookingOTP = ({ phone, onVerify, onResend, isLoading, error = null }: Book
             <div className="bg-white rounded-xl border border-zinc-200 p-6 sm:p-8 shadow-sm">
                 <div className="flex flex-col items-center text-center mb-8">
                     <div className="w-12 h-12 bg-zinc-50 rounded-full flex items-center justify-center mb-4">
-                        <MessageSquare className="w-6 h-6 text-zinc-900" />
+                        {otpChannel === 'email' ? (
+                            <Mail className="w-6 h-6 text-zinc-900" />
+                        ) : (
+                            <MessageSquare className="w-6 h-6 text-zinc-900" />
+                        )}
                     </div>
-                    <h2 className="text-lg font-black text-zinc-900 tracking-tight">Verify Your Phone</h2>
+                    <h2 className="text-lg font-black text-zinc-900 tracking-tight">
+                        {otpChannel === 'email' ? 'Verify Your Email' : 'Verify Your Phone'}
+                    </h2>
                     <p className="text-zinc-500 text-xs mt-2 leading-relaxed">
                         We've sent a 4-digit verification code to <br />
-                        <span className="font-bold text-zinc-900">+91 {phone}</span>
+                        <span className="font-bold text-zinc-900">
+                            {otpChannel === 'email' && email ? email : `+91 ${phone}`}
+                        </span>
                     </p>
                 </div>
 

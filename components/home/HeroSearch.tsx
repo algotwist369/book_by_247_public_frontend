@@ -4,7 +4,7 @@ import React from 'react'
 import { SearchBar } from '../ui/SearchBar'
 import { useRouter } from 'next/navigation'
 
-// Isolated client component — only the router-dependent part
+// Isolated client component - only the router-dependent part
 export const HeroSearch = () => {
     const router = useRouter()
 

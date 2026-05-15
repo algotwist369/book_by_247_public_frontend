@@ -56,7 +56,7 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
     const [selectedServices, setSelectedServices] = useState<{ serviceId: string | number; optionIdx: number; addOnIds: string[] }[]>([]);
     const [selectedDate, setSelectedDate] = useState<string>('');
     const [selectedTime, setSelectedTime] = useState<string>('');
-    const [formData, setFormData] = useState({ name: '', phone: '', notes: '' });
+    const [formData, setFormData] = useState<{ name: string; phone: string; email: string; notes: string; otpChannel: 'email' | 'sms' }>({ name: '', phone: '', email: '', notes: '', otpChannel: 'email' });
     const [paymentMethod, setPaymentMethod] = useState<'cash' | 'online' | ''>('');
     const [confirmationCode, setConfirmationCode] = useState<string>('');
     const [confirmedAppointment, setConfirmedAppointment] = useState<ConfirmedAppointment | null>(null);
@@ -81,7 +81,15 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
     });
 
     const verifyOtpMutation = useMutation({
-        mutationFn: (otp: string) => appointmentApi.verifyOTP(business.slug, formData.phone, otp),
+        mutationFn: (otp: string) => {
+            const verifyData: any = { otp };
+            if (formData.otpChannel === 'email' && formData.email) {
+                verifyData.email = formData.email;
+            } else {
+                verifyData.phone = formData.phone;
+            }
+            return appointmentApi.verifyOTP(business.slug, verifyData);
+        },
         onSuccess: (response) => {
             if (response.success) {
                 const code = response.data?.confirmationCode || response.data?.appointment?.bookingNumber || 'CONFIRMED';
@@ -117,7 +125,7 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
                     setSelectedServices(parsedServices);
                     setSelectedDate(parsed.selectedDate || '');
                     setSelectedTime(parsed.selectedTime || '');
-                    setFormData(parsed.formData || { name: '', phone: '', notes: '' });
+                    setFormData(parsed.formData || { name: '', phone: '', email: '', notes: '', otpChannel: 'email' });
                     setPaymentMethod(parsed.paymentMethod || '');
                     if (parsed.step && parsed.step !== 'success') {
                         setStep(parsed.step);
@@ -302,7 +310,9 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
             customerInfo: {
                 name: formData.name,
                 phone: formData.phone,
+                email: formData.email || undefined,
             },
+            otpChannel: formData.otpChannel,
             appointmentDate: selectedDate,
             startTime: normalizedStartTime,
             endTime: addMinutesToTime(normalizedStartTime, durationTotal),
@@ -327,7 +337,10 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
     };
 
     const handleConfirm = () => {
-        bookingMutation.mutate(getBookingData());
+        const bookingData = getBookingData();
+        console.log('📤 Booking data being sent:', bookingData);
+        console.log('📱 formData.otpChannel:', formData.otpChannel);
+        bookingMutation.mutate(bookingData);
     };
 
     const isNextEnabled =
@@ -401,7 +414,9 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
 
                         {step === 'otp' && (
                             <BookingOTP
+                                otpChannel={formData.otpChannel}
                                 phone={formData.phone}
+                                email={formData.email}
                                 onVerify={(otp) => verifyOtpMutation.mutate(otp)}
                                 onResend={() => bookingMutation.mutate(getBookingData())}
                                 isLoading={verifyOtpMutation.isPending}

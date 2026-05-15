@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
 
     const title = `Top ${displayCount} Best ${tagName} Services Near Me | Book Online 24/7`;
-    const description = `Find and book the best ${tagName} professionals in your area. Compare verified reviews, transparent pricing, and instant availability. Skip the wait—book your ${tagName} appointment online via Bookby247 today.`;
+    const description = `Find and book the best ${tagName} professionals in your area. Compare verified reviews, transparent pricing, and instant availability. Skip the wait-book your ${tagName} appointment online via Bookby247 today.`;
     const keywords = [
         `${tag}`,
         `${tag} services near me`,

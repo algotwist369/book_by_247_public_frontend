@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { businessApi } from "@/api/public/business";
+import { blogApi } from "@/api/public/blog";
 
 const BASE_URL = "https://bookby247.com";
 
@@ -18,6 +19,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/blog/latest`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/blog/popular`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/blog/trending`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.8,
     },
     {
       url: `${BASE_URL}/free-listing`,
@@ -48,6 +73,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamic SEO Listing Routes from database
   let dynamicSeoRoutes: MetadataRoute.Sitemap = [];
   let businessDetailRoutes: MetadataRoute.Sitemap = [];
+  let blogRoutes: MetadataRoute.Sitemap = [];
 
   try {
     const sitemapDataResponse = await businessApi.getSeoSitemapData();
@@ -156,6 +182,37 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   } catch (err) {
     console.error("Error fetching sitemap data:", err);
+  }
+
+  try {
+    const [blogListing, categoriesResponse, tagsResponse] = await Promise.all([
+      blogApi.listBlogs({ limit: 100, sort: "-publishedAt" }),
+      blogApi.getCategories(),
+      blogApi.getTags(),
+    ]);
+
+    blogRoutes = [
+      ...blogListing.data.map((blog) => ({
+        url: `${BASE_URL}/blog/${blog.slug}`,
+        lastModified: blog.updatedAt ? new Date(blog.updatedAt) : new Date(),
+        changeFrequency: "weekly" as const,
+        priority: 0.8,
+      })),
+      ...categoriesResponse.data.map((category) => ({
+        url: `${BASE_URL}/blog/category/${category.slug}`,
+        lastModified: new Date(),
+        changeFrequency: "weekly" as const,
+        priority: 0.7,
+      })),
+      ...tagsResponse.data.map((tag) => ({
+        url: `${BASE_URL}/blog/tag/${tag.slug}`,
+        lastModified: new Date(),
+        changeFrequency: "weekly" as const,
+        priority: 0.7,
+      })),
+    ];
+  } catch (error) {
+    console.error("Error fetching blog sitemap data:", error);
   }
 
   // 3. Near Me SEO Routes (Cleaned up list of high-intent categories)
@@ -283,6 +340,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...dynamicSeoRoutes, ...businessDetailRoutes, ...nearMeRoutes, ...popularSearchRoutes];
+  return [...staticRoutes, ...dynamicSeoRoutes, ...businessDetailRoutes, ...blogRoutes, ...nearMeRoutes, ...popularSearchRoutes];
 }
 

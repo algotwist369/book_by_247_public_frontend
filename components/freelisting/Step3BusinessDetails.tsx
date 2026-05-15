@@ -59,7 +59,7 @@ export default function Step3BusinessDetails({ onSubmit, onBack, initial, loadin
           Business Details
         </h2>
         <p style={{ fontSize: "14px", color: "var(--muted)", fontFamily: "var(--font-body)" }}>
-          Last step — tell us about your business.
+          Last step - tell us about your business.
         </p>
       </div>
 

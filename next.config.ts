@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
   },
 
   images: {
-    // Allow images from any HTTPS source — needed because business images
+    // Allow images from any HTTPS source - needed because business images
     // are scraped from a wide variety of third-party domains (JustDial,
     // Cloudinary, Google, Unsplash, etc.) that can't all be whitelisted.
     remotePatterns: [
@@ -34,12 +34,12 @@ const nextConfig: NextConfig = {
   async headers() {
     const isProd = process.env.NODE_ENV === "production";
     const csp = isProd
-      ? "default-src 'self' https: data: blob:; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https:; img-src 'self' https: data: blob:; font-src 'self' https: data:; connect-src 'self' https: wss: https://cloudflareinsights.com https://maps.googleapis.com http://localhost:5000 http://localhost:9004 http://127.0.0.1:9004; frame-src 'self' https:;"
-      : "default-src 'self' https: data: blob:; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https:; img-src 'self' https: data: blob:; font-src 'self' https: data:; connect-src 'self' https: wss: https://cloudflareinsights.com https://maps.googleapis.com http://localhost:5000 http://localhost:9004 http://127.0.0.1:9004; frame-src 'self' https:;";
+      ? "default-src 'self' https: data: blob:; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https:; img-src 'self' https: data: blob:; font-src 'self' https: data:; connect-src 'self' https: wss: https://cloudflareinsights.com https://maps.googleapis.com http://localhost:9009 http://localhost:9004 http://127.0.0.1:9004; frame-src 'self' https:;"
+      : "default-src 'self' https: data: blob:; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https:; img-src 'self' https: data: blob:; font-src 'self' https: data:; connect-src 'self' https: wss: https://cloudflareinsights.com https://maps.googleapis.com http://localhost:9009 http://localhost:9004 http://127.0.0.1:9004; frame-src 'self' https:;";
 
     return [
       {
-        // Static assets (JS/CSS/images) — immutable for 1 year
+        // Static assets (JS/CSS/images) - immutable for 1 year
         source: "/_next/static/:path*",
         headers: [
           {
@@ -49,7 +49,7 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // Next.js image optimization endpoint — cache for 1 day
+        // Next.js image optimization endpoint - cache for 1 day
         source: "/_next/image",
         headers: [
           {
@@ -59,7 +59,7 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // Pages with ISR — stale-while-revalidate
+        // Pages with ISR - stale-while-revalidate
         source: "/(.*)",
         headers: [
           {
