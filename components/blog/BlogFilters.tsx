@@ -25,6 +25,7 @@ export function BlogFilters({ categories, tags }: BlogFiltersProps) {
                                     {i > 0 ? <span className="mx-1 text-gray-300">·</span> : null}
                                     <button
                                         type="button"
+                                        aria-label={`Filter by category: ${category.name}`}
                                         onClick={() => router.push(`/blog/category/${category.slug}`)}
                                         className="rounded-sm px-0.5 text-left hover:bg-gray-950/[0.06] hover:underline"
                                     >
@@ -44,6 +45,7 @@ export function BlogFilters({ categories, tags }: BlogFiltersProps) {
                                 <button
                                     key={tag.slug}
                                     type="button"
+                                    aria-label={`Filter by tag: ${tag.name}`}
                                     onClick={() => router.push(`/blog/tag/${tag.slug}`)}
                                     className={cn(blogTagChipClassName, "cursor-pointer text-left")}
                                 >

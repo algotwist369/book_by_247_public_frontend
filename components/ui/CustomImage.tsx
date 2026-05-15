@@ -46,6 +46,8 @@ const CustomImage = ({
     containerClassName,
     fallback = GLOBAL_PLACEHOLDER,
     unoptimized,
+    loading,
+    priority,
     ...props
 }: CustomImageProps) => {
     const normalizeSrc = (s: string | undefined): string => {
@@ -86,6 +88,7 @@ const CustomImage = ({
     }
 
     const isFill = !!props.fill;
+    const effectiveLoading = priority ? "eager" : (loading ?? "lazy");
 
     return (
         <div className={cn(
@@ -103,6 +106,8 @@ const CustomImage = ({
                     "duration-500 ease-in-out opacity-100",
                     className
                 )}
+                loading={effectiveLoading}
+                priority={priority}
                 onLoad={() => {
                     setIsLoading(false);
                 }}

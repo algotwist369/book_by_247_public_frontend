@@ -19,6 +19,8 @@ export function BookmarkButton({
 
     return (
         <button
+            type="button"
+            aria-label={isBookmarked ? "Remove from saved articles" : "Save article"}
             onClick={async () => {
                 const allowed = requireAuth()
                 if (!allowed) {

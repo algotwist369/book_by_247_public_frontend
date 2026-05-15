@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState, useRef } from "react"
 import { cn } from "@/lib/utils"
 
 export function TableOfContents({
@@ -12,6 +12,8 @@ export function TableOfContents({
     compact?: boolean
 }) {
     const [activeId, setActiveId] = useState<string | null>(null)
+    const activeIdRef = useRef<string | null>(null)
+    const tickingRef = useRef(false)
 
     const headingIds = useMemo(() => headings.map((h) => h.id), [headings])
 
@@ -22,7 +24,7 @@ export function TableOfContents({
 
         if (elements.length === 0) return
 
-        const handleScroll = () => {
+        const updateActiveId = () => {
             const scrollPosition = window.scrollY + window.innerHeight * 0.25
 
             let currentActiveId = null
@@ -38,13 +40,23 @@ export function TableOfContents({
                 }
             }
 
-            if (currentActiveId !== activeId) {
+            if (currentActiveId !== activeIdRef.current) {
+                activeIdRef.current = currentActiveId
                 setActiveId(currentActiveId)
+            }
+
+            tickingRef.current = false
+        }
+
+        const handleScroll = () => {
+            if (!tickingRef.current) {
+                window.requestAnimationFrame(updateActiveId)
+                tickingRef.current = true
             }
         }
 
         window.addEventListener("scroll", handleScroll, { passive: true })
-        handleScroll()
+        updateActiveId()
 
         return () => {
             window.removeEventListener("scroll", handleScroll)

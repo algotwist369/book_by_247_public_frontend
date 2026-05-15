@@ -19,6 +19,8 @@ export function LikeButton({
 
     return (
         <button
+            type="button"
+            aria-label={liked ? "Unlike article" : "Like article"}
             onClick={async () => {
                 if (!requireAuth()) return
                 const nextLiked = !liked

@@ -67,6 +67,7 @@ export function BlogSearch({ initialValue = "", className = "", inputClassName =
                         <button
                             key={`${suggestion.href}-${suggestion.label}`}
                             type="button"
+                            aria-label={`Go to ${suggestion.label}`}
                             onClick={() => router.push(suggestion.href)}
                             className="w-full px-3 py-2.5 text-left text-[14px] text-gray-900 outline-none hover:bg-gray-50"
                         >
