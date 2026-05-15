@@ -10,7 +10,7 @@ export function FeaturedBlogCard({ blog }: { blog: BlogArticle }) {
             <div className="mt-4 flex flex-col gap-6 sm:flex-row sm:gap-10">
                 {blog.featuredImage?.url ? (
                     <Link href={`/blog/${blog.slug}`} className="relative shrink-0 sm:w-[200px] md:w-[240px]">
-                        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-md bg-gray-100">
+                        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-md bg-gray-100">
                             <CustomImage
                                 src={blog.featuredImage.url}
                                 alt={blog.featuredImage.alt || blog.title}

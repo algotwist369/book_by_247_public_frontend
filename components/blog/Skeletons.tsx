@@ -6,9 +6,9 @@ export function BlogCardSkeleton() {
     return (
         <article className="border border-gray-200 bg-white">
             <div className="flex flex-col gap-6 rounded-md p-4 sm:flex-row sm:gap-8">
-                {/* Thumbnail - matches BlogCard fixed heights */}
+                {/* Thumbnail - 16:9 aspect ratio matching BlogCard */}
                 <div
-                    className={`h-[120px] w-full max-h-[120px] shrink-0 rounded-md ${pulse} sm:h-[144px] sm:w-[200px] sm:max-h-[144px] sm:max-w-[200px]`}
+                    className={`w-full shrink-0 rounded-md ${pulse} aspect-[16/9] sm:w-[200px] md:w-[240px]`}
                     aria-hidden
                 />
                 <div className="min-w-0 flex-1 space-y-3">

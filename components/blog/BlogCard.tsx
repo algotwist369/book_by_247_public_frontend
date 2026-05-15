@@ -8,9 +8,9 @@ interface BlogCardProps {
     blog: BlogArticle
 }
 
-/** Thumbnail box: fixed height so card rows align regardless of image aspect ratio */
+/** Thumbnail box: 16:9 aspect ratio for consistent display across devices */
 const CARD_IMAGE_CLASSES =
-    "relative block h-[120px] w-full max-h-[120px] shrink-0 overflow-hidden rounded-md bg-gray-100 sm:h-[144px] sm:w-[200px] sm:max-h-[144px] sm:max-w-[200px]"
+    "relative block w-full shrink-0 overflow-hidden rounded-md bg-gray-100 aspect-[16/9] sm:w-[200px] md:w-[240px]"
 
 export function BlogCard({ blog }: BlogCardProps) {
     const fallbackImg = "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f"
