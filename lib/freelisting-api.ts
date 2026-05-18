@@ -1,3 +1,5 @@
+import { getUtmAttributionHeader } from "@/lib/utm-tracking";
+
 const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.bookby247.com/api";
 
 export interface ListingPayload {
@@ -12,9 +14,14 @@ export interface ListingPayload {
 }
 
 export const submitListing = async (data: ListingPayload) => {
+  const attributionHeader = getUtmAttributionHeader();
+
   const response = await fetch(`${NEXT_PUBLIC_API_URL}/listing/submit`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      ...(attributionHeader ? { "X-UTM-Attribution": attributionHeader } : {}),
+    },
     body: JSON.stringify(data),
   });
   

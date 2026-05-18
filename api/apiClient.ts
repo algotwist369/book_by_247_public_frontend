@@ -1,6 +1,9 @@
+import { getUtmAttributionHeader } from "@/lib/utm-tracking"
+
 export interface ApiClientOptions extends RequestInit {
     baseUrl?: string
     authToken?: string | null
+    includeAttribution?: boolean
     /** Called when the server returns 401 and a Bearer token was sent (e.g. expired session). */
     onUnauthorized?: () => void
 }
@@ -61,7 +64,7 @@ export async function apiClient<T>(
     endpoint: string,
     options: ApiClientOptions = {}
 ): Promise<T> {
-    const { baseUrl, authToken, onUnauthorized, ...requestInit } = options
+    const { baseUrl, authToken, includeAttribution, onUnauthorized, ...requestInit } = options
     const normalizedEndpoint = normalizeEndpoint(endpoint)
     const apiBaseUrl = (baseUrl || DEFAULT_API_BASE_URL).replace(/\/$/, "")
     const url = `${apiBaseUrl}${normalizedEndpoint}`
@@ -75,6 +78,12 @@ export async function apiClient<T>(
         ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
         ...(requestInit.headers || {}),
     } as Record<string, string>
+
+    const shouldIncludeAttribution = includeAttribution ?? (!baseUrl && !["GET", "HEAD", "OPTIONS"].includes(method))
+    const attributionHeader = shouldIncludeAttribution ? getUtmAttributionHeader() : null
+    if (attributionHeader && !headers["X-UTM-Attribution"] && !headers["x-utm-attribution"]) {
+        headers["X-UTM-Attribution"] = attributionHeader
+    }
 
     if (!["GET", "HEAD", "OPTIONS"].includes(method) && !headers["x-csrf-token"]) {
         const csrfToken = await fetchCsrfToken(apiBaseUrl, (requestInit.credentials as RequestCredentials) || "include")

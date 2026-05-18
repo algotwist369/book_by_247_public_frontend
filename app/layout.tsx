@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Suspense } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -267,6 +268,7 @@ import { BottomNav } from "@/components/layout/BottomNav";
 import StructuredData from "@/components/seo/StructuredData";
 import Script from "next/script";
 import QueryProvider from "@/providers/QueryProvider";
+import UtmTracker from "@/components/analytics/UtmTracker";
 
 export default function RootLayout({
   children,
@@ -319,6 +321,9 @@ export default function RootLayout({
         )}
 
         <QueryProvider>
+          <Suspense fallback={null}>
+            <UtmTracker />
+          </Suspense>
           <StructuredData />
           <Navbar />
           <FloatingActionButtons />
