@@ -5,21 +5,21 @@ import { CustomImage } from "@/components/ui/CustomImage";
 const features = [
   {
     icon: FiClock,
-    title: "Instant Booking",
+    title: "Instant spa and salon booking",
     description:
-      "Confirmation in under 60 seconds. No more waiting for callbacks.",
+      "Book massage, haircut, facial, waxing, nail and grooming appointments online without waiting for callbacks.",
   },
   {
     icon: FiMapPin,
-    title: "Hyper-local Search",
+    title: "Hyper-local beauty search",
     description:
-      "Discover hidden gems right in your neighborhood with real-time availability.",
+      "Find salons, spas, beauty parlours and massage centers near your city, area or neighborhood.",
   },
   {
     icon: FiStar,
-    title: "Authentic Reviews",
+    title: "Verified reviews and prices",
     description:
-      "Only verified customers can leave reviews, ensuring you get the real picture.",
+      "Compare service menus, ratings, reviews and pricing before choosing the right wellness partner.",
   },
 ] as const;
 
@@ -35,8 +35,8 @@ const FeatureSection = () => {
               Why guests choose us
             </p>
             <h2 className="text-balance text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
-              Booking that feels
-              <span className="block text-rose-700">simple and reliable</span>
+              Search, compare and book
+              <span className="block text-rose-700">trusted beauty services</span>
             </h2>
           </div>
 

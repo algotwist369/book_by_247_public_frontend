@@ -7,43 +7,79 @@ import { businessApi } from "@/api/public/business";
 import HomeSeoTags from "@/components/seo/HomeSeoTags";
 
 export const metadata: Metadata = {
-  title: "Book Top Spas, Salons & Beauty Services Near Me - Online Booking | Bookby247",
+  title: "Spa & Salon Booking Near Me | Beauty Services India | Bookby247",
   description:
-    "Bookby247 is India's leading booking platform for top-rated spas, salons, and beauty services. Users can search by location, compare prices, read verified reviews, and book instant appointments for full body massage, hair spa, facials, and more in cities like Mumbai, Delhi, and Bangalore.",
+    "Find and book verified spas, salons, beauty parlours, massage centers, hair salons, facials, bridal makeup, waxing, manicure, pedicure, and grooming services near you across India.",
   keywords: [
     "spa near me",
     "salon near me",
     "beauty parlour near me",
+    "beauty salon near me",
     "massage near me",
+    "massage spa near me",
+    "body massage center near me",
     "hair salon near me",
+    "ladies salon near me",
+    "men salon near me",
+    "unisex salon near me",
     "spa booking online",
     "salon booking online",
+    "online spa appointment",
+    "online salon appointment",
     "beauty services near me",
     "best spa near me",
     "best salon near me",
     "body massage near me",
     "full body massage near me",
     "deep tissue massage near me",
+    "aromatherapy massage near me",
+    "thai massage near me",
+    "couple spa near me",
     "facial near me",
+    "cleanup facial near me",
+    "skin care salon near me",
     "haircut near me",
     "hair spa near me",
+    "hair colouring near me",
+    "keratin treatment near me",
+    "beard grooming near me",
     "manicure pedicure near me",
+    "nail art near me",
     "bridal makeup near me",
+    "makeup artist near me",
     "waxing near me",
     "threading near me",
+    "body polishing near me",
     "luxury spa near me",
-    "couple spa near me",
-    "unisex salon near me",
+    "affordable salon near me",
+    "spa offers near me",
+    "salon deals near me",
     "spa in Mumbai",
+    "salon in Mumbai",
+    "spa in Navi Mumbai",
+    "salon in Navi Mumbai",
     "salon in Delhi",
+    "spa in Delhi",
     "beauty parlour in Bangalore",
+    "salon in Bangalore",
     "spa in Pune",
     "salon in Hyderabad",
+    "spa in Hyderabad",
+    "beauty services in India",
     "massage in Navi Mumbai",
     "book spa appointment online",
     "book salon appointment online",
     "top rated salons with reviews",
     "top rated spas with reviews",
+    "spa management software",
+    "salon management software",
+    "beauty business management software",
+    "spa appointment management",
+    "salon CRM software",
+    "multi branch salon management",
+    "spa inventory management",
+    "salon campaign management",
+    "beauty salon billing software",
   ],
   authors: [{ name: "Bookby247 Team" }],
   alternates: {
@@ -61,9 +97,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Book Top Spas, Salons & Beauty Services Online | Bookby247",
+    title: "Book Verified Spas, Salons & Beauty Services Near You | Bookby247",
     description:
-      "Discover top-rated spas, salons, and beauty services near you across India. Compare prices, read real reviews, and book appointments instantly on Bookby247.",
+      "Search spas, salons, beauty parlours, massage centers, hair services, facials, waxing, nails, and bridal makeup near you. Compare prices, reviews, and book online.",
     url: "https://bookby247.com/",
     siteName: "Bookby247",
     type: "website",
@@ -79,9 +115,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Book Top Spas, Salons & Beauty Services Online | Bookby247",
+    title: "Spa, Salon & Beauty Services Near You | Bookby247",
     description:
-      "Find top-rated spas, salons & beauty services near you across India. Compare prices, read real reviews & book instantly on Bookby247.",
+      "Find verified spas, salons, massage, hair, skin, nail, grooming, and bridal beauty services near you. Compare reviews and book online.",
     images: ["https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png"],
     creator: "@bookby247",
   },
@@ -93,14 +129,19 @@ const FeatureSection = dynamic(() => import("@/components/home/FeatureSection"))
 const AppPromoSection = dynamic(() => import("@/components/home/AppPromoSection").then(m => m.AppPromoSection));
 const ForBusinesses = dynamic(() => import("@/components/home/ForBusinesses"));
 const ReviewsSection = dynamic(() => import("@/components/home/ReviewsSection").then(m => m.ReviewsSection));
+const PlatformOverviewSection = dynamic(() => import("@/components/home/PlatformOverviewSection"));
 const SEOFooter = dynamic(() => import("@/components/home/SEOFooter"));
-const PromotionBanner = dynamic(() => import("@/components/promotion/PromotionBanner").then(m => m.default));
 
 export const revalidate = 3600;
 
 import { generateItemListJsonLd, generateOrganizationJsonLd, generateWebSiteJsonLd, generateSeoTagsItemListJsonLd } from "@/lib/seo-jsonld";
 import { safeJsonLdStringify } from "@/lib/utils";
 import AiReadabilitySection from "@/components/seo/AiReadabilitySection";
+
+type HomeBusinessResponse = {
+  businesses?: Record<string, unknown>[];
+  data?: Record<string, unknown>[];
+};
 
 export default async function Home() {
   // Fetch initial data for SSR
@@ -114,9 +155,10 @@ export default async function Home() {
     return null;
   });
 
-  const businesses = (initialBusinessData as any)?.businesses || (initialBusinessData as any)?.data || [];
+  const homeBusinessResponse = initialBusinessData as HomeBusinessResponse | null;
+  const businesses = homeBusinessResponse?.businesses || homeBusinessResponse?.data || [];
   const tags = seoTagsData?.data || [];
-  
+
   const itemListJsonLd = {
     "@context": "https://schema.org",
     ...generateItemListJsonLd(businesses, "India", "Spas and Salons")
@@ -132,6 +174,36 @@ export default async function Home() {
   const seoTagsItemListJsonLd = {
     "@context": "https://schema.org",
     ...generateSeoTagsItemListJsonLd(tags)
+  };
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Bookby247?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Bookby247 is a wellness discovery, online appointment booking and business management platform for spas, salons, beauty parlours, massage centers and beauty businesses in India."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Bookby247 help customers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Customers can search nearby verified spas and salons, compare services and prices, read reviews and book appointments online without creating an account."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Bookby247 help spa and salon owners?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Business owners can manage multiple branches, appointments, customers, staff, inventory, enquiries, leads, campaigns, billing, finance, reports and analytics from one dashboard."
+        }
+      }
+    ]
   };
 
   return (
@@ -154,7 +226,11 @@ export default async function Home() {
           dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(seoTagsItemListJsonLd) }}
         />
       )}
-      
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(faqJsonLd) }}
+      />
+
       <HeroSection />
       <CategorySection />
 
@@ -177,8 +253,9 @@ export default async function Home() {
         }
       >
         <BusinessSection initialData={initialBusinessData} />
-        
+
       </Suspense>
+      <PlatformOverviewSection />
 
       {/* SEO Tags Section */}
       {tags.length > 0 && <HomeSeoTags tags={tags} />}

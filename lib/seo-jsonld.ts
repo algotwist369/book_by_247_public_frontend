@@ -1,15 +1,103 @@
-import { PublicBusiness } from "@/api/public/business";
+type SeoValue = string | number;
 
-export const generateLocalBusinessJsonLd = (business: any) => {
+type BusinessServiceOption = {
+  price?: SeoValue;
+  duration?: SeoValue;
+};
+
+type BusinessService = {
+  name?: string;
+  service_title?: string;
+  shortDescription?: string;
+  description?: string;
+  service_description?: string;
+  pricingOptions?: BusinessServiceOption[];
+  business?: string | {
+    name?: string;
+    slug?: string;
+  };
+  minPrice?: SeoValue;
+  service_min_price?: SeoValue;
+  maxPrice?: SeoValue;
+  service_max_price?: SeoValue;
+  rating?: SeoValue;
+  service_avg_rating?: SeoValue;
+  reviewsCount?: SeoValue;
+  service_reviews_count?: SeoValue;
+};
+
+type BusinessJsonLdInput = {
+  slug?: string;
+  bussiness_slug?: string;
+  workingHours?: {
+    working_hours?: {
+      days?: string[];
+      open?: string;
+      close?: string;
+    };
+    open?: string;
+    close?: string;
+  };
+  images?: string[];
+  name?: string;
+  business_title?: string;
+  description?: string;
+  business_dec?: string;
+  phone?: string;
+  business_contacts?: string;
+  email?: string;
+  address?: string;
+  city?: string;
+  branch?: string;
+  business_location?: string;
+  state?: string;
+  zip_code?: string;
+  pincode?: string;
+  ratings?: {
+    average?: SeoValue;
+    totalReviews?: SeoValue;
+    total_reviews?: SeoValue;
+  };
+  avg_rating?: SeoValue;
+  business_avg_tating?: SeoValue;
+  total_reviews?: SeoValue;
+  business_reviws_len?: SeoValue;
+  location?: {
+    coordinates?: SeoValue[];
+  };
+  locationInfo?: {
+    coordinates?: {
+      lat?: SeoValue;
+      lng?: SeoValue;
+    };
+  };
+  searchProfile?: {
+    priceCategory?: string;
+  };
+  facebook?: string;
+  instagram?: string;
+  twitter?: string;
+  linkedin?: string;
+  youtube?: string;
+  amenities?: string[];
+  services?: BusinessService[];
+};
+
+const getServiceBusiness = (business: BusinessService["business"]) =>
+  typeof business === "object" && business !== null ? business : undefined;
+
+export const generateLocalBusinessJsonLd = (business: BusinessJsonLdInput) => {
   const slug = business.slug || business.bussiness_slug;
   const baseUrl = "https://bookby247.com";
+  const workingHours = business.workingHours;
+  const workingHoursDetails = workingHours?.working_hours;
 
   // Map working hours to Schema.org format
-  const openingHoursSpecification = business.workingHours?.working_hours?.days?.map((day: string) => ({
+  const openingHoursSpecification = workingHoursDetails?.days?.map((day: string) => ({
     "@type": "OpeningHoursSpecification",
     "dayOfWeek": day.charAt(0).toUpperCase() + day.slice(1),
-    "opens": business.workingHours.working_hours.open || business.workingHours.open,
-    "closes": business.workingHours.working_hours.close || business.workingHours.close
+    "opens": workingHoursDetails.open || workingHours?.open,
+    "closes": workingHoursDetails.close || workingHours?.close
   })) || [];
 
   const images = Array.isArray(business.images) ? business.images : [];
@@ -76,15 +164,14 @@ export const generateBreadcrumbJsonLd = (items: { name: string; item: string }[]
   };
 };
 
-export const generateServiceItemListJsonLd = (business: any) => {
+export const generateServiceItemListJsonLd = (business: BusinessJsonLdInput) => {
   const services = business.services || [];
-  const baseUrl = "https://bookby247.com";
 
   return {
     "@type": "ItemList",
     "name": `Services at ${business.name}`,
     "numberOfItems": services.length,
-    "itemListElement": services.map((service: any, index: number) => ({
+    "itemListElement": services.map((service, index) => ({
       "@type": "ListItem",
       "position": index + 1,
       "item": {
@@ -95,7 +182,7 @@ export const generateServiceItemListJsonLd = (business: any) => {
           "@type": "LocalBusiness",
           "name": business.name
         },
-        "offers": service.pricingOptions?.map((option: any) => ({
+        "offers": service.pricingOptions?.map((option) => ({
             "@type": "Offer",
             "price": option.price,
             "priceCurrency": "INR",
@@ -106,49 +193,53 @@ export const generateServiceItemListJsonLd = (business: any) => {
   };
 };
 
-export const generateGlobalServiceItemListJsonLd = (services: any[], city?: string, category?: string) => {
+export const generateGlobalServiceItemListJsonLd = (services: BusinessService[], city?: string, category?: string) => {
     const baseUrl = "https://bookby247.com";
     return {
       "@type": "ItemList",
       "name": `${category || "Services"} in ${city || "India"}`,
       "description": `Compare prices and reviews for ${category || "wellness services"} in ${city || "your area"}.`,
       "numberOfItems": services.length,
-      "itemListElement": services.map((service: any, index: number) => ({
-        "@type": "ListItem",
-        "position": index + 1,
-        "item": {
-          "@type": "Service",
-          "name": service.name || service.service_title,
-          "description": service.shortDescription || service.description || service.service_description,
-          "provider": {
-            "@type": "LocalBusiness",
-            "name": service.business?.name,
-            "url": `${baseUrl}/business/${service.business?.slug}`
-          },
-          "offers": {
-              "@type": "AggregateOffer",
-              "lowPrice": service.minPrice || service.service_min_price,
-              "highPrice": service.maxPrice || service.service_max_price,
-              "priceCurrency": "INR"
-          },
-          "aggregateRating": service.rating || service.service_avg_rating ? {
-              "@type": "AggregateRating",
-              "ratingValue": service.rating || service.service_avg_rating,
-              "reviewCount": service.reviewsCount || service.service_reviews_count,
-              "bestRating": "5",
-              "worstRating": "1"
-          } : undefined
-        }
-      })),
+      "itemListElement": services.map((service, index) => {
+        const serviceBusiness = getServiceBusiness(service.business);
+
+        return {
+          "@type": "ListItem",
+          "position": index + 1,
+          "item": {
+            "@type": "Service",
+            "name": service.name || service.service_title,
+            "description": service.shortDescription || service.description || service.service_description,
+            "provider": {
+              "@type": "LocalBusiness",
+              "name": serviceBusiness?.name,
+              "url": `${baseUrl}/business/${serviceBusiness?.slug}`
+            },
+            "offers": {
+                "@type": "AggregateOffer",
+                "lowPrice": service.minPrice || service.service_min_price,
+                "highPrice": service.maxPrice || service.service_max_price,
+                "priceCurrency": "INR"
+            },
+            "aggregateRating": service.rating || service.service_avg_rating ? {
+                "@type": "AggregateRating",
+                "ratingValue": service.rating || service.service_avg_rating,
+                "reviewCount": service.reviewsCount || service.service_reviews_count,
+                "bestRating": "5",
+                "worstRating": "1"
+            } : undefined
+          }
+        };
+      }),
     };
   };
 
-export const generateItemListJsonLd = (businesses: any[], city?: string, service?: string) => {
+export const generateItemListJsonLd = (businesses: BusinessJsonLdInput[], city?: string, service?: string) => {
   const baseUrl = "https://bookby247.com";
   return {
     "@type": "ItemList",
     "name": `${service || "Spas and Salons"} in ${city || "India"}`,
-    "description": `List of top-rated ${service || "beauty services"} available in ${city || "your area"}.`,
+    "description": `List of top-rated ${service || "spa, salon, massage, hair, skincare and beauty services"} available in ${city || "your area"}.`,
     "url": `${baseUrl}/search/${city || ""}/${service || ""}`,
     "itemListElement": businesses.map((business, index) => ({
       "@type": "ListItem",
@@ -165,7 +256,7 @@ export const generateOrganizationJsonLd = () => {
     "alternateName": "Book by 24/7",
     "url": "https://bookby247.com",
     "logo": "https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png",
-    "description": "Bookby247 is India's premier beauty and wellness booking platform. It connects users with top-rated spas, salons, and beauty professionals for instant appointment booking, price comparison, and verified review reading.",
+    "description": "Bookby247 helps users in India discover and book verified spas, salons, beauty parlours, massage centers, hair salons, skincare studios, nail salons, grooming services and makeup artists with price comparison and verified reviews.",
     "areaServed": {
       "@type": "Country",
       "name": "India"
@@ -175,9 +266,24 @@ export const generateOrganizationJsonLd = () => {
       "Salon Appointments",
       "Beauty Treatments",
       "Massage Therapy",
+      "Full Body Massage",
       "Hair Styling",
       "Skincare",
-      "Wellness Booking"
+      "Facials",
+      "Bridal Makeup",
+      "Waxing",
+      "Threading",
+      "Manicure",
+      "Pedicure",
+      "Wellness Booking",
+      "Spa Management Software",
+      "Salon Management Software",
+      "Multi Branch Management",
+      "Appointment Management",
+      "Customer CRM",
+      "Inventory Management",
+      "Campaign Management",
+      "Billing and Finance Management"
     ],
     "sameAs": [
       "https://www.facebook.com/bookby247",

@@ -5,8 +5,6 @@ import {
     Flower2,
     Heart,
     Zap,
-    Smile,
-    Hand,
     Waves
 } from "lucide-react";
 
@@ -18,7 +16,7 @@ export const SERVICES_DATA = [
         icon: Waves,
         image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399336/1_b4laro.png",
         category: "Spa",
-        description: "Gentle full-body massage for complete relaxation"
+        description: "Relaxing full body Swedish massage for stress relief"
     },
     {
         id: 2,
@@ -26,7 +24,7 @@ export const SERVICES_DATA = [
         icon: Zap,
         image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399346/3_tg8oe1.png",
         category: "Spa",
-        description: "Intense pressure to release chronic muscle tension"
+        description: "Deep tissue massage for muscle pain and tension"
     },
     {
         id: 3,
@@ -34,7 +32,7 @@ export const SERVICES_DATA = [
         icon: Flower2,
         image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399347/2_vyncgx.png",
         category: "Spa",
-        description: "Therapeutic massage with essential plant oils"
+        description: "Aromatherapy spa massage with essential oils"
     },
     {
         id: 4,
@@ -42,7 +40,7 @@ export const SERVICES_DATA = [
         icon: Heart,
         image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399342/4_hb33eu.png",
         category: "Spa",
-        description: "Shared relaxation experience for two"
+        description: "Couple spa package for shared relaxation"
     },
     {
         id: 5,
@@ -50,7 +48,7 @@ export const SERVICES_DATA = [
         icon: Waves,
         image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399336/1_b4laro.png",
         category: "Spa",
-        description: "Gentle full-body massage for complete relaxation"
+        description: "Relaxing full body Swedish massage for stress relief"
     },
     {
         id: 6,
@@ -58,7 +56,7 @@ export const SERVICES_DATA = [
         icon: Zap,
         image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399346/3_tg8oe1.png",
         category: "Spa",
-        description: "Intense pressure to release chronic muscle tension"
+        description: "Deep tissue massage for muscle pain and tension"
     },
     {
         id: 7,
@@ -66,7 +64,7 @@ export const SERVICES_DATA = [
         icon: Flower2,
         image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399347/2_vyncgx.png",
         category: "Spa",
-        description: "Therapeutic massage with essential plant oils"
+        description: "Aromatherapy spa massage with essential oils"
     },
     {
         id: 8,
@@ -74,7 +72,7 @@ export const SERVICES_DATA = [
         icon: Heart,
         image: "https://res.cloudinary.com/dxpxcptn4/image/upload/v1771399342/4_hb33eu.png",
         category: "Spa",
-        description: "Shared relaxation experience for two"
+        description: "Couple spa package for shared relaxation"
     },
 
     // Salon Category
@@ -84,15 +82,15 @@ export const SERVICES_DATA = [
         icon: Scissors,
         image: "https://hourglasslex.com/wp-content/uploads/2023/08/The-Importance-of-Consultations-in-Hair-Salon-Services-min-scaled.jpeg",
         category: "Salon",
-        description: "Precision cutting and styling by expert stylists"
+        description: "Haircut, hair spa, styling and colouring services"
     },
     {
         id: 10,
-        title: "beard Services",
+        title: "Beard Services",
         icon: Scissors,
         image: "https://www.weatherbeardsupply.com/cdn/shop/articles/img-1770762677093_14ebba5f-2980-49b5-b6e8-bf11e0f62217.jpg?v=1770763473&width=1600",
         category: "Salon",
-        description: "Precision cutting and styling by expert stylists"
+        description: "Beard trim, shaving and men's grooming services"
     },
     {
         id: 11,
@@ -100,7 +98,7 @@ export const SERVICES_DATA = [
         icon: Sparkles,
         image: "https://www.mitchellusa.co.in/cdn/shop/articles/Header-01_06843ef4-4134-4885-8ac2-cd659a4d8b76.jpg?v=1640255228",
         category: "Salon",
-        description: "Exquisite makeup for your special day"
+        description: "Facial, skincare, cleanup and party makeup services"
     },
     {
         id: 12,
@@ -108,7 +106,7 @@ export const SERVICES_DATA = [
         icon: Sparkles,
         image: "https://images.squarespace-cdn.com/content/v1/528e7c71e4b0fe20836f0a7e/1624054744381-X10SEZUGM1606C1W7M3U/AdobeStock_74478328.jpeg",
         category: "Salon",
-        description: "Exquisite makeup for your special day"
+        description: "Manicure and pedicure care for hands and feet"
     },
     {
         id: 13,
@@ -116,7 +114,7 @@ export const SERVICES_DATA = [
         icon: Sparkles,
         image: "https://remedytupelo.com/storage/2022/11/10-Things-To-Know-Before-Getting-Your-Facial-Waxing-scaled.jpeg",
         category: "Salon",
-        description: "Exquisite makeup for your special day"
+        description: "Face, arm, leg and full body waxing services"
     },
     {
         id: 14,
@@ -124,7 +122,7 @@ export const SERVICES_DATA = [
         icon: Sparkles,
         image: "https://ellementco.com/cdn/shop/articles/EC_Blog_-_17.png?v=1715416536",
         category: "Salon",
-        description: "Exquisite makeup for your special day"
+        description: "Nail art, gel polish and nail extension services"
     },
     {
         id: 15,
@@ -132,7 +130,7 @@ export const SERVICES_DATA = [
         icon: Sparkles,
         image: "https://visubeauty.com/wp-content/uploads/2024/09/Eye-Brow-Threading-Image.jpg",
         category: "Salon",
-        description: "Exquisite makeup for your special day"
+        description: "Eyebrow threading, upper lip and face threading"
     },
     {
         id: 16,
@@ -140,7 +138,7 @@ export const SERVICES_DATA = [
         icon: Sparkles,
         image: "https://cpimg.tistatic.com/02270356/b/4/Body-Polishing-Massage.jpg",
         category: "Salon",
-        description: "Exquisite makeup for your special day"
+        description: "Body polishing and tan removal beauty treatment"
     },
     // Beauty & Care Category
     {
@@ -149,7 +147,7 @@ export const SERVICES_DATA = [
         icon: Sparkles,
         image: "https://www.mitchellusa.co.in/cdn/shop/articles/Header-01_06843ef4-4134-4885-8ac2-cd659a4d8b76.jpg?v=1640255228",
         category: "Beauty",
-        description: "Exquisite makeup for your special day"
+        description: "Bridal makeup, party makeup, facials and skincare"
     },
     {
         id: 18,
@@ -157,7 +155,7 @@ export const SERVICES_DATA = [
         icon: Sparkles,
         image: "https://images.squarespace-cdn.com/content/v1/528e7c71e4b0fe20836f0a7e/1624054744381-X10SEZUGM1606C1W7M3U/AdobeStock_74478328.jpeg",
         category: "Beauty",
-        description: "Exquisite makeup for your special day"
+        description: "Manicure, pedicure and nail care appointments"
     },
     {
         id: 19,
@@ -165,7 +163,7 @@ export const SERVICES_DATA = [
         icon: Sparkles,
         image: "https://remedytupelo.com/storage/2022/11/10-Things-To-Know-Before-Getting-Your-Facial-Waxing-scaled.jpeg",
         category: "Beauty",
-        description: "Exquisite makeup for your special day"
+        description: "Smooth waxing services for face and body"
     },
     {
         id: 20,
@@ -173,7 +171,7 @@ export const SERVICES_DATA = [
         icon: Sparkles,
         image: "https://ellementco.com/cdn/shop/articles/EC_Blog_-_17.png?v=1715416536",
         category: "Beauty",
-        description: "Exquisite makeup for your special day"
+        description: "Creative nail art, polish and nail extensions"
     },
     {
         id: 21,
@@ -181,7 +179,7 @@ export const SERVICES_DATA = [
         icon: Sparkles,
         image: "https://visubeauty.com/wp-content/uploads/2024/09/Eye-Brow-Threading-Image.jpg",
         category: "Beauty",
-        description: "Exquisite makeup for your special day"
+        description: "Eyebrow shaping and facial threading services"
     },
     {
         id: 22,
@@ -189,7 +187,7 @@ export const SERVICES_DATA = [
         icon: Sparkles,
         image: "https://cpimg.tistatic.com/02270356/b/4/Body-Polishing-Massage.jpg",
         category: "Beauty",
-        description: "Exquisite makeup for your special day"
+        description: "Glow body polishing, exfoliation and detan care"
     },
 ];
 

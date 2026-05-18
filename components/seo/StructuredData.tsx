@@ -11,7 +11,7 @@ const StructuredData = () => {
                 "alternateName": "Book by 24/7",
                 "url": "https://bookby247.com",
                 "logo": "https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png",
-                "description": "Bookby247 is India's premier beauty and wellness booking platform, connecting users with top-rated spas, salons, and beauty professionals for instant appointment booking.",
+                "description": "Bookby247 helps users in India find and book verified spas, salons, beauty parlours, massage centers, hair salons, skincare studios, nail salons, grooming services and makeup artists online.",
                 "areaServed": {
                     "@type": "Country",
                     "name": "India"
@@ -21,7 +21,20 @@ const StructuredData = () => {
                     "Salon Appointments",
                     "Beauty Treatments",
                     "Massage Therapy",
-                    "Wellness Booking"
+                    "Full Body Massage",
+                    "Hair Salon Services",
+                    "Facials and Skincare",
+                    "Bridal Makeup",
+                    "Waxing and Threading",
+                    "Manicure and Pedicure",
+                    "Wellness Booking",
+                    "Spa Management Software",
+                    "Salon Management Software",
+                    "Multi Branch Management",
+                    "Appointment Management",
+                    "Customer CRM",
+                    "Inventory Management",
+                    "Campaign Management"
                 ],
                 "sameAs": [
                     "https://www.facebook.com/bookby247",
@@ -40,7 +53,7 @@ const StructuredData = () => {
                 "@type": "WebSite",
                 "name": "Bookby247",
                 "url": "https://bookby247.com",
-                "description": "Book best spas, salons, and wellness services near you with Bookby247.",
+                "description": "Search and book spa, salon, massage, skincare, haircare, nail, grooming and makeup services near you. Business owners can manage branches, appointments, customers and growth tools with Bookby247.",
                 "potentialAction": {
                     "@type": "SearchAction",
                     "target": "https://bookby247.com/search?q={search_term_string}",

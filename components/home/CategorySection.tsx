@@ -5,31 +5,11 @@ import { ArrowRight } from "lucide-react";
 import { CategoryButton } from "./CategoryButton";
 import { ServiceCard } from "./ServiceCard";
 import Link from "next/link";
-import { LucideIcon } from "lucide-react";
-
-interface Category {
-    id: string;
-    label: string;
-    image: string;
-}
-
-interface Service {
-    id: string | number;
-    title: string;
-    description: string;
-    image: string;
-    category: string;
-    icon: LucideIcon;
-}
 
 import { useRouter } from "next/navigation";
 import { CATEGORIES_DATA, SERVICES_DATA } from "@/lib/constants";
 
-interface CategorySectionProps {
-    // Data imported directly to avoid serialization issues with icons
-}
-
-export const CategorySection: React.FC<CategorySectionProps> = () => {
+export const CategorySection = () => {
     const router = useRouter();
     const categories = CATEGORIES_DATA;
     const services = SERVICES_DATA;
@@ -43,20 +23,16 @@ export const CategorySection: React.FC<CategorySectionProps> = () => {
         router.push(`/explore?q=${encodeURIComponent(title)}`);
     }, [router]);
 
-    const handleExploreAll = React.useCallback(() => {
-        router.push("/explore");
-    }, [router]);
-
     return (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-10">
             <div className="flex flex-col gap-5 sm:gap-6 md:gap-8 mb-2 sm:mb-8 md:mb-10">
                 <div className="space-y-3 sm:space-y-4 md:space-y-6">
                     <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-zinc-900 tracking-tight">
-                            Explore by category
+                            Explore spa, salon and beauty services
                         </h2>
                         <p className="text-sm sm:text-base text-zinc-500 font-medium">
-                            Find the perfect service for your well-being
+                            Find massage, haircare, skincare, nails, grooming and bridal makeup services near you.
                         </p>
                     </div>
 

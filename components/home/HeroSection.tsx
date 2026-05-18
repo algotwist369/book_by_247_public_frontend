@@ -17,16 +17,16 @@ const HeroSection = () => {
                     <div className="text-center lg:text-left">
                         <div className="hidden mx-auto md:inline-flex items-center gap-2 rounded-full border border-rose-200 bg-white/70 px-3 py-1 text-xs font-semibold tracking-wide text-rose-900 lg:mx-0">
                             <span className="h-1.5 w-1.5 rounded-full bg-rose-500" aria-hidden="true" />
-                            Book confidently with verified businesses
+                            Verified spas, salons and beauty experts near you
                         </div>
 
                         <h1 className="md:mt-5 text-balance text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
-                            India&apos;s leading platform to find &amp; book
-                            <span className="block text-rose-700">wellness services</span>
+                            Book spas, salons &amp; beauty services
+                            <span className="block text-rose-700">near you in India</span>
                         </h1>
 
                         <p className="hidden md:block mt-4 max-w-2xl text-pretty text-base leading-relaxed text-slate-700 sm:text-lg lg:max-w-xl">
-                            Discover the best spas, salons, and beauty parlours in India. Search by location, compare prices, read reviews, and book your appointment online with Bookby247.
+                            Discover full body massage, deep tissue spa, haircuts, hair spa, facials, waxing, threading, nails, beard grooming, bridal makeup and beauty parlour services. Search by city or area, compare prices and reviews, then book online with Bookby247.
                         </p>
 
                         <div className="mt-7 max-w-2xl lg:max-w-xl">
@@ -61,7 +61,7 @@ const HeroSection = () => {
                                 <div className="rounded-xl border border-rose-200 bg-white/70 p-4">
                                     <div className="text-xs font-semibold tracking-wide text-slate-600">Businesses</div>
                                     <div className="mt-1 text-2xl font-extrabold text-slate-900">15,000+</div>
-                                    <div className="mt-1 text-xs text-slate-600">Spa &amp; salon partners</div>
+                                    <div className="mt-1 text-xs text-slate-600">Spa, salon &amp; beauty partners</div>
                                 </div>
                                 <div className="rounded-xl border border-rose-200 bg-white/70 p-4">
                                     <div className="text-xs font-semibold tracking-wide text-slate-600">Cities</div>
@@ -78,10 +78,10 @@ const HeroSection = () => {
                                         </div>
                                         <div className="min-w-0">
                                             <div className="text-sm font-semibold leading-snug text-slate-900 sm:leading-normal">
-                                                Verified listings
+                                                Verified spa and salon listings
                                             </div>
                                             <div className="mt-1 text-sm leading-relaxed text-slate-700">
-                                                Clear business details and quality signals so users can book with confidence.
+                                                Clear prices, service menus, reviews, location details and booking signals so users can choose with confidence.
                                             </div>
                                         </div>
                                     </div>
@@ -89,7 +89,7 @@ const HeroSection = () => {
                             </div>
 
                             <div className="mt-4 rounded-xl border border-rose-200 bg-white/70 p-4">
-                                <div className="text-xs font-semibold tracking-wide text-slate-600">Popular Business</div>
+                                <div className="text-xs font-semibold tracking-wide text-slate-600">Popular Searches</div>
                                 <div className="mt-2 grid grid-cols-3 gap-2 text-center">
                                     <div className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-[11px] font-semibold text-slate-900 sm:text-xs">
                                         Spa & Wellness
