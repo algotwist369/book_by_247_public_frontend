@@ -8,7 +8,7 @@ interface ApiResponse<T> {
     success: boolean
     message: string
     data: T
-    meta?: any
+    meta?: unknown
 }
 
 const getAuthToken = () => {
@@ -20,6 +20,7 @@ const withBlogBase = (options: RequestInit & { authToken?: string | null; onUnau
     ...options,
     credentials: "include" as RequestCredentials,
     baseUrl: BLOG_API_BASE_URL,
+    includeAttribution: true,
 })
 
 /** Dispatched when blog API returns 401 while a reader token was sent. */
@@ -155,5 +156,5 @@ export const blogApi = {
         apiClient<ApiResponse<BlogAuthor>>(`/users/public/${username}`, withBlogBase({ next: { revalidate: 300 } })),
 
     getAiArticlePayload: (slug: string) =>
-        apiClient<ApiResponse<any>>(`/ai/articles/${slug}/extract`, withBlogBase({ next: { revalidate: 3600 } })),
+        apiClient<ApiResponse<unknown>>(`/ai/articles/${slug}/extract`, withBlogBase({ next: { revalidate: 3600 } })),
 }
