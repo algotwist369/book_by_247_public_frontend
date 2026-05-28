@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, Phone, Mail, MessageSquare, Smartphone } from 'lucide-react';
+import { User, Phone, Mail, Smartphone } from 'lucide-react';
 
 interface BookingDetailsProps {
     formData: { name: string; phone: string; email: string; notes: string; otpChannel: 'email' | 'sms' };
@@ -28,7 +28,6 @@ const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
     };
 
     const handleOtpChannelChange = (channel: 'email' | 'sms') => {
-        console.log('🎯 OTP channel selected:', channel);
         onUpdateForm({ otpChannel: channel });
     };
 

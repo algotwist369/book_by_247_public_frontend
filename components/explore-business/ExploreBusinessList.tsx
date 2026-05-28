@@ -18,9 +18,6 @@ interface ExploreBusinessListProps {
 const ExploreBusinessList = ({
     businesses,
     isFullWidth = false,
-    location,
-    category,
-    totalResults,
     hasNextPage,
     isFetchingNextPage,
     onLoadMore,
@@ -46,9 +43,9 @@ const ExploreBusinessList = ({
     return (
         <div className="flex flex-col gap-6">
             {/* Grid */}
-            <div className={`grid grid-cols-1 md:grid-cols-2 ${isFullWidth ? 'lg:grid-cols-4' : 'lg:grid-cols-2'} gap-6 lg:gap-8`}>
+            <div className={`grid grid-cols-1 ${isFullWidth ? 'xl:grid-cols-2' : ''} gap-4 sm:gap-5 lg:gap-6`}>
                 {businesses.map((business, index) => (
-                    <div key={`${business.id}-${index}`}>
+                    <div key={`${business.id}-${index}`} className="min-w-0">
                         <ExploreBusinessCard business={business} index={index} />
                     </div>
                 ))}
@@ -70,7 +67,7 @@ const ExploreBusinessList = ({
             {/* End of results */}
             {!hasNextPage && businesses.length > 0 && (
                 <p className="text-center text-sm text-zinc-400 py-6">
-                    You've seen all {businesses.length} results
+                    You&apos;ve seen all {businesses.length} results
                 </p>
             )}
         </div>

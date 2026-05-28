@@ -27,7 +27,6 @@ const WriteReviewModal = ({ isOpen, onClose, businessName }: WriteReviewModalPro
         setIsSubmitting(true);
         // Simulate API call
         setTimeout(() => {
-            console.log('Submitted Review:', { rating, review });
             setIsSubmitting(false);
             onClose();
             // Reset state

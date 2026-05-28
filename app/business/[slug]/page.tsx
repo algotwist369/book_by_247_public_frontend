@@ -15,6 +15,13 @@ interface PageProps {
     }>
 }
 
+type BusinessReviewForJsonLd = {
+    customerName?: string;
+    createdAt?: string;
+    comment?: string;
+    rating?: number;
+};
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { slug } = await params;
     
@@ -108,8 +115,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         }
     };
 
-    console.log(`SEO Metadata for ${slug}:`, JSON.stringify(metadata, null, 2));
-
     return metadata;
 }
 
@@ -163,17 +168,17 @@ const BusinessDetailsPage = async ({ params }: PageProps) => {
         "@graph": [
             {
                 ...generateLocalBusinessJsonLd(consolidatedBusiness),
-                "review": reviews.map((r: any) => ({
+                "review": (reviews as BusinessReviewForJsonLd[]).map((review) => ({
                     "@type": "Review",
                     "author": {
                         "@type": "Person",
-                        "name": r.customerName || "Anonymous"
+                        "name": review.customerName || "Anonymous"
                     },
-                    "datePublished": r.createdAt,
-                    "reviewBody": r.comment,
+                    "datePublished": review.createdAt,
+                    "reviewBody": review.comment,
                     "reviewRating": {
                         "@type": "Rating",
-                        "ratingValue": r.rating,
+                        "ratingValue": review.rating,
                         "bestRating": "5"
                     }
                 }))

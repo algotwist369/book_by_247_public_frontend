@@ -338,8 +338,6 @@ const BookingPageContent = ({ business }: BookingPageContentProps) => {
 
     const handleConfirm = () => {
         const bookingData = getBookingData();
-        console.log('📤 Booking data being sent:', bookingData);
-        console.log('📱 formData.otpChannel:', formData.otpChannel);
         bookingMutation.mutate(bookingData);
     };
 

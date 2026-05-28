@@ -181,7 +181,7 @@ export default async function Home() {
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "What is Bookby247?",
+        "name": "What is Bookby247 Salon and Spa Booking App?",
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "Bookby247 is a wellness discovery, online appointment booking and business management platform for spas, salons, beauty parlours, massage centers and beauty businesses in India."
@@ -234,7 +234,7 @@ export default async function Home() {
       <HeroSection />
       <CategorySection />
 
-      {/* Featured Businesses Section with SSR initial data */}
+      {/* Top-Rated Featured Salons & Spas Section with SSR initial data */}
       <Suspense
         fallback={
           <section className="w-full bg-linear-to-b from-white via-zinc-50 to-white px-4 py-20">

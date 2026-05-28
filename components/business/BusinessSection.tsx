@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import BusinessCard from './BusinessCard';
 import { usePublicBusinesses, useNearbyBusinesses } from '@/hooks/useBusinesses';
 import { useGeolocation } from '@/hooks/useGeolocation';
-import { MapPin } from 'lucide-react';
+import { ArrowRight, MapPin } from 'lucide-react';
 import Link from 'next/link';
 
 const QUERY_PARAMS = { limit: 16 };
@@ -28,7 +28,7 @@ const BusinessSection: React.FC<BusinessSectionProps> = ({ initialData }) => {
     const activeLat = latitude || (urlLat ? parseFloat(urlLat) : null);
     const activeLng = longitude || (urlLng ? parseFloat(urlLng) : null);
 
-    // Featured Businesses (Initial/Default)
+    // Top-Rated Featured Salons & Spas (Initial/Default)
     const {
         data: featuredData,
         isLoading: isFeaturedLoading,
@@ -107,7 +107,7 @@ const BusinessSection: React.FC<BusinessSectionProps> = ({ initialData }) => {
                 <div className="mb-6 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:items-center sm:justify-between md:mb-10">
                     <div className="flex items-center gap-3">
                         <h2 className="hidden text-2xl font-black tracking-tight text-zinc-900 sm:text-3xl md:block md:text-4xl">
-                            {isNearbyMode ? "Nearby Businesses" : "Featured Businesses"}
+                            {isNearbyMode ? "Nearby Businesses" : "Top-Rated Featured Salons & Spas"}
                         </h2>
                         {isNearbyMode && (
                             <div className="hidden items-center gap-1.5 rounded-full bg-zinc-100 px-3 py-1 text-xs font-bold text-zinc-900 md:flex">
@@ -118,9 +118,9 @@ const BusinessSection: React.FC<BusinessSectionProps> = ({ initialData }) => {
                     </div>
                     <Link
                         href="/explore"
-                        className="self-start text-sm font-bold text-zinc-900 sm:self-auto sm:text-base"
+                        className="self-start text-sm font-bold text-zinc-900 sm:self-auto sm:text-base flex items-center justify-center gap-2"
                     >
-                        View all {isNearbyMode ? "nearby" : ""}
+                        View All Verified Partners <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" /> {isNearbyMode ? "nearby" : ""}
                     </Link>
                 </div>
 

@@ -93,14 +93,14 @@ export const Navbar = () => {
                         <NavInfoBlock
                             icon={Briefcase}
                             title="LOGO for Business"
-                            subtitle="Trusted by 5000 Business"
+                            subtitle="Trusted by 5,000+ Top Salons & Spas"
                             href="https://business.bookby247.com"
                             target="_blank"
                         />
                         <NavInfoBlock
                             icon={Handshake}
-                            title="Become A Partner"
-                            subtitle="Start receiving qualified leads within days"
+                            title="List Your Salon & Spa"
+                            subtitle="Grow your beauty business online with free bookings"
                             href="https://business.bookby247.com/book-demo"
                             target="_blank"
                         />
@@ -277,7 +277,7 @@ export const Navbar = () => {
                                         <Briefcase className="w-5 h-5 text-zinc-500 group-hover:text-zinc-700" />
                                         <div>
                                             <p className="text-sm font-bold text-zinc-900">LOGO for Business</p>
-                                            <p className="text-xs text-zinc-500">Trusted by 5000 Business</p>
+                                            <p className="text-xs text-zinc-500">Trusted by 5,000+ Top Salons & Spas</p>
                                         </div>
                                     </a>
                                     <a

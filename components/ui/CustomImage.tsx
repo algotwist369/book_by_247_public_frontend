@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React, { useMemo, useState } from "react"
 import Image, { ImageProps } from "next/image"
 import { cn } from "@/lib/utils"
 
@@ -11,8 +11,6 @@ interface CustomImageProps extends ImageProps {
 
 const GLOBAL_PLACEHOLDER = "https://img.freepik.com/free-photo/stylish-beauty-women-elegent-enjoy-concept_53876-132577.jpg?semt=ais_user_personalization&w=740&q=80";
 
-// Domains that block proxy requests (hotlink protected). Images from these
-// hosts must be served directly by the browser, not through Next.js's optimizer.
 const UNOPTIMIZED_HOSTS = [
     "googleusercontent.com",
     "lh3.googleusercontent.com",
@@ -25,15 +23,22 @@ const UNOPTIMIZED_HOSTS = [
     "img.youtube.com",
 ];
 
+const normalizeSrc = (src: string | undefined, fallback: string): string => {
+    if (!src || src.includes("example.com")) return fallback;
+    if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("/")) {
+        return src;
+    }
+    return `/${src}`;
+};
+
 const isHotlinkProtected = (src: string): boolean => {
     if (!src || (!src.startsWith("http://") && !src.startsWith("https://"))) {
         return false;
     }
     try {
         const { hostname } = new URL(src);
-        // Explicitly block mock domains to avoid Next.js optimizer 500 errors
-        if (hostname.includes("example.com")) return true; 
-        return UNOPTIMIZED_HOSTS.some((h) => hostname === h || hostname.endsWith("." + h));
+        if (hostname.includes("example.com")) return true;
+        return UNOPTIMIZED_HOSTS.some((host) => hostname === host || hostname.endsWith(`.${host}`));
     } catch {
         return false;
     }
@@ -50,45 +55,27 @@ const CustomImage = ({
     priority,
     ...props
 }: CustomImageProps) => {
-    const normalizeSrc = (s: string | undefined): string => {
-        if (!s || s.includes("example.com")) return fallback;
-        if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("/")) {
-            return s;
-        }
-        return `/${s}`;
-    };
+    const normalizedSrc = useMemo(() => normalizeSrc(src as string | undefined, fallback), [src, fallback]);
+    const [failedSources, setFailedSources] = useState<Record<string, true>>({});
+    const [loadedSrc, setLoadedSrc] = useState("");
 
-    // Auto-detect hotlink-protected sources and bypass the optimizer for them
-    const shouldUnoptimize = unoptimized ?? isHotlinkProtected(normalizeSrc(src as string ?? ""));
-    const [imgSrc, setImgSrc] = useState<string>(normalizeSrc(src as string) || fallback)
-    const [isLoading, setIsLoading] = useState(true)
-    const [hasError, setHasError] = useState(false)
-
-    // Reset state when src changes
-    useEffect(() => {
-        const normalized = normalizeSrc(src as string);
-        if (src) {
-            setImgSrc(normalized)
-            setIsLoading(true)
-            setHasError(false)
-        } else {
-            setImgSrc(fallback)
-            setIsLoading(false)
-        }
-    }, [src, fallback])
-
-    const handleError = () => {
-        if (!hasError) {
-            setHasError(true)
-            setImgSrc(fallback)
-        } else if (imgSrc !== GLOBAL_PLACEHOLDER) {
-            setImgSrc(GLOBAL_PLACEHOLDER)
-        }
-        setIsLoading(false)
-    }
-
+    const fallbackSrc = normalizeSrc(fallback, GLOBAL_PLACEHOLDER);
+    const effectiveSrc = failedSources[normalizedSrc]
+        ? failedSources[fallbackSrc]
+            ? GLOBAL_PLACEHOLDER
+            : fallbackSrc
+        : normalizedSrc;
+    const shouldUnoptimize = unoptimized ?? isHotlinkProtected(effectiveSrc);
     const isFill = !!props.fill;
     const effectiveLoading = priority ? "eager" : (loading ?? "lazy");
+    const isLoading = loadedSrc !== effectiveSrc;
+
+    const handleError = () => {
+        setFailedSources((previous) => ({
+            ...previous,
+            [effectiveSrc]: true,
+        }));
+    };
 
     return (
         <div className={cn(
@@ -98,8 +85,8 @@ const CustomImage = ({
         )}>
             <Image
                 {...props}
-                src={imgSrc}
-                alt={alt || "Image"}
+                src={effectiveSrc}
+                alt={alt || "Bookby247 spa salon and beauty service image"}
                 unoptimized={shouldUnoptimize}
                 sizes={props.sizes || "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
                 className={cn(
@@ -108,9 +95,7 @@ const CustomImage = ({
                 )}
                 loading={effectiveLoading}
                 priority={priority}
-                onLoad={() => {
-                    setIsLoading(false);
-                }}
+                onLoad={() => setLoadedSrc(effectiveSrc)}
                 onError={handleError}
                 referrerPolicy="no-referrer"
             />

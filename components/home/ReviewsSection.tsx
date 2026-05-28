@@ -16,7 +16,7 @@ export const ReviewsSection: React.FC = () => {
         <section className="w-full bg-white lg:pb-20 mt-10">
             <div className="max-w-7xl mx-auto px-6">
                 <h2 className="text-3xl font-black text-zinc-800 my-10 tracking-tight">
-                    What Customers Say
+                    What Clients Say About Local Spas & Salons Near You
                 </h2>
 
                 <div className="relative h-[500px] md:h-[700px] w-full bg-zinc-50/50 rounded-[2rem] overflow-hidden py-12 px-4 border border-zinc-100">

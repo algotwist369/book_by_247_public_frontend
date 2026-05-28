@@ -5,21 +5,21 @@ import { CustomImage } from "@/components/ui/CustomImage";
 const benefits = [
   {
     icon: TrendingUp,
-    title: "Boost Your Visibility",
+    title: "Get Discovered by Local Clients",
     description:
-      "Get discovered by thousands of clients looking for services in your area.",
+      "Rank on top when thousands of local customers search for 'beauty parlour near me' or 'best hair salon' within your specific neighborhood.",
   },
   {
     icon: Laptop,
-    title: "Smart Management",
+    title: "All-in-One Salon Billing & Scheduling Software",
     description:
-      "Calendar sync, automated reminders, and client management tools in one place.",
+      "Streamline operations with real-time appointment calendar sync, automated SMS client reminders, and seamless salon billing tools.",
   },
   {
     icon: CheckCircle2,
-    title: "Verified Pro Status",
+    title: "Verified Premium Partner Badge",
     description:
-      "Build immediate trust with our verified partner badge on your profile.",
+      `Build instant marketplace authority and stand out from competitors with a Verified Salon Partner Badge directly on your public listing.`,
   },
 ] as const;
 
@@ -31,15 +31,14 @@ export const PartnerSection: React.FC = () => {
         <div className="flex-1 space-y-8 text-center lg:text-left">
           <div className="space-y-4">
             <p className="inline-flex items-center gap-2 rounded-full border border-rose-200 bg-white px-3 py-1 text-xs font-semibold tracking-wide text-rose-800">
-              <span className="h-1.5 w-1.5 rounded-full bg-rose-500" aria-hidden="true" />
-              Partner with us
+              🚀 FREE SALON REGISTRATION & PARTNER PROGRAM
             </p>
             <h2 className="text-balance text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
-              Grow your spa &amp; salon
-              <span className="block text-rose-700">with Bookby247</span>
+              List Your Hair Salon, Spa & Beauty Parlour
+              <span className="block text-rose-700">on Bookby247</span>
             </h2>
             <p className="mx-auto max-w-xl text-sm leading-relaxed text-slate-700 sm:text-base">
-              Join a curated marketplace of wellness businesses and start receiving quality bookings from day one.
+              Join India's fastest-growing online salon directory and marketplace for top-rated spas, hair studios, and massage centers, and start receiving confirmed client appointments and salon leads from day one.
             </p>
           </div>
 
@@ -68,7 +67,7 @@ export const PartnerSection: React.FC = () => {
               rel="noopener noreferrer"
               className="inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-8 py-3 text-sm font-semibold text-white sm:w-auto sm:text-base"
             >
-              List your business
+              List Your Salon & Spa Free
             </a>
           </div>
         </div>

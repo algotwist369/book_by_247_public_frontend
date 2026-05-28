@@ -1,11 +1,17 @@
 type SeoValue = string | number;
 
 type BusinessServiceOption = {
+  name?: string;
+  title?: string;
   price?: SeoValue;
   duration?: SeoValue;
+  currency?: string;
 };
 
 type BusinessService = {
+  id?: string;
+  _id?: string;
+  slug?: string;
   name?: string;
   service_title?: string;
   shortDescription?: string;
@@ -39,6 +45,9 @@ type BusinessJsonLdInput = {
     close?: string;
   };
   images?: string[];
+  image?: string;
+  thumbnailImage?: string;
+  logoImage?: string;
   name?: string;
   business_title?: string;
   description?: string;
@@ -48,6 +57,7 @@ type BusinessJsonLdInput = {
   email?: string;
   address?: string;
   city?: string;
+  area?: string;
   branch?: string;
   business_location?: string;
   state?: string;
@@ -74,6 +84,12 @@ type BusinessJsonLdInput = {
   searchProfile?: {
     priceCategory?: string;
   };
+  search_profile?: {
+    priceCategory?: string;
+    spaTypes?: string[];
+  };
+  googleMapsUrl?: string;
+  hasMap?: string;
   facebook?: string;
   instagram?: string;
   twitter?: string;
@@ -86,9 +102,58 @@ type BusinessJsonLdInput = {
 const getServiceBusiness = (business: BusinessService["business"]) =>
   typeof business === "object" && business !== null ? business : undefined;
 
+const baseUrl = "https://bookby247.com";
+
+const getBusinessName = (business: BusinessJsonLdInput) => business.name || business.business_title || "Bookby247 Partner";
+
+const getBusinessSlug = (business: BusinessJsonLdInput) => business.slug || business.bussiness_slug;
+
+const getBusinessImages = (business: BusinessJsonLdInput) =>
+  [
+    business.image,
+    business.thumbnailImage,
+    business.logoImage,
+    ...(Array.isArray(business.images) ? business.images : []),
+  ].filter(Boolean) as string[];
+
+const getServiceName = (service: BusinessService) => service.name || service.service_title || "Wellness service";
+
+const getServiceDescription = (service: BusinessService) =>
+  service.shortDescription || service.description || service.service_description;
+
+const getOfferCatalog = (business: BusinessJsonLdInput) => {
+  const services = business.services || [];
+  if (services.length === 0) return undefined;
+
+  return {
+    "@type": "OfferCatalog",
+    "name": `Services offered by ${getBusinessName(business)}`,
+    "itemListElement": services.map((service) => ({
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": getServiceName(service),
+        "description": getServiceDescription(service),
+        "provider": {
+          "@id": `${baseUrl}/business/${getBusinessSlug(business)}#business`
+        }
+      },
+      "priceSpecification": service.pricingOptions?.map((option) => ({
+        "@type": "PriceSpecification",
+        "price": option.price,
+        "priceCurrency": option.currency || "INR",
+        "description": [
+          option.name || option.title,
+          option.duration ? `${option.duration} minutes` : undefined,
+        ].filter(Boolean).join(" - ") || undefined
+      }))
+    }))
+  };
+};
+
 export const generateLocalBusinessJsonLd = (business: BusinessJsonLdInput) => {
-  const slug = business.slug || business.bussiness_slug;
-  const baseUrl = "https://bookby247.com";
+  const slug = getBusinessSlug(business);
+  const name = getBusinessName(business);
   const workingHours = business.workingHours;
   const workingHoursDetails = workingHours?.working_hours;
 
@@ -100,21 +165,29 @@ export const generateLocalBusinessJsonLd = (business: BusinessJsonLdInput) => {
     "closes": workingHoursDetails.close || workingHours?.close
   })) || [];
 
-  const images = Array.isArray(business.images) ? business.images : [];
+  const images = getBusinessImages(business);
+  const businessType = business.search_profile?.spaTypes?.[0];
+  const priceCategory = business.searchProfile?.priceCategory || business.search_profile?.priceCategory;
+  const hasMap = business.googleMapsUrl || business.hasMap;
 
   return {
-    "@type": "LocalBusiness",
+    "@type": ["LocalBusiness", "HealthAndBeautyBusiness"],
     "@id": `${baseUrl}/business/${slug}#business`,
-    "name": business.name || business.business_title,
+    "name": name,
+    "alternateName": businessType ? `${name} ${businessType}` : undefined,
     "description": business.description || business.business_dec,
-    "image": images.length > 0 ? images : ["https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png"],
+    "image": (images.length > 0 ? images : ["https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png"]).map((url) => ({
+      "@type": "ImageObject",
+      "url": url,
+      "caption": `${name} on Bookby247`
+    })),
     "url": `${baseUrl}/business/${slug}`,
     "telephone": business.phone || business.business_contacts,
     "email": business.email,
     "address": {
       "@type": "PostalAddress",
       "streetAddress": business.address || "",
-      "addressLocality": business.city || business.branch || business.business_location?.split(",")[0],
+      "addressLocality": business.area || business.city || business.branch || business.business_location?.split(",")[0],
       "addressRegion": business.state || "",
       "postalCode": business.zip_code || business.pincode || "",
       "addressCountry": "IN",
@@ -136,7 +209,20 @@ export const generateLocalBusinessJsonLd = (business: BusinessJsonLdInput) => {
       }
       : undefined,
     "openingHoursSpecification": openingHoursSpecification,
-    "priceRange": business.searchProfile?.priceCategory === "luxury" ? "$$$" : business.searchProfile?.priceCategory === "mid" ? "$$" : "$",
+    "priceRange": priceCategory === "luxury" ? "$$$" : priceCategory === "mid" ? "$$" : "$",
+    "hasMap": hasMap,
+    "currenciesAccepted": "INR",
+    "paymentAccepted": "Cash, UPI, Credit Card, Debit Card",
+    "areaServed": [
+      business.area,
+      business.city,
+      business.branch,
+      "India"
+    ].filter(Boolean).map((area) => ({
+      "@type": "Place",
+      "name": area
+    })),
+    "hasOfferCatalog": getOfferCatalog(business),
     "sameAs": [
       business.facebook,
       business.instagram,
@@ -166,27 +252,38 @@ export const generateBreadcrumbJsonLd = (items: { name: string; item: string }[]
 
 export const generateServiceItemListJsonLd = (business: BusinessJsonLdInput) => {
   const services = business.services || [];
+  const businessSlug = getBusinessSlug(business);
+  const businessName = getBusinessName(business);
 
   return {
     "@type": "ItemList",
-    "name": `Services at ${business.name}`,
+    "name": `Services at ${businessName}`,
     "numberOfItems": services.length,
     "itemListElement": services.map((service, index) => ({
       "@type": "ListItem",
       "position": index + 1,
       "item": {
         "@type": "Service",
-        "name": service.name,
-        "description": service.shortDescription || service.description,
+        "@id": `${baseUrl}/business/${businessSlug}#service-${service.slug || service.id || service._id || index + 1}`,
+        "name": getServiceName(service),
+        "description": getServiceDescription(service),
+        "areaServed": "India",
         "provider": {
           "@type": "LocalBusiness",
-          "name": business.name
+          "@id": `${baseUrl}/business/${businessSlug}#business`,
+          "name": businessName,
+          "url": `${baseUrl}/business/${businessSlug}`
         },
         "offers": service.pricingOptions?.map((option) => ({
             "@type": "Offer",
             "price": option.price,
-            "priceCurrency": "INR",
-            "description": `${option.duration} minutes service`
+            "priceCurrency": option.currency || "INR",
+            "availability": "https://schema.org/InStock",
+            "url": `${baseUrl}/business/${businessSlug}/book-appointment`,
+            "description": [
+              option.name || option.title,
+              option.duration ? `${option.duration} minutes service` : undefined
+            ].filter(Boolean).join(" - ") || undefined
         }))
       }
     }))
@@ -288,7 +385,8 @@ export const generateOrganizationJsonLd = () => {
     "sameAs": [
       "https://www.facebook.com/bookby247",
       "https://www.instagram.com/bookby247",
-      "https://twitter.com/bookby247"
+      "https://twitter.com/bookby247",
+      "https://www.linkedin.com/company/bookby247"
     ],
     "contactPoint": {
       "@type": "ContactPoint",
@@ -302,11 +400,23 @@ export const generateOrganizationJsonLd = () => {
 export const generateWebSiteJsonLd = () => {
   return {
     "@type": "WebSite",
+    "@id": "https://bookby247.com/#website",
     "name": "Bookby247",
+    "alternateName": ["Book by 24/7", "Bookby 247"],
     "url": "https://bookby247.com",
+    "inLanguage": "en-IN",
+    "publisher": {
+      "@type": "Organization",
+      "@id": "https://bookby247.com/#organization",
+      "name": "Bookby247",
+      "url": "https://bookby247.com"
+    },
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://bookby247.com/search?q={search_term_string}",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://bookby247.com/explore?q={search_term_string}"
+      },
       "query-input": "required name=search_term_string"
     }
   };

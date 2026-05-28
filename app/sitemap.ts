@@ -6,178 +6,123 @@ const BASE_URL = "https://bookby247.com";
 
 export const revalidate = 3600;
 
+type SitemapBusiness = {
+  slug: string;
+  updatedAt?: string;
+  image?: string;
+  thumbnailImage?: string;
+  logoImage?: string;
+  images?: string[];
+};
+
+type SitemapEntry = MetadataRoute.Sitemap[number] & {
+  images?: string[];
+};
+
+const toAbsoluteUrl = (path: string) => `${BASE_URL}${path.startsWith("/") ? path : `/${path}`}`;
+
+const toDate = (value?: string) => {
+  if (!value) return undefined;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? undefined : date;
+};
+
+const unique = <T,>(items: T[]) => Array.from(new Set(items.filter(Boolean)));
+
+const isString = (value: unknown): value is string => typeof value === "string" && value.length > 0;
+
+const normalizeBusiness = (item: string | SitemapBusiness): SitemapBusiness =>
+  typeof item === "string" ? { slug: item } : item;
+
+const createRoute = (
+  path: string,
+  options: Omit<SitemapEntry, "url"> = {}
+): SitemapEntry => ({
+  url: toAbsoluteUrl(path),
+  ...options,
+});
+
+const getBusinessImages = (business: SitemapBusiness) =>
+  unique([
+    business.image,
+    business.thumbnailImage,
+    business.logoImage,
+    ...(Array.isArray(business.images) ? business.images : []),
+  ].filter(isString)).slice(0, 5);
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticRoutes: MetadataRoute.Sitemap = [
-    {
-      url: `${BASE_URL}/`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 1,
-    },
-    {
-      url: `${BASE_URL}/explore`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 0.9,
-    },
-    {
-      url: `${BASE_URL}/blog`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 0.9,
-    },
-    {
-      url: `${BASE_URL}/blog/latest`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/blog/popular`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/blog/trending`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/free-listing`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/careers`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      url: `${BASE_URL}/privacy-policy`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.3,
-    },
-    {
-      url: `${BASE_URL}/terms-of-service`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.3,
-    },
+  const staticRoutes: SitemapEntry[] = [
+    createRoute("/", { changeFrequency: "daily", priority: 1 }),
+    createRoute("/explore", { changeFrequency: "daily", priority: 0.9 }),
+    createRoute("/blog", { changeFrequency: "daily", priority: 0.9 }),
+    createRoute("/blog/latest", { changeFrequency: "daily", priority: 0.8 }),
+    createRoute("/blog/popular", { changeFrequency: "daily", priority: 0.8 }),
+    createRoute("/blog/trending", { changeFrequency: "daily", priority: 0.8 }),
+    createRoute("/free-listing", { changeFrequency: "monthly", priority: 0.8 }),
+    createRoute("/careers", { changeFrequency: "monthly", priority: 0.5 }),
+    createRoute("/editorial-standards", { changeFrequency: "monthly", priority: 0.5 }),
+    createRoute("/privacy-policy", { changeFrequency: "monthly", priority: 0.3 }),
+    createRoute("/terms-of-service", { changeFrequency: "monthly", priority: 0.3 }),
   ];
 
-  // Dynamic SEO Listing Routes from database
-  let dynamicSeoRoutes: MetadataRoute.Sitemap = [];
-  let businessDetailRoutes: MetadataRoute.Sitemap = [];
-  let blogRoutes: MetadataRoute.Sitemap = [];
+  let dynamicSeoRoutes: SitemapEntry[] = [];
+  let businessDetailRoutes: SitemapEntry[] = [];
+  let blogRoutes: SitemapEntry[] = [];
 
   try {
     const sitemapDataResponse = await businessApi.getSeoSitemapData();
+
     if (sitemapDataResponse?.success && sitemapDataResponse.data) {
       const { cities, types, businessSlugs, cityAreaCombinations, cityServiceCombinations } = sitemapDataResponse.data;
+      const uniqueCities = unique(cities);
+      const uniqueTypes = unique(types);
 
-      // 0. City Landing Pages
-      cities.forEach(city => {
-        dynamicSeoRoutes.push({
-          url: `${BASE_URL}/${city}`,
-          lastModified: new Date(),
-          changeFrequency: "weekly",
-          priority: 0.8,
-        });
-      });
+      dynamicSeoRoutes = [
+        ...uniqueCities.map((city) =>
+          createRoute(`/${city}`, { changeFrequency: "weekly", priority: 0.8 })
+        ),
+        ...uniqueCities.flatMap((city) =>
+          uniqueTypes.flatMap((type) => [
+            createRoute(`/${city}/${type}`, { changeFrequency: "weekly", priority: 0.8 }),
+            createRoute(`/${city}/top-10-${type}`, { changeFrequency: "weekly", priority: 0.7 }),
+            createRoute(`/${city}/best-${type}`, { changeFrequency: "weekly", priority: 0.7 }),
+            createRoute(`/${city}/affordable-${type}`, { changeFrequency: "weekly", priority: 0.7 }),
+            createRoute(`/${city}/luxury-${type}`, { changeFrequency: "weekly", priority: 0.7 }),
+          ])
+        ),
+        ...cityAreaCombinations.flatMap(({ city, area }) =>
+          uniqueTypes.map((type) =>
+            createRoute(`/${city}/${type}-in-${area}`, { changeFrequency: "weekly", priority: 0.7 })
+          )
+        ),
+        ...cityServiceCombinations.map(({ city, service }) =>
+          createRoute(`/${city}/${service}`, { changeFrequency: "weekly", priority: 0.7 })
+        ),
+      ];
 
-      // 1. Dynamic SEO Listings (City + Category)
-      cities.forEach(city => {
-        types.forEach(type => {
-          dynamicSeoRoutes.push({
-            url: `${BASE_URL}/${city}/${type}`,
-            lastModified: new Date(),
-            changeFrequency: "weekly",
-            priority: 0.8,
-          });
+      const seoSubPaths = ["reviews", "services", "contacts", "book-appointment"];
+      const businesses = (businessSlugs as Array<string | SitemapBusiness>).map(normalizeBusiness);
 
-          // Add Top-10 listings: /[city]/top-10-[category]
-          dynamicSeoRoutes.push({
-            url: `${BASE_URL}/${city}/top-10-${type}`,
-            lastModified: new Date(),
-            changeFrequency: "weekly",
-            priority: 0.7,
-          });
-
-          // Add Best listings: /[city]/best-[category]
-          dynamicSeoRoutes.push({
-            url: `${BASE_URL}/${city}/best-${type}`,
-            lastModified: new Date(),
-            changeFrequency: "weekly",
-            priority: 0.7,
-          });
-
-          // Add Affordable listings: /[city]/affordable-[category]
-          dynamicSeoRoutes.push({
-            url: `${BASE_URL}/${city}/affordable-${type}`,
-            lastModified: new Date(),
-            changeFrequency: "weekly",
-            priority: 0.7,
-          });
-
-          // Add Luxury listings: /[city]/luxury-[category]
-          dynamicSeoRoutes.push({
-            url: `${BASE_URL}/${city}/luxury-${type}`,
-            lastModified: new Date(),
-            changeFrequency: "weekly",
-            priority: 0.7,
-          });
-        });
-      });
-
-      // 2. City + Category + Area Listings (Valid combinations only)
-      cityAreaCombinations.forEach(({ city, area }) => {
-        types.forEach(type => {
-          // Add Area-specific listings: /[city]/[category]-in-[area]
-          dynamicSeoRoutes.push({
-            url: `${BASE_URL}/${city}/${type}-in-${area}`,
-            lastModified: new Date(),
-            changeFrequency: "weekly",
-            priority: 0.7,
-          });
-        });
-      });
-
-      // 3. City + Service Listings (Valid combinations only)
-      cityServiceCombinations.forEach(({ city, service }) => {
-        // Add Service-specific listings: /[city]/[service]
-        dynamicSeoRoutes.push({
-          url: `${BASE_URL}/${city}/${service}`,
-          lastModified: new Date(),
-          changeFrequency: "weekly",
-          priority: 0.7,
-        });
-      });
-
-      // 4. Business Profiles (ALL active businesses)
-      businessSlugs.forEach(slug => {
-        // Main business profile
-        businessDetailRoutes.push({
-          url: `${BASE_URL}/business/${slug}`,
-          lastModified: new Date(),
+      businessDetailRoutes = businesses.flatMap((business) => {
+        const lastModified = toDate(business.updatedAt);
+        const images = getBusinessImages(business);
+        const profileRoute = createRoute(`/business/${business.slug}`, {
+          lastModified,
           changeFrequency: "daily",
           priority: 0.9,
+          ...(images.length > 0 ? { images } : {}),
         });
 
-        // Key sub-pages that are good for SEO
-        const seoSubPaths = ['reviews', 'services', 'contacts', 'book-appointment'];
-        seoSubPaths.forEach(subPath => {
-          businessDetailRoutes.push({
-            url: `${BASE_URL}/business/${slug}/${subPath}`,
-            lastModified: new Date(),
-            changeFrequency: "weekly",
-            priority: 0.6,
-          });
-        });
+        return [
+          profileRoute,
+          ...seoSubPaths.map((subPath) =>
+            createRoute(`/business/${business.slug}/${subPath}`, {
+              lastModified,
+              changeFrequency: "weekly",
+              priority: subPath === "book-appointment" ? 0.7 : 0.6,
+            })
+          ),
+        ];
       });
     }
   } catch (err) {
@@ -192,154 +137,109 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ]);
 
     blogRoutes = [
-      ...blogListing.data.map((blog) => ({
-        url: `${BASE_URL}/blog/${blog.slug}`,
-        lastModified: blog.updatedAt ? new Date(blog.updatedAt) : new Date(),
-        changeFrequency: "weekly" as const,
-        priority: 0.8,
-      })),
-      ...categoriesResponse.data.map((category) => ({
-        url: `${BASE_URL}/blog/category/${category.slug}`,
-        lastModified: new Date(),
-        changeFrequency: "weekly" as const,
-        priority: 0.7,
-      })),
-      ...tagsResponse.data.map((tag) => ({
-        url: `${BASE_URL}/blog/tag/${tag.slug}`,
-        lastModified: new Date(),
-        changeFrequency: "weekly" as const,
-        priority: 0.7,
-      })),
+      ...blogListing.data.map((blog) =>
+        createRoute(`/blog/${blog.slug}`, {
+          lastModified: toDate(blog.updatedAt),
+          changeFrequency: "weekly",
+          priority: 0.8,
+          ...(blog.featuredImage?.url ? { images: [blog.featuredImage.url] } : {}),
+        })
+      ),
+      ...categoriesResponse.data.map((category) =>
+        createRoute(`/blog/category/${category.slug}`, {
+          changeFrequency: "weekly",
+          priority: 0.7,
+        })
+      ),
+      ...tagsResponse.data.map((tag) =>
+        createRoute(`/blog/tag/${tag.slug}`, {
+          changeFrequency: "weekly",
+          priority: 0.7,
+        })
+      ),
     ];
   } catch (error) {
     console.error("Error fetching blog sitemap data:", error);
   }
 
-  // 3. Near Me SEO Routes (Cleaned up list of high-intent categories)
-  const nearMeCategories = [
+  const nearMeCategories = unique([
+    "spa",
+    "massage",
+    "salon",
+    "beauty-parlour",
+    "hair-salon",
+    "unisex-salon",
+    "ladies-salon",
+    "mens-salon",
+    "body-massage",
+    "full-body-massage",
+    "couple-spa",
+    "couple-massage",
+    "wellness-centre",
+    "thai-massage",
+    "swedish-massage",
+    "deep-tissue-massage",
+    "aromatherapy-massage",
+    "balinese-massage",
+    "hot-stone-massage",
+    "foot-massage",
+    "head-massage",
+    "back-massage",
+    "ayurvedic-spa",
+    "kerala-massage",
+    "panchakarma",
+    "herbal-massage",
+    "abhyanga-massage",
+    "facial",
+    "cleanup",
+    "manicure",
+    "pedicure",
+    "waxing",
+    "threading",
+    "bleach",
+    "detan",
+    "hair-cut",
+    "hair-spa",
+    "hair-color",
+    "keratin-treatment",
+    "smoothening",
+    "rebonding",
+    "hair-fall-treatment",
+    "bridal-makeup",
+    "party-makeup",
+    "makeup-artist",
+    "pre-bridal-packages",
+    "stress-relief-massage",
+    "pain-relief-massage",
+    "relaxation-spa",
+    "body-pain-massage",
+    "luxury-spa",
+    "premium-salon",
+    "russian-spa",
+    "thai-spa",
+    "24-hours-spa",
+    "home-massage",
+    "spa-home-service",
+    "salon-at-home",
+    "beauty-services-at-home",
+    "spa-for-men",
+    "spa-for-women",
+    "massage-for-men",
+    "massage-for-women",
+  ]);
 
-      "spa", "massage", "salon", "beauty-parlour", "hair-salon",
-    "unisex-salon", "ladies-salon", "mens-salon",
-    // 🔹 Core Services
-    "spa", "massage", "body-massage", "full-body-massage",
-    "couple-spa", "couple-massage", "wellness-centre",
+  const nearMeRoutes: SitemapEntry[] = nearMeCategories.map((category) =>
+    createRoute(`/${category}-near-me`, {
+      changeFrequency: "daily",
+      priority: 0.9,
+    })
+  );
 
-    // 🔹 Massage Types (VERY HIGH SEARCH)
-    "thai-massage", "swedish-massage", "deep-tissue-massage",
-    "aromatherapy-massage", "balinese-massage", "hot-stone-massage",
-    "foot-massage", "head-massage", "back-massage",
-
-    // 🔹 Ayurvedic / Indian
-    "ayurvedic-spa", "kerala-massage", "panchakarma",
-    "herbal-massage", "abhyanga-massage",
-
-    // 🔹 Salon Services
-    "salon", "hair-salon", "unisex-salon",
-    "ladies-salon", "mens-salon",
-
-    // 🔹 Beauty Services
-    "beauty-parlour", "facial", "cleanup",
-    "manicure", "pedicure", "waxing",
-    "threading", "bleach", "detan",
-
-    // 🔹 Hair Services
-    "hair-cut", "hair-spa", "hair-color",
-    "keratin-treatment", "smoothening",
-    "rebonding", "hair-fall-treatment",
-
-    // 🔹 Bridal / Premium
-    "bridal-makeup", "party-makeup",
-    "makeup-artist", "pre-bridal-packages",
-
-    // 🔹 Problem-Based Searches (UNDERRATED GOLD)
-    "stress-relief-massage", "pain-relief-massage",
-    "relaxation-spa", "body-pain-massage",
-
-    // 🔹 Luxury / Niche
-    "luxury-spa", "premium-salon", "russian-spa",
-    "thai-spa", "24-hours-spa",
-
-    // 🔹 Home Services (TRENDING)
-    "home-massage", "spa-home-service",
-    "salon-at-home", "beauty-services-at-home",
-
-    // 🔹 Gender-Based
-    "spa-for-men", "spa-for-women",
-    "massage-for-men", "massage-for-women",
-
-       "couple-spa", "couple-massage", "full-body-massage",
-    "ayurvedic-spa", "kerala-massage", "hair-spa", "facial",
-    "bridal-makeup", "makeup-artist"
+  return [
+    ...staticRoutes,
+    ...dynamicSeoRoutes,
+    ...businessDetailRoutes,
+    ...blogRoutes,
+    ...nearMeRoutes,
   ];
-
-  const nearMeRoutes: MetadataRoute.Sitemap = nearMeCategories.map((category) => ({
-    url: `${BASE_URL}/${category}-near-me`,
-    lastModified: new Date(),
-    changeFrequency: "daily" as const,
-    priority: 0.9,
-  }));
-
-  // 4. Popular SEO Search Queries (Pan-India coverage)
-  const popularSearches = [
-    // 🔹 Tier 1 Cities
-    "Best spa in Mumbai", "Best spa in Delhi", "Best spa in Bangalore",
-    "Best spa in Hyderabad", "Best spa in Chennai", "Best spa in Kolkata",
-    "Best spa in Pune", "Best spa in Ahmedabad",
-
-    // 🔹 Tier 2 Cities
-    "Best spa in Jaipur", "Best spa in Chandigarh", "Best spa in Lucknow",
-    "Best spa in Indore", "Best spa in Bhopal", "Best spa in Kochi",
-    "Best spa in Surat", "Best spa in Nagpur", "Best spa in Patna",
-    "Best spa in Coimbatore", "Best spa in Vadodara", "Best spa in Nashik",
-
-    // 🔹 Local Intent
-    "Spa near me", "Massage near me", "Salon near me", "Beauty parlour near me",
-
-    // 🔹 Service-Based Searches
-    "Couple spa near me", "Couple massage spa",
-    "Full body massage near me", "Body massage spa",
-    "Thai massage spa", "Deep tissue massage", "Swedish massage spa",
-    "Aromatherapy massage spa", "Hot stone massage spa",
-    "Balinese massage spa", "Foot massage near me",
-
-    // 🔹 Salon & Beauty
-    "Best salon near me", "Hair salon near me",
-    "Beauty parlour near me for ladies",
-    "Unisex salon near me", "Bridal makeup artist near me",
-    "Hair spa near me", "Facial near me", "Manicure pedicure near me",
-
-    // 🔹 Price & Offers (High Conversion)
-    "Spa offers near me", "Massage spa price near me",
-    "Couple spa offers", "Affordable spa near me",
-    "Cheap massage near me", "Best spa deals near me",
-
-    // 🔹 Location + Service Combo (SEO Gold)
-    "Full body massage in Mumbai", "Couple spa in Delhi",
-    "Thai massage in Bangalore", "Body massage in Pune",
-    "Spa in Navi Mumbai", "Massage in Hyderabad",
-    "Salon in Chennai", "Beauty parlour in Kolkata",
-
-    // 🔹 Luxury / Premium Intent
-    "Luxury spa near me", "5 star spa in Mumbai",
-    "Premium salon near me", "Luxury massage spa",
-
-    // 🔹 Gender Specific
-    "Spa for men near me", "Spa for women near me",
-    "Massage for men near me", "Ladies beauty parlour near me",
-
-    // 🔹 Trending / Niche
-    "Home service massage", "Spa home service",
-    "Ayurvedic massage near me", "Kerala massage near me",
-    "Russian spa near me", "24 hours spa near me"
-  ];
-
-  const popularSearchRoutes: MetadataRoute.Sitemap = popularSearches.map(query => ({
-    url: `${BASE_URL}/explore?q=${encodeURIComponent(query)}`,
-    lastModified: new Date(),
-    changeFrequency: "daily" as const,
-    priority: 0.7,
-  }));
-
-  return [...staticRoutes, ...dynamicSeoRoutes, ...businessDetailRoutes, ...blogRoutes, ...nearMeRoutes, ...popularSearchRoutes];
 }
-

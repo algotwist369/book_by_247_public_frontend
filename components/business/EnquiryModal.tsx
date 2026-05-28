@@ -19,6 +19,11 @@ interface EnquiryModalProps {
 }
 
 type EnquiryStep = 'details' | 'otp' | 'success';
+type SendInquiryOtpPayload = Parameters<typeof inquiryApi.sendInquiryOTP>[0];
+type VerifyInquiryOtpPayload = Parameters<typeof inquiryApi.verifyInquiryOTP>[0];
+
+const getErrorMessage = (error: unknown, fallback: string) =>
+    error instanceof Error ? error.message : fallback;
 
 const EnquiryModal = ({ isOpen, onClose, businessName, businessId, businessSlug }: EnquiryModalProps) => {
     const [step, setStep] = useState<EnquiryStep>('details');
@@ -38,7 +43,7 @@ const EnquiryModal = ({ isOpen, onClose, businessName, businessId, businessSlug 
     const [submitError, setSubmitError] = useState('');
 
     const sendOtpMutation = useMutation({
-        mutationFn: (payload: any) => inquiryApi.sendInquiryOTP(payload),
+        mutationFn: (payload: SendInquiryOtpPayload) => inquiryApi.sendInquiryOTP(payload),
         onSuccess: (response) => {
             if (response.success) {
                 setStep('otp');
@@ -46,14 +51,14 @@ const EnquiryModal = ({ isOpen, onClose, businessName, businessId, businessSlug 
                 setSubmitError(response.message || 'Failed to send OTP');
             }
         },
-        onError: (error: any) => {
-            setSubmitError(error?.message || 'Failed to send OTP');
+        onError: (error: unknown) => {
+            setSubmitError(getErrorMessage(error, 'Failed to send OTP'));
         }
     });
 
     const verifyOtpMutation = useMutation({
         mutationFn: (otp: string) => {
-            const verifyData: any = { otp };
+            const verifyData: VerifyInquiryOtpPayload = { otp };
             if (formData.otpChannel === 'email' && formData.email) {
                 verifyData.email = formData.email;
             } else {
@@ -68,8 +73,8 @@ const EnquiryModal = ({ isOpen, onClose, businessName, businessId, businessSlug 
                 setSubmitError(response.message || 'Invalid OTP');
             }
         },
-        onError: (error: any) => {
-            setSubmitError(error?.message || 'OTP verification failed');
+        onError: (error: unknown) => {
+            setSubmitError(getErrorMessage(error, 'OTP verification failed'));
         }
     });
 
@@ -90,8 +95,8 @@ const EnquiryModal = ({ isOpen, onClose, businessName, businessId, businessSlug 
                 setSubmitError(response.message || 'Failed to send enquiry');
             }
         },
-        onError: (error: any) => {
-            setSubmitError(error?.message || 'Failed to send enquiry');
+        onError: (error: unknown) => {
+            setSubmitError(getErrorMessage(error, 'Failed to send enquiry'));
         }
     });
 
@@ -126,7 +131,6 @@ const EnquiryModal = ({ isOpen, onClose, businessName, businessId, businessSlug 
     };
 
     const handleOtpChannelChange = (channel: 'email' | 'sms') => {
-        console.log('🎯 Inquiry OTP channel selected:', channel);
         setFormData(prev => ({ ...prev, otpChannel: channel }));
     };
 

@@ -287,6 +287,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://lh3.googleusercontent.com" />
         <link rel="dns-prefetch" href="https://content.jdmagicbox.com" />
         <link rel="dns-prefetch" href="https://ui-avatars.com" />
+        <link rel="alternate" type="text/plain" href="/llms.txt" title="Bookby247 LLMs.txt" />
+        <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Bookby247 expanded LLM context" />
       </head>
       <body
         className="antialiased min-h-screen flex flex-col"

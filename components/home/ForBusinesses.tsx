@@ -17,31 +17,30 @@ const ForBusinesses = () => {
                             <div className="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-3 py-1">
                                 <span className="h-2 w-2 rounded-full bg-black" />
                                 <span className="text-xs font-semibold text-zinc-700 uppercase tracking-widest">
-                                    Partner Growth
+                                    B2B SALON & SPA SOFTWARE & LISTING
                                 </span>
                             </div>
 
                             <h2 className="text-2xl font-bold leading-tight text-zinc-900 sm:text-3xl lg:text-4xl">
-                                Grow your spa, salon
+                                Grow Your Spa, Hair Salon & Beauty Parlour Business
                                 <br />
                                 <span className="text-zinc-900">
-                                    and beauty business.
+                                    with Bookby247 Partner Platform
                                 </span>
                             </h2>
 
                             <p className="max-w-xl text-sm leading-relaxed text-zinc-700 sm:text-base">
-                                Manage bookings, attract regular customers, and scale your
-                                brand with an easy-to-use wellness management platform.
+                                Streamline online appointments, generate repeat salon clients, and increase salon revenue with an easy-to-use, all-in-one salon billing and scheduling software.
                             </p>
                         </div>
 
                         {/* Feature Grid */}
                         <div className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
                             {[
-                                "Online booking management",
-                                "Reach nearby customers",
-                                "Performance tracking",
-                                "24/7 Support",
+                                "Real-Time Salon & Spa Calendar Sync",
+                                "Hyper-Local Local SEO Marketing",
+                                "Sales Analytics & Billing Software",
+                                "24/7 Merchant Customer Support",
                             ].map((item, idx) => (
                                 <div key={idx} className="flex items-center gap-3">
                                     <CheckCircle className="w-5 h-5 text-black" />
@@ -61,7 +60,7 @@ const ForBusinesses = () => {
                                 rel="noopener noreferrer"
                                 className="flex items-center justify-center gap-2 rounded-xl bg-black px-6 py-3 text-base font-semibold text-white"
                             >
-                                List Your Business Free
+                                List Your Salon & Spa Free
                                 <ArrowRight className="w-4 h-4" />
                             </a>
 
@@ -71,14 +70,14 @@ const ForBusinesses = () => {
                                 rel="noopener noreferrer"
                                 className="text-center rounded-xl border border-zinc-300 px-6 py-3 text-base font-semibold text-zinc-800"
                             >
-                                Request a Demo
+                                Book Free Software Demo
                             </a>
 
                         </div>
 
                         <div className="border-t border-zinc-200 pt-4">
                             <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
-                                Joined by 12,000+ businesses nationwide
+                                JOINED BY 12,000+ SALONS, SPAS & PARLOURS NATIONWIDE
                             </p>
                         </div>
 

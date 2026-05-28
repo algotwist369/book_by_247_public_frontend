@@ -29,12 +29,11 @@ export const AppPromoSection: React.FC = () => {
 
               <div className="space-y-4">
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-zinc-900 leading-tight">
-                  A Premium Experience Inside Your Pocket
+                  Book Top-Rated Beauty Parlours on the Bookby247 App
                 </h2>
 
                 <p className="text-zinc-600 text-base sm:text-lg max-w-xl mx-auto lg:mx-0">
-                  Book faster, manage appointments effortlessly, and unlock
-                  exclusive members-only privileges through our mobile app.
+                  Book hair & beauty services faster, track salon appointments instantly, and unlock exclusive spa discounts and salon offers through the free Bookby247 web app.
                 </p>
               </div>
 
@@ -43,19 +42,19 @@ export const AppPromoSection: React.FC = () => {
                 {[
                   {
                     icon: <Zap className="w-5 h-5 text-zinc-700" />,
-                    title: "Instant Booking",
+                    title: "1-Tap Salon & Spa Booking",
                   },
                   {
                     icon: <Bell className="w-5 h-5 text-zinc-700" />,
-                    title: "Smart Reminders",
+                    title: "Automated SMS Reminders",
                   },
                   {
                     icon: <Gift className="w-5 h-5 text-zinc-700" />,
-                    title: "VIP Rewards",
+                    title: "Cashback & Spa/Salon Offers",
                   },
                   {
                     icon: <Smartphone className="w-5 h-5 text-zinc-700" />,
-                    title: "QR Check-in",
+                    title: "Contactless Salon & Spa QR Check-in",
                   },
                 ].map((item, i) => (
                   <div

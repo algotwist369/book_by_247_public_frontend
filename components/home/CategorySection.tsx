@@ -29,10 +29,10 @@ export const CategorySection = () => {
                 <div className="space-y-3 sm:space-y-4 md:space-y-6">
                     <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-zinc-900 tracking-tight">
-                            Explore spa, salon and beauty services
+                            Book Trending Spa, Salon & Beauty Parlour Services Near You
                         </h2>
                         <p className="text-sm sm:text-base text-zinc-500 font-medium">
-                            Find massage, haircare, skincare, nails, grooming and bridal makeup services near you.
+                            Book top-rated full body massages, luxury spas, trendy haircuts, keratin treatments, deep-cleansing facials, nail extensions, men's grooming, and professional bridal makeup near you.
                         </p>
                     </div>
 
@@ -68,7 +68,7 @@ export const CategorySection = () => {
                         href="/explore"
                         className="flex items-center gap-2 text-zinc-900 text-sm sm:text-base font-bold hover:underline underline-offset-4 py-2 transition-all hover:gap-3"
                     >
-                        Explore all services <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                        View All Salon & Spa Services Near Me <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                     </Link>
                 </div>
             </div>

@@ -5,21 +5,21 @@ import { CustomImage } from "@/components/ui/CustomImage";
 const features = [
   {
     icon: FiClock,
-    title: "Instant spa and salon booking",
+    title: "Instant Salon & Spa Appointment Booking",
     description:
-      "Book massage, haircut, facial, waxing, nail and grooming appointments online without waiting for callbacks.",
+      "Secure your full body massage, men's haircut, hydrafacial, body waxing, nail extensions, or grooming appointments online instantly with real-time salon slot confirmation.",
   },
   {
     icon: FiMapPin,
-    title: "Hyper-local beauty search",
+    title: `Hyper-Local "Near Me" Salon Finder `,
     description:
-      "Find salons, spas, beauty parlours and massage centers near your city, area or neighborhood.",
+      "Instantly locate top-rated hair salons, luxury day spas, local beauty parlours, and certified massage centers mapped directly to your specific city area or neighborhood.",
   },
   {
     icon: FiStar,
-    title: "Verified reviews and prices",
+    title: "Transparent Salon Prices & Verified Reviews",
     description:
-      "Compare service menus, ratings, reviews and pricing before choosing the right wellness partner.",
+      "Easily check salon service menu card prices, read 100% verified customer reviews, and compare local ratings before booking your next treatment.",
   },
 ] as const;
 
@@ -32,11 +32,11 @@ const FeatureSection = () => {
           <div className="space-y-3">
             <p className="inline-flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-widest text-rose-700 lg:justify-start">
               <FiCheckCircle className="h-4 w-4 text-rose-700" aria-hidden="true" />
-              Why guests choose us
+              WHY CUSTOMERS BOOK WITH US
             </p>
             <h2 className="text-balance text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
-              Search, compare and book
-              <span className="block text-rose-700">trusted beauty services</span>
+              Search, Compare & Book Trusted
+              <span className="block text-rose-700">Spas, Salons & Beauty Parlours</span>
             </h2>
           </div>
 
@@ -44,7 +44,7 @@ const FeatureSection = () => {
             {features.map((feature, index) => (
               <div key={index} className="flex items-start gap-3 text-left">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-900">
-                  <feature.icon className="h-5 w-5 text-white sm:h-6 sm:w-6" aria-hidden="true" />
+                  <feature.icon className="h-8 w-8 text-white sm:h-12 sm:w-12" aria-hidden="true" />
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-slate-900 sm:text-base">
@@ -78,7 +78,7 @@ const FeatureSection = () => {
                 </p>
               </div>
               <p className="text-xs text-slate-600 sm:text-sm">
-                Based on verified bookings across top partners.
+                Based on verified customer reviews across top spas and salons in India.
               </p>
             </div>
           </div>

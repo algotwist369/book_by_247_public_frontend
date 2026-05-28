@@ -76,7 +76,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 <div className="flex-[1.5] pl-4 border-r border-zinc-100">
                     <Input
                         className="border-none rounded-full focus-visible:ring-0 focus:ring-0 focus-visible:ring-offset-0 outline-none shadow-none h-14 placeholder:text-zinc-500 font-medium"
-                        placeholder={isCompact ? "What are you looking for?" : "Search spa, salon or beauty expert"}
+                        placeholder={isCompact ? "What are you looking for?" : "Search hair salon, spa, beauty parlour, bridal makeup...t"}
                         icon={<Search className="w-5 h-5 text-[#008080]" />}
                         value={value}
                         onChange={onChange}

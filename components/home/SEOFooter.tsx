@@ -19,20 +19,20 @@ const SEOFooter = () => {
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-2">
-            <h3 className="font-bold text-zinc-900">What is Bookby247?</h3>
-            <p className="text-sm text-zinc-600">A marketplace for discovering and booking spa, salon, massage, skincare, haircare, makeup, nail and grooming services online.</p>
+            <h3 className="font-bold text-zinc-900">What is Bookby247 Salon and Spa Booking App?</h3>
+            <p className="text-sm text-zinc-600">Bookby247 is India's premier online salon appointment booking app designed for premium spas, hair salons, beauty parlours, and massage centers. Users can effortlessly discover, compare service menus, and book trusted local beauty services online with instant confirmation.</p>
           </div>
           <div className="space-y-2">
-            <h3 className="font-bold text-zinc-900">Who is it for?</h3>
-            <p className="text-sm text-zinc-600">Designed for people searching for trusted self-care services, from quick haircuts to luxury spa days and bridal beauty appointments.</p>
+            <h3 className="font-bold text-zinc-900">Who Can Book Services on Bookby247?</h3>
+            <p className="text-sm text-zinc-600">Our platform connects clients searching for top-rated beauty parlours and unisex salons near me for trending treatments. Book local experts for full body massages, luxury spa packages, keratin treatments, deep-cleansing facials, body waxing, gel nail extensions, and professional bridal makeup artists.</p>
           </div>
           <div className="space-y-2">
-            <h3 className="font-bold text-zinc-900">Where we serve?</h3>
-            <p className="text-sm text-zinc-600">Available in major Indian cities including Mumbai, Delhi, Bangalore, Pune, Hyderabad, and growing nationwide.</p>
+            <h3 className="font-bold text-zinc-900">Top Cities & Locations We Serve</h3>
+            <p className="text-sm text-zinc-600">Find the best hair salons, luxury spas, and beauty parlours in major Indian cities including Mumbai, Delhi, Bengaluru, Pune, Hyderabad, and premier neighborhoods nationwide.</p>
           </div>
           <div className="space-y-2">
-            <h3 className="font-bold text-zinc-900">What can you do?</h3>
-            <p className="text-sm text-zinc-600">Search by location or service, compare prices and reviews, check business details, and book appointments 24/7 with instant confirmation.</p>
+            <h3 className="font-bold text-zinc-900">How to Book Salon Appointments Online?</h3>
+            <p className="text-sm text-zinc-600">Customers can easily filter by salon price lists, check real-time slot availability, and read 100% verified customer reviews. Simply search by service type, local area, or studio name to instantly secure your online beauty parlour appointment without waiting for callbacks.</p>
           </div>
         </div>
 
@@ -40,48 +40,39 @@ const SEOFooter = () => {
           <div className="grid gap-8 text-sm leading-relaxed md:grid-cols-3 md:gap-10">
             <div className="space-y-3">
               <h3 className="text-base font-semibold text-zinc-900">
-                Find Spas, Salons &amp; Beauty Parlours
+                Find Top Spas, Hair Salons &amp; Beauty Parlours Near You
               </h3>
               <p className="text-zinc-600">
-                Browse verified spas, salons, beauty parlours and wellness centers
-                for full body massage, aromatherapy, deep tissue massage, haircuts,
-                hair spa, keratin treatment, beard grooming, facials and skincare.
+                Browse 100% verified luxury day spas, local unisex salons, premium beauty parlours, and wellness centers. Book trending local services including full body massages, aromatherapy spa packages, deep tissue massage therapy, trendy haircuts, premium hair spas, keratin treatments, hair smoothening, beard grooming, and anti-acne facials.
               </p>
             </div>
 
             <div className="space-y-3">
               <h3 className="text-base font-semibold text-zinc-900">
-                Book Instantly &amp; Securely
+                Book Salon Appointments Online Instantly &amp; Securely
               </h3>
               <p className="text-zinc-600">
-                Enjoy seamless online booking with real-time availability.
-                Whether it&apos;s massage therapy, haircut, facial cleanup, waxing,
-                threading, manicure, pedicure, nail art, body polishing or bridal
-                makeup, you can confirm appointments in seconds.
+                Enjoy a seamless online salon booking system featuring real-time calendar availability. Whether you want to book massage therapy, professional haircuts, hydrafacials, facial cleanups, full body waxing, threading, manicures, pedicures, gel nail extensions, custom nail art, body polishing, or professional bridal makeup artists, secure your slot instantly.
               </p>
             </div>
 
             <div className="space-y-3">
               <h3 className="text-base font-semibold text-zinc-900">
-                Beauty for Every Budget
+                Compare Salon Service Menu Prices for Every Budget
               </h3>
               <p className="text-zinc-600">
-                From neighborhood salons and affordable beauty parlours to premium
-                spas and luxury wellness centers, Bookby247 makes self-care accessible
-                with clear pricing, trusted reviews and curated offers.
+                From budget neighborhood beauty salons and affordable ladies parlours to premium international spas and luxury skin clinics, Bookby247 makes self-care accessible. Effortlessly compare salon service menu cards, read verified customer reviews, and unlock exclusive beauty deals, discounts, and booking offers.
               </p>
             </div>
           </div>
 
           <div className="mt-8 border-t border-zinc-200 pt-4">
             <p className="max-w-4xl text-xs leading-relaxed text-zinc-500">
-              Bookby247 is a beauty and wellness discovery platform helping users find
-              trusted spa services, salon treatments, massage therapy, skincare,
-              hair styling, nail care, bridal makeup, waxing, threading, grooming,
-              and holistic wellness solutions across India.
+              <strong>Bookby247</strong> is India&apos;s leading beauty and wellness marketplace platform helping clients locate trusted day spa services, hair studio salon treatments, certified massage therapy, skincare clinics, hair styling, premium nail care, celebrity bridal makeup, facial waxing, threading, men&apos;s grooming, and holistic wellness solutions across major neighborhoods.
             </p>
           </div>
         </div>
+
       </div>
     </section>
   );

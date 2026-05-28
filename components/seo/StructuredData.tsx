@@ -7,6 +7,7 @@ const StructuredData = () => {
         "@graph": [
             {
                 "@type": "Organization",
+                "@id": "https://bookby247.com/#organization",
                 "name": "Bookby247",
                 "alternateName": "Book by 24/7",
                 "url": "https://bookby247.com",
@@ -51,12 +52,21 @@ const StructuredData = () => {
             },
             {
                 "@type": "WebSite",
+                "@id": "https://bookby247.com/#website",
                 "name": "Bookby247",
+                "alternateName": ["Book by 24/7", "Bookby 247"],
                 "url": "https://bookby247.com",
+                "inLanguage": "en-IN",
                 "description": "Search and book spa, salon, massage, skincare, haircare, nail, grooming and makeup services near you. Business owners can manage branches, appointments, customers and growth tools with Bookby247.",
+                "publisher": {
+                    "@id": "https://bookby247.com/#organization"
+                },
                 "potentialAction": {
                     "@type": "SearchAction",
-                    "target": "https://bookby247.com/search?q={search_term_string}",
+                    "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "https://bookby247.com/explore?q={search_term_string}"
+                    },
                     "query-input": "required name=search_term_string"
                 }
             }

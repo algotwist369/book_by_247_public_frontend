@@ -39,17 +39,15 @@ const PlatformOverviewSection = () => {
             <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-12 lg:items-center">
                 <div className="space-y-7 lg:col-span-5">
                     <div className="space-y-4">
-                        <div className="inline-flex items-center gap-2 rounded-full border border-rose-200 bg-rose-50 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-rose-800">
+                        <p className="inline-flex items-center gap-2 rounded-full border border-rose-200 bg-rose-50 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-rose-800">
                             <Store className="h-3.5 w-3.5" aria-hidden="true" />
-                            Discovery, booking and management
-                        </div>
+                            INDIA'S TOP SALON BOOKING APP & SPA DIRECTORY
+                        </p>
                         <h2 className="text-balance text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-4xl lg:text-5xl">
-                            What is Bookby247 and how does it help?
+                            What is Bookby247 & How to Book Salons Online?
                         </h2>
                         <p className="text-sm leading-7 text-zinc-700 sm:text-base">
-                            Bookby247 is a wellness discovery, online appointment booking and business management platform built for spas,
-                            salons and beauty businesses. Customers can find nearby verified services with transparent pricing, while owners
-                            can manage branches, bookings, customers, staff, inventory, campaigns, billing and analytics from one dashboard.
+                            <b>Bookby247</b> is a premier <b>online salon appointment booking app</b> and <b>local beauty parlour finder</b> built for <b>local spas, hair salons, and beauty parlours in India.</b> Customers can instantly locate <b>verified local spa treatments and hair stylist services</b> with <b>upfront salon menu prices</b>, while business merchants use our advanced <b>spa & salon management software</b> to manage bookings, staff schedules, client billing, and inventory from one unified dashboard.
                         </p>
                     </div>
 
@@ -59,10 +57,9 @@ const PlatformOverviewSection = () => {
                                 <BarChart3 className="h-5 w-5" aria-hidden="true" />
                             </div>
                             <div>
-                                <h3 className="font-bold text-zinc-900">Built for growth, not just bookings</h3>
+                                <h3 className="font-bold text-zinc-900">Advanced Salon Management Software For Business Growth</h3>
                                 <p className="mt-1 text-sm leading-6 text-zinc-600">
-                                    Owners get data on center-wise performance, customer visits, spending, leads, campaigns, low stock,
-                                    revenue and monthly reports so they know where to improve and how to grow.
+                                    Salon & Spa owners get access to real-time salon billing software, automated customer appointment tracking, staff performance metrics, inventory alerts, and beauty clinic revenue analytics to scale operations efficiently.
                                 </p>
                             </div>
                         </div>
@@ -87,9 +84,9 @@ const PlatformOverviewSection = () => {
             <div className="mx-auto mt-10 grid max-w-7xl gap-6 lg:grid-cols-2">
                 <div className="rounded-3xl border border-zinc-200 bg-linear-to-br from-white via-white to-rose-50/70 p-6 sm:p-8">
                     <div className="space-y-2">
-                        <h3 className="text-xl font-bold text-zinc-900 sm:text-2xl">For customers booking spa and salon services</h3>
+                        <h3 className="text-xl font-bold text-zinc-900 sm:text-2xl">For Customers Booking Local Salons & Spa Treatments</h3>
                         <p className="text-sm leading-6 text-zinc-600">
-                            Bookby247 makes self-care easier for customers who want trusted services, clear prices and fast appointment booking.
+                            Bookby247 simplifies self-care by offering instant online bookings, transparent salon price checks, verified salon customer reviews, and confirmation alerts. and fast appointment booking.
                         </p>
                     </div>
                     <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -105,9 +102,9 @@ const PlatformOverviewSection = () => {
 
                 <div className="rounded-3xl border border-zinc-200 bg-zinc-950 p-6 text-white sm:p-8">
                     <div className="space-y-2">
-                        <h3 className="text-xl font-bold sm:text-2xl">For spa, salon and beauty business owners</h3>
+                        <h3 className="text-xl font-bold sm:text-2xl">For Hair Salon, Spa & Beauty Parlour Owners</h3>
                         <p className="text-sm leading-6 text-zinc-300">
-                            Owners can list multiple centers and manage daily operations, growth and customer communication from one place.
+                            Effortlessly list your salon or spa business online, coordinate multiple branches, manage digital bookings, and reduce no-shows automatically. communication from one place.
                         </p>
                     </div>
                     <div className="mt-6 grid gap-3">

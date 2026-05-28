@@ -194,17 +194,17 @@ export const SERVICES_DATA = [
 export const CATEGORIES_DATA = [
     {
         id: 'Spa',
-        label: 'Spa',
+        label: 'Luxury Spas',
         image: "https://img.freepik.com/premium-vector/vector-design-wellness-spa-icon-style_822882-284006.jpg"
     },
     {
         id: 'Salon',
-        label: 'Salons',
+        label: 'Hair & Beauty Salons',
         image: "https://img.freepik.com/premium-vector/black-vector-beauty-salon-hairdresser-icon-design_968452-53.jpg"
     },
     {
         id: 'Beauty',
-        label: 'Beauty & Care',
+        label: 'Skin & Bridal Care',
         image: "https://img.freepik.com/premium-vector/skin-care-icon-vector-image-can-be-used-dermatology_120816-47339.jpg"
     }
 ];

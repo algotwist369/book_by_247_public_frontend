@@ -17,16 +17,16 @@ const HeroSection = () => {
                     <div className="text-center lg:text-left">
                         <div className="hidden mx-auto md:inline-flex items-center gap-2 rounded-full border border-rose-200 bg-white/70 px-3 py-1 text-xs font-semibold tracking-wide text-rose-900 lg:mx-0">
                             <span className="h-1.5 w-1.5 rounded-full bg-rose-500" aria-hidden="true" />
-                            Verified spas, salons and beauty experts near you
+                            100% Verified Spas, Salons, & Beauty Parlours Near You
                         </div>
 
                         <h1 className="md:mt-5 text-balance text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
-                            Book spas, salons &amp; beauty services
-                            <span className="block text-rose-700">near you in India</span>
+                            Find & Book the Best Spas, Salons & Makeup Artists
+                            <span className="block text-rose-700">Near You In India.</span>
                         </h1>
 
                         <p className="hidden md:block mt-4 max-w-2xl text-pretty text-base leading-relaxed text-slate-700 sm:text-lg lg:max-w-xl">
-                            Discover full body massage, deep tissue spa, haircuts, hair spa, facials, waxing, threading, nails, beard grooming, bridal makeup and beauty parlour services. Search by city or area, compare prices and reviews, then book online with Bookby247.
+                            <b>Find and book</b> luxury spa treatments, full body massages, <b>hair salons, keratin treatments, hair spas</b>, facials, waxing, threading, <b>nail extensions, beard grooming, and professional bridal makeup artists</b> at <b>top-rated local beauty parlours. Filter by city, neighborhood, </b> or <b>near me, compare salon prices and verified customer reviews</b>, and <b>book salon appointments online instantly.</b>
                         </p>
 
                         <div className="mt-7 max-w-2xl lg:max-w-xl">
@@ -37,19 +37,19 @@ const HeroSection = () => {
                             <div className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-center">
                                 <Sparkles className="mx-auto h-4 w-4 text-rose-700" aria-hidden="true" />
                                 <div className="mt-1 text-[11px] font-semibold leading-tight text-slate-900 sm:text-sm sm:leading-normal">
-                                    Premium <br className="sm:hidden" /> services
+                                    Luxury Spas & Salons
                                 </div>
                             </div>
                             <div className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-center">
                                 <ShieldCheck className="mx-auto h-4 w-4 text-rose-700" aria-hidden="true" />
                                 <div className="mt-1 text-[11px] font-semibold leading-tight text-slate-900 sm:text-sm sm:leading-normal">
-                                    Verified <br className="sm:hidden" /> businesses
+                                    5-Star Rated Parlours
                                 </div>
                             </div>
                             <div className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-center">
                                 <Star className="mx-auto h-4 w-4 text-rose-700" aria-hidden="true" />
                                 <div className="mt-1 text-[11px] font-semibold leading-tight text-slate-900 sm:text-sm sm:leading-normal">
-                                    Top-rated <br className="sm:hidden" /> picks
+                                    Best Deals & Offers
                                 </div>
                             </div>
                         </div>
@@ -60,13 +60,13 @@ const HeroSection = () => {
                             <div className="grid grid-cols-2 gap-3 sm:gap-4">
                                 <div className="rounded-xl border border-rose-200 bg-white/70 p-4">
                                     <div className="text-xs font-semibold tracking-wide text-slate-600">Businesses</div>
-                                    <div className="mt-1 text-2xl font-extrabold text-slate-900">15,000+</div>
-                                    <div className="mt-1 text-xs text-slate-600">Spa, salon &amp; beauty partners</div>
+                                    <h2 className="mt-1 text-2xl font-extrabold text-slate-900">15,000+</h2>
+                                    <p className="mt-1 text-xs text-slate-600">Top-Rated Salons & Spas</p>
                                 </div>
                                 <div className="rounded-xl border border-rose-200 bg-white/70 p-4">
                                     <div className="text-xs font-semibold tracking-wide text-slate-600">Cities</div>
-                                    <div className="mt-1 text-2xl font-extrabold text-slate-900">25+</div>
-                                    <div className="mt-1 text-xs text-slate-600">Across India</div>
+                                    <h2 className="mt-1 text-2xl font-extrabold text-slate-900">25+</h2>
+                                    <p className="mt-1 text-xs text-slate-600">Major Cities in India</p>
                                 </div>
                                 <div className="col-span-2 rounded-xl border border-rose-200 bg-white/70 p-4">
                                     <div className="flex flex-col items-start gap-3 sm:flex-row">
@@ -77,29 +77,38 @@ const HeroSection = () => {
                                             <Check className="h-4 w-4 text-rose-700 sm:h-5 sm:w-5" />
                                         </div>
                                         <div className="min-w-0">
-                                            <div className="text-sm font-semibold leading-snug text-slate-900 sm:leading-normal">
-                                                Verified spa and salon listings
-                                            </div>
-                                            <div className="mt-1 text-sm leading-relaxed text-slate-700">
-                                                Clear prices, service menus, reviews, location details and booking signals so users can choose with confidence.
-                                            </div>
+                                            <h1 className="text-sm font-semibold leading-snug text-slate-900 sm:leading-normal">
+                                                100% Verified Salon & Spa Listings
+                                            </h1>
+                                            <h2 className="mt-1 text-sm leading-relaxed text-slate-700">
+                                                Transparent salon pricing, detailed rate lists, customer reviews, exact location addresses, and instant online slot booking so you can book with confidence.
+                                            </h2>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="mt-4 rounded-xl border border-rose-200 bg-white/70 p-4">
-                                <div className="text-xs font-semibold tracking-wide text-slate-600">Popular Searches</div>
+                                <h2 className="text-md font-semibold tracking-wide text-slate-600">Popular Searches</h2>
                                 <div className="mt-2 grid grid-cols-3 gap-2 text-center">
-                                    <div className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-[11px] font-semibold text-slate-900 sm:text-xs">
-                                        Spa & Wellness
-                                    </div>
-                                    <div className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-[11px] font-semibold text-slate-900 sm:text-xs">
-                                        Salon & Haircare
-                                    </div>
-                                    <div className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-[11px] font-semibold text-slate-900 sm:text-xs">
-                                        Beauty & Makeup
-                                    </div>
+                                    <p className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-[11px] font-semibold text-slate-900 sm:text-xs">
+                                        Top Hair Salon Near Me
+                                    </p>
+                                    <p className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-[11px] font-semibold text-slate-900 sm:text-xs">
+                                        Bridal Makeup Packages Price
+                                    </p>
+                                    <p className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-[11px] font-semibold text-slate-900 sm:text-xs">
+                                        Nail Art Studio Near Me
+                                    </p>
+                                    <p className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-[11px] font-semibold text-slate-900 sm:text-xs">
+                                        Best Keratin Treatment Salon
+                                    </p>
+                                    <p className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-[11px] font-semibold text-slate-900 sm:text-xs">
+                                        Hydrafacial & Skin Clinics
+                                    </p>
+                                    <p className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-[11px] font-semibold text-slate-900 sm:text-xs">
+                                        Luxury Spa & Body Massage
+                                    </p>
                                 </div>
                             </div>
                         </div>

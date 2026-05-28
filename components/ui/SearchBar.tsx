@@ -82,7 +82,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                         id="desktop-search-input"
                         name="desktop-search"
                         type="text"
-                        placeholder={isCompact ? "What are you looking for?" : "Search spa, salon or beauty expert"}
+                        placeholder={isCompact ? "What are you looking for?" : "Search hair salon, spa, beauty parlour, bridal makeup...t"}
                         value={value}
                         onChange={onChange}
                         onKeyDown={(e) => e.key === 'Enter' && onSearch?.(value, localLocation)}
@@ -109,7 +109,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                         id="desktop-location-input"
                         name="desktop-location"
                         type="text"
-                        placeholder="Location"
+                        placeholder="Enter your city or area (e.g., Mumbai, Delhi)"
                         value={localLocation}
                         onChange={handleLocationChange}
                         onFocus={() => setShowSuggestions(true)}

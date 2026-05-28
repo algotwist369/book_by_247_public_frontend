@@ -40,6 +40,7 @@ const Footer = () => {
     const bottomLinks = [
         { label: "Privacy Policy", href: "/privacy-policy" },
         { label: "Terms of Service", href: "/terms-of-service" },
+        { label: "Editorial Standards", href: "/editorial-standards" },
         { label: "Cookies Settings", href: "/cookies-settings" }
     ];
 

@@ -72,8 +72,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         },
     };
 
-    console.log(`SEO Metadata for ${slug} Reviews:`, JSON.stringify(metadata, null, 2));
-
     return metadata;
 }
 
