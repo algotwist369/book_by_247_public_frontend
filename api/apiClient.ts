@@ -31,36 +31,49 @@ const fetchCsrfToken = async (baseUrl: string, credentials: RequestCredentials =
     const urlObj = new URL(baseUrl)
     const baseOrigin = urlObj.origin
     const basePath = urlObj.pathname.replace(/\/$/, "")
+    const isBlogApi = baseUrl.includes("blog-api")
+    
+    console.log(`[apiClient] fetchCsrfToken called with baseUrl: ${baseUrl}, isBlogApi: ${isBlogApi}`)
+    console.log(`[apiClient] baseOrigin: ${baseOrigin}, basePath: ${basePath}`)
     
     // Cache key should be the full base URL, not just origin
     if (csrfTokenCache[baseUrl]) {
+        console.log(`[apiClient] Using cached CSRF token for baseUrl: ${baseUrl}`)
         return csrfTokenCache[baseUrl]
     }
 
-    // Try 1: With base path (for main API)
-    const tokenUrlWithPath = `${baseOrigin}${basePath}/csrf-token`
-    try {
-        const tokenResponse = await fetch(tokenUrlWithPath, {
-            method: "GET",
-            credentials,
-            headers: {
-                Accept: "application/json",
-            },
-        })
+    // Try 1: With base path ONLY if it's NOT the blog API
+    if (!isBlogApi) {
+        const tokenUrlWithPath = `${baseOrigin}${basePath}/csrf-token`
+        console.log(`[apiClient] Trying CSRF token URL (with path): ${tokenUrlWithPath}`)
+        try {
+            const tokenResponse = await fetch(tokenUrlWithPath, {
+                method: "GET",
+                credentials,
+                headers: {
+                    Accept: "application/json",
+                },
+            })
 
-        if (tokenResponse.ok) {
-            const tokenBody = await tokenResponse.json()
-            if (tokenBody?.csrfToken) {
-                csrfTokenCache[baseUrl] = tokenBody.csrfToken
-                return tokenBody.csrfToken
+            console.log(`[apiClient] CSRF token URL (with path) status: ${tokenResponse.status}`)
+            
+            if (tokenResponse.ok) {
+                const tokenBody = await tokenResponse.json()
+                if (tokenBody?.csrfToken) {
+                    console.log(`[apiClient] Success - got CSRF token from (with path): ${tokenUrlWithPath}`)
+                    csrfTokenCache[baseUrl] = tokenBody.csrfToken
+                    return tokenBody.csrfToken
+                }
             }
+        } catch (e) {
+            console.log(`[apiClient] Error trying (with path): ${e}`)
+            // Ignore error and try fallback
         }
-    } catch {
-        // Ignore error and try fallback
     }
 
-    // Try 2: At origin (for blog API)
+    // Try 2: At origin (for blog API, or as fallback for main API)
     const tokenUrlAtOrigin = `${baseOrigin}/csrf-token`
+    console.log(`[apiClient] Trying CSRF token URL (at origin): ${tokenUrlAtOrigin}`)
     try {
         const tokenResponse = await fetch(tokenUrlAtOrigin, {
             method: "GET",
@@ -70,12 +83,14 @@ const fetchCsrfToken = async (baseUrl: string, credentials: RequestCredentials =
             },
         })
 
+        console.log(`[apiClient] CSRF token URL (at origin) status: ${tokenResponse.status}`)
+
         if (!tokenResponse.ok) {
             let errorData = {}
             try {
                 errorData = await tokenResponse.json()
             } catch { }
-            console.error(`[apiClient] CSRF token fetch failed -> ${tokenUrlAtOrigin} (also tried ${tokenUrlWithPath})`, errorData)
+            console.error(`[apiClient] CSRF token fetch failed -> ${tokenUrlAtOrigin}`, errorData)
             throw new Error("Unable to retrieve CSRF token")
         }
 
@@ -84,6 +99,7 @@ const fetchCsrfToken = async (baseUrl: string, credentials: RequestCredentials =
             throw new Error("Invalid CSRF token response")
         }
 
+        console.log(`[apiClient] Success - got CSRF token from (at origin): ${tokenUrlAtOrigin}`)
         csrfTokenCache[baseUrl] = tokenBody.csrfToken
         return tokenBody.csrfToken
     } catch (error) {
@@ -100,6 +116,8 @@ export async function apiClient<T>(
     const normalizedEndpoint = normalizeEndpoint(endpoint)
     const apiBaseUrl = (baseUrl || DEFAULT_API_BASE_URL).replace(/\/$/, "")
     const url = `${apiBaseUrl}${normalizedEndpoint}`
+    
+    console.log(`[apiClient] Making request to: ${url} (apiBaseUrl: ${apiBaseUrl})`)
 
     let response: Response
 

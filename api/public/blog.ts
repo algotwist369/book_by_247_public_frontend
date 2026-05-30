@@ -3,6 +3,7 @@ import type { BlogArticle, BlogAuthor, BlogComment, BlogListResponse, BlogTaxono
 import { getBlogApiBaseUrl } from "@/lib/blog-utils"
 
 const BLOG_API_BASE_URL = getBlogApiBaseUrl()
+console.log(`[blogApi] BLOG_API_BASE_URL: ${BLOG_API_BASE_URL}`)
 
 interface ApiResponse<T> {
     success: boolean
