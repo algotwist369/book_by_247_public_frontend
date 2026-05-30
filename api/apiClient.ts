@@ -1,10 +1,11 @@
 import { getUtmAttributionHeader } from "@/lib/utm-tracking"
+import { getBlogApiBaseUrl } from "@/lib/blog-utils"
 
 export interface ApiClientOptions extends RequestInit {
     baseUrl?: string
     authToken?: string | null
     includeAttribution?: boolean
-    /** Called when the server returns 401 and a Bearer token was sent (e.g. expired session). */
+    /** Called when the server returns 401 and a Bearer token was sent (e.g., expired session). */
     onUnauthorized?: () => void
 }
 
@@ -28,52 +29,29 @@ const normalizeEndpoint = (endpoint: string) => {
 const csrfTokenCache: Record<string, string> = {}
 
 const fetchCsrfToken = async (baseUrl: string, credentials: RequestCredentials = "include") => {
-    const urlObj = new URL(baseUrl)
-    const baseOrigin = urlObj.origin
-    const basePath = urlObj.pathname.replace(/\/$/, "")
-    const isBlogApi = baseUrl.includes("blog-api")
+    const blogApiBaseUrl = getBlogApiBaseUrl();
+    const isBlogApi = baseUrl === blogApiBaseUrl;
     
-    console.log(`[apiClient] fetchCsrfToken called with baseUrl: ${baseUrl}, isBlogApi: ${isBlogApi}`)
-    console.log(`[apiClient] baseOrigin: ${baseOrigin}, basePath: ${basePath}`)
+    console.log(`[apiClient] fetchCsrfToken called with baseUrl: ${baseUrl}, isBlogApi: ${isBlogApi}`);
     
-    // Cache key should be the full base URL, not just origin
-    if (csrfTokenCache[baseUrl]) {
-        console.log(`[apiClient] Using cached CSRF token for baseUrl: ${baseUrl}`)
-        return csrfTokenCache[baseUrl]
-    }
-
-    // Try 1: With base path ONLY if it's NOT the blog API
+    // If it's NOT the blog API, DO NOTHING - just return null and skip!
     if (!isBlogApi) {
-        const tokenUrlWithPath = `${baseOrigin}${basePath}/csrf-token`
-        console.log(`[apiClient] Trying CSRF token URL (with path): ${tokenUrlWithPath}`)
-        try {
-            const tokenResponse = await fetch(tokenUrlWithPath, {
-                method: "GET",
-                credentials,
-                headers: {
-                    Accept: "application/json",
-                },
-            })
-
-            console.log(`[apiClient] CSRF token URL (with path) status: ${tokenResponse.status}`)
-            
-            if (tokenResponse.ok) {
-                const tokenBody = await tokenResponse.json()
-                if (tokenBody?.csrfToken) {
-                    console.log(`[apiClient] Success - got CSRF token from (with path): ${tokenUrlWithPath}`)
-                    csrfTokenCache[baseUrl] = tokenBody.csrfToken
-                    return tokenBody.csrfToken
-                }
-            }
-        } catch (e) {
-            console.log(`[apiClient] Error trying (with path): ${e}`)
-            // Ignore error and try fallback
-        }
+        console.log(`[apiClient] Not a blog API - skipping CSRF token fetch entirely`);
+        return null;
     }
 
-    // Try 2: At origin (for blog API, or as fallback for main API)
-    const tokenUrlAtOrigin = `${baseOrigin}/csrf-token`
-    console.log(`[apiClient] Trying CSRF token URL (at origin): ${tokenUrlAtOrigin}`)
+    const urlObj = new URL(baseUrl);
+    const baseOrigin = urlObj.origin;
+    
+    // Use full base URL as cache key
+    if (csrfTokenCache[baseUrl]) {
+        console.log(`[apiClient] Using cached CSRF token for baseUrl: ${baseUrl}`);
+        return csrfTokenCache[baseUrl];
+    }
+
+    // For blog API, CSRF token is at origin: /csrf-token
+    const tokenUrlAtOrigin = `${baseOrigin}/csrf-token`;
+    console.log(`[apiClient] Trying CSRF token URL (blog API origin): ${tokenUrlAtOrigin}`);
     try {
         const tokenResponse = await fetch(tokenUrlAtOrigin, {
             method: "GET",
@@ -81,30 +59,30 @@ const fetchCsrfToken = async (baseUrl: string, credentials: RequestCredentials =
             headers: {
                 Accept: "application/json",
             },
-        })
+        });
 
-        console.log(`[apiClient] CSRF token URL (at origin) status: ${tokenResponse.status}`)
+        console.log(`[apiClient] CSRF token URL (blog API) status: ${tokenResponse.status}`);
 
         if (!tokenResponse.ok) {
-            let errorData = {}
+            let errorData = {};
             try {
-                errorData = await tokenResponse.json()
+                errorData = await tokenResponse.json();
             } catch { }
-            console.error(`[apiClient] CSRF token fetch failed -> ${tokenUrlAtOrigin}`, errorData)
-            throw new Error("Unable to retrieve CSRF token")
+            console.error(`[apiClient] CSRF token fetch failed -> ${tokenUrlAtOrigin}`, errorData);
+            throw new Error("Unable to retrieve CSRF token");
         }
 
-        const tokenBody = await tokenResponse.json()
+        const tokenBody = await tokenResponse.json();
         if (!tokenBody?.csrfToken) {
-            throw new Error("Invalid CSRF token response")
+            throw new Error("Invalid CSRF token response");
         }
 
-        console.log(`[apiClient] Success - got CSRF token from (at origin): ${tokenUrlAtOrigin}`)
-        csrfTokenCache[baseUrl] = tokenBody.csrfToken
-        return tokenBody.csrfToken
+        console.log(`[apiClient] Success - got CSRF token from blog API: ${tokenUrlAtOrigin}`);
+        csrfTokenCache[baseUrl] = tokenBody.csrfToken;
+        return tokenBody.csrfToken;
     } catch (error) {
-        console.error(`[apiClient] All CSRF token fetch attempts failed`, error)
-        throw new Error("Unable to retrieve CSRF token")
+        console.error(`[apiClient] CSRF token fetch failed for blog API`, error);
+        throw new Error("Unable to retrieve CSRF token");
     }
 }
 
@@ -135,9 +113,13 @@ export async function apiClient<T>(
         headers["X-UTM-Attribution"] = attributionHeader
     }
 
-    if (!["GET", "HEAD", "OPTIONS"].includes(method) && !headers["x-csrf-token"]) {
-        const csrfToken = await fetchCsrfToken(apiBaseUrl, (requestInit.credentials as RequestCredentials) || "include")
-        headers["x-csrf-token"] = csrfToken
+    // ONLY add CSRF token if this is a blog API request
+    const blogApiBaseUrl = getBlogApiBaseUrl();
+    if (apiBaseUrl === blogApiBaseUrl && !["GET", "HEAD", "OPTIONS"].includes(method) && !headers["x-csrf-token"]) {
+        const csrfToken = await fetchCsrfToken(apiBaseUrl, (requestInit.credentials as RequestCredentials) || "include");
+        if (csrfToken) {
+            headers["x-csrf-token"] = csrfToken;
+        }
     }
 
     try {
