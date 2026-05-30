@@ -28,36 +28,68 @@ const normalizeEndpoint = (endpoint: string) => {
 const csrfTokenCache: Record<string, string> = {}
 
 const fetchCsrfToken = async (baseUrl: string, credentials: RequestCredentials = "include") => {
-    const baseOrigin = new URL(baseUrl).origin
-    if (csrfTokenCache[baseOrigin]) {
-        return csrfTokenCache[baseOrigin]
+    const urlObj = new URL(baseUrl)
+    const baseOrigin = urlObj.origin
+    const basePath = urlObj.pathname.replace(/\/$/, "")
+    
+    // Cache key should be the full base URL, not just origin
+    if (csrfTokenCache[baseUrl]) {
+        return csrfTokenCache[baseUrl]
     }
 
-    const tokenUrl = `${baseOrigin}/csrf-token`
-    const tokenResponse = await fetch(tokenUrl, {
-        method: "GET",
-        credentials,
-        headers: {
-            Accept: "application/json",
-        },
-    })
+    // Try 1: With base path (for main API)
+    const tokenUrlWithPath = `${baseOrigin}${basePath}/csrf-token`
+    try {
+        const tokenResponse = await fetch(tokenUrlWithPath, {
+            method: "GET",
+            credentials,
+            headers: {
+                Accept: "application/json",
+            },
+        })
 
-    if (!tokenResponse.ok) {
-        let errorData = {}
-        try {
-            errorData = await tokenResponse.json()
-        } catch { }
-        console.error(`[apiClient] CSRF token fetch failed -> ${tokenUrl}`, errorData)
+        if (tokenResponse.ok) {
+            const tokenBody = await tokenResponse.json()
+            if (tokenBody?.csrfToken) {
+                csrfTokenCache[baseUrl] = tokenBody.csrfToken
+                return tokenBody.csrfToken
+            }
+        }
+    } catch {
+        // Ignore error and try fallback
+    }
+
+    // Try 2: At origin (for blog API)
+    const tokenUrlAtOrigin = `${baseOrigin}/csrf-token`
+    try {
+        const tokenResponse = await fetch(tokenUrlAtOrigin, {
+            method: "GET",
+            credentials,
+            headers: {
+                Accept: "application/json",
+            },
+        })
+
+        if (!tokenResponse.ok) {
+            let errorData = {}
+            try {
+                errorData = await tokenResponse.json()
+            } catch { }
+            console.error(`[apiClient] CSRF token fetch failed -> ${tokenUrlAtOrigin} (also tried ${tokenUrlWithPath})`, errorData)
+            throw new Error("Unable to retrieve CSRF token")
+        }
+
+        const tokenBody = await tokenResponse.json()
+        if (!tokenBody?.csrfToken) {
+            throw new Error("Invalid CSRF token response")
+        }
+
+        csrfTokenCache[baseUrl] = tokenBody.csrfToken
+        return tokenBody.csrfToken
+    } catch (error) {
+        console.error(`[apiClient] All CSRF token fetch attempts failed`, error)
         throw new Error("Unable to retrieve CSRF token")
     }
-
-    const tokenBody = await tokenResponse.json()
-    if (!tokenBody?.csrfToken) {
-        throw new Error("Invalid CSRF token response")
-    }
-
-    csrfTokenCache[baseOrigin] = tokenBody.csrfToken
-    return tokenBody.csrfToken
 }
 
 export async function apiClient<T>(
