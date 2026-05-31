@@ -61,8 +61,8 @@ const Footer = () => {
         )});
 
     return (
-        <footer className="bg-zinc-950 text-zinc-400 border-t border-white/5 py-10">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <footer className="bg-zinc-950 text-zinc-400 border-t border-white/5 py-10 ">
+            <div className="max-w-7xl mx-auto px-4 md:px-0">
 
                 {/* 🔥 TOP GRID */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">

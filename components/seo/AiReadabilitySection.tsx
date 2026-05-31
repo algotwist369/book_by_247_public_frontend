@@ -10,8 +10,8 @@ const AiReadabilitySection: React.FC<AiReadabilitySectionProps> = ({
     aboutContent = "Bookby247 lists thousands of verified local partners across major urban hubs. Find your next appointment at the best hair salons in Mumbai, luxury spas in Delhi, top beauty parlours in Bangalore, or premier wellness studios across Pune, Hyderabad, and Navi Mumbai." 
 }) => {
     return (
-        <section className="border-t border-zinc-100 bg-white py-16 px-4">
-            <div className="max-w-7xl mx-auto">
+        <section className="border-t border-zinc-100 bg-white py-16">
+            <div className="max-w-7xl mx-auto px-4 px-6 md:px-0">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div className="space-y-3">
                         <h2 className="text-lg font-bold text-zinc-900">What is Bookby247 Salon and Spa Booking App?</h2>

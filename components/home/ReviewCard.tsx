@@ -11,7 +11,9 @@ interface ReviewCardProps {
         text: string;
         name: string;
         location: string;
-        avatar: string;
+        avatar: string | null;
+        avatarFallback?: string;
+        rating?: number;
     };
 }
 
@@ -39,8 +41,8 @@ export const ReviewCard: React.FC<ReviewCardProps> = React.memo(({ review }) => 
             <div className="flex items-center gap-2 sm:gap-3 mt-4 sm:mt-6">
                 <div className="relative flex-shrink-0">
                     <CustomImage
-                        src={review.avatar}
-                        alt={review.name}
+                        src={review.avatar || review.avatarFallback || ""}
+                        alt={review.name || review.location || ""}
                         width={40}
                         height={40}
                         className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover ring-2 ring-white shadow-sm"
@@ -48,10 +50,10 @@ export const ReviewCard: React.FC<ReviewCardProps> = React.memo(({ review }) => 
                 </div>
                 <div className="min-w-0">
                     <p className="text-xs sm:text-sm font-bold text-zinc-900 truncate">
-                        {review.name}
+                        {review.name || review.location || ""}
                     </p>
                     <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-zinc-400 truncate">
-                        {review.location}
+                        {review.location || ""}
                     </p>
                 </div>
             </div>

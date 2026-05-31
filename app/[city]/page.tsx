@@ -243,7 +243,7 @@ export default async function CityPage({ params }: Props) {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(jsonLd) }}
             />
-            <main className="min-h-screen bg-white">
+            <main className="min-h-screen bg-white max-w-7xl mx-auto">
                 <Suspense fallback={
                     <div className="flex items-center justify-center min-h-[50vh]">
                         <div className="w-8 h-8 border-4 border-zinc-200 border-t-black rounded-full animate-spin" />

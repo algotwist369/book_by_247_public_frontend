@@ -237,8 +237,8 @@ export default async function Home() {
       {/* Top-Rated Featured Salons & Spas Section with SSR initial data */}
       <Suspense
         fallback={
-          <section className="w-full bg-linear-to-b from-white via-zinc-50 to-white px-4 py-20">
-            <div className="mx-auto max-w-7xl px-4 flex flex-col gap-8">
+          <section className="w-full bg-linear-to-b from-white via-zinc-50 to-white py-20">
+            <div className="mx-auto max-w-7xl flex flex-col gap-8">
               <div className="h-10 w-64 bg-zinc-100 rounded-lg animate-pulse" />
               <div className="grid grid-cols-2 gap-4 sm:gap-8 md:grid-cols-3 lg:grid-cols-4">
                 {[...Array(4)].map((_, i) => (
@@ -256,16 +256,15 @@ export default async function Home() {
 
       </Suspense>
       <PlatformOverviewSection />
-
-      {/* SEO Tags Section */}
-      {tags.length > 0 && <HomeSeoTags tags={tags} />}
+      <PartnerSection />
 
       {/* Below-fold content */}
-      <PartnerSection />
       <FeatureSection />
       <AppPromoSection />
       <ForBusinesses />
       <ReviewsSection />
+      {/* SEO Tags Section */}
+      {tags.length > 0 && <HomeSeoTags tags={tags} />}
       <AiReadabilitySection />
       <SEOFooter />
     </div>

@@ -75,7 +75,7 @@ export const Navbar = () => {
     return (
         <nav className="sticky top-0 z-50 w-full bg-white shadow-sm">
             {/* Top Tier */}
-            <div className="relative flex items-center justify-between px-3 sm:px-4 md:px-8 py-3 md:py-4 border-b border-zinc-50">
+            <div className="relative flex items-center justify-between py-3 md:py-4 border-b border-zinc-50 max-w-7xl mx-auto">
                 <div className="flex items-center gap-3 sm:gap-4 md:gap-8">
                     <Link href="/" className="shrink-0 flex items-center">
                         <img
@@ -92,16 +92,9 @@ export const Navbar = () => {
                     <div className="hidden lg:flex items-center">
                         <NavInfoBlock
                             icon={Briefcase}
-                            title="LOGO for Business"
+                            title="Bookby247 for Business"
                             subtitle="Trusted by 5,000+ Top Salons & Spas"
                             href="https://business.bookby247.com"
-                            target="_blank"
-                        />
-                        <NavInfoBlock
-                            icon={Handshake}
-                            title="List Your Salon & Spa"
-                            subtitle="Grow your beauty business online with free bookings"
-                            href="https://business.bookby247.com/book-demo"
                             target="_blank"
                         />
                     </div>

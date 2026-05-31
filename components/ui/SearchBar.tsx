@@ -66,7 +66,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
     };
 
     return (
-        <div className="relative w-full">
+        <div className="relative w-full px-6 md:px-0">
             {/* ── Desktop: horizontal pill ── */}
             <div
                 className={cn(

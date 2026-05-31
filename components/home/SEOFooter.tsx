@@ -3,7 +3,7 @@ import React from "react";
 const SEOFooter = () => {
   return (
     <section className="border-t border-zinc-200 bg-white">
-      <div className="flex max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20 flex-col gap-10 lg:gap-14">
+      <div className="flex max-w-7xl mx-auto px-4 px-6 md:px-0 py-12 sm:py-16 md:py-20 flex-col gap-10 lg:gap-14">
         <div className="max-w-4xl">
           <h2 className="text-2xl font-bold leading-tight text-zinc-900 sm:text-3xl lg:text-4xl">
             Bookby247 - Find Spas, Salons and Beauty Services Near You

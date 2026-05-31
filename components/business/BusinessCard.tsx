@@ -16,7 +16,7 @@ interface BusinessCardProps {
 
 const BusinessCard: React.FC<BusinessCardProps> = ({ business, className, priority = false }) => {
     return (
-        <div className={cn("flex flex-col gap-3 group cursor-pointer", className)}>
+        <div className={cn("flex flex-col gap-3 group cursor-pointer border border-gray-200 rounded-lg p-1", className)}>
             <Link href={`/business/${business.slug}`} className="block h-full">
                 {/* Image Container */}
                 <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-zinc-100 mb-3">

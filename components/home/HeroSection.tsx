@@ -12,7 +12,7 @@ const HeroSection = () => {
                 <div className="absolute left-1/2 top-72 h-72 w-72 -translate-x-1/2 rounded-full bg-pink-300/35 blur-3xl" />
             </div>
 
-            <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 md:px-8 md:py-20">
+            <div className="relative mx-auto max-w-7xl py-14 sm:py-16 md:py-20">
                 <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
                     <div className="text-center lg:text-left">
                         <div className="hidden mx-auto md:inline-flex items-center gap-2 rounded-full border border-rose-200 bg-white/70 px-3 py-1 text-xs font-semibold tracking-wide text-rose-900 lg:mx-0">
@@ -33,7 +33,7 @@ const HeroSection = () => {
                             <HeroSearch />
                         </div>
 
-                        <div className="mt-7 grid grid-cols-3 gap-2 sm:gap-3">
+                        <div className="mt-7 grid grid-cols-3 gap-2 sm:gap-3 px-6 md:px-0">
                             <div className="rounded-lg border border-rose-200 bg-white/70 px-2 py-2 text-center">
                                 <Sparkles className="mx-auto h-4 w-4 text-rose-700" aria-hidden="true" />
                                 <div className="mt-1 text-[11px] font-semibold leading-tight text-slate-900 sm:text-sm sm:leading-normal">
