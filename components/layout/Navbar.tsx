@@ -75,8 +75,8 @@ export const Navbar = () => {
     return (
         <nav className="sticky top-0 z-50 w-full bg-white shadow-sm">
             {/* Top Tier */}
-            <div className="relative flex items-center justify-between py-3 md:py-4 border-b border-zinc-50 max-w-7xl mx-auto px-4 md:px-0">
-                <div className="flex items-center gap-3 sm:gap-4 md:gap-8">
+            <div className="relative flex items-center justify-between py-3 md:py-4 border-b border-zinc-50 max-w-7xl mx-auto">
+                <div className="flex items-center gap-3 sm:gap-4 md:gap-8 px-6 md:px-0">
                     <Link href="/" className="shrink-0 flex items-center">
                         <img
                             src="https://res.cloudinary.com/dwsv275kv/image/upload/v1774790235/White_and_Black_Simple_Marketing_LinkedIn_Banner_f7aqfk.png" // put your logo inside public folder
