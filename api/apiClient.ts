@@ -1,5 +1,6 @@
 import { getUtmAttributionHeader } from "@/lib/utm-tracking"
 import { getBlogApiBaseUrl } from "@/lib/blog-utils"
+import { getPublicApiBaseUrl } from "@/lib/api-env"
 
 export interface ApiClientOptions extends RequestInit {
     baseUrl?: string
@@ -9,8 +10,7 @@ export interface ApiClientOptions extends RequestInit {
     onUnauthorized?: () => void
 }
 
-const DEFAULT_API_BASE_URL =
-    (process.env.NEXT_PUBLIC_API_URL || "https://api.bookby247.com/api").replace(/\/$/, "")
+const DEFAULT_API_BASE_URL = getPublicApiBaseUrl()
 
 const normalizeEndpoint = (endpoint: string) => {
     if (!endpoint) throw new Error("Endpoint is required")

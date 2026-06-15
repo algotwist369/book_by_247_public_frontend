@@ -7,7 +7,7 @@ import { FiMail, FiMessageSquare, FiPhone, FiUser } from 'react-icons/fi';
 import Modal from '@/components/ui/Modal';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { inquiryApi } from '@/api/public/inquiry';
+import { inquiryApi, SendInquiryOtpPayload } from '@/api/public/inquiry';
 import BookingOTP from '@/app/business/[slug]/book-appointment/components/BookingOTP';
 
 interface EnquiryModalProps {
@@ -15,17 +15,15 @@ interface EnquiryModalProps {
     onClose: () => void;
     businessName: string;
     businessId?: string;
-    businessSlug?: string;
 }
 
 type EnquiryStep = 'details' | 'otp' | 'success';
-type SendInquiryOtpPayload = Parameters<typeof inquiryApi.sendInquiryOTP>[0];
 type VerifyInquiryOtpPayload = Parameters<typeof inquiryApi.verifyInquiryOTP>[0];
 
 const getErrorMessage = (error: unknown, fallback: string) =>
     error instanceof Error ? error.message : fallback;
 
-const EnquiryModal = ({ isOpen, onClose, businessName, businessId, businessSlug }: EnquiryModalProps) => {
+const EnquiryModal = ({ isOpen, onClose, businessName, businessId }: EnquiryModalProps) => {
     const [step, setStep] = useState<EnquiryStep>('details');
     const [formData, setFormData] = useState<{
         name: string;
@@ -66,9 +64,9 @@ const EnquiryModal = ({ isOpen, onClose, businessName, businessId, businessSlug 
             }
             return inquiryApi.verifyInquiryOTP(verifyData);
         },
-        onSuccess: async (response) => {
+        onSuccess: async (response, otp) => {
             if (response.success) {
-                await createInquiryMutation.mutateAsync();
+                await createInquiryMutation.mutateAsync(otp);
             } else {
                 setSubmitError(response.message || 'Invalid OTP');
             }
@@ -79,15 +77,20 @@ const EnquiryModal = ({ isOpen, onClose, businessName, businessId, businessSlug 
     });
 
     const createInquiryMutation = useMutation({
-        mutationFn: () => inquiryApi.createInquiry({
-            business_id: businessId,
-            business_slug: businessSlug,
-            user_name: formData.name,
-            phone: formData.phone,
-            email: formData.email || undefined,
-            otpChannel: formData.otpChannel,
-            inquiry_type: formData.message || 'General'
-        }),
+        mutationFn: (otp: string) => {
+            if (!businessId) {
+                throw new Error('Business details are still loading. Please try again.');
+            }
+
+            return inquiryApi.createInquiry({
+                business_id: businessId,
+                user_name: formData.name.trim(),
+                phone: formData.phone.trim(),
+                email: formData.email.trim() || undefined,
+                inquiry_type: formData.message.trim() || 'General',
+                otp
+            });
+        },
         onSuccess: (response) => {
             if (response.success) {
                 setStep('success');
@@ -106,16 +109,14 @@ const EnquiryModal = ({ isOpen, onClose, businessName, businessId, businessSlug 
         e.preventDefault();
         setSubmitError('');
         
-        if (!businessId && !businessSlug) {
-            setSubmitError('Missing business id/slug');
+        if (!businessId) {
+            setSubmitError('Business details are still loading. Please try again.');
             return;
         }
 
         await sendOtpMutation.mutateAsync({
-            business_id: businessId,
-            business_slug: businessSlug,
-            phone: formData.phone,
-            email: formData.email || undefined,
+            phone: formData.phone.trim(),
+            email: formData.email.trim() || undefined,
             otpChannel: formData.otpChannel
         });
     };
@@ -282,10 +283,8 @@ const EnquiryModal = ({ isOpen, onClose, businessName, businessId, businessSlug 
                             email={formData.email}
                             onVerify={(otp) => verifyOtpMutation.mutate(otp)}
                             onResend={() => sendOtpMutation.mutate({
-                                business_id: businessId,
-                                business_slug: businessSlug,
-                                phone: formData.phone,
-                                email: formData.email || undefined,
+                                phone: formData.phone.trim(),
+                                email: formData.email.trim() || undefined,
                                 otpChannel: formData.otpChannel
                             })}
                             isLoading={verifyOtpMutation.isPending || sendOtpMutation.isPending}

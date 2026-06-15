@@ -1,33 +1,33 @@
 import { z } from "zod";
 import { apiClient } from "../apiClient";
 
+const sendInquiryOtpPayloadSchema = z.object({
+    phone: z.string().trim().regex(/^\+?\d{7,15}$/).optional(),
+    email: z.string().trim().email().optional(),
+    otpChannel: z.enum(["email", "sms"] as const).optional()
+}).strict().refine(
+    (data) => !!(data.phone || data.email),
+    { message: "Either phone or email is required" }
+);
+
 const inquiryPayloadSchema = z.object({
-    business_id: z.string().trim().min(1).optional(),
-    business_slug: z.string().trim().min(1).max(160).optional(),
+    business_id: z.string().trim().min(1),
     user_name: z.string().trim().min(2).max(100),
     phone: z.string().trim().regex(/^\+?\d{7,15}$/),
     email: z.string().trim().email().optional(),
-    otpChannel: z.enum(["email", "sms"] as const).optional(),
     inquiry_type: z.string().trim().max(100).optional(),
-    otp: z.string().trim().regex(/^\d{4,8}$/).optional()
-}).strict().refine(
-    (data) => !!(data.business_id || data.business_slug),
-    { message: "Either business_id or business_slug is required" }
-);
+    otp: z.string().trim().regex(/^\d{4,8}$/)
+}).strict();
 
 export type CreateInquiryPayload = z.infer<typeof inquiryPayloadSchema>;
+export type SendInquiryOtpPayload = z.infer<typeof sendInquiryOtpPayloadSchema>;
 
 export const inquiryApi = {
-    sendInquiryOTP: async (payload: {
-        business_id?: string;
-        business_slug?: string;
-        phone: string;
-        email?: string;
-        otpChannel?: 'email' | 'sms';
-    }) => {
+    sendInquiryOTP: async (payload: SendInquiryOtpPayload) => {
+        const validated = sendInquiryOtpPayloadSchema.parse(payload);
         return apiClient<any>("/inquiries/send-otp", {
             method: "POST",
-            body: JSON.stringify(payload)
+            body: JSON.stringify(validated)
         });
     },
     verifyInquiryOTP: async (payload: {

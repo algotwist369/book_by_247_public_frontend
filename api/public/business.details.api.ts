@@ -1,6 +1,9 @@
 import { apiClient } from "../apiClient";
 
 export interface BusinessDetails {
+    _id?: string;
+    id?: string;
+    business_id?: string;
     location_info: any;
     search_profile: any;
     name: string;

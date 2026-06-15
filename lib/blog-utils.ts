@@ -1,13 +1,10 @@
 import { safeJsonLdStringify } from "@/lib/utils"
 import type { BlogArticle, BlogComment } from "@/lib/blog-types"
+import { getPublicBlogApiBaseUrl } from "@/lib/api-env"
 
 export const BLOG_BASE_PATH = "/blog"
 
-export const getBlogApiBaseUrl = () => {
-    const fromEnv = process.env.NEXT_PUBLIC_BLOG_API_URL
-    if (fromEnv) return fromEnv.replace(/\/$/, "")
-    return "http://localhost:9009/api/v1"
-}
+export const getBlogApiBaseUrl = getPublicBlogApiBaseUrl
 
 export const getSiteBaseUrl = () => "https://bookby247.com"
 

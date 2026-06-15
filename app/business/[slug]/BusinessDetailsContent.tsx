@@ -689,7 +689,6 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialData }: Cl
                 onClose={() => setIsEnquiryModalOpen(false)}
                 businessName={businessName}
                 businessId={resolvedBusinessId}
-                businessSlug={slug}
             />
         </div >
     );

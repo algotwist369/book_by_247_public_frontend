@@ -1,6 +1,5 @@
 import { getUtmAttributionHeader } from "@/lib/utm-tracking";
-
-const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.bookby247.com/api";
+import { getPublicApiBaseUrl } from "@/lib/api-env";
 
 export interface ListingPayload {
   mobile: string;
@@ -16,7 +15,7 @@ export interface ListingPayload {
 export const submitListing = async (data: ListingPayload) => {
   const attributionHeader = getUtmAttributionHeader();
 
-  const response = await fetch(`${NEXT_PUBLIC_API_URL}/listing/submit`, {
+  const response = await fetch(`${getPublicApiBaseUrl()}/listing/submit`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
