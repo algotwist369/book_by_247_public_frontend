@@ -135,8 +135,27 @@ export default async function DetailSeoPage({ params }: Props) {
         return notFound();
     }
 
-    const info = parseSlug(slug);
+    const capitalize = (s: string) => s.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     const cityName = city.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+
+    // Check if the slug is an area in the city
+    const areasResponse = await businessApi.getCityAreas(city).catch(() => null);
+    const cityAreas = areasResponse?.data || [];
+    const isAreaPage = cityAreas.includes(slug.toLowerCase());
+
+    let info;
+    if (isAreaPage) {
+        info = {
+            isTop10: false,
+            isService: false,
+            categorySlug: "",
+            areaSlug: slug,
+            categoryName: "Wellness Centers",
+            areaName: capitalize(slug)
+        };
+    } else {
+        info = parseSlug(slug);
+    }
 
     let items: any[] = [];
     let jsonLd: any = [];
@@ -199,13 +218,15 @@ export default async function DetailSeoPage({ params }: Props) {
         ? `Top 10 ${info.categoryName} in ${info.areaName || cityName}`
         : `${info.categoryName} in ${info.areaName || cityName}`;
 
+
     return (
         <>
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(jsonLd) }}
             />
-            <main className="min-h-screen bg-white max-w-7xl mx-auto px-4 md:px-0">
+            <main className="min-h-screen bg-white w-full">
+
                 <Suspense fallback={
                     <div className="flex items-center justify-center min-h-[50vh]">
                         <div className="w-8 h-8 border-4 border-zinc-200 border-t-black rounded-full animate-spin" />

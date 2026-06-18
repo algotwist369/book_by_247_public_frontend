@@ -171,7 +171,10 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 <div className="px-2 py-2">
                     <button
                         onClick={() => onSearch?.(value, localLocation)}
-                        className="bg-black text-white text-sm font-semibold rounded-full px-6 h-10"
+                        className={cn(
+                            "bg-black text-white text-sm font-semibold rounded-full transition-all active:scale-95 flex items-center justify-center shrink-0",
+                            isCompact ? "w-10 h-10 p-0" : "px-6 h-10"
+                        )}
                     >
                         {isCompact ? <Search className="w-4 h-4" /> : "Search"}
                     </button>

@@ -258,4 +258,8 @@ export const businessApi = {
             data: any[];
         }>(`/v1/seo/businesses/tag/${tag}`);
     },
+    getCityAreas: async (city: string) => {
+        return apiClient<{ success: boolean; data: string[] }>(`/v1/seo/metadata/areas/${city}`);
+    },
 };
+

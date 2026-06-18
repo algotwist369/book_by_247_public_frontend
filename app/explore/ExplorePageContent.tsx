@@ -1,18 +1,17 @@
 "use client";
 
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import ExploreBusinessList from '@/components/explore-business/ExploreBusinessList';
 import ExploreMap from '@/components/explore-business/ExploreMap';
 import ExploreFilters from '@/components/explore-business/ExploreFilters';
 import ExploreFilterModal, { FilterState } from '@/components/explore-business/ExploreFilterModal';
-import { Map, List } from 'lucide-react';
+import { Map, List, MapPin, ArrowLeft, Search, X as CloseIcon } from 'lucide-react';
+import { SearchBar } from '@/components/ui/SearchBar';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useInfiniteSearch } from '@/hooks/useInfiniteSearch';
 import { useBusinessTypes } from '@/hooks/useBusinessTypes';
 import { useGeolocation } from '@/hooks/useGeolocation';
-import { MapPin, ArrowLeft, Search, X as CloseIcon } from 'lucide-react';
 import { useLocationSuggestions } from '@/hooks/useLocationSuggestions';
-
 
 interface ExplorePageContentProps {
     initialData?: any;
@@ -29,7 +28,7 @@ const ExplorePageContent: React.FC<ExplorePageContentProps> = ({ initialData, ta
     const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || "");
     const [locationQuery, setLocationQuery] = useState(searchParams.get('location') || "");
 
-    // Committed states for actual search execution (Scale Optimization)
+    // Committed states for actual search execution
     const [committedSearch, setCommittedSearch] = useState(searchParams.get('q') || "");
     const [committedLocation, setCommittedLocation] = useState(searchParams.get('location') || "");
 
@@ -60,6 +59,7 @@ const ExplorePageContent: React.FC<ExplorePageContentProps> = ({ initialData, ta
     // Effective coordinates
     const activeLat = latitude || (urlLat ? parseFloat(urlLat) : null);
     const activeLng = longitude || (urlLng ? parseFloat(urlLng) : null);
+
     // Infinite search - loads page by page as the user scrolls
     const searchFilters = {
         q: committedSearch,
@@ -76,18 +76,39 @@ const ExplorePageContent: React.FC<ExplorePageContentProps> = ({ initialData, ta
                 activeFilters.sortBy === 'Price (Low to High)' ? 'price_low' : 'price_high'
     };
 
+    const initialParams = useRef({
+        q: searchParams.get('q') || "",
+        location: searchParams.get('location') || "",
+        category: searchParams.get('category'),
+        minRating: Number(searchParams.get('minRating')) || 0,
+        priceRange: searchParams.get('priceRange') || 'Any Price',
+        rating: Number(searchParams.get('rating')) || 0,
+        gender: searchParams.get('gender') || 'Any',
+        sortBy: searchParams.get('sortBy') || 'Recommended',
+    });
+
+    const isInitialQuery =
+        committedSearch === initialParams.current.q &&
+        committedLocation === initialParams.current.location &&
+        selectedCategory === initialParams.current.category &&
+        minRating === initialParams.current.minRating &&
+        activeFilters.priceRange === initialParams.current.priceRange &&
+        activeFilters.rating === initialParams.current.rating &&
+        activeFilters.gender === initialParams.current.gender &&
+        activeFilters.sortBy === initialParams.current.sortBy;
+
     const {
         data: infiniteData,
         hasNextPage,
         isFetchingNextPage,
         fetchNextPage,
-    } = useInfiniteSearch({ ...searchFilters, initialData });
+    } = useInfiniteSearch({ ...searchFilters, initialData: isInitialQuery ? initialData : undefined });
 
     // Flatten all pages into a single list
     const businesses = infiniteData?.pages.flatMap(p => p.results) ?? [];
     const totalResults = infiniteData?.pages[0]?.totalResults;
 
-    // URL sync - Syncs with COMMITTED state (what the user actually sees)
+    // URL sync - Syncs with COMMITTED state
     useEffect(() => {
         const params = new URLSearchParams();
         if (committedSearch) params.set('q', committedSearch);
@@ -101,7 +122,6 @@ const ExplorePageContent: React.FC<ExplorePageContentProps> = ({ initialData, ta
         if (activeFilters.sortBy !== 'Recommended') params.set('sortBy', activeFilters.sortBy);
         if (showMap) params.set('view', 'map');
 
-        // Only sync location-based params if coordinates are present
         if (activeLat && activeLng) {
             if (radius !== DEFAULT_RADIUS) params.set('radius', radius.toString());
             params.set('lat', activeLat.toString());
@@ -115,7 +135,6 @@ const ExplorePageContent: React.FC<ExplorePageContentProps> = ({ initialData, ta
     // Sync state to URL when geolocation succeeds
     useEffect(() => {
         if (latitude && longitude && (latitude.toString() !== urlLat || longitude.toString() !== urlLng)) {
-            // Geolocation succeeded, update URL
             const params = new URLSearchParams(searchParams.toString());
             params.set('lat', latitude.toString());
             params.set('lng', longitude.toString());
@@ -178,7 +197,7 @@ const ExplorePageContent: React.FC<ExplorePageContentProps> = ({ initialData, ta
                                     {locationQuery && <span className="text-black truncate">{locationQuery}</span>}
                                 </span>
                             ) : (
-                                <span className="text-zinc-400 font-medium">Explore Businessess </span>
+                                <span className="text-zinc-400 font-medium">Explore Businesses</span>
                             )}
                         </span>
                     </button>
@@ -331,77 +350,190 @@ const ExplorePageContent: React.FC<ExplorePageContentProps> = ({ initialData, ta
                 </div>
             )}
 
-            {/* Split Layout Container */}
-            <div className="flex flex-col lg:flex-row relative">
-                {/* Left Side: Content & List */}
-                <div className={`w-full transition-all duration-500 ease-in-out ${showMap ? 'lg:w-[55%]' : 'lg:w-full'} px-4 sm:px-8 md:px-12 py-4 lg:py-16`}>
-                    <div className={`${showMap ? 'max-w-4xl' : 'max-w-[1600px]'} mx-auto transition-all duration-500`}>
-                        {/* Header & Toggle Section */}
-                        <div className="flex items-center justify-between mb-0 lg:mb-10">
-                            <div className="hidden lg:block">
-                                <div className="flex items-center gap-3">
-                                    <h1 className="text-3xl font-black text-zinc-900 tracking-tight">
-                                        {tagName ? `${tagName} Services` : "Explore Wellness"}
+            {/* Top Header & Filters Section (Full Width) */}
+            <div className={`${showMap ? 'max-w-[1750px] px-6 lg:px-10' : 'max-w-7xl px-4 sm:px-6 lg:px-8'} mx-auto pt-6 lg:pt-10`}>
+                {showMap ? (
+                    /* Plain Header Layout when Map is open */
+                    <div className="mb-6 space-y-6">
+                        <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+                            <div className="space-y-1">
+                                <div className="flex items-center gap-3 flex-wrap">
+                                    <h1 className="text-3xl sm:text-4xl font-extrabold text-zinc-900 tracking-tight leading-tight">
+                                        {tagName ? `Best ${tagName}` : "Best Wellness Centers"}
+                                        {(committedLocation || locationQuery) && (
+                                            <>
+                                                {" in "}
+                                                <span className="text-amber-800 font-serif italic font-normal">
+                                                    {committedLocation || locationQuery}
+                                                </span>
+                                            </>
+                                        )}
                                     </h1>
                                     {(activeLat && activeLng) && (
-                                        <div className="flex items-center gap-1.5 px-3 py-1 bg-black/10 text-black rounded-full text-[10px] font-bold">
+                                        <div className="flex items-center gap-1.5 px-3 py-1 bg-black/10 text-black rounded-full text-[10px] font-bold h-fit mt-1.5">
                                             <MapPin className="w-3 h-3" />
                                             <span>NEARBY</span>
                                         </div>
                                     )}
                                 </div>
                                 <p className="text-zinc-500 text-sm font-medium">
-                                    {tagName 
-                                        ? `Discover top-rated ${tagName} services near you` 
+                                    {tagName
+                                        ? `Discover top-rated ${tagName} services near you`
                                         : "Find your perfect spa or salon experience"}
                                 </p>
                             </div>
 
+                            {/* View List Button */}
                             <button
-                                onClick={() => setShowMap(!showMap)}
-                                className="hidden lg:flex items-center gap-2 bg-zinc-900 text-white px-5 py-2.5 rounded-2xl hover:bg-zinc-800 transition-all active:scale-95 shadow-lg shadow-zinc-900/10"
+                                onClick={() => setShowMap(false)}
+                                className="hidden lg:flex items-center gap-2 bg-white border border-zinc-200 text-zinc-900 px-4 py-2.5 rounded-xl hover:bg-zinc-50 transition-all active:scale-95 shadow-sm text-xs font-bold uppercase tracking-wider shrink-0"
                             >
-                                {showMap ? (
-                                    <>
-                                        <List className="w-4 h-4" />
-                                        <span className="text-xs font-bold uppercase tracking-wider">Hide Map</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Map className="w-4 h-4" />
-                                        <span className="text-xs font-bold uppercase tracking-wider">Show Map</span>
-                                    </>
-                                )}
+                                <List className="w-4 h-4" />
+                                <span>List View</span>
                             </button>
                         </div>
 
-                        {/* Filters & Search - sticky on scroll */}
-                        <div className="sticky top-0 lg:top-0 z-30 bg-white pb-2 -mx-4 px-4 lg:-mx-0 lg:px-0">
-                            <ExploreFilters
-                                categories={categories}
-                                selectedCategory={selectedCategory}
-                                onSelectCategory={(cat) => {
-                                    setSelectedCategory(cat);
-                                    setCommittedSearch(searchQuery);
-                                    setCommittedLocation(locationQuery);
-                                }}
-                                minRating={minRating}
-                                onSelectRating={(rate) => {
-                                    setMinRating(rate);
-                                    setCommittedSearch(searchQuery);
-                                    setCommittedLocation(locationQuery);
-                                }}
-                                searchQuery={searchQuery}
-                                onSearchChange={setSearchQuery}
-                                locationQuery={locationQuery}
+                        {/* Full-width Search Bar */}
+                        <div className="max-w-5xl">
+                            <SearchBar
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                locationValue={locationQuery}
                                 onLocationChange={setLocationQuery}
                                 onSearch={handleSearch}
-                                onOpenFilters={() => setIsFilterModalOpen(true)}
-                                radius={radius}
-                                onRadiusChange={setRadius}
-                                isNearby={!!(activeLat && activeLng)}
                             />
                         </div>
+                    </div>
+                ) : (
+                    /* Premium Hero Header Banner Card when Map is closed */
+                    <div className="relative overflow-hidden rounded-3xl border border-zinc-100 bg-linear-to-r from-zinc-50/80 via-white to-zinc-50/50 p-6 sm:p-8 md:p-10 mb-8 flex flex-col justify-between items-start gap-6 shadow-xs">
+                        {/* Spa Faded Background Image */}
+                        <div className="absolute right-0 top-0 bottom-0 w-full lg:w-1/2 opacity-15 lg:opacity-30 pointer-events-none z-0">
+                            <div className="absolute inset-0 bg-gradient-to-r from-zinc-50 via-white/80 to-transparent z-10" />
+                            <img
+                                src="https://res.cloudinary.com/dxpxcptn4/image/upload/v1781774213/Book_Now_1_firrpj.png"
+                                alt="Spa wellness background banner"
+                                className="w-full h-full object-cover object-right"
+                            />
+                        </div>
+
+                        {/* Content */}
+                        <div className="relative z-10 flex-1 space-y-6 w-full">
+                            <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+                                <div className="space-y-2">
+                                    <div className="flex items-center gap-3 flex-wrap">
+                                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-zinc-900 tracking-tight leading-tight">
+                                            {tagName ? `Best ${tagName}` : "Best Wellness Centers"}
+                                            {(committedLocation || locationQuery) && (
+                                                <>
+                                                    {" in "}
+                                                    <span className="text-amber-800 font-serif italic font-normal">
+                                                        {committedLocation || locationQuery}
+                                                    </span>
+                                                </>
+                                            )}
+                                        </h1>
+                                        {(activeLat && activeLng) && (
+                                            <div className="flex items-center gap-1.5 px-3 py-1 bg-black/10 text-black rounded-full text-[10px] font-bold h-fit mt-1.5">
+                                                <MapPin className="w-3 h-3" />
+                                                <span>NEARBY</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <p className="text-zinc-500 text-sm sm:text-base font-medium max-w-2xl">
+                                        {tagName
+                                            ? `Discover top-rated ${tagName} services near you`
+                                            : "Find your perfect spa or salon experience"}
+                                    </p>
+                                </div>
+
+                                {/* View on Map Button */}
+                                <button
+                                    onClick={() => setShowMap(true)}
+                                    className="hidden lg:flex items-center gap-2 bg-white border border-zinc-200 text-zinc-900 px-4 py-2.5 rounded-xl hover:bg-zinc-50 transition-all active:scale-95 shadow-sm text-xs font-bold uppercase tracking-wider shrink-0"
+                                >
+                                    <Map className="w-4 h-4" />
+                                    <span>View on Map</span>
+                                </button>
+                            </div>
+
+                            {/* Desktop Search Bar inside Hero */}
+                            <div className="hidden lg:block max-w-3xl">
+                                <SearchBar
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    locationValue={locationQuery}
+                                    onLocationChange={setLocationQuery}
+                                    onSearch={handleSearch}
+                                    isCompact
+                                />
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Filters & Search - sticky on scroll */}
+                <div className="sticky top-0 lg:top-0 z-30 bg-white pb-2">
+                    <ExploreFilters
+                        categories={categories}
+                        selectedCategory={selectedCategory}
+                        onSelectCategory={(cat) => {
+                            setSelectedCategory(cat);
+                            setCommittedSearch(searchQuery);
+                            setCommittedLocation(locationQuery);
+                        }}
+                        minRating={minRating}
+                        onSelectRating={(rate) => {
+                            setMinRating(rate);
+                            setCommittedSearch(searchQuery);
+                            setCommittedLocation(locationQuery);
+                        }}
+                        searchQuery={searchQuery}
+                        onSearchChange={setSearchQuery}
+                        locationQuery={locationQuery}
+                        onLocationChange={setLocationQuery}
+                        onSearch={handleSearch}
+                        onOpenFilters={() => setIsFilterModalOpen(true)}
+                        radius={radius}
+                        onRadiusChange={setRadius}
+                        isNearby={!!(activeLat && activeLng)}
+                        sortBy={activeFilters.sortBy}
+                        onSortChange={(sort) => {
+                            setActiveFilters((prev) => ({ ...prev, sortBy: sort }));
+                            handleSearch();
+                        }}
+                    />
+                </div>
+            </div>
+
+            {/* Split Layout Container */}
+            <div className={`flex flex-col lg:flex-row relative ${showMap ? 'max-w-[1750px] px-6 lg:px-10' : 'max-w-7xl px-4 sm:px-6 lg:px-8'} mx-auto`}>
+                {/* Left Side: Content & List */}
+                <div className={`w-full transition-all duration-500 ease-in-out ${showMap ? 'lg:w-[55%] px-0 lg:pr-8' : 'lg:w-full'} py-4 lg:py-8`}>
+                    <div className="w-full">
+                        {/* Results count indicator when map is open */}
+                        {showMap && (
+                            <div className="flex justify-between items-center mb-6">
+                                <span className="text-sm font-bold text-zinc-900">{totalResults || 0} Results</span>
+                                <button
+                                    onClick={() => {
+                                        setSearchQuery('');
+                                        setSelectedCategory(null);
+                                        setMinRating(0);
+                                        setActiveFilters({
+                                            sortBy: 'Recommended',
+                                            priceRange: 'Any Price',
+                                            rating: 0,
+                                            amenities: [],
+                                            gender: 'Any'
+                                        });
+                                    }}
+                                    className="text-xs font-bold text-zinc-500 hover:text-zinc-800 transition-colors uppercase tracking-wider underline underline-offset-4"
+                                >
+                                    Clear all
+                                </button>
+                            </div>
+                        )}
 
                         {/* Results List */}
                         {infiniteData ? (
@@ -464,8 +596,10 @@ const ExplorePageContent: React.FC<ExplorePageContentProps> = ({ initialData, ta
 
                 {/* Right Side: Sticky Map */}
                 {showMap && (
-                    <div className="hidden lg:block lg:w-[45%] pr-8 py-12">
-                        <ExploreMap businesses={businesses} />
+                    <div className="hidden lg:block lg:w-[45%] pr-8 py-8 sticky top-24 h-[calc(100vh-120px)]">
+                        <div className="w-full h-full rounded-2xl overflow-hidden border border-zinc-200 shadow-sm">
+                            <ExploreMap businesses={businesses} />
+                        </div>
                     </div>
                 )}
             </div>

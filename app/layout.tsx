@@ -281,6 +281,7 @@ export default function RootLayout({
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="google-site-verification" content="-bpy02NcWgpZGZ989qJTsr3-SDJzSCN0oCDJfKm-Hvs" />
+        <meta name="msvalidate.01" content="4DF60793F804FED7D277DF0F7E14BE23" />
         {/* Preconnect to key external origins to reduce latency */}
         <link rel="preconnect" href="https://res.cloudinary.com" />
         <link rel="preconnect" href="https://images.unsplash.com" />

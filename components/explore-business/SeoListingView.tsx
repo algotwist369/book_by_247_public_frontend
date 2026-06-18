@@ -6,6 +6,7 @@ import ExploreMap from '@/components/explore-business/ExploreMap';
 import ExploreFilters from '@/components/explore-business/ExploreFilters';
 import ExploreFilterModal, { FilterState } from '@/components/explore-business/ExploreFilterModal';
 import { Map, List, ArrowLeft, Search, X as CloseIcon, MapPin } from 'lucide-react';
+import { SearchBar } from '../ui/SearchBar';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useInfiniteSearch } from '@/hooks/useInfiniteSearch';
 import { useInfiniteServices } from '@/hooks/useInfiniteServices';
@@ -122,7 +123,7 @@ const SeoListingView = ({
     } = useInfiniteServices(searchFilters);
 
     const isServiceView = viewType === 'service';
-    
+
     const infiniteData = isServiceView ? infiniteServiceData : infiniteBusinessData;
     const hasNextPage = isServiceView ? hasNextServicePage : hasNextBusinessPage;
     const isFetchingNextPage = isServiceView ? isFetchingNextServicePage : isFetchingNextBusinessPage;
@@ -225,46 +226,158 @@ const SeoListingView = ({
                 </button>
             </div>
 
-            {/* Split Layout Container */}
-            <div className="flex flex-col lg:flex-row relative">
-                <div className={`w-full transition-all duration-500 ease-in-out ${showMap ? 'lg:w-[55%]' : 'lg:w-full'} px-4 sm:px-8 md:px-12 py-4 lg:py-16`}>
-                    <div className={`${showMap ? 'max-w-4xl' : 'max-w-[1600px]'} mx-auto transition-all duration-500`}>
-                        {/* Header & Toggle Section */}
-                        <div className="mb-0 lg:mb-10">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-zinc-900 tracking-tight leading-tight">
-                                        {displayTitle}
-                                        {initialCity && <span className="text-zinc-400"> in {initialCity}</span>}
-                                    </h1>
-                                    <p className="text-zinc-500 text-base sm:text-lg font-medium mt-2">{displaySubtitle}</p>
-                                </div>
+            {/* Top Header & Filters Section (Full Width) */}
+            <div className={`${showMap ? 'max-w-[1750px] px-6 lg:px-10' : 'max-w-7xl px-4 sm:px-6 lg:px-8'} mx-auto pt-6 lg:pt-10`}>
+                {showMap ? (
 
-                                <button onClick={() => setShowMap(!showMap)} className="hidden lg:flex items-center gap-2 bg-zinc-900 text-white px-5 py-2.5 rounded-2xl hover:bg-zinc-800 transition-all active:scale-95 shadow-lg shadow-zinc-900/10">
-                                    {showMap ? <><List className="w-4 h-4" /><span className="text-xs font-bold uppercase tracking-wider">Hide Map</span></> : <><Map className="w-4 h-4" /><span className="text-xs font-bold uppercase tracking-wider">Show Map</span></>}
-                                </button>
+                    /* Plain Header Layout when Map is open */
+                    <div className="mb-6 space-y-6">
+                        <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+                            <div className="space-y-1">
+                                <h1 className="text-3xl sm:text-4xl font-extrabold text-zinc-900 tracking-tight leading-tight">
+                                    {displayTitle}
+                                    {initialCity && (
+                                        <>
+                                            {" in "}
+                                            <span className="text-amber-800 font-serif italic font-normal">
+                                                {initialCity}
+                                            </span>
+                                        </>
+                                    )}
+                                </h1>
+                                <p className="text-zinc-500 text-sm font-medium">
+                                    {displaySubtitle}
+                                </p>
                             </div>
+
+                            {/* View List Button */}
+                            <button
+                                onClick={() => setShowMap(false)}
+                                className="hidden lg:flex items-center gap-2 bg-white border border-zinc-200 text-zinc-900 px-4 py-2.5 rounded-xl hover:bg-zinc-50 transition-all active:scale-95 shadow-sm text-xs font-bold uppercase tracking-wider shrink-0"
+                            >
+                                <List className="w-4 h-4" />
+                                <span>List View</span>
+                            </button>
                         </div>
 
-                        {/* Filters & Search */}
-                        <div className="sticky top-0 lg:top-0 z-30 bg-white pb-2 -mx-4 px-4 lg:-mx-0 lg:px-0">
-                            <ExploreFilters
-                                categories={categories}
-                                selectedCategory={selectedCategory}
-                                onSelectCategory={(cat) => { setSelectedCategory(cat); handleSearch(); }}
-                                minRating={minRating}
-                                onSelectRating={(rate) => { setMinRating(rate); handleSearch(); }}
-                                searchQuery={searchQuery}
-                                onSearchChange={setSearchQuery}
-                                locationQuery={locationQuery}
+                        {/* Full-width Search Bar */}
+                        <div className="max-w-5xl">
+                            <SearchBar
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                locationValue={locationQuery}
                                 onLocationChange={setLocationQuery}
                                 onSearch={handleSearch}
-                                onOpenFilters={() => setIsFilterModalOpen(true)}
-                                radius={radius}
-                                onRadiusChange={setRadius}
-                                isNearby={!!(activeLat && activeLng)}
                             />
                         </div>
+                    </div>
+                ) : (
+                    /* Premium Hero Header Banner Card when Map is closed */
+                    <div className="relative overflow-hidden rounded-3xl border border-zinc-100 bg-linear-to-r from-zinc-50/80 via-white to-zinc-50/50 p-6 sm:p-8 md:p-10 mb-8 flex flex-col justify-between items-start gap-6 shadow-xs">
+                        {/* Spa Faded Background Image */}
+                        <div className="absolute right-0 top-0 bottom-0 w-full lg:w-1/2 opacity-15 lg:opacity-30 pointer-events-none z-0">
+                            <div className="absolute inset-0 bg-gradient-to-r from-zinc-50 via-white/80 to-transparent z-10" />
+                            <img
+                                src="https://res.cloudinary.com/dxpxcptn4/image/upload/v1771920468/Book_now_yueyz3.png"
+                                alt="Spa wellness background banner"
+                                className="w-full h-full object-cover object-right"
+                            />
+                        </div>
+
+                        {/* Content */}
+                        <div className="relative z-10 flex-1 space-y-6 w-full">
+                            <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+                                <div className="space-y-2">
+                                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-zinc-900 tracking-tight leading-tight">
+                                        {displayTitle}
+                                        {initialCity && (
+                                            <>
+                                                {" in "}
+                                                <span className="text-amber-800 font-serif italic font-normal">
+                                                    {initialCity}
+                                                </span>
+                                            </>
+                                        )}
+                                    </h1>
+                                    <p className="text-zinc-500 text-sm sm:text-base font-medium max-w-2xl">
+                                        {displaySubtitle}
+                                    </p>
+                                </div>
+
+                                {/* View on Map Button */}
+                                <button
+                                    onClick={() => setShowMap(true)}
+                                    className="hidden lg:flex items-center gap-2 bg-white border border-zinc-200 text-zinc-900 px-4 py-2.5 rounded-xl hover:bg-zinc-50 transition-all active:scale-95 shadow-sm text-xs font-bold uppercase tracking-wider shrink-0"
+                                >
+                                    <Map className="w-4 h-4" />
+                                    <span>View on Map</span>
+                                </button>
+                            </div>
+
+                            {/* Desktop Search Bar inside Hero */}
+                            <div className="hidden lg:block max-w-3xl">
+                                <SearchBar
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    locationValue={locationQuery}
+                                    onLocationChange={setLocationQuery}
+                                    onSearch={handleSearch}
+                                    isCompact
+                                />
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Filters & Search */}
+                <div className="sticky top-0 lg:top-0 z-30 bg-white pb-2">
+                    <ExploreFilters
+                        categories={categories}
+                        selectedCategory={selectedCategory}
+                        onSelectCategory={(cat) => { setSelectedCategory(cat); handleSearch(); }}
+                        minRating={minRating}
+                        onSelectRating={(rate) => { setMinRating(rate); handleSearch(); }}
+                        searchQuery={searchQuery}
+                        onSearchChange={setSearchQuery}
+                        locationQuery={locationQuery}
+                        onLocationChange={setLocationQuery}
+                        onSearch={handleSearch}
+                        onOpenFilters={() => setIsFilterModalOpen(true)}
+                        radius={radius}
+                        onRadiusChange={setRadius}
+                        isNearby={!!(activeLat && activeLng)}
+                        sortBy={activeFilters.sortBy}
+                        onSortChange={(sort) => {
+                            setActiveFilters((prev) => ({ ...prev, sortBy: sort }));
+                            handleSearch();
+                        }}
+                    />
+                </div>
+            </div>
+
+            {/* Split Layout Container */}
+            <div className={`flex flex-col lg:flex-row relative ${showMap ? 'max-w-[1750px] px-6 lg:px-10' : 'max-w-7xl px-4 sm:px-6 lg:px-8'} mx-auto`}>
+                <div className={`w-full transition-all duration-500 ease-in-out ${showMap ? 'lg:w-[55%] px-0 lg:pr-8' : 'lg:w-full'} py-4 lg:py-8`}>
+                    <div className="w-full">
+
+                        {/* Results count indicator when map is open */}
+                        {showMap && (
+                            <div className="flex justify-between items-center mb-6">
+                                <span className="text-sm font-bold text-zinc-900">{totalResults || 0} Results</span>
+                                <button
+                                    onClick={() => {
+                                        setSearchQuery('');
+                                        setSelectedCategory('All');
+                                        setMinRating(0);
+                                        setActiveFilters({ sortBy: 'Recommended', priceRange: 'Any Price', rating: 0, amenities: [], gender: 'Any' });
+                                        handleSearch('', '');
+                                    }}
+                                    className="text-xs font-bold text-zinc-500 hover:text-zinc-800 transition-colors uppercase tracking-wider underline underline-offset-4"
+                                >
+                                    Clear all
+                                </button>
+                            </div>
+                        )}
 
                         {/* Results List */}
                         {infiniteData ? (
@@ -307,8 +420,15 @@ const SeoListingView = ({
 
                 <ExploreFilterModal isOpen={isFilterModalOpen} onClose={() => setIsFilterModalOpen(false)} currentFilters={activeFilters} onApply={(newFilters) => { setActiveFilters(newFilters); handleSearch(); setIsFilterModalOpen(false); }} />
 
-                {showMap && <div className="hidden lg:block lg:w-[45%] pr-8 py-12 sticky top-0 h-screen"><ExploreMap businesses={businesses} /></div>}
+                {showMap && (
+                    <div className="hidden lg:block lg:w-[45%] pr-8 py-8 sticky top-24 h-[calc(100vh-120px)]">
+                        <div className="w-full h-full rounded-2xl overflow-hidden border border-zinc-200 shadow-sm">
+                            <ExploreMap businesses={businesses} />
+                        </div>
+                    </div>
+                )}
             </div>
+
         </div>
     );
 };
