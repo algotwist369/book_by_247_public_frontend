@@ -1,4 +1,14 @@
+import Link from "next/link";
 import React from "react";
+
+const popularSearches = [
+  { name: "Top Hair Salon Near Me", query: "Hair Salon" },
+  { name: "Bridal Makeup Packages Price", query: "Bridal Makeup" },
+  { name: "Nail Art Studio Near Me", query: "Nail Art" },
+  { name: "Best Keratin Treatment Salon", query: "Keratin Treatment" },
+  { name: "Hydrafacial & Skin Clinics", query: "Hydrafacial" },
+  { name: "Luxury Spa & Body Massage", query: "Body Massage" },
+];
 
 const SEOFooter = () => {
   return (
@@ -20,7 +30,7 @@ const SEOFooter = () => {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-2">
             <h3 className="font-bold text-zinc-900">What is Bookby247 Salon and Spa Booking App?</h3>
-            <p className="text-sm text-zinc-600">Bookby247 is India's premier online salon appointment booking app designed for premium spas, hair salons, beauty parlours, and massage centers. Users can effortlessly discover, compare service menus, and book trusted local beauty services online with instant confirmation.</p>
+            <p className="text-sm text-zinc-600">Bookby247 is India&apos;s premier online salon appointment booking app designed for premium spas, hair salons, beauty parlours, and massage centers. Users can effortlessly discover, compare service menus, and book trusted local beauty services online with instant confirmation.</p>
           </div>
           <div className="space-y-2">
             <h3 className="font-bold text-zinc-900">Who Can Book Services on Bookby247?</h3>
@@ -32,7 +42,22 @@ const SEOFooter = () => {
           </div>
           <div className="space-y-2">
             <h3 className="font-bold text-zinc-900">How to Book Salon Appointments Online?</h3>
-            <p className="text-sm text-zinc-600">Customers can easily filter by salon price lists, check real-time slot availability, and read 100% verified customer reviews. Simply search by service type, local area, or studio name to instantly secure your online beauty parlour appointment without waiting for callbacks.</p>
+            <p className="text-sm text-zinc-600">Customers can filter by city, neighborhood, service type, salon price lists, real-time slot availability, and 100% verified customer reviews. Search by service, local area, or studio name to book salon appointments online instantly without waiting for callbacks.</p>
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <h3 className="text-base font-semibold text-zinc-900">Popular Beauty Searches in India</h3>
+          <div className="flex flex-wrap gap-2">
+            {popularSearches.map((search) => (
+              <Link
+                key={search.query}
+                href={`/explore?q=${encodeURIComponent(search.query)}`}
+                className="rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs font-semibold text-zinc-800 transition-colors hover:border-rose-300 hover:bg-rose-50"
+              >
+                {search.name}
+              </Link>
+            ))}
           </div>
         </div>
 
@@ -79,3 +104,4 @@ const SEOFooter = () => {
 };
 
 export default SEOFooter;
+

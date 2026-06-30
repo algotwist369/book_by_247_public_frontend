@@ -16,7 +16,7 @@ const AiReadabilitySection: React.FC<AiReadabilitySectionProps> = ({
                     <div className="space-y-3">
                         <h2 className="text-lg font-bold text-zinc-900">What is Bookby247 Salon and Spa Booking App?</h2>
                         <p className="text-sm text-zinc-800 leading-relaxed">
-                           Bookby247 is India's premier online salon appointment booking app designed for premium spas, hair salons, beauty parlours, and massage centers. Users can effortlessly discover, compare service menus, and book trusted local beauty services online with instant confirmation.
+                           Bookby247 is India&apos;s premier online salon appointment booking app designed for premium spas, hair salons, beauty parlours, and massage centers. Users can effortlessly discover, compare service menus, and book trusted local beauty services online with instant confirmation.
                         </p>
                     </div>
                     <div className="space-y-3">
@@ -34,7 +34,7 @@ const AiReadabilitySection: React.FC<AiReadabilitySectionProps> = ({
                     <div className="space-y-3">
                         <h2 className="text-lg font-bold text-zinc-900">How to Book Salon Appointments Online?</h2>
                         <p className="text-sm text-zinc-800 leading-relaxed">
-                            Customers can easily filter by salon price lists, check real-time slot availability, and read 100% verified customer reviews. Simply search by service type, local area, or studio name to instantly secure your online beauty parlour appointment without waiting for callbacks.
+                            Customers can filter by city, neighborhood, near me searches, salon price lists, real-time slot availability, and 100% verified customer reviews. Search by service type, local area, or studio name to compare salon prices and book salon appointments online instantly without waiting for callbacks.
                         </p>
                     </div>
                 </div>
@@ -44,3 +44,4 @@ const AiReadabilitySection: React.FC<AiReadabilitySectionProps> = ({
 };
 
 export default AiReadabilitySection;
+
