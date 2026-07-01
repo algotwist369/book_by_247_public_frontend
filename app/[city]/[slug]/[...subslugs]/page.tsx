@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const response = await businessApi.getDynamicListing(city, slug, subslugs[0], subslugs[1]).catch(() => null);
     
     if (!response || !response.success) {
-        return { title: 'Not Found - Bookby247' };
+        return { title: 'Not Found - BookBy247' };
     }
 
     const { filters, canonicalUrl, total = 0 } = response;
@@ -65,7 +65,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
 
     // Best SEO Description: [Value Prop] + [Social Proof] + [CTA]
-    const description = `Bookby247 is the top platform for finding the ${total > 0 ? `top ${total} ` : 'best '}rated ${categoryName.toLowerCase()} ${serviceName ? `offering ${serviceName.toLowerCase()} ` : ''}in ${locationName}. Compare prices, read verified reviews, and book appointments online instantly.`;
+    const description = `BookBy247 is the top platform for finding the ${total > 0 ? `top ${total} ` : 'best '}rated ${categoryName.toLowerCase()} ${serviceName ? `offering ${serviceName.toLowerCase()} ` : ''}in ${locationName}. Compare prices, read verified reviews, and book appointments online instantly.`;
 
     const fullCanonicalUrl = `https://bookby247.com${canonicalUrl}`;
 
@@ -79,7 +79,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             title,
             description,
             url: fullCanonicalUrl,
-            siteName: 'Bookby247',
+            siteName: 'BookBy247',
             type: 'website',
             locale: 'en_IN',
             images: [
@@ -87,7 +87,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
                     url: 'https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png',
                     width: 1200,
                     height: 630,
-                    alt: `Best ${categoryName} in ${locationName} - Bookby247`,
+                    alt: `Best ${categoryName} in ${locationName} - BookBy247`,
                 },
             ],
         },
@@ -96,7 +96,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             title,
             description,
             images: ['https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png'],
-            creator: '@bookby247',
+            creator: '@BookBy247',
         },
         robots: {
             index: true,

@@ -1,8 +1,7 @@
 import type { MetadataRoute } from "next";
 import { businessApi } from "@/api/public/business";
 import { blogApi } from "@/api/public/blog";
-
-const BASE_URL = "https://bookby247.com";
+import { publicRoutes, toAbsoluteUrl } from "@/lib/seo-config";
 
 export const revalidate = 3600;
 
@@ -18,8 +17,6 @@ type SitemapBusiness = {
 type SitemapEntry = MetadataRoute.Sitemap[number] & {
   images?: string[];
 };
-
-const toAbsoluteUrl = (path: string) => `${BASE_URL}${path.startsWith("/") ? path : `/${path}`}`;
 
 const toDate = (value?: string) => {
   if (!value) return undefined;
@@ -52,17 +49,12 @@ const getBusinessImages = (business: SitemapBusiness) =>
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: SitemapEntry[] = [
-    createRoute("/", { changeFrequency: "daily", priority: 1 }),
-    createRoute("/explore", { changeFrequency: "daily", priority: 0.9 }),
-    createRoute("/blog", { changeFrequency: "daily", priority: 0.9 }),
-    createRoute("/blog/latest", { changeFrequency: "daily", priority: 0.8 }),
-    createRoute("/blog/popular", { changeFrequency: "daily", priority: 0.8 }),
-    createRoute("/blog/trending", { changeFrequency: "daily", priority: 0.8 }),
-    createRoute("/free-listing", { changeFrequency: "monthly", priority: 0.8 }),
-    createRoute("/careers", { changeFrequency: "monthly", priority: 0.5 }),
-    createRoute("/editorial-standards", { changeFrequency: "monthly", priority: 0.5 }),
-    createRoute("/privacy-policy", { changeFrequency: "monthly", priority: 0.3 }),
-    createRoute("/terms-of-service", { changeFrequency: "monthly", priority: 0.3 }),
+    ...publicRoutes.map((route) =>
+      createRoute(route.path, {
+        changeFrequency: route.changeFrequency,
+        priority: route.priority,
+      })
+    ),
   ];
 
   let dynamicSeoRoutes: SitemapEntry[] = [];

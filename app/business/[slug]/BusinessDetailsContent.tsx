@@ -191,7 +191,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialData }: Cl
                                                         } else if (action.isWhatsApp) {
                                                             if (businessPhone) {
                                                                 const cleanPhone = businessPhone.replace(/[^0-9]/g, '');
-                                                                const prefilledMessage = `Hi ${businessName}, I am reaching out from the Bookby247. I am interested in booking an appointment. Please share available slots & details.`;
+                                                                const prefilledMessage = `Hi ${businessName}, I am reaching out from the BookBy247. I am interested in booking an appointment. Please share available slots & details.`;
                                                                 const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(prefilledMessage)}`;
                                                                 window.open(whatsappUrl, '_blank');
                                                             }

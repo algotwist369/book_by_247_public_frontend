@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const response = await businessApi.getDynamicListing(city, category, segments[0], segments[1]).catch(() => null);
     
     if (!response || !response.success) {
-        return { title: 'Not Found - Bookby247' };
+        return { title: 'Not Found - BookBy247' };
     }
 
     const { filters, canonicalUrl, total = 0 } = response;
@@ -44,11 +44,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     
     // Ensure title is within 60 characters if possible
     if (title.length > 60) {
-        title = `Best ${serviceName ? `${serviceName} ` : ''}${categoryName} in ${locationName} - Bookby247`;
+        title = `Best ${serviceName ? `${serviceName} ` : ''}${categoryName} in ${locationName} - BookBy247`;
     }
 
     // 🚀 Best SEO Description: [Value Prop] + [Social Proof] + [CTA]
-    const description = `Discover the ${total > 0 ? `top ${total} ` : 'best '}rated ${categoryName.toLowerCase()} ${serviceName ? `offering ${serviceName.toLowerCase()} ` : ''}in ${locationName}. Compare prices, read verified customer reviews, and enjoy instant online booking with Bookby247!`;
+    const description = `Discover the ${total > 0 ? `top ${total} ` : 'best '}rated ${categoryName.toLowerCase()} ${serviceName ? `offering ${serviceName.toLowerCase()} ` : ''}in ${locationName}. Compare prices, read verified customer reviews, and enjoy instant online booking with BookBy247!`;
 
     const fullCanonicalUrl = `https://bookby247.com/seo/listing/${city}/${category}${segments.length > 0 ? `/${segments.join('/')}` : ''}`;
 
@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         .filter((k: string, i: number, arr: string[]) => k && arr.indexOf(k) === i) // Unique
         .slice(0, 20); // Limit to top 20 keywords
 
-    const baseKeywords = [categoryName, cityName, areaName, serviceName, 'Bookby247', 'Online Booking'].filter(Boolean);
+    const baseKeywords = [categoryName, cityName, areaName, serviceName, 'BookBy247', 'Online Booking'].filter(Boolean);
     const finalKeywords = [...new Set([...baseKeywords, ...businessKeywords])];
 
     return {
@@ -72,7 +72,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             title,
             description,
             url: fullCanonicalUrl,
-            siteName: 'Bookby247',
+            siteName: 'BookBy247',
             type: 'website',
         },
         robots: {

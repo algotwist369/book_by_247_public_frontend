@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import { blogTagChipClassName } from "@/components/blog/BlogTagChip"
 import type { BlogTaxonomy } from "@/lib/blog-types"
 import { cn } from "@/lib/utils"
+import { startRouteProgress } from "@/lib/navigation-events"
 
 interface BlogFiltersProps {
     categories: BlogTaxonomy[]
@@ -12,6 +13,11 @@ interface BlogFiltersProps {
 
 export function BlogFilters({ categories, tags }: BlogFiltersProps) {
     const router = useRouter()
+    const navigate = (href: string) => {
+        startRouteProgress(href)
+        router.prefetch(href)
+        router.push(href)
+    }
 
     return (
         <div className="rounded-lg border border-gray-900/12 bg-gray-950/[0.04] px-4 py-5 sm:px-5">
@@ -26,7 +32,7 @@ export function BlogFilters({ categories, tags }: BlogFiltersProps) {
                                     <button
                                         type="button"
                                         aria-label={`Filter by category: ${category.name}`}
-                                        onClick={() => router.push(`/blog/category/${category.slug}`)}
+                                        onClick={() => navigate(`/blog/category/${category.slug}`)}
                                         className="rounded-sm px-0.5 text-left hover:bg-gray-950/[0.06] hover:underline"
                                     >
                                         {category.name}
@@ -46,7 +52,7 @@ export function BlogFilters({ categories, tags }: BlogFiltersProps) {
                                     key={tag.slug}
                                     type="button"
                                     aria-label={`Filter by tag: ${tag.name}`}
-                                    onClick={() => router.push(`/blog/tag/${tag.slug}`)}
+                                    onClick={() => navigate(`/blog/tag/${tag.slug}`)}
                                     className={cn(blogTagChipClassName, "cursor-pointer text-left")}
                                 >
                                     {tag.name}

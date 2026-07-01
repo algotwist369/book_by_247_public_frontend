@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { useRouter } from "next/navigation";
+import { startRouteProgress } from '@/lib/navigation-events';
 
 interface ServiceOption {
     name?: string;
@@ -46,7 +47,10 @@ const ServiceCard = ({ service, slug }: { service: Service; slug: string }) => {
         };
         
         localStorage.setItem('appointment_booking_data', JSON.stringify(bookingData));
-        router.push(`/business/${slug}/book-appointment`);
+        const href = `/business/${slug}/book-appointment`;
+        startRouteProgress(href);
+        router.prefetch(href);
+        router.push(href);
     };
 
     const formatDuration = (mins: number) => {

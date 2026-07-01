@@ -1,256 +1,49 @@
 import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
 import "./globals.css";
+import {
+  defaultOpenGraph,
+  defaultTwitter,
+  indexFollowRobots,
+  SEO_CONFIG,
+} from "@/lib/seo-config";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://bookby247.com"),
+  metadataBase: new URL(SEO_CONFIG.baseUrl),
+  applicationName: SEO_CONFIG.brandName,
   title: {
-    default: "Bookby247 - Discover & Book Top Spas, Salons and Beauty Services Near You",
-    template: "%s - Bookby247"
+    default: SEO_CONFIG.defaultTitle,
+    template: "%s"
   },
-  description: "Book & discover top-rated spas, salons, and beauty services across India Near You. Explore verified businesses, compare services, check reviews, and book appointments online with Bookby247.",
-  keywords: [
-    "spa booking",
-    "salon booking",
-    "beauty services",
-    "spa near me",
-    "salon near me",
-    "massage spa",
-    "facial services",
-    "wellness center",
-    "beauty parlour",
-    "spa in Mumbai",
-    "best spa",
-    "salon in Mumbai",
-    "beauty services India",
-    "book spa online",
-    "book salon online",
-
-    "spa booking online",
-    "salon appointment booking",
-    "book massage near me",
-    "instant salon booking",
-    "online beauty service booking",
-    "same day spa booking",
-    "book facial appointment",
-    "hair salon appointment near me",
-    "spa reservation system",
-    "salon booking app",
-
-    "best spa in Mumbai",
-    "best salon in Navi Mumbai",
-    "spa near Vashi",
-    "salon near Andheri",
-    "spa near me open now",
-    "salon open now near me",
-    "affordable spa in Mumbai",
-    "luxury spa Mumbai",
-    "unisex salon near me",
-    "ladies beauty parlour near me",
-
-    "full body massage near me",
-    "deep tissue massage Mumbai",
-    "aromatherapy spa",
-    "couple spa near me",
-    "thai massage near me",
-    "ayurvedic spa treatment",
-
-    "haircut near me",
-    "hair spa treatment",
-    "hair smoothening salon",
-    "keratin treatment near me",
-    "beard grooming salon",
-
-    "facial near me",
-    "bridal makeup artist",
-    "cleanup facial services",
-    "skin care clinic near me",
-    "acne treatment facial",
-
-    "spa offers near me",
-    "salon discount deals",
-    "cheap spa near me",
-    "affordable salon services",
-    "spa packages Mumbai",
-    "bridal package salon",
-    "membership spa deals",
-
-    "spa management software",
-    "salon management system",
-    "booking CRM for salon",
-    "spa appointment software",
-    "salon POS system",
-    "beauty salon CRM",
-    "appointment scheduling software",
-    "booking management dashboard",
-    "salon business software India",
-
-    "AI salon booking system",
-    "smart appointment scheduler",
-    "automated booking system",
-    "WhatsApp booking salon",
-    "QR check-in salon",
-    "contactless spa booking",
-    "mobile salon booking app",
-    "real-time booking system",
-
-    "where can I book a spa near me",
-    "best salon near me open now",
-    "cheap massage spa near me",
-    "which salon is best in Mumbai",
-    "book facial appointment near me",
-
-    "spa booking",
-    "salon booking",
-    "beauty services",
-    "spa near me",
-    "salon near me",
-    "massage spa",
-    "facial services",
-    "wellness center",
-    "beauty parlour",
-    "spa in India",
-    "salon in India",
-    "beauty services India",
-    "book spa online",
-    "book salon online",
-
-    "spa booking online",
-    "salon appointment booking",
-    "book massage near me",
-    "instant salon booking",
-    "online beauty service booking",
-    "same day spa booking",
-    "book facial appointment",
-    "hair salon appointment near me",
-    "spa reservation system",
-    "salon booking app",
-
-    "best spa in India",
-    "best salon near me",
-    "spa near me open now",
-    "salon open now near me",
-    "affordable spa near me",
-    "luxury spa near me",
-    "unisex salon near me",
-    "ladies beauty parlour near me",
-    "top rated salon near me",
-    "best beauty parlour in India",
-
-    "full body massage near me",
-    "deep tissue massage near me",
-    "aromatherapy spa",
-    "couple spa near me",
-    "thai massage near me",
-    "ayurvedic spa treatment",
-    "body massage center near me",
-    "relaxation spa near me",
-
-    "haircut near me",
-    "hair spa treatment",
-    "hair smoothening salon",
-    "keratin treatment near me",
-    "beard grooming salon",
-    "hair styling salon near me",
-    "professional hair salon",
-    "men salon near me",
-
-    "facial near me",
-    "bridal makeup artist",
-    "cleanup facial services",
-    "skin care clinic near me",
-    "acne treatment facial",
-    "glow facial services",
-    "beauty salon for women",
-    "makeup artist near me",
-
-    "spa offers near me",
-    "salon discount deals",
-    "cheap spa near me",
-    "affordable salon services",
-    "spa packages near me",
-    "bridal package salon",
-    "membership spa deals",
-    "discount salon near me",
-
-    "spa management software",
-    "salon management system",
-    "booking CRM for salon",
-    "spa appointment software",
-    "salon POS system",
-    "beauty salon CRM",
-    "appointment scheduling software",
-    "booking management dashboard",
-    "salon business software India",
-
-    "AI salon booking system",
-    "smart appointment scheduler",
-    "automated booking system",
-    "WhatsApp booking salon",
-    "QR check-in salon",
-    "contactless spa booking",
-    "mobile salon booking app",
-    "real-time booking system",
-
-    "where can I book a spa near me",
-    "best salon near me open now",
-    "cheap massage spa near me",
-    "which salon is best in India",
-    "book facial appointment near me",
-    "nearest beauty parlour",
-    "spa services near me",
-    "salon services near me"
-  ],
-  authors: [{ name: "Bookby247 Team" }],
-  creator: "Bookby247",
-  publisher: "Bookby247",
+  description: SEO_CONFIG.defaultDescription,
+  keywords: [...SEO_CONFIG.defaultKeywords],
+  authors: [{ name: `${SEO_CONFIG.brandName} Team` }],
+  creator: SEO_CONFIG.brandName,
+  publisher: SEO_CONFIG.brandName,
+  category: "spa salon wellness booking",
   formatDetection: {
     email: false,
     address: true,
     telephone: true,
   },
-  openGraph: {
-    title: "Discover & Book Top Spas, Salons and Beauty Services Near You - Bookby247",
-    description:
-      "Find verified spas, salons, and beauty services near you. Compare reviews, explore services, and book appointments online.",
-    url: "https://bookby247.com",
-    siteName: "Bookby247",
-    locale: "en_IN",
-    type: "website",
-    images: [
-      {
-        url: "https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png",
-        width: 1200,
-        height: 630,
-        alt: "Bookby247 - Spa, Salon and Beauty Booking Platform",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Discover & Book Top Spas, Salons and Beauty Services Near You - Bookby247",
-    description:
-      "Explore trusted spas, salons, and beauty businesses near you with Bookby247.",
-    images: [
-      "https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png",
-    ],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+  openGraph: defaultOpenGraph,
+  twitter: defaultTwitter,
+  robots: indexFollowRobots,
   alternates: {
     canonical: "/",
   },
   icons: {
-    icon: "https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png",
+    icon: "/icon",
+    apple: "/apple-icon",
+  },
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    title: SEO_CONFIG.brandName,
+    statusBarStyle: "black-translucent",
+  },
+  other: {
+    "apple-mobile-web-app-title": SEO_CONFIG.brandName,
   },
 };
 
@@ -259,6 +52,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   viewportFit: "cover",
+  themeColor: SEO_CONFIG.themeColor,
 };
 
 import { Navbar } from "@/components/layout/Navbar";
@@ -266,6 +60,8 @@ import Footer from "@/components/layout/Footer";
 import { FloatingActionButtons } from "@/components/layout/FloatingActionButtons";
 import { BottomNav } from "@/components/layout/BottomNav";
 import StructuredData from "@/components/seo/StructuredData";
+import AutomaticBreadcrumbJsonLd from "@/components/seo/AutomaticBreadcrumbJsonLd";
+import RouteProgress from "@/components/navigation/RouteProgress";
 import Script from "next/script";
 import QueryProvider from "@/providers/QueryProvider";
 import UtmTracker from "@/components/analytics/UtmTracker";
@@ -279,7 +75,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="google-site-verification" content="-bpy02NcWgpZGZ989qJTsr3-SDJzSCN0oCDJfKm-Hvs" />
         <meta name="msvalidate.01" content="4DF60793F804FED7D277DF0F7E14BE23" />
         {/* Preconnect to key external origins to reduce latency */}
@@ -288,8 +83,9 @@ export default function RootLayout({
         <link rel="preconnect" href="https://lh3.googleusercontent.com" />
         <link rel="dns-prefetch" href="https://content.jdmagicbox.com" />
         <link rel="dns-prefetch" href="https://ui-avatars.com" />
-        <link rel="alternate" type="text/plain" href="/llms.txt" title="Bookby247 LLMs.txt" />
-        <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Bookby247 expanded LLM context" />
+        <link rel="preload" as="image" href={SEO_CONFIG.ogImage.url} />
+        <link rel="alternate" type="text/plain" href="/llms.txt" title="BookBy247 LLMs.txt" />
+        <link rel="alternate" type="text/plain" href="/llms-full.txt" title="BookBy247 expanded LLM context" />
       </head>
       <body
         className="antialiased min-h-screen flex flex-col"
@@ -328,6 +124,8 @@ export default function RootLayout({
             <UtmTracker />
           </Suspense>
           <StructuredData />
+          <AutomaticBreadcrumbJsonLd />
+          <RouteProgress />
           <Navbar />
           <FloatingActionButtons />
           <main className="flex-1 pb-16 md:pb-0">

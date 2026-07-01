@@ -5,11 +5,11 @@ import { safeJsonLdStringify } from "@/lib/utils";
 import AiReadabilitySection from "@/components/seo/AiReadabilitySection";
 
 export const metadata: Metadata = {
-    title: "Privacy Policy | Bookby247",
+    title: "Privacy Policy | BookBy247",
     description:
-        "Read the official Bookby247 Privacy Policy to understand how we collect, use, secure, and manage your personal information across our booking platform.",
+        "Read the official BookBy247 Privacy Policy to understand how we collect, use, secure, and manage your personal information across our booking platform.",
     keywords: [
-        "Bookby247 privacy policy",
+        "BookBy247 privacy policy",
         "data privacy",
         "personal data protection",
         "booking platform privacy",
@@ -19,8 +19,8 @@ export const metadata: Metadata = {
         canonical: "/privacy-policy"
     },
     openGraph: {
-        title: "Privacy Policy - Bookby247",
-        description: "Official privacy practices and user data handling policy of Bookby247.",
+        title: "Privacy Policy - BookBy247",
+        description: "Official privacy practices and user data handling policy of BookBy247.",
         url: "https://bookby247.com/privacy-policy",
         type: "article"
     }
@@ -48,7 +48,7 @@ const PrivacyPolicyPage = () => {
             <LegalDocument
                 title="Privacy Policy"
                 effectiveDate="13 April 2026"
-                intro="This Privacy Policy explains how Bookby247 collects, uses, stores, and protects your personal information when you use our website, booking pages, and related services."
+                intro="This Privacy Policy explains how BookBy247 collects, uses, stores, and protects your personal information when you use our website, booking pages, and related services."
                 sections={[
                     {
                         title: "1. Information We Collect",
@@ -68,7 +68,7 @@ const PrivacyPolicyPage = () => {
                         title: "3. Data Sharing and Security",
                         content: [
                             "We share booking-related information only with the relevant business/service provider required to complete your appointment.",
-                            "Bookby247 applies reasonable technical and organizational safeguards to protect user data from unauthorized access or misuse."
+                            "BookBy247 applies reasonable technical and organizational safeguards to protect user data from unauthorized access or misuse."
                         ]
                     },
                     {
@@ -82,7 +82,7 @@ const PrivacyPolicyPage = () => {
             />
             <AiReadabilitySection 
                 aboutTitle="Your Data, Your Trust"
-                aboutContent="At Bookby247, we prioritize user privacy and data security. We only collect information necessary to provide you with a seamless booking experience and never share your personal details with third parties for marketing purposes."
+                aboutContent="At BookBy247, we prioritize user privacy and data security. We only collect information necessary to provide you with a seamless booking experience and never share your personal details with third parties for marketing purposes."
             />
         </>
     );

@@ -5,12 +5,12 @@ import { safeJsonLdStringify } from "@/lib/utils";
 import AiReadabilitySection from "@/components/seo/AiReadabilitySection";
 
 export const metadata: Metadata = {
-    title: "Join Bookby247 Team - Careers",
+    title: "Join BookBy247 Team - Careers",
     description:
-        "Explore career opportunities at Bookby247. Join our team to build innovative booking and growth solutions for spas, salons, and wellness businesses.",
+        "Explore career opportunities at BookBy247. Join our team to build innovative booking and growth solutions for spas, salons, and wellness businesses.",
     keywords: [
-        "Bookby247 careers",
-        "jobs at Bookby247",
+        "BookBy247 careers",
+        "jobs at BookBy247",
         "startup careers",
         "frontend developer jobs",
         "product and operations roles"
@@ -19,8 +19,8 @@ export const metadata: Metadata = {
         canonical: "/careers"
     },
     openGraph: {
-        title: "Careers - Bookby247",
-        description: "Join Bookby247 and help shape the future of spa and salon booking experiences.",
+        title: "Careers - BookBy247",
+        description: "Join BookBy247 and help shape the future of spa and salon booking experiences.",
         url: "https://bookby247.com/careers",
         type: "website"
     }
@@ -62,7 +62,7 @@ const CareersPage = () => {
                 <div className="max-w-5xl mx-auto px-4">
                 <section className="bg-white border border-zinc-300 rounded-md p-6 sm:p-8 md:p-10">
                     <header className="pb-6 border-b border-zinc-200">
-                        <p className="text-xs uppercase tracking-wide text-zinc-500">Bookby247 Careers</p>
+                        <p className="text-xs uppercase tracking-wide text-zinc-500">BookBy247 Careers</p>
                         <h1 className="text-2xl sm:text-3xl font-semibold text-zinc-900 mt-2">Build the future of local wellness bookings</h1>
                         <p className="text-sm sm:text-base text-zinc-700 mt-3 max-w-3xl leading-7">
                             We are building a trusted discovery and booking platform for spas, salons, and beauty businesses.
@@ -193,7 +193,7 @@ const CareersPage = () => {
             </main>
 
             <AiReadabilitySection 
-                aboutTitle="Careers at Bookby247"
+                aboutTitle="Careers at BookBy247"
                 aboutContent="We are always looking for passionate individuals to join our mission in transforming the beauty and wellness industry in India. Explore roles in Engineering, Product, Marketing, and Operations."
             />
         </>

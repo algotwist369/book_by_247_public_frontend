@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     if (!seoData) {
         return {
-            title: 'Business Not Found - Bookby247',
+            title: 'Business Not Found - BookBy247',
         };
     }
 
@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     // Pro SEO Title: [Business Name] - [Prefix] [Type] in [Area], [City] - Online Booking
     const title =
-        seo.metaTitle || `${seoData.name} - ${prefix} ${type} in ${area ? `${area}, ` : ''}${city} - Bookby247`;
+        seo.metaTitle || `${seoData.name} - ${prefix} ${type} in ${area ? `${area}, ` : ''}${city} - BookBy247`;
     
     const avgRating = seoData.ratings?.average || 5;
     const totalReviews = seoData.ratings?.totalReviews || 10;
@@ -83,7 +83,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             `best ${type} in ${city}`,
             `${seoData.name} booking`,
             `${seoData.name} reviews`,
-            "bookby247"
+            "BookBy247"
         ].filter((v, i, a) => a.indexOf(v) === i), // deduplicate
         alternates: {
             canonical: canonicalPath,
@@ -101,7 +101,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             title,
             description,
             url: `https://bookby247.com${canonicalPath}`,
-            siteName: "Bookby247",
+            siteName: "BookBy247",
             type: "website",
             locale: "en_IN",
             images: ogImage ? [{ url: ogImage, width: 1200, height: 630, alt: seoData.name }] : [],
@@ -111,7 +111,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             title,
             description,
             images: ogImage ? [ogImage] : [],
-            creator: "@bookby247",
+            creator: "@BookBy247",
         }
     };
 
@@ -214,7 +214,7 @@ const BusinessDetailsPage = async ({ params }: PageProps) => {
 
             <AiReadabilitySection 
                 aboutTitle={`About ${details.name}`} 
-                aboutContent={`${details.name} is a verified ${details.search_profile?.spaTypes?.[0] || 'wellness partner'} on Bookby247, located in ${contacts?.area ? `${contacts.area}, ` : ''}${contacts?.city}. They offer professional services with transparent pricing and verified customer reviews.`} 
+                aboutContent={`${details.name} is a verified ${details.search_profile?.spaTypes?.[0] || 'wellness partner'} on BookBy247, located in ${contacts?.area ? `${contacts.area}, ` : ''}${contacts?.city}. They offer professional services with transparent pricing and verified customer reviews.`} 
             />
         </>
     );

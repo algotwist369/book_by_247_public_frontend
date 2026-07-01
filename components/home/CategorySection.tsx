@@ -8,6 +8,7 @@ import Link from "next/link";
 
 import { useRouter } from "next/navigation";
 import { CATEGORIES_DATA, SERVICES_DATA } from "@/lib/constants";
+import { startRouteProgress } from "@/lib/navigation-events";
 
 export const CategorySection = () => {
     const router = useRouter();
@@ -20,7 +21,10 @@ export const CategorySection = () => {
     }, []);
 
     const handleServiceClick = React.useCallback((title: string) => {
-        router.push(`/explore?q=${encodeURIComponent(title)}`);
+        const href = `/explore?q=${encodeURIComponent(title)}`;
+        startRouteProgress(href);
+        router.prefetch(href);
+        router.push(href);
     }, [router]);
 
     return (

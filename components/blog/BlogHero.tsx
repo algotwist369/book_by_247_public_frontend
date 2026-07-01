@@ -24,7 +24,7 @@ export function BlogHero({ featured, topics }: BlogHeroProps) {
         <section className="border-b border-gray-100 bg-white">
             <div className="mx-auto max-w-6xl px-4 pb-12 pt-10 sm:px-6 lg:px-8">
                 <header className="max-w-2xl">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-gray-500">Bookby247</p>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-gray-500">BookBy247</p>
                     <h1 className="mt-3 text-3xl font-semibold tracking-tight text-gray-900 sm:text-[2.125rem] sm:leading-snug">
                         Insights for salons, spas & beauty brands
                     </h1>

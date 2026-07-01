@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/Input"
 import { blogApi } from "@/api/public/blog"
 import { useDebounce } from "@/hooks/useDebounce"
 import { cn } from "@/lib/utils"
+import { startRouteProgress } from "@/lib/navigation-events"
 
 interface BlogSearchProps {
     initialValue?: string
@@ -51,7 +52,10 @@ export function BlogSearch({ initialValue = "", className = "", inputClassName =
                 onChange={(event) => setQuery(event.target.value)}
                 onKeyDown={(event) => {
                     if (event.key === "Enter" && query.trim()) {
-                        router.push(`/blog/search?q=${encodeURIComponent(query.trim())}`)
+                        const href = `/blog/search?q=${encodeURIComponent(query.trim())}`
+                        startRouteProgress(href)
+                        router.prefetch(href)
+                        router.push(href)
                     }
                 }}
                 placeholder="Search articles"
@@ -68,7 +72,11 @@ export function BlogSearch({ initialValue = "", className = "", inputClassName =
                             key={`${suggestion.href}-${suggestion.label}`}
                             type="button"
                             aria-label={`Go to ${suggestion.label}`}
-                            onClick={() => router.push(suggestion.href)}
+                            onClick={() => {
+                                startRouteProgress(suggestion.href)
+                                router.prefetch(suggestion.href)
+                                router.push(suggestion.href)
+                            }}
                             className="w-full px-3 py-2.5 text-left text-[14px] text-gray-900 outline-none hover:bg-gray-50"
                         >
                             {suggestion.label}

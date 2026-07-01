@@ -25,7 +25,7 @@ const ForBusinesses = () => {
                                 Grow Your Spa, Hair Salon & Beauty Parlour Business
                                 <br />
                                 <span className="text-zinc-900">
-                                    with Bookby247 Partner Platform
+                                    with BookBy247 Partner Platform
                                 </span>
                             </h2>
 

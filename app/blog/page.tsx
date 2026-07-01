@@ -6,11 +6,11 @@ import { BlogLandingContent } from "@/app/blog/BlogLandingContent"
 export const revalidate = 300
 
 const BLOG_INDEX_DESCRIPTION =
-    "Editorial guides on discovery, bookings, and growth for salons, spas, and beauty brands in India. Practical reads for wellness teams and guests using Bookby247."
+    "Editorial guides on discovery, bookings, and growth for salons, spas, and beauty brands in India. Practical reads for wellness teams and guests using BookBy247."
 
 const BLOG_INDEX_OG_IMAGE = "https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png"
 
-const BLOG_INDEX_SHARE_TITLE = "Bookby247 Blog | Salons, spas & beauty business insights"
+const BLOG_INDEX_SHARE_TITLE = "BookBy247 Blog | Salons, spas & beauty business insights"
 
 export const metadata: Metadata = {
     title: {
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     },
     description: BLOG_INDEX_DESCRIPTION,
     keywords: [
-        "Bookby247 blog",
+        "BookBy247 blog",
         "salon business tips India",
         "spa marketing",
         "beauty salon booking",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
         title: BLOG_INDEX_SHARE_TITLE,
         description: BLOG_INDEX_DESCRIPTION,
         url: "/blog",
-        siteName: "Bookby247",
+        siteName: "BookBy247",
         locale: "en_IN",
         type: "website",
         images: [
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
                 url: BLOG_INDEX_OG_IMAGE,
                 width: 1200,
                 height: 630,
-                alt: "Bookby247 blog — salons, spas and beauty brands",
+                alt: "BookBy247 blog — salons, spas and beauty brands",
             },
         ],
     },
@@ -74,7 +74,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     return (
         <BlogLandingContent
             title="Articles"
-            description="Short reads on wellness brands, salons, spas, and using Bookby247 day to day."
+            description="Short reads on wellness brands, salons, spas, and using BookBy247 day to day."
             blogs={blogs}
             featured={shell.trending[0] || blogs[0]}
             categories={shell.categories}

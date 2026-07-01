@@ -11,8 +11,8 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { confirmationCode } = await params;
     return {
-        title: `Booking Status ${confirmationCode} - Bookby247`,
-        description: "Track real-time appointment booking status and details on Bookby247."
+        title: `Booking Status ${confirmationCode} - BookBy247`,
+        description: "Track real-time appointment booking status and details on BookBy247."
     };
 }
 

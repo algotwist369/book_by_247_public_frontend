@@ -3,9 +3,9 @@ import { generateBreadcrumbJsonLd, generateOrganizationJsonLd, generateWebSiteJs
 import { safeJsonLdStringify } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Editorial Standards & AI Content Policy | Bookby247",
+  title: "Editorial Standards & AI Content Policy | BookBy247",
   description:
-    "Learn how Bookby247 creates, reviews, and updates spa, salon, beauty, wellness, and business-management content for accuracy, usefulness, and transparency.",
+    "Learn how BookBy247 creates, reviews, and updates spa, salon, beauty, wellness, and business-management content for accuracy, usefulness, and transparency.",
   alternates: {
     canonical: "/editorial-standards",
   },
@@ -20,11 +20,11 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Bookby247 Editorial Standards & AI Content Policy",
+    title: "BookBy247 Editorial Standards & AI Content Policy",
     description:
-      "How Bookby247 keeps public wellness, booking, business listing, and educational content accurate, useful, and people-first.",
+      "How BookBy247 keeps public wellness, booking, business listing, and educational content accurate, useful, and people-first.",
     url: "https://bookby247.com/editorial-standards",
-    siteName: "Bookby247",
+    siteName: "BookBy247",
     type: "website",
     locale: "en_IN",
   },
@@ -34,7 +34,7 @@ const standards = [
   {
     title: "People-first usefulness",
     content:
-      "Bookby247 content is written to help customers compare and book spas, salons, massage centers, beauty parlours, grooming services, and wellness businesses with clarity.",
+      "BookBy247 content is written to help customers compare and book spas, salons, massage centers, beauty parlours, grooming services, and wellness businesses with clarity.",
   },
   {
     title: "Accuracy and business data",
@@ -44,7 +44,7 @@ const standards = [
   {
     title: "AI-assisted workflows",
     content:
-      "Bookby247 may use AI-assisted tools to organize drafts, summarize public information, improve structure, generate internal research outlines, or support visual concepts. AI assistance is not treated as a replacement for human review where accuracy matters.",
+      "BookBy247 may use AI-assisted tools to organize drafts, summarize public information, improve structure, generate internal research outlines, or support visual concepts. AI assistance is not treated as a replacement for human review where accuracy matters.",
   },
   {
     title: "Human review and updates",
@@ -54,7 +54,7 @@ const standards = [
   {
     title: "No mass low-value pages",
     content:
-      "Bookby247 avoids creating pages only to capture keyword variations. Local, service, blog, and business pages should provide real discovery, comparison, booking, or educational value.",
+      "BookBy247 avoids creating pages only to capture keyword variations. Local, service, blog, and business pages should provide real discovery, comparison, booking, or educational value.",
   },
   {
     title: "Images and media",
@@ -70,9 +70,9 @@ const jsonLd = {
       "@type": "WebPage",
       "@id": "https://bookby247.com/editorial-standards#webpage",
       "url": "https://bookby247.com/editorial-standards",
-      "name": "Bookby247 Editorial Standards & AI Content Policy",
+      "name": "BookBy247 Editorial Standards & AI Content Policy",
       "description":
-        "Bookby247 explains how spa, salon, beauty, wellness, business listing, and educational content is created, reviewed, updated, and assisted by AI tools.",
+        "BookBy247 explains how spa, salon, beauty, wellness, business listing, and educational content is created, reviewed, updated, and assisted by AI tools.",
       "isPartOf": {
         "@id": "https://bookby247.com/#website",
       },
@@ -92,26 +92,26 @@ const jsonLd = {
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "Does Bookby247 use AI-generated content?",
+          "name": "Does BookBy247 use AI-generated content?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Bookby247 may use AI-assisted tools for drafting support, structure, summaries, research organization, or visual concepts, but important public information is reviewed for usefulness and accuracy.",
+            "text": "BookBy247 may use AI-assisted tools for drafting support, structure, summaries, research organization, or visual concepts, but important public information is reviewed for usefulness and accuracy.",
           },
         },
         {
           "@type": "Question",
-          "name": "How does Bookby247 keep business information accurate?",
+          "name": "How does BookBy247 keep business information accurate?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Bookby247 uses listed business data, platform records, customer interactions, and public business information where available, then updates pages when information changes or issues are reported.",
+            "text": "BookBy247 uses listed business data, platform records, customer interactions, and public business information where available, then updates pages when information changes or issues are reported.",
           },
         },
         {
           "@type": "Question",
-          "name": "Does Bookby247 create pages only for search engines?",
+          "name": "Does BookBy247 create pages only for search engines?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. Bookby247 aims to create local, service, business, and educational pages that help users discover, compare, book, or understand spa, salon, beauty, and wellness services.",
+            "text": "No. BookBy247 aims to create local, service, business, and educational pages that help users discover, compare, book, or understand spa, salon, beauty, and wellness services.",
           },
         },
       ],
@@ -141,7 +141,7 @@ export default function EditorialStandardsPage() {
             Editorial Standards & AI Content Policy
           </h1>
           <p className="mt-5 text-base leading-8 text-zinc-600">
-            Bookby247 publishes public information for customers searching for spas, salons,
+            BookBy247 publishes public information for customers searching for spas, salons,
             massage centers, beauty parlours, grooming services, wellness experiences, and
             business-management tools. This page explains how we keep that content useful,
             accurate, and transparent.

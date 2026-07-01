@@ -5,11 +5,11 @@ import { safeJsonLdStringify } from "@/lib/utils";
 import AiReadabilitySection from "@/components/seo/AiReadabilitySection";
 
 export const metadata: Metadata = {
-    title: "Terms of Service | Bookby247",
+    title: "Terms of Service | BookBy247",
     description:
-        "Read the Bookby247 Terms of Service covering account usage, booking responsibilities, platform limitations, and legal terms for all users.",
+        "Read the BookBy247 Terms of Service covering account usage, booking responsibilities, platform limitations, and legal terms for all users.",
     keywords: [
-        "Bookby247 terms",
+        "BookBy247 terms",
         "terms of service",
         "booking platform terms",
         "user agreement",
@@ -19,8 +19,8 @@ export const metadata: Metadata = {
         canonical: "/terms-of-service"
     },
     openGraph: {
-        title: "Terms of Service - Bookby247",
-        description: "Legal terms and conditions for using Bookby247 booking services.",
+        title: "Terms of Service - BookBy247",
+        description: "Legal terms and conditions for using BookBy247 booking services.",
         url: "https://bookby247.com/terms-of-service",
         type: "article"
     }
@@ -48,13 +48,13 @@ const TermsOfServicePage = () => {
             <LegalDocument
                 title="Terms of Service"
                 effectiveDate="13 April 2026"
-                intro="These Terms of Service govern your access to and use of Bookby247. By using the platform, you agree to these terms and applicable laws."
+                intro="These Terms of Service govern your access to and use of BookBy247. By using the platform, you agree to these terms and applicable laws."
                 sections={[
                     {
                         title: "1. Platform Usage",
                         content: [
                             "Users must provide accurate booking information and must not misuse the platform through false bookings, abuse, or unauthorized access attempts.",
-                            "Bookby247 may suspend or restrict access for users violating these terms."
+                            "BookBy247 may suspend or restrict access for users violating these terms."
                         ]
                     },
                     {
@@ -67,14 +67,14 @@ const TermsOfServicePage = () => {
                     {
                         title: "3. Third-Party Businesses",
                         content: [
-                            "Bookby247 is a facilitation platform connecting users with listed businesses. Service quality, pricing, and fulfillment are managed by the respective business.",
+                            "BookBy247 is a facilitation platform connecting users with listed businesses. Service quality, pricing, and fulfillment are managed by the respective business.",
                             "Users should review business-specific policies before confirming appointments."
                         ]
                     },
                     {
                         title: "4. Liability and Modifications",
                         content: [
-                            "Bookby247 is not liable for indirect losses resulting from service interruptions, third-party changes, or booking disputes outside platform control.",
+                            "BookBy247 is not liable for indirect losses resulting from service interruptions, third-party changes, or booking disputes outside platform control.",
                             "We may update these terms periodically. Continued use after updates means acceptance of revised terms."
                         ]
                     }
@@ -82,7 +82,7 @@ const TermsOfServicePage = () => {
             />
             <AiReadabilitySection 
                 aboutTitle="Clear and Transparent Terms"
-                aboutContent="Bookby247 operates as a trusted intermediary between users and wellness service providers. Our terms ensure a fair, transparent, and secure booking environment for everyone involved."
+                aboutContent="BookBy247 operates as a trusted intermediary between users and wellness service providers. Our terms ensure a fair, transparent, and secure booking environment for everyone involved."
             />
         </>
     );

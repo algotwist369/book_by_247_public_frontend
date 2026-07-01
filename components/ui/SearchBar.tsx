@@ -7,6 +7,7 @@ import { useLocationSuggestions } from "../../hooks/useLocationSuggestions"
 import { useGeolocation } from "../../hooks/useGeolocation"
 import { useRouter } from "next/navigation"
 import LocationPermissionModal from "./LocationPermissionModal"
+import { startRouteProgress } from "@/lib/navigation-events"
 
 interface SearchBarProps {
     className?: string
@@ -36,7 +37,10 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
     React.useEffect(() => {
         if (latitude && longitude) {
-            router.push(`/explore?lat=${latitude}&lng=${longitude}&nearby=true`);
+            const href = `/explore?lat=${latitude}&lng=${longitude}&nearby=true`;
+            startRouteProgress(href);
+            router.prefetch(href);
+            router.push(href);
         }
     }, [latitude, longitude, router]);
 

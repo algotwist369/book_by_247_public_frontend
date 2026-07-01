@@ -261,7 +261,7 @@ export const REVIEWS_DATA = [
   {
     "id": 1,
     "title": "Best Spa near me in Mumbai",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Aarav S.",
     "location": "Andheri, Mumbai",
     "rating": 4.8,
@@ -272,7 +272,7 @@ export const REVIEWS_DATA = [
   {
     "id": 2,
     "title": "Top-rated Salon booking experience",
-    "text": "I used Bookby247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Vivaan P.",
     "location": "Bandra, Mumbai",
     "rating": 4.9,
@@ -283,7 +283,7 @@ export const REVIEWS_DATA = [
   {
     "id": 3,
     "title": "Smooth online booking for Beauty Center",
-    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Aditya M.",
     "location": "Dadar, Mumbai",
     "rating": 4.7,
@@ -294,7 +294,7 @@ export const REVIEWS_DATA = [
   {
     "id": 4,
     "title": "Trusted Massage Center with verified reviews",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Vihaan K.",
     "location": "Borivali, Mumbai",
     "rating": 4.9,
@@ -316,7 +316,7 @@ export const REVIEWS_DATA = [
   {
     "id": 6,
     "title": "Premium Wellness Center found quickly",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Sai R.",
     "location": "Lower Parel, Mumbai",
     "rating": 4.7,
@@ -327,7 +327,7 @@ export const REVIEWS_DATA = [
   {
     "id": 7,
     "title": "Easy appointment booking for Haircut Salon",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Reyansh N.",
     "location": "Worli, Mumbai",
     "rating": 4.8,
@@ -338,7 +338,7 @@ export const REVIEWS_DATA = [
   {
     "id": 8,
     "title": "Reliable Mumbai Beard Styling Service discovery",
-    "text": "I used Bookby247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Ayaan B.",
     "location": "Malad, Mumbai",
     "rating": 5.0,
@@ -349,7 +349,7 @@ export const REVIEWS_DATA = [
   {
     "id": 9,
     "title": "Excellent Facial Service with instant booking",
-    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Krishna D.",
     "location": "Goregaon, Mumbai",
     "rating": 5.0,
@@ -360,7 +360,7 @@ export const REVIEWS_DATA = [
   {
     "id": 10,
     "title": "Helpful app for finding Body Massage Spa",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Ishaan V.",
     "location": "Chembur, Mumbai",
     "rating": 4.8,
@@ -382,7 +382,7 @@ export const REVIEWS_DATA = [
   {
     "id": 12,
     "title": "Top-rated Thai Massage booking experience",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Atharv T.",
     "location": "Thane, Mumbai",
     "rating": 4.8,
@@ -393,7 +393,7 @@ export const REVIEWS_DATA = [
   {
     "id": 13,
     "title": "Smooth online booking for Aroma Therapy",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Dhruv A.",
     "location": "Vashi, Navi Mumbai",
     "rating": 4.8,
@@ -404,7 +404,7 @@ export const REVIEWS_DATA = [
   {
     "id": 14,
     "title": "Trusted Premium Spa with verified reviews",
-    "text": "I used Bookby247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Kabir C.",
     "location": "Nerul, Navi Mumbai",
     "rating": 4.9,
@@ -415,7 +415,7 @@ export const REVIEWS_DATA = [
   {
     "id": 15,
     "title": "Great platform to compare Relaxation Therapy",
-    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Rudra S.",
     "location": "Kharghar, Navi Mumbai",
     "rating": 5.0,
@@ -426,7 +426,7 @@ export const REVIEWS_DATA = [
   {
     "id": 16,
     "title": "Premium Spa found quickly",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Aniket P.",
     "location": "Colaba, Mumbai",
     "rating": 4.8,
@@ -448,7 +448,7 @@ export const REVIEWS_DATA = [
   {
     "id": 18,
     "title": "Reliable Mumbai Beauty Center discovery",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Rahul K.",
     "location": "Kandivali, Mumbai",
     "rating": 4.7,
@@ -459,7 +459,7 @@ export const REVIEWS_DATA = [
   {
     "id": 19,
     "title": "Excellent Massage Center with instant booking",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Amit G.",
     "location": "Mulund, Mumbai",
     "rating": 5.0,
@@ -470,7 +470,7 @@ export const REVIEWS_DATA = [
   {
     "id": 20,
     "title": "Helpful app for finding Men'S Grooming Salon",
-    "text": "I used Bookby247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Vikram R.",
     "location": "Kurla, Mumbai",
     "rating": 4.5,
@@ -481,7 +481,7 @@ export const REVIEWS_DATA = [
   {
     "id": 21,
     "title": "Best Wellness Center near me in Mumbai",
-    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Nikhil N.",
     "location": "Andheri, Mumbai",
     "rating": 4.6,
@@ -492,7 +492,7 @@ export const REVIEWS_DATA = [
   {
     "id": 22,
     "title": "Top-rated Haircut Salon booking experience",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Siddharth B.",
     "location": "Bandra, Mumbai",
     "rating": 4.7,
@@ -514,7 +514,7 @@ export const REVIEWS_DATA = [
   {
     "id": 24,
     "title": "Trusted Facial Service with verified reviews",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Rajat V.",
     "location": "Borivali, Mumbai",
     "rating": 4.6,
@@ -525,7 +525,7 @@ export const REVIEWS_DATA = [
   {
     "id": 25,
     "title": "Great platform to compare Body Massage Spa",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Manish J.",
     "location": "Powai, Mumbai",
     "rating": 4.9,
@@ -536,7 +536,7 @@ export const REVIEWS_DATA = [
   {
     "id": 26,
     "title": "Premium Deep Tissue Massage found quickly",
-    "text": "I used Bookby247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Saurabh T.",
     "location": "Lower Parel, Mumbai",
     "rating": 4.8,
@@ -547,7 +547,7 @@ export const REVIEWS_DATA = [
   {
     "id": 27,
     "title": "Easy appointment booking for Thai Massage",
-    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Pranav A.",
     "location": "Worli, Mumbai",
     "rating": 4.5,
@@ -558,7 +558,7 @@ export const REVIEWS_DATA = [
   {
     "id": 28,
     "title": "Reliable Mumbai Aroma Therapy discovery",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Harsh C.",
     "location": "Malad, Mumbai",
     "rating": 4.6,
@@ -580,7 +580,7 @@ export const REVIEWS_DATA = [
   {
     "id": 30,
     "title": "Helpful app for finding Relaxation Therapy",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Ritesh P.",
     "location": "Chembur, Mumbai",
     "rating": 4.9,
@@ -591,7 +591,7 @@ export const REVIEWS_DATA = [
   {
     "id": 31,
     "title": "Best Spa near me in Mumbai",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Yash M.",
     "location": "Ghatkopar, Mumbai",
     "rating": 5.0,
@@ -602,7 +602,7 @@ export const REVIEWS_DATA = [
   {
     "id": 32,
     "title": "Top-rated Salon booking experience",
-    "text": "I used Bookby247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Akshay K.",
     "location": "Thane, Mumbai",
     "rating": 4.5,
@@ -613,7 +613,7 @@ export const REVIEWS_DATA = [
   {
     "id": 33,
     "title": "Smooth online booking for Beauty Center",
-    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Sameer G.",
     "location": "Vashi, Navi Mumbai",
     "rating": 4.8,
@@ -624,7 +624,7 @@ export const REVIEWS_DATA = [
   {
     "id": 34,
     "title": "Trusted Massage Center with verified reviews",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Deepak R.",
     "location": "Nerul, Navi Mumbai",
     "rating": 4.5,
@@ -646,7 +646,7 @@ export const REVIEWS_DATA = [
   {
     "id": 36,
     "title": "Premium Wellness Center found quickly",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Mohit B.",
     "location": "Colaba, Mumbai",
     "rating": 4.8,
@@ -657,7 +657,7 @@ export const REVIEWS_DATA = [
   {
     "id": 37,
     "title": "Easy appointment booking for Haircut Salon",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Rohit D.",
     "location": "Juhu, Mumbai",
     "rating": 4.7,
@@ -668,7 +668,7 @@ export const REVIEWS_DATA = [
   {
     "id": 38,
     "title": "Reliable Mumbai Beard Styling Service discovery",
-    "text": "I used Bookby247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Sanket V.",
     "location": "Kandivali, Mumbai",
     "rating": 4.5,
@@ -679,7 +679,7 @@ export const REVIEWS_DATA = [
   {
     "id": 39,
     "title": "Excellent Facial Service with instant booking",
-    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Jay J.",
     "location": "Mulund, Mumbai",
     "rating": 5.0,
@@ -690,7 +690,7 @@ export const REVIEWS_DATA = [
   {
     "id": 40,
     "title": "Helpful app for finding Body Massage Spa",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Tejas T.",
     "location": "Kurla, Mumbai",
     "rating": 4.7,
@@ -712,7 +712,7 @@ export const REVIEWS_DATA = [
   {
     "id": 42,
     "title": "Top-rated Thai Massage booking experience",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Abhishek C.",
     "location": "Bandra, Mumbai",
     "rating": 4.8,
@@ -723,7 +723,7 @@ export const REVIEWS_DATA = [
   {
     "id": 43,
     "title": "Smooth online booking for Aroma Therapy",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Mayank S.",
     "location": "Dadar, Mumbai",
     "rating": 4.7,
@@ -734,7 +734,7 @@ export const REVIEWS_DATA = [
   {
     "id": 44,
     "title": "Trusted Premium Spa with verified reviews",
-    "text": "I used Bookby247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Varun P.",
     "location": "Borivali, Mumbai",
     "rating": 4.5,
@@ -745,7 +745,7 @@ export const REVIEWS_DATA = [
   {
     "id": 45,
     "title": "Great platform to compare Relaxation Therapy",
-    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Tushar M.",
     "location": "Powai, Mumbai",
     "rating": 4.7,
@@ -756,7 +756,7 @@ export const REVIEWS_DATA = [
   {
     "id": 46,
     "title": "Premium Spa found quickly",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Anurag K.",
     "location": "Lower Parel, Mumbai",
     "rating": 4.5,
@@ -778,7 +778,7 @@ export const REVIEWS_DATA = [
   {
     "id": 48,
     "title": "Reliable Mumbai Beauty Center discovery",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Nitin R.",
     "location": "Malad, Mumbai",
     "rating": 4.5,
@@ -789,7 +789,7 @@ export const REVIEWS_DATA = [
   {
     "id": 49,
     "title": "Excellent Massage Center with instant booking",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Pankaj N.",
     "location": "Goregaon, Mumbai",
     "rating": 4.7,
@@ -800,7 +800,7 @@ export const REVIEWS_DATA = [
   {
     "id": 50,
     "title": "Helpful app for finding Men'S Grooming Salon",
-    "text": "I used Bookby247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Dev B.",
     "location": "Chembur, Mumbai",
     "rating": 4.8,
@@ -811,7 +811,7 @@ export const REVIEWS_DATA = [
   {
     "id": 51,
     "title": "Best Wellness Center near me in Mumbai",
-    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Aarav D.",
     "location": "Ghatkopar, Mumbai",
     "rating": 4.8,
@@ -822,7 +822,7 @@ export const REVIEWS_DATA = [
   {
     "id": 52,
     "title": "Top-rated Haircut Salon booking experience",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Vivaan V.",
     "location": "Thane, Mumbai",
     "rating": 4.7,
@@ -844,7 +844,7 @@ export const REVIEWS_DATA = [
   {
     "id": 54,
     "title": "Trusted Facial Service with verified reviews",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Vihaan T.",
     "location": "Nerul, Navi Mumbai",
     "rating": 4.7,
@@ -855,7 +855,7 @@ export const REVIEWS_DATA = [
   {
     "id": 55,
     "title": "Great platform to compare Body Massage Spa",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Arjun A.",
     "location": "Kharghar, Navi Mumbai",
     "rating": 4.6,
@@ -866,7 +866,7 @@ export const REVIEWS_DATA = [
   {
     "id": 56,
     "title": "Premium Deep Tissue Massage found quickly",
-    "text": "I used Bookby247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Sai C.",
     "location": "Colaba, Mumbai",
     "rating": 4.6,
@@ -877,7 +877,7 @@ export const REVIEWS_DATA = [
   {
     "id": 57,
     "title": "Easy appointment booking for Thai Massage",
-    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Reyansh S.",
     "location": "Juhu, Mumbai",
     "rating": 4.8,
@@ -888,7 +888,7 @@ export const REVIEWS_DATA = [
   {
     "id": 58,
     "title": "Reliable Mumbai Aroma Therapy discovery",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Ayaan P.",
     "location": "Kandivali, Mumbai",
     "rating": 4.8,
@@ -910,7 +910,7 @@ export const REVIEWS_DATA = [
   {
     "id": 60,
     "title": "Helpful app for finding Relaxation Therapy",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Ishaan K.",
     "location": "Kurla, Mumbai",
     "rating": 4.7,
@@ -921,7 +921,7 @@ export const REVIEWS_DATA = [
   {
     "id": 61,
     "title": "Best Spa near me in Mumbai",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Shaurya G.",
     "location": "Andheri, Mumbai",
     "rating": 4.9,
@@ -932,7 +932,7 @@ export const REVIEWS_DATA = [
   {
     "id": 62,
     "title": "Top-rated Salon booking experience",
-    "text": "I used Bookby247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Atharv R.",
     "location": "Bandra, Mumbai",
     "rating": 4.5,
@@ -943,7 +943,7 @@ export const REVIEWS_DATA = [
   {
     "id": 63,
     "title": "Smooth online booking for Beauty Center",
-    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Dhruv N.",
     "location": "Dadar, Mumbai",
     "rating": 4.6,
@@ -954,7 +954,7 @@ export const REVIEWS_DATA = [
   {
     "id": 64,
     "title": "Trusted Massage Center with verified reviews",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Kabir B.",
     "location": "Borivali, Mumbai",
     "rating": 5.0,
@@ -976,7 +976,7 @@ export const REVIEWS_DATA = [
   {
     "id": 66,
     "title": "Premium Wellness Center found quickly",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Aniket V.",
     "location": "Lower Parel, Mumbai",
     "rating": 4.9,
@@ -987,7 +987,7 @@ export const REVIEWS_DATA = [
   {
     "id": 67,
     "title": "Easy appointment booking for Haircut Salon",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Rohan J.",
     "location": "Worli, Mumbai",
     "rating": 4.6,
@@ -998,7 +998,7 @@ export const REVIEWS_DATA = [
   {
     "id": 68,
     "title": "Reliable Mumbai Beard Styling Service discovery",
-    "text": "I used Bookby247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Rahul T.",
     "location": "Malad, Mumbai",
     "rating": 5.0,
@@ -1009,7 +1009,7 @@ export const REVIEWS_DATA = [
   {
     "id": 69,
     "title": "Excellent Facial Service with instant booking",
-    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Amit A.",
     "location": "Goregaon, Mumbai",
     "rating": 4.8,
@@ -1020,7 +1020,7 @@ export const REVIEWS_DATA = [
   {
     "id": 70,
     "title": "Helpful app for finding Body Massage Spa",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Vikram C.",
     "location": "Chembur, Mumbai",
     "rating": 4.8,
@@ -1042,7 +1042,7 @@ export const REVIEWS_DATA = [
   {
     "id": 72,
     "title": "Top-rated Thai Massage booking experience",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Siddharth P.",
     "location": "Thane, Mumbai",
     "rating": 4.8,
@@ -1053,7 +1053,7 @@ export const REVIEWS_DATA = [
   {
     "id": 73,
     "title": "Smooth online booking for Aroma Therapy",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Karan M.",
     "location": "Vashi, Navi Mumbai",
     "rating": 4.8,
@@ -1064,7 +1064,7 @@ export const REVIEWS_DATA = [
   {
     "id": 74,
     "title": "Trusted Premium Spa with verified reviews",
-    "text": "I used Bookby247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Rajat K.",
     "location": "Nerul, Navi Mumbai",
     "rating": 4.7,
@@ -1075,7 +1075,7 @@ export const REVIEWS_DATA = [
   {
     "id": 75,
     "title": "Great platform to compare Relaxation Therapy",
-    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Manish G.",
     "location": "Kharghar, Navi Mumbai",
     "rating": 4.6,
@@ -1086,7 +1086,7 @@ export const REVIEWS_DATA = [
   {
     "id": 76,
     "title": "Premium Spa found quickly",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Saurabh R.",
     "location": "Colaba, Mumbai",
     "rating": 4.8,
@@ -1108,7 +1108,7 @@ export const REVIEWS_DATA = [
   {
     "id": 78,
     "title": "Reliable Mumbai Beauty Center discovery",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Harsh B.",
     "location": "Kandivali, Mumbai",
     "rating": 4.5,
@@ -1119,7 +1119,7 @@ export const REVIEWS_DATA = [
   {
     "id": 79,
     "title": "Excellent Massage Center with instant booking",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Kunal D.",
     "location": "Mulund, Mumbai",
     "rating": 4.9,
@@ -1130,7 +1130,7 @@ export const REVIEWS_DATA = [
   {
     "id": 80,
     "title": "Helpful app for finding Men'S Grooming Salon",
-    "text": "I used Bookby247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Ritesh V.",
     "location": "Kurla, Mumbai",
     "rating": 4.5,
@@ -1141,7 +1141,7 @@ export const REVIEWS_DATA = [
   {
     "id": 81,
     "title": "Best Wellness Center near me in Mumbai",
-    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Yash J.",
     "location": "Andheri, Mumbai",
     "rating": 4.7,
@@ -1152,7 +1152,7 @@ export const REVIEWS_DATA = [
   {
     "id": 82,
     "title": "Top-rated Haircut Salon booking experience",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Akshay T.",
     "location": "Bandra, Mumbai",
     "rating": 4.9,
@@ -1174,7 +1174,7 @@ export const REVIEWS_DATA = [
   {
     "id": 84,
     "title": "Trusted Facial Service with verified reviews",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Deepak C.",
     "location": "Borivali, Mumbai",
     "rating": 4.5,
@@ -1185,7 +1185,7 @@ export const REVIEWS_DATA = [
   {
     "id": 85,
     "title": "Great platform to compare Body Massage Spa",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Gaurav S.",
     "location": "Powai, Mumbai",
     "rating": 4.9,
@@ -1196,7 +1196,7 @@ export const REVIEWS_DATA = [
   {
     "id": 86,
     "title": "Premium Deep Tissue Massage found quickly",
-    "text": "I used Bookby247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Mohit P.",
     "location": "Lower Parel, Mumbai",
     "rating": 4.8,
@@ -1207,7 +1207,7 @@ export const REVIEWS_DATA = [
   {
     "id": 87,
     "title": "Easy appointment booking for Thai Massage",
-    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Rohit M.",
     "location": "Worli, Mumbai",
     "rating": 4.6,
@@ -1218,7 +1218,7 @@ export const REVIEWS_DATA = [
   {
     "id": 88,
     "title": "Reliable Mumbai Aroma Therapy discovery",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Sanket K.",
     "location": "Malad, Mumbai",
     "rating": 5.0,
@@ -1240,7 +1240,7 @@ export const REVIEWS_DATA = [
   {
     "id": 90,
     "title": "Helpful app for finding Relaxation Therapy",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Tejas R.",
     "location": "Chembur, Mumbai",
     "rating": 4.8,
@@ -1251,7 +1251,7 @@ export const REVIEWS_DATA = [
   {
     "id": 91,
     "title": "Best Spa near me in Mumbai",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Omkar N.",
     "location": "Ghatkopar, Mumbai",
     "rating": 4.7,
@@ -1262,7 +1262,7 @@ export const REVIEWS_DATA = [
   {
     "id": 92,
     "title": "Top-rated Salon booking experience",
-    "text": "I used Bookby247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Abhishek B.",
     "location": "Thane, Mumbai",
     "rating": 4.8,
@@ -1273,7 +1273,7 @@ export const REVIEWS_DATA = [
   {
     "id": 93,
     "title": "Smooth online booking for Beauty Center",
-    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Mayank D.",
     "location": "Vashi, Navi Mumbai",
     "rating": 4.8,
@@ -1284,7 +1284,7 @@ export const REVIEWS_DATA = [
   {
     "id": 94,
     "title": "Trusted Massage Center with verified reviews",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Varun V.",
     "location": "Nerul, Navi Mumbai",
     "rating": 4.5,
@@ -1306,7 +1306,7 @@ export const REVIEWS_DATA = [
   {
     "id": 96,
     "title": "Premium Wellness Center found quickly",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Anurag T.",
     "location": "Colaba, Mumbai",
     "rating": 4.6,
@@ -1317,7 +1317,7 @@ export const REVIEWS_DATA = [
   {
     "id": 97,
     "title": "Easy appointment booking for Haircut Salon",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Sahil A.",
     "location": "Juhu, Mumbai",
     "rating": 4.8,
@@ -1328,7 +1328,7 @@ export const REVIEWS_DATA = [
   {
     "id": 98,
     "title": "Reliable Mumbai Beard Styling Service discovery",
-    "text": "I used Bookby247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Nitin C.",
     "location": "Kandivali, Mumbai",
     "rating": 4.9,
@@ -1339,7 +1339,7 @@ export const REVIEWS_DATA = [
   {
     "id": 99,
     "title": "Excellent Facial Service with instant booking",
-    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Pankaj S.",
     "location": "Mulund, Mumbai",
     "rating": 5.0,
@@ -1350,7 +1350,7 @@ export const REVIEWS_DATA = [
   {
     "id": 100,
     "title": "Helpful app for finding Body Massage Spa",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Dev P.",
     "location": "Kurla, Mumbai",
     "rating": 4.7,
@@ -1372,7 +1372,7 @@ export const REVIEWS_DATA = [
   {
     "id": 102,
     "title": "Top-rated Thai Massage booking experience",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Vivaan K.",
     "location": "Bandra, Mumbai",
     "rating": 4.9,
@@ -1383,7 +1383,7 @@ export const REVIEWS_DATA = [
   {
     "id": 103,
     "title": "Smooth online booking for Aroma Therapy",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Aditya G.",
     "location": "Dadar, Mumbai",
     "rating": 4.5,
@@ -1394,7 +1394,7 @@ export const REVIEWS_DATA = [
   {
     "id": 104,
     "title": "Trusted Premium Spa with verified reviews",
-    "text": "I used Bookby247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Vihaan R.",
     "location": "Borivali, Mumbai",
     "rating": 4.6,
@@ -1405,7 +1405,7 @@ export const REVIEWS_DATA = [
   {
     "id": 105,
     "title": "Great platform to compare Relaxation Therapy",
-    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Arjun N.",
     "location": "Powai, Mumbai",
     "rating": 4.7,
@@ -1416,7 +1416,7 @@ export const REVIEWS_DATA = [
   {
     "id": 106,
     "title": "Premium Spa found quickly",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Sai B.",
     "location": "Lower Parel, Mumbai",
     "rating": 4.8,
@@ -1438,7 +1438,7 @@ export const REVIEWS_DATA = [
   {
     "id": 108,
     "title": "Reliable Mumbai Beauty Center discovery",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Ayaan V.",
     "location": "Malad, Mumbai",
     "rating": 4.5,
@@ -1449,7 +1449,7 @@ export const REVIEWS_DATA = [
   {
     "id": 109,
     "title": "Excellent Massage Center with instant booking",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Krishna J.",
     "location": "Goregaon, Mumbai",
     "rating": 4.8,
@@ -1460,7 +1460,7 @@ export const REVIEWS_DATA = [
   {
     "id": 110,
     "title": "Helpful app for finding Men'S Grooming Salon",
-    "text": "I used Bookby247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Ishaan T.",
     "location": "Chembur, Mumbai",
     "rating": 4.6,
@@ -1471,7 +1471,7 @@ export const REVIEWS_DATA = [
   {
     "id": 111,
     "title": "Best Wellness Center near me in Mumbai",
-    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Shaurya A.",
     "location": "Ghatkopar, Mumbai",
     "rating": 4.6,
@@ -1482,7 +1482,7 @@ export const REVIEWS_DATA = [
   {
     "id": 112,
     "title": "Top-rated Haircut Salon booking experience",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Atharv C.",
     "location": "Thane, Mumbai",
     "rating": 4.7,
@@ -1504,7 +1504,7 @@ export const REVIEWS_DATA = [
   {
     "id": 114,
     "title": "Trusted Facial Service with verified reviews",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Kabir P.",
     "location": "Nerul, Navi Mumbai",
     "rating": 4.7,
@@ -1515,7 +1515,7 @@ export const REVIEWS_DATA = [
   {
     "id": 115,
     "title": "Great platform to compare Body Massage Spa",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Rudra M.",
     "location": "Kharghar, Navi Mumbai",
     "rating": 4.7,
@@ -1526,7 +1526,7 @@ export const REVIEWS_DATA = [
   {
     "id": 116,
     "title": "Premium Deep Tissue Massage found quickly",
-    "text": "I used Bookby247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Aniket K.",
     "location": "Colaba, Mumbai",
     "rating": 5.0,
@@ -1537,7 +1537,7 @@ export const REVIEWS_DATA = [
   {
     "id": 117,
     "title": "Easy appointment booking for Thai Massage",
-    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Rohan G.",
     "location": "Juhu, Mumbai",
     "rating": 4.6,
@@ -1548,7 +1548,7 @@ export const REVIEWS_DATA = [
   {
     "id": 118,
     "title": "Reliable Mumbai Aroma Therapy discovery",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Rahul R.",
     "location": "Kandivali, Mumbai",
     "rating": 4.5,
@@ -1570,7 +1570,7 @@ export const REVIEWS_DATA = [
   {
     "id": 120,
     "title": "Helpful app for finding Relaxation Therapy",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Vikram B.",
     "location": "Kurla, Mumbai",
     "rating": 4.5,
@@ -1581,7 +1581,7 @@ export const REVIEWS_DATA = [
   {
     "id": 121,
     "title": "Best Spa near me in Mumbai",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Nikhil D.",
     "location": "Andheri, Mumbai",
     "rating": 4.6,
@@ -1592,7 +1592,7 @@ export const REVIEWS_DATA = [
   {
     "id": 122,
     "title": "Top-rated Salon booking experience",
-    "text": "I used Bookby247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Siddharth V.",
     "location": "Bandra, Mumbai",
     "rating": 4.6,
@@ -1603,7 +1603,7 @@ export const REVIEWS_DATA = [
   {
     "id": 123,
     "title": "Smooth online booking for Beauty Center",
-    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Karan J.",
     "location": "Dadar, Mumbai",
     "rating": 4.9,
@@ -1614,7 +1614,7 @@ export const REVIEWS_DATA = [
   {
     "id": 124,
     "title": "Trusted Massage Center with verified reviews",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Rajat T.",
     "location": "Borivali, Mumbai",
     "rating": 4.8,
@@ -1636,7 +1636,7 @@ export const REVIEWS_DATA = [
   {
     "id": 126,
     "title": "Premium Wellness Center found quickly",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Saurabh C.",
     "location": "Lower Parel, Mumbai",
     "rating": 4.8,
@@ -1647,7 +1647,7 @@ export const REVIEWS_DATA = [
   {
     "id": 127,
     "title": "Easy appointment booking for Haircut Salon",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Pranav S.",
     "location": "Worli, Mumbai",
     "rating": 4.9,
@@ -1658,7 +1658,7 @@ export const REVIEWS_DATA = [
   {
     "id": 128,
     "title": "Reliable Mumbai Beard Styling Service discovery",
-    "text": "I used Bookby247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Harsh P.",
     "location": "Malad, Mumbai",
     "rating": 4.7,
@@ -1669,7 +1669,7 @@ export const REVIEWS_DATA = [
   {
     "id": 129,
     "title": "Excellent Facial Service with instant booking",
-    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Kunal M.",
     "location": "Goregaon, Mumbai",
     "rating": 4.5,
@@ -1680,7 +1680,7 @@ export const REVIEWS_DATA = [
   {
     "id": 130,
     "title": "Helpful app for finding Body Massage Spa",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Ritesh K.",
     "location": "Chembur, Mumbai",
     "rating": 5.0,
@@ -1702,7 +1702,7 @@ export const REVIEWS_DATA = [
   {
     "id": 132,
     "title": "Top-rated Thai Massage booking experience",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Akshay R.",
     "location": "Thane, Mumbai",
     "rating": 4.6,
@@ -1713,7 +1713,7 @@ export const REVIEWS_DATA = [
   {
     "id": 133,
     "title": "Smooth online booking for Aroma Therapy",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Sameer N.",
     "location": "Vashi, Navi Mumbai",
     "rating": 4.5,
@@ -1724,7 +1724,7 @@ export const REVIEWS_DATA = [
   {
     "id": 134,
     "title": "Trusted Premium Spa with verified reviews",
-    "text": "I used Bookby247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Deepak B.",
     "location": "Nerul, Navi Mumbai",
     "rating": 4.7,
@@ -1735,7 +1735,7 @@ export const REVIEWS_DATA = [
   {
     "id": 135,
     "title": "Great platform to compare Relaxation Therapy",
-    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Gaurav D.",
     "location": "Kharghar, Navi Mumbai",
     "rating": 4.7,
@@ -1746,7 +1746,7 @@ export const REVIEWS_DATA = [
   {
     "id": 136,
     "title": "Premium Spa found quickly",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Mohit V.",
     "location": "Colaba, Mumbai",
     "rating": 4.8,
@@ -1768,7 +1768,7 @@ export const REVIEWS_DATA = [
   {
     "id": 138,
     "title": "Reliable Mumbai Beauty Center discovery",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Sanket T.",
     "location": "Kandivali, Mumbai",
     "rating": 4.7,
@@ -1779,7 +1779,7 @@ export const REVIEWS_DATA = [
   {
     "id": 139,
     "title": "Excellent Massage Center with instant booking",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Jay A.",
     "location": "Mulund, Mumbai",
     "rating": 4.7,
@@ -1790,7 +1790,7 @@ export const REVIEWS_DATA = [
   {
     "id": 140,
     "title": "Helpful app for finding Men'S Grooming Salon",
-    "text": "I used Bookby247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Tejas C.",
     "location": "Kurla, Mumbai",
     "rating": 4.8,
@@ -1801,7 +1801,7 @@ export const REVIEWS_DATA = [
   {
     "id": 141,
     "title": "Best Wellness Center near me in Mumbai",
-    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Omkar S.",
     "location": "Andheri, Mumbai",
     "rating": 4.7,
@@ -1812,7 +1812,7 @@ export const REVIEWS_DATA = [
   {
     "id": 142,
     "title": "Top-rated Haircut Salon booking experience",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Abhishek P.",
     "location": "Bandra, Mumbai",
     "rating": 5.0,
@@ -1834,7 +1834,7 @@ export const REVIEWS_DATA = [
   {
     "id": 144,
     "title": "Trusted Facial Service with verified reviews",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Varun K.",
     "location": "Borivali, Mumbai",
     "rating": 4.8,
@@ -1845,7 +1845,7 @@ export const REVIEWS_DATA = [
   {
     "id": 145,
     "title": "Great platform to compare Body Massage Spa",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Tushar G.",
     "location": "Powai, Mumbai",
     "rating": 4.6,
@@ -1856,7 +1856,7 @@ export const REVIEWS_DATA = [
   {
     "id": 146,
     "title": "Premium Deep Tissue Massage found quickly",
-    "text": "I used Bookby247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Anurag R.",
     "location": "Lower Parel, Mumbai",
     "rating": 4.6,
@@ -1867,7 +1867,7 @@ export const REVIEWS_DATA = [
   {
     "id": 147,
     "title": "Easy appointment booking for Thai Massage",
-    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Sahil N.",
     "location": "Worli, Mumbai",
     "rating": 5.0,
@@ -1878,7 +1878,7 @@ export const REVIEWS_DATA = [
   {
     "id": 148,
     "title": "Reliable Mumbai Aroma Therapy discovery",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Nitin B.",
     "location": "Malad, Mumbai",
     "rating": 4.7,
@@ -1900,7 +1900,7 @@ export const REVIEWS_DATA = [
   {
     "id": 150,
     "title": "Helpful app for finding Relaxation Therapy",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Dev V.",
     "location": "Chembur, Mumbai",
     "rating": 4.7,
@@ -1911,7 +1911,7 @@ export const REVIEWS_DATA = [
   {
     "id": 151,
     "title": "Best Spa near me in Mumbai",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Aarav J.",
     "location": "Ghatkopar, Mumbai",
     "rating": 4.6,
@@ -1922,7 +1922,7 @@ export const REVIEWS_DATA = [
   {
     "id": 152,
     "title": "Top-rated Salon booking experience",
-    "text": "I used Bookby247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Vivaan T.",
     "location": "Thane, Mumbai",
     "rating": 4.9,
@@ -1933,7 +1933,7 @@ export const REVIEWS_DATA = [
   {
     "id": 153,
     "title": "Smooth online booking for Beauty Center",
-    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Aditya A.",
     "location": "Vashi, Navi Mumbai",
     "rating": 4.6,
@@ -1944,7 +1944,7 @@ export const REVIEWS_DATA = [
   {
     "id": 154,
     "title": "Trusted Massage Center with verified reviews",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Vihaan C.",
     "location": "Nerul, Navi Mumbai",
     "rating": 4.6,
@@ -1966,7 +1966,7 @@ export const REVIEWS_DATA = [
   {
     "id": 156,
     "title": "Premium Wellness Center found quickly",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Sai P.",
     "location": "Colaba, Mumbai",
     "rating": 4.9,
@@ -1977,7 +1977,7 @@ export const REVIEWS_DATA = [
   {
     "id": 157,
     "title": "Easy appointment booking for Haircut Salon",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Reyansh M.",
     "location": "Juhu, Mumbai",
     "rating": 4.7,
@@ -1988,7 +1988,7 @@ export const REVIEWS_DATA = [
   {
     "id": 158,
     "title": "Reliable Mumbai Beard Styling Service discovery",
-    "text": "I used Bookby247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Ayaan K.",
     "location": "Kandivali, Mumbai",
     "rating": 4.7,
@@ -1999,7 +1999,7 @@ export const REVIEWS_DATA = [
   {
     "id": 159,
     "title": "Excellent Facial Service with instant booking",
-    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Krishna G.",
     "location": "Mulund, Mumbai",
     "rating": 4.8,
@@ -2010,7 +2010,7 @@ export const REVIEWS_DATA = [
   {
     "id": 160,
     "title": "Helpful app for finding Body Massage Spa",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Ishaan R.",
     "location": "Kurla, Mumbai",
     "rating": 4.9,
@@ -2032,7 +2032,7 @@ export const REVIEWS_DATA = [
   {
     "id": 162,
     "title": "Top-rated Thai Massage booking experience",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Atharv B.",
     "location": "Bandra, Mumbai",
     "rating": 4.5,
@@ -2043,7 +2043,7 @@ export const REVIEWS_DATA = [
   {
     "id": 163,
     "title": "Smooth online booking for Aroma Therapy",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Dhruv D.",
     "location": "Dadar, Mumbai",
     "rating": 4.6,
@@ -2054,7 +2054,7 @@ export const REVIEWS_DATA = [
   {
     "id": 164,
     "title": "Trusted Premium Spa with verified reviews",
-    "text": "I used Bookby247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Kabir V.",
     "location": "Borivali, Mumbai",
     "rating": 4.9,
@@ -2065,7 +2065,7 @@ export const REVIEWS_DATA = [
   {
     "id": 165,
     "title": "Great platform to compare Relaxation Therapy",
-    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Rudra J.",
     "location": "Powai, Mumbai",
     "rating": 5.0,
@@ -2076,7 +2076,7 @@ export const REVIEWS_DATA = [
   {
     "id": 166,
     "title": "Premium Spa found quickly",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Aniket T.",
     "location": "Lower Parel, Mumbai",
     "rating": 5.0,
@@ -2098,7 +2098,7 @@ export const REVIEWS_DATA = [
   {
     "id": 168,
     "title": "Reliable Mumbai Beauty Center discovery",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Rahul C.",
     "location": "Malad, Mumbai",
     "rating": 4.8,
@@ -2109,7 +2109,7 @@ export const REVIEWS_DATA = [
   {
     "id": 169,
     "title": "Excellent Massage Center with instant booking",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Amit S.",
     "location": "Goregaon, Mumbai",
     "rating": 4.9,
@@ -2120,7 +2120,7 @@ export const REVIEWS_DATA = [
   {
     "id": 170,
     "title": "Helpful app for finding Men'S Grooming Salon",
-    "text": "I used Bookby247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Vikram P.",
     "location": "Chembur, Mumbai",
     "rating": 4.6,
@@ -2131,7 +2131,7 @@ export const REVIEWS_DATA = [
   {
     "id": 171,
     "title": "Best Wellness Center near me in Mumbai",
-    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Nikhil M.",
     "location": "Ghatkopar, Mumbai",
     "rating": 4.6,
@@ -2142,7 +2142,7 @@ export const REVIEWS_DATA = [
   {
     "id": 172,
     "title": "Top-rated Haircut Salon booking experience",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Siddharth K.",
     "location": "Thane, Mumbai",
     "rating": 4.7,
@@ -2164,7 +2164,7 @@ export const REVIEWS_DATA = [
   {
     "id": 174,
     "title": "Trusted Facial Service with verified reviews",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Rajat R.",
     "location": "Nerul, Navi Mumbai",
     "rating": 4.6,
@@ -2175,7 +2175,7 @@ export const REVIEWS_DATA = [
   {
     "id": 175,
     "title": "Great platform to compare Body Massage Spa",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Manish N.",
     "location": "Kharghar, Navi Mumbai",
     "rating": 4.5,
@@ -2186,7 +2186,7 @@ export const REVIEWS_DATA = [
   {
     "id": 176,
     "title": "Premium Deep Tissue Massage found quickly",
-    "text": "I used Bookby247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Saurabh B.",
     "location": "Colaba, Mumbai",
     "rating": 4.9,
@@ -2197,7 +2197,7 @@ export const REVIEWS_DATA = [
   {
     "id": 177,
     "title": "Easy appointment booking for Thai Massage",
-    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Pranav D.",
     "location": "Juhu, Mumbai",
     "rating": 4.9,
@@ -2208,7 +2208,7 @@ export const REVIEWS_DATA = [
   {
     "id": 178,
     "title": "Reliable Mumbai Aroma Therapy discovery",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Harsh V.",
     "location": "Kandivali, Mumbai",
     "rating": 4.9,
@@ -2230,7 +2230,7 @@ export const REVIEWS_DATA = [
   {
     "id": 180,
     "title": "Helpful app for finding Relaxation Therapy",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Ritesh T.",
     "location": "Kurla, Mumbai",
     "rating": 4.7,
@@ -2241,7 +2241,7 @@ export const REVIEWS_DATA = [
   {
     "id": 181,
     "title": "Best Spa near me in Mumbai",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Yash A.",
     "location": "Andheri, Mumbai",
     "rating": 4.7,
@@ -2252,7 +2252,7 @@ export const REVIEWS_DATA = [
   {
     "id": 182,
     "title": "Top-rated Salon booking experience",
-    "text": "I used Bookby247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Akshay C.",
     "location": "Bandra, Mumbai",
     "rating": 4.5,
@@ -2263,7 +2263,7 @@ export const REVIEWS_DATA = [
   {
     "id": 183,
     "title": "Smooth online booking for Beauty Center",
-    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Sameer S.",
     "location": "Dadar, Mumbai",
     "rating": 5.0,
@@ -2274,7 +2274,7 @@ export const REVIEWS_DATA = [
   {
     "id": 184,
     "title": "Trusted Massage Center with verified reviews",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Deepak P.",
     "location": "Borivali, Mumbai",
     "rating": 4.9,
@@ -2296,7 +2296,7 @@ export const REVIEWS_DATA = [
   {
     "id": 186,
     "title": "Premium Wellness Center found quickly",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Mohit K.",
     "location": "Lower Parel, Mumbai",
     "rating": 4.7,
@@ -2307,7 +2307,7 @@ export const REVIEWS_DATA = [
   {
     "id": 187,
     "title": "Easy appointment booking for Haircut Salon",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Rohit G.",
     "location": "Worli, Mumbai",
     "rating": 4.9,
@@ -2318,7 +2318,7 @@ export const REVIEWS_DATA = [
   {
     "id": 188,
     "title": "Reliable Mumbai Beard Styling Service discovery",
-    "text": "I used Bookby247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Sanket R.",
     "location": "Malad, Mumbai",
     "rating": 5.0,
@@ -2329,7 +2329,7 @@ export const REVIEWS_DATA = [
   {
     "id": 189,
     "title": "Excellent Facial Service with instant booking",
-    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Jay N.",
     "location": "Goregaon, Mumbai",
     "rating": 4.7,
@@ -2340,7 +2340,7 @@ export const REVIEWS_DATA = [
   {
     "id": 190,
     "title": "Helpful app for finding Body Massage Spa",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Tejas B.",
     "location": "Chembur, Mumbai",
     "rating": 4.9,
@@ -2362,7 +2362,7 @@ export const REVIEWS_DATA = [
   {
     "id": 192,
     "title": "Top-rated Thai Massage booking experience",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Abhishek V.",
     "location": "Thane, Mumbai",
     "rating": 5.0,
@@ -2373,7 +2373,7 @@ export const REVIEWS_DATA = [
   {
     "id": 193,
     "title": "Smooth online booking for Aroma Therapy",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Mayank J.",
     "location": "Vashi, Navi Mumbai",
     "rating": 4.5,
@@ -2384,7 +2384,7 @@ export const REVIEWS_DATA = [
   {
     "id": 194,
     "title": "Trusted Premium Spa with verified reviews",
-    "text": "I used Bookby247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Varun T.",
     "location": "Nerul, Navi Mumbai",
     "rating": 4.8,
@@ -2395,7 +2395,7 @@ export const REVIEWS_DATA = [
   {
     "id": 195,
     "title": "Great platform to compare Relaxation Therapy",
-    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Tushar A.",
     "location": "Kharghar, Navi Mumbai",
     "rating": 4.9,
@@ -2406,7 +2406,7 @@ export const REVIEWS_DATA = [
   {
     "id": 196,
     "title": "Premium Spa found quickly",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Anurag C.",
     "location": "Colaba, Mumbai",
     "rating": 4.6,
@@ -2428,7 +2428,7 @@ export const REVIEWS_DATA = [
   {
     "id": 198,
     "title": "Reliable Mumbai Beauty Center discovery",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Nitin P.",
     "location": "Kandivali, Mumbai",
     "rating": 4.5,
@@ -2439,7 +2439,7 @@ export const REVIEWS_DATA = [
   {
     "id": 199,
     "title": "Excellent Massage Center with instant booking",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Pankaj M.",
     "location": "Mulund, Mumbai",
     "rating": 4.8,
@@ -2450,7 +2450,7 @@ export const REVIEWS_DATA = [
   {
     "id": 200,
     "title": "Helpful app for finding Men'S Grooming Salon",
-    "text": "I used Bookby247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Dev K.",
     "location": "Kurla, Mumbai",
     "rating": 4.8,
@@ -2461,7 +2461,7 @@ export const REVIEWS_DATA = [
   {
     "id": 201,
     "title": "Best Wellness Center near me in Mumbai",
-    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Aarav G.",
     "location": "Andheri, Mumbai",
     "rating": 4.6,
@@ -2472,7 +2472,7 @@ export const REVIEWS_DATA = [
   {
     "id": 202,
     "title": "Top-rated Haircut Salon booking experience",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Vivaan R.",
     "location": "Bandra, Mumbai",
     "rating": 5.0,
@@ -2494,7 +2494,7 @@ export const REVIEWS_DATA = [
   {
     "id": 204,
     "title": "Trusted Facial Service with verified reviews",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Vihaan B.",
     "location": "Borivali, Mumbai",
     "rating": 4.7,
@@ -2505,7 +2505,7 @@ export const REVIEWS_DATA = [
   {
     "id": 205,
     "title": "Great platform to compare Body Massage Spa",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Arjun D.",
     "location": "Powai, Mumbai",
     "rating": 4.6,
@@ -2516,7 +2516,7 @@ export const REVIEWS_DATA = [
   {
     "id": 206,
     "title": "Premium Deep Tissue Massage found quickly",
-    "text": "I used Bookby247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Sai V.",
     "location": "Lower Parel, Mumbai",
     "rating": 4.8,
@@ -2527,7 +2527,7 @@ export const REVIEWS_DATA = [
   {
     "id": 207,
     "title": "Easy appointment booking for Thai Massage",
-    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Reyansh J.",
     "location": "Worli, Mumbai",
     "rating": 4.8,
@@ -2538,7 +2538,7 @@ export const REVIEWS_DATA = [
   {
     "id": 208,
     "title": "Reliable Mumbai Aroma Therapy discovery",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Ayaan T.",
     "location": "Malad, Mumbai",
     "rating": 4.6,
@@ -2560,7 +2560,7 @@ export const REVIEWS_DATA = [
   {
     "id": 210,
     "title": "Helpful app for finding Relaxation Therapy",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Ishaan C.",
     "location": "Chembur, Mumbai",
     "rating": 4.5,
@@ -2571,7 +2571,7 @@ export const REVIEWS_DATA = [
   {
     "id": 211,
     "title": "Best Spa near me in Mumbai",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Shaurya S.",
     "location": "Ghatkopar, Mumbai",
     "rating": 5.0,
@@ -2582,7 +2582,7 @@ export const REVIEWS_DATA = [
   {
     "id": 212,
     "title": "Top-rated Salon booking experience",
-    "text": "I used Bookby247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Atharv P.",
     "location": "Thane, Mumbai",
     "rating": 4.8,
@@ -2593,7 +2593,7 @@ export const REVIEWS_DATA = [
   {
     "id": 213,
     "title": "Smooth online booking for Beauty Center",
-    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Dhruv M.",
     "location": "Vashi, Navi Mumbai",
     "rating": 4.8,
@@ -2604,7 +2604,7 @@ export const REVIEWS_DATA = [
   {
     "id": 214,
     "title": "Trusted Massage Center with verified reviews",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Kabir K.",
     "location": "Nerul, Navi Mumbai",
     "rating": 5.0,
@@ -2626,7 +2626,7 @@ export const REVIEWS_DATA = [
   {
     "id": 216,
     "title": "Premium Wellness Center found quickly",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Aniket R.",
     "location": "Colaba, Mumbai",
     "rating": 4.5,
@@ -2637,7 +2637,7 @@ export const REVIEWS_DATA = [
   {
     "id": 217,
     "title": "Easy appointment booking for Haircut Salon",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Rohan N.",
     "location": "Juhu, Mumbai",
     "rating": 4.8,
@@ -2648,7 +2648,7 @@ export const REVIEWS_DATA = [
   {
     "id": 218,
     "title": "Reliable Mumbai Beard Styling Service discovery",
-    "text": "I used Bookby247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Rahul B.",
     "location": "Kandivali, Mumbai",
     "rating": 4.8,
@@ -2659,7 +2659,7 @@ export const REVIEWS_DATA = [
   {
     "id": 219,
     "title": "Excellent Facial Service with instant booking",
-    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Amit D.",
     "location": "Mulund, Mumbai",
     "rating": 4.9,
@@ -2670,7 +2670,7 @@ export const REVIEWS_DATA = [
   {
     "id": 220,
     "title": "Helpful app for finding Body Massage Spa",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Vikram V.",
     "location": "Kurla, Mumbai",
     "rating": 4.9,
@@ -2692,7 +2692,7 @@ export const REVIEWS_DATA = [
   {
     "id": 222,
     "title": "Top-rated Thai Massage booking experience",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Siddharth T.",
     "location": "Bandra, Mumbai",
     "rating": 4.5,
@@ -2703,7 +2703,7 @@ export const REVIEWS_DATA = [
   {
     "id": 223,
     "title": "Smooth online booking for Aroma Therapy",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Karan A.",
     "location": "Dadar, Mumbai",
     "rating": 4.9,
@@ -2714,7 +2714,7 @@ export const REVIEWS_DATA = [
   {
     "id": 224,
     "title": "Trusted Premium Spa with verified reviews",
-    "text": "I used Bookby247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Rajat C.",
     "location": "Borivali, Mumbai",
     "rating": 4.9,
@@ -2725,7 +2725,7 @@ export const REVIEWS_DATA = [
   {
     "id": 225,
     "title": "Great platform to compare Relaxation Therapy",
-    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Manish S.",
     "location": "Powai, Mumbai",
     "rating": 4.5,
@@ -2736,7 +2736,7 @@ export const REVIEWS_DATA = [
   {
     "id": 226,
     "title": "Premium Spa found quickly",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Saurabh P.",
     "location": "Lower Parel, Mumbai",
     "rating": 4.8,
@@ -2758,7 +2758,7 @@ export const REVIEWS_DATA = [
   {
     "id": 228,
     "title": "Reliable Mumbai Beauty Center discovery",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Harsh K.",
     "location": "Malad, Mumbai",
     "rating": 4.7,
@@ -2769,7 +2769,7 @@ export const REVIEWS_DATA = [
   {
     "id": 229,
     "title": "Excellent Massage Center with instant booking",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Kunal G.",
     "location": "Goregaon, Mumbai",
     "rating": 5.0,
@@ -2780,7 +2780,7 @@ export const REVIEWS_DATA = [
   {
     "id": 230,
     "title": "Helpful app for finding Men'S Grooming Salon",
-    "text": "I used Bookby247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Ritesh R.",
     "location": "Chembur, Mumbai",
     "rating": 4.9,
@@ -2791,7 +2791,7 @@ export const REVIEWS_DATA = [
   {
     "id": 231,
     "title": "Best Wellness Center near me in Mumbai",
-    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Yash N.",
     "location": "Ghatkopar, Mumbai",
     "rating": 4.8,
@@ -2802,7 +2802,7 @@ export const REVIEWS_DATA = [
   {
     "id": 232,
     "title": "Top-rated Haircut Salon booking experience",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Akshay B.",
     "location": "Thane, Mumbai",
     "rating": 4.5,
@@ -2824,7 +2824,7 @@ export const REVIEWS_DATA = [
   {
     "id": 234,
     "title": "Trusted Facial Service with verified reviews",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Deepak V.",
     "location": "Nerul, Navi Mumbai",
     "rating": 4.7,
@@ -2835,7 +2835,7 @@ export const REVIEWS_DATA = [
   {
     "id": 235,
     "title": "Great platform to compare Body Massage Spa",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Gaurav J.",
     "location": "Kharghar, Navi Mumbai",
     "rating": 4.7,
@@ -2846,7 +2846,7 @@ export const REVIEWS_DATA = [
   {
     "id": 236,
     "title": "Premium Deep Tissue Massage found quickly",
-    "text": "I used Bookby247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Mohit T.",
     "location": "Colaba, Mumbai",
     "rating": 4.6,
@@ -2857,7 +2857,7 @@ export const REVIEWS_DATA = [
   {
     "id": 237,
     "title": "Easy appointment booking for Thai Massage",
-    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Rohit A.",
     "location": "Juhu, Mumbai",
     "rating": 4.8,
@@ -2868,7 +2868,7 @@ export const REVIEWS_DATA = [
   {
     "id": 238,
     "title": "Reliable Mumbai Aroma Therapy discovery",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Sanket C.",
     "location": "Kandivali, Mumbai",
     "rating": 4.6,
@@ -2890,7 +2890,7 @@ export const REVIEWS_DATA = [
   {
     "id": 240,
     "title": "Helpful app for finding Relaxation Therapy",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Tejas P.",
     "location": "Kurla, Mumbai",
     "rating": 5.0,
@@ -2901,7 +2901,7 @@ export const REVIEWS_DATA = [
   {
     "id": 241,
     "title": "Best Spa near me in Mumbai",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Omkar M.",
     "location": "Andheri, Mumbai",
     "rating": 4.8,
@@ -2912,7 +2912,7 @@ export const REVIEWS_DATA = [
   {
     "id": 242,
     "title": "Top-rated Salon booking experience",
-    "text": "I used Bookby247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Abhishek K.",
     "location": "Bandra, Mumbai",
     "rating": 4.8,
@@ -2923,7 +2923,7 @@ export const REVIEWS_DATA = [
   {
     "id": 243,
     "title": "Smooth online booking for Beauty Center",
-    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Mayank G.",
     "location": "Dadar, Mumbai",
     "rating": 4.6,
@@ -2934,7 +2934,7 @@ export const REVIEWS_DATA = [
   {
     "id": 244,
     "title": "Trusted Massage Center with verified reviews",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Varun R.",
     "location": "Borivali, Mumbai",
     "rating": 4.6,
@@ -2956,7 +2956,7 @@ export const REVIEWS_DATA = [
   {
     "id": 246,
     "title": "Premium Wellness Center found quickly",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Anurag B.",
     "location": "Lower Parel, Mumbai",
     "rating": 4.8,
@@ -2967,7 +2967,7 @@ export const REVIEWS_DATA = [
   {
     "id": 247,
     "title": "Easy appointment booking for Haircut Salon",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Sahil D.",
     "location": "Worli, Mumbai",
     "rating": 4.9,
@@ -2978,7 +2978,7 @@ export const REVIEWS_DATA = [
   {
     "id": 248,
     "title": "Reliable Mumbai Beard Styling Service discovery",
-    "text": "I used Bookby247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Nitin V.",
     "location": "Malad, Mumbai",
     "rating": 5.0,
@@ -2989,7 +2989,7 @@ export const REVIEWS_DATA = [
   {
     "id": 249,
     "title": "Excellent Facial Service with instant booking",
-    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Pankaj J.",
     "location": "Goregaon, Mumbai",
     "rating": 4.7,
@@ -3000,7 +3000,7 @@ export const REVIEWS_DATA = [
   {
     "id": 250,
     "title": "Helpful app for finding Body Massage Spa",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Dev T.",
     "location": "Chembur, Mumbai",
     "rating": 4.9,
@@ -3022,7 +3022,7 @@ export const REVIEWS_DATA = [
   {
     "id": 252,
     "title": "Top-rated Thai Massage booking experience",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Vivaan C.",
     "location": "Thane, Mumbai",
     "rating": 5.0,
@@ -3033,7 +3033,7 @@ export const REVIEWS_DATA = [
   {
     "id": 253,
     "title": "Smooth online booking for Aroma Therapy",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Aditya S.",
     "location": "Vashi, Navi Mumbai",
     "rating": 4.5,
@@ -3044,7 +3044,7 @@ export const REVIEWS_DATA = [
   {
     "id": 254,
     "title": "Trusted Premium Spa with verified reviews",
-    "text": "I used Bookby247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Vihaan P.",
     "location": "Nerul, Navi Mumbai",
     "rating": 5.0,
@@ -3055,7 +3055,7 @@ export const REVIEWS_DATA = [
   {
     "id": 255,
     "title": "Great platform to compare Relaxation Therapy",
-    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Arjun M.",
     "location": "Kharghar, Navi Mumbai",
     "rating": 4.8,
@@ -3066,7 +3066,7 @@ export const REVIEWS_DATA = [
   {
     "id": 256,
     "title": "Premium Spa found quickly",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Sai K.",
     "location": "Colaba, Mumbai",
     "rating": 4.8,
@@ -3088,7 +3088,7 @@ export const REVIEWS_DATA = [
   {
     "id": 258,
     "title": "Reliable Mumbai Beauty Center discovery",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Ayaan R.",
     "location": "Kandivali, Mumbai",
     "rating": 5.0,
@@ -3099,7 +3099,7 @@ export const REVIEWS_DATA = [
   {
     "id": 259,
     "title": "Excellent Massage Center with instant booking",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Krishna N.",
     "location": "Mulund, Mumbai",
     "rating": 4.8,
@@ -3110,7 +3110,7 @@ export const REVIEWS_DATA = [
   {
     "id": 260,
     "title": "Helpful app for finding Men'S Grooming Salon",
-    "text": "I used Bookby247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Ishaan B.",
     "location": "Kurla, Mumbai",
     "rating": 4.8,
@@ -3121,7 +3121,7 @@ export const REVIEWS_DATA = [
   {
     "id": 261,
     "title": "Best Wellness Center near me in Mumbai",
-    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Shaurya D.",
     "location": "Andheri, Mumbai",
     "rating": 5.0,
@@ -3132,7 +3132,7 @@ export const REVIEWS_DATA = [
   {
     "id": 262,
     "title": "Top-rated Haircut Salon booking experience",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Atharv V.",
     "location": "Bandra, Mumbai",
     "rating": 4.8,
@@ -3154,7 +3154,7 @@ export const REVIEWS_DATA = [
   {
     "id": 264,
     "title": "Trusted Facial Service with verified reviews",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Kabir T.",
     "location": "Borivali, Mumbai",
     "rating": 4.6,
@@ -3165,7 +3165,7 @@ export const REVIEWS_DATA = [
   {
     "id": 265,
     "title": "Great platform to compare Body Massage Spa",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Rudra A.",
     "location": "Powai, Mumbai",
     "rating": 4.5,
@@ -3176,7 +3176,7 @@ export const REVIEWS_DATA = [
   {
     "id": 266,
     "title": "Premium Deep Tissue Massage found quickly",
-    "text": "I used Bookby247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Aniket C.",
     "location": "Lower Parel, Mumbai",
     "rating": 4.6,
@@ -3187,7 +3187,7 @@ export const REVIEWS_DATA = [
   {
     "id": 267,
     "title": "Easy appointment booking for Thai Massage",
-    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Rohan S.",
     "location": "Worli, Mumbai",
     "rating": 4.9,
@@ -3198,7 +3198,7 @@ export const REVIEWS_DATA = [
   {
     "id": 268,
     "title": "Reliable Mumbai Aroma Therapy discovery",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Rahul P.",
     "location": "Malad, Mumbai",
     "rating": 4.8,
@@ -3220,7 +3220,7 @@ export const REVIEWS_DATA = [
   {
     "id": 270,
     "title": "Helpful app for finding Relaxation Therapy",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Vikram K.",
     "location": "Chembur, Mumbai",
     "rating": 4.5,
@@ -3231,7 +3231,7 @@ export const REVIEWS_DATA = [
   {
     "id": 271,
     "title": "Best Spa near me in Mumbai",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Nikhil G.",
     "location": "Ghatkopar, Mumbai",
     "rating": 4.7,
@@ -3242,7 +3242,7 @@ export const REVIEWS_DATA = [
   {
     "id": 272,
     "title": "Top-rated Salon booking experience",
-    "text": "I used Bookby247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Siddharth R.",
     "location": "Thane, Mumbai",
     "rating": 4.6,
@@ -3253,7 +3253,7 @@ export const REVIEWS_DATA = [
   {
     "id": 273,
     "title": "Smooth online booking for Beauty Center",
-    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted beauty center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Karan N.",
     "location": "Vashi, Navi Mumbai",
     "rating": 4.8,
@@ -3264,7 +3264,7 @@ export const REVIEWS_DATA = [
   {
     "id": 274,
     "title": "Trusted Massage Center with verified reviews",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book massage center appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Rajat B.",
     "location": "Nerul, Navi Mumbai",
     "rating": 4.9,
@@ -3286,7 +3286,7 @@ export const REVIEWS_DATA = [
   {
     "id": 276,
     "title": "Premium Wellness Center found quickly",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for wellness center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Saurabh V.",
     "location": "Colaba, Mumbai",
     "rating": 4.7,
@@ -3297,7 +3297,7 @@ export const REVIEWS_DATA = [
   {
     "id": 277,
     "title": "Easy appointment booking for Haircut Salon",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated haircut salon in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Pranav J.",
     "location": "Juhu, Mumbai",
     "rating": 4.5,
@@ -3308,7 +3308,7 @@ export const REVIEWS_DATA = [
   {
     "id": 278,
     "title": "Reliable Mumbai Beard Styling Service discovery",
-    "text": "I used Bookby247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby beard styling service options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Harsh T.",
     "location": "Kandivali, Mumbai",
     "rating": 4.8,
@@ -3319,7 +3319,7 @@ export const REVIEWS_DATA = [
   {
     "id": 279,
     "title": "Excellent Facial Service with instant booking",
-    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted facial service near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Kunal A.",
     "location": "Mulund, Mumbai",
     "rating": 4.5,
@@ -3330,7 +3330,7 @@ export const REVIEWS_DATA = [
   {
     "id": 280,
     "title": "Helpful app for finding Body Massage Spa",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book body massage spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Ritesh C.",
     "location": "Kurla, Mumbai",
     "rating": 4.6,
@@ -3352,7 +3352,7 @@ export const REVIEWS_DATA = [
   {
     "id": 282,
     "title": "Top-rated Thai Massage booking experience",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for Thai massage near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Akshay P.",
     "location": "Bandra, Mumbai",
     "rating": 4.5,
@@ -3363,7 +3363,7 @@ export const REVIEWS_DATA = [
   {
     "id": 283,
     "title": "Smooth online booking for Aroma Therapy",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated aroma therapy in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Sameer M.",
     "location": "Dadar, Mumbai",
     "rating": 4.7,
@@ -3374,7 +3374,7 @@ export const REVIEWS_DATA = [
   {
     "id": 284,
     "title": "Trusted Premium Spa with verified reviews",
-    "text": "I used Bookby247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby premium spa options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Deepak K.",
     "location": "Borivali, Mumbai",
     "rating": 4.9,
@@ -3385,7 +3385,7 @@ export const REVIEWS_DATA = [
   {
     "id": 285,
     "title": "Great platform to compare Relaxation Therapy",
-    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted relaxation therapy near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Gaurav G.",
     "location": "Powai, Mumbai",
     "rating": 4.7,
@@ -3396,7 +3396,7 @@ export const REVIEWS_DATA = [
   {
     "id": 286,
     "title": "Premium Spa found quickly",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book spa appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Mohit R.",
     "location": "Lower Parel, Mumbai",
     "rating": 4.6,
@@ -3418,7 +3418,7 @@ export const REVIEWS_DATA = [
   {
     "id": 288,
     "title": "Reliable Mumbai Beauty Center discovery",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for beauty center near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Sanket B.",
     "location": "Malad, Mumbai",
     "rating": 4.5,
@@ -3429,7 +3429,7 @@ export const REVIEWS_DATA = [
   {
     "id": 289,
     "title": "Excellent Massage Center with instant booking",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated massage center in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Jay D.",
     "location": "Goregaon, Mumbai",
     "rating": 4.7,
@@ -3440,7 +3440,7 @@ export const REVIEWS_DATA = [
   {
     "id": 290,
     "title": "Helpful app for finding Men'S Grooming Salon",
-    "text": "I used Bookby247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby men's grooming salon options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Tejas V.",
     "location": "Chembur, Mumbai",
     "rating": 4.6,
@@ -3451,7 +3451,7 @@ export const REVIEWS_DATA = [
   {
     "id": 291,
     "title": "Best Wellness Center near me in Mumbai",
-    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted wellness center near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Omkar J.",
     "location": "Ghatkopar, Mumbai",
     "rating": 4.8,
@@ -3462,7 +3462,7 @@ export const REVIEWS_DATA = [
   {
     "id": 292,
     "title": "Top-rated Haircut Salon booking experience",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book haircut salon appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Abhishek T.",
     "location": "Thane, Mumbai",
     "rating": 4.9,
@@ -3484,7 +3484,7 @@ export const REVIEWS_DATA = [
   {
     "id": 294,
     "title": "Trusted Facial Service with verified reviews",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for facial service near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Varun C.",
     "location": "Nerul, Navi Mumbai",
     "rating": 4.7,
@@ -3495,7 +3495,7 @@ export const REVIEWS_DATA = [
   {
     "id": 295,
     "title": "Great platform to compare Body Massage Spa",
-    "text": "This is demo review content for UI testing. Bookby247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
+    "text": "This is demo review content for UI testing. BookBy247 helped me find a top-rated body massage spa in Mumbai with verified reviews, clear ratings, location details, and quick online appointment booking.",
     "name": "Tushar S.",
     "location": "Kharghar, Navi Mumbai",
     "rating": 5.0,
@@ -3506,7 +3506,7 @@ export const REVIEWS_DATA = [
   {
     "id": 296,
     "title": "Premium Deep Tissue Massage found quickly",
-    "text": "I used Bookby247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
+    "text": "I used BookBy247 sample listing data to compare nearby deep tissue massage options in Mumbai. The filters for rating, category, pricing, and location make the booking journey simple and user friendly.",
     "name": "Anurag P.",
     "location": "Colaba, Mumbai",
     "rating": 4.9,
@@ -3517,7 +3517,7 @@ export const REVIEWS_DATA = [
   {
     "id": 297,
     "title": "Easy appointment booking for Thai Massage",
-    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with Bookby247 because the platform shows services, reviews, availability, and contact options clearly.",
+    "text": "Demo customer feedback: finding a trusted Thai massage near me in Mumbai became easier with BookBy247 because the platform shows services, reviews, availability, and contact options clearly.",
     "name": "Sahil M.",
     "location": "Juhu, Mumbai",
     "rating": 4.6,
@@ -3528,7 +3528,7 @@ export const REVIEWS_DATA = [
   {
     "id": 298,
     "title": "Reliable Mumbai Aroma Therapy discovery",
-    "text": "This sample SEO-friendly review highlights how Bookby247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
+    "text": "This sample SEO-friendly review highlights how BookBy247 can help users discover, compare, and book aroma therapy appointments across Mumbai using verified business details and smooth booking actions.",
     "name": "Nitin K.",
     "location": "Kandivali, Mumbai",
     "rating": 4.6,
@@ -3550,7 +3550,7 @@ export const REVIEWS_DATA = [
   {
     "id": 300,
     "title": "Helpful app for finding Relaxation Therapy",
-    "text": "Bookby247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
+    "text": "BookBy247 makes local discovery better for Mumbai users looking for relaxation therapy near me. This demo review includes keywords like verified reviews, top-rated services, pricing, and online booking.",
     "name": "Dev R.",
     "location": "Kurla, Mumbai",
     "rating": 5.0,

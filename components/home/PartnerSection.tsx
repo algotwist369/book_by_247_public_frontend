@@ -35,7 +35,7 @@ export const PartnerSection: React.FC = () => {
             </p>
             <h2 className="text-balance text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
               List Your Hair Salon, Spa & Beauty Parlour
-              <span className="block text-rose-700">on Bookby247</span>
+              <span className="block text-rose-700">on BookBy247</span>
             </h2>
             <p className="mx-auto max-w-xl text-sm leading-relaxed text-slate-700 sm:text-base">
               Join India's fastest-growing online salon directory and marketplace for top-rated spas, hair studios, and massage centers, and start receiving confirmed client appointments and salon leads from day one.

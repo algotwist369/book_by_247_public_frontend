@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
 
     const title = `Top ${displayCount} Best ${tagName} Services Near Me | Book Online 24/7`;
-    const description = `Find and book the best ${tagName} professionals in your area. Compare verified reviews, transparent pricing, and instant availability. Skip the wait-book your ${tagName} appointment online via Bookby247 today.`;
+    const description = `Find and book the best ${tagName} professionals in your area. Compare verified reviews, transparent pricing, and instant availability. Skip the wait-book your ${tagName} appointment online via BookBy247 today.`;
     const keywords = [
         `${tag}`,
         `${tag} services near me`,
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         title,
         description,
         keywords,
-        authors: [{ name: "Bookby247 Team" }],
+        authors: [{ name: "BookBy247 Team" }],
         alternates: {
             canonical: `/tags/${slug}`,
         },
@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             images: ['https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png'],
             url: `https://bookby247.com/tags/${slug}`,
             type: "website",
-            siteName: "Bookby247",
+            siteName: "BookBy247",
             locale: "en_IN",
         },
         twitter: {
@@ -68,7 +68,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             title,
             description,
             images: ['https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png'],
-            creator: "@bookby247",
+            creator: "@BookBy247",
         },
     };
 }
@@ -168,7 +168,7 @@ export default async function TagPage({ params }: PageProps) {
 
                 <AiReadabilitySection 
                     aboutTitle={`${tagName} Services`}
-                    aboutContent={`Explore top-rated ${tagName} services near you. Our platform connects you with verified professionals offering premium ${tagName} experiences. Read reviews, compare prices, and book your next appointment instantly on Bookby247.`}
+                    aboutContent={`Explore top-rated ${tagName} services near you. Our platform connects you with verified professionals offering premium ${tagName} experiences. Read reviews, compare prices, and book your next appointment instantly on BookBy247.`}
                 />
             </main>
         </>

@@ -12,7 +12,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
     const query = params.q || ""
     return {
         title: query ? `Search: ${query}` : "Search Blog",
-        description: query ? `Search results for ${query} across the Bookby247 blog.` : "Search editorial articles on Bookby247.",
+        description: query ? `Search results for ${query} across the BookBy247 blog.` : "Search editorial articles on BookBy247.",
         alternates: { canonical: query ? `/blog/search?q=${encodeURIComponent(query)}` : "/blog/search" },
     }
 }

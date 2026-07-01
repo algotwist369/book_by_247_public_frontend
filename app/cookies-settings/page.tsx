@@ -5,11 +5,11 @@ import { safeJsonLdStringify } from "@/lib/utils";
 import AiReadabilitySection from "@/components/seo/AiReadabilitySection";
 
 export const metadata: Metadata = {
-    title: "Cookies Settings | Bookby247",
+    title: "Cookies Settings | BookBy247",
     description:
-        "Review Bookby247 Cookies Settings and learn how cookies are used for login sessions, analytics, user preferences, and platform performance.",
+        "Review BookBy247 Cookies Settings and learn how cookies are used for login sessions, analytics, user preferences, and platform performance.",
     keywords: [
-        "Bookby247 cookies",
+        "BookBy247 cookies",
         "cookies settings",
         "website tracking preferences",
         "analytics cookies",
@@ -19,8 +19,8 @@ export const metadata: Metadata = {
         canonical: "/cookies-settings"
     },
     openGraph: {
-        title: "Cookies Settings - Bookby247",
-        description: "Cookies usage and control preferences for Bookby247 users.",
+        title: "Cookies Settings - BookBy247",
+        description: "Cookies usage and control preferences for BookBy247 users.",
         url: "https://bookby247.com/cookies-settings",
         type: "article"
     }
@@ -48,7 +48,7 @@ const CookiesSettingsPage = () => {
             <LegalDocument
                 title="Cookies Settings"
                 effectiveDate="13 April 2026"
-                intro="Bookby247 uses cookies and similar technologies to improve user experience, maintain secure sessions, and understand platform usage patterns."
+                intro="BookBy247 uses cookies and similar technologies to improve user experience, maintain secure sessions, and understand platform usage patterns."
                 sections={[
                     {
                         title: "1. Essential Cookies",

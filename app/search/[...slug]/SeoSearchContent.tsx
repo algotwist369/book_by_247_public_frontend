@@ -7,6 +7,7 @@ import { useSeoBusinesses } from '@/hooks/useSeo';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Search, MapPin } from 'lucide-react';
 import Link from 'next/link';
+import { startRouteProgress } from '@/lib/navigation-events';
 
 interface SeoSearchContentProps {
     params: any;
@@ -33,7 +34,10 @@ const SeoSearchContent = ({ params, initialData, slug }: SeoSearchContentProps) 
         const searchParams = new URLSearchParams();
         if (q || searchQuery) searchParams.set('q', q || searchQuery);
         if (loc || locationQuery) searchParams.set('location', loc || locationQuery);
-        router.push(`/explore?${searchParams.toString()}`);
+        const href = `/explore?${searchParams.toString()}`;
+        startRouteProgress(href);
+        router.prefetch(href);
+        router.push(href);
     };
 
     return (
@@ -103,7 +107,7 @@ const SeoSearchContent = ({ params, initialData, slug }: SeoSearchContentProps) 
                             <p className="text-zinc-600 text-sm leading-relaxed max-w-4xl">
                                 Looking for the best {params.service || "spa and salon services"}? We've curated a list of top-rated businesses 
                                 in {params.city} to help you find the perfect pampering session. Whether you need a relaxing massage, 
-                                a trendy haircut, or professional skincare, Bookby247 connect you with verified experts.
+                                a trendy haircut, or professional skincare, BookBy247 connect you with verified experts.
                             </p>
                         </div>
 

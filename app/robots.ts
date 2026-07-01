@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
+import { SEO_CONFIG } from "@/lib/seo-config";
 
-const BASE_URL = "https://bookby247.com";
+const BASE_URL = SEO_CONFIG.baseUrl;
 
 const ALLOWED_RENDER_RESOURCES = [
   "/",
@@ -12,8 +13,13 @@ const ALLOWED_RENDER_RESOURCES = [
 const DISALLOWED_NON_PUBLIC_PATHS = [
   "/api/",
   "/admin",
+  "/admin/",
   "/dashboard",
+  "/dashboard/",
   "/auth",
+  "/auth/",
+  "/login",
+  "/register",
 ];
 
 export default function robots(): MetadataRoute.Robots {

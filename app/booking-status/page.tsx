@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { startRouteProgress } from "@/lib/navigation-events";
 
 const BookingStatusHomePage = () => {
     const router = useRouter();
@@ -25,7 +26,10 @@ const BookingStatusHomePage = () => {
         }
 
         setError("");
-        router.push(`/booking-status/${encodeURIComponent(code)}`);
+        const href = `/booking-status/${encodeURIComponent(code)}`;
+        startRouteProgress(href);
+        router.prefetch(href);
+        router.push(href);
     };
 
     return (

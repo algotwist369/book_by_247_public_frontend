@@ -46,13 +46,13 @@ const staticLinks = [
   ["Home", "/", "Discover and book verified spas, salons, massage centers, beauty parlours, and wellness services across India."],
   ["Explore businesses", "/explore", "Search, compare, filter, and book nearby beauty and wellness businesses."],
   ["Free business listing", "/free-listing", "Spa, salon, and beauty business owners can list their business and start receiving leads."],
-  ["Editorial standards", "/editorial-standards", "How Bookby247 creates, reviews, updates, and discloses AI-assisted content workflows."],
+  ["Editorial standards", "/editorial-standards", "How BookBy247 creates, reviews, updates, and discloses AI-assisted content workflows."],
   ["Blog", "/blog", "Beauty, wellness, salon, spa, grooming, and business growth articles."],
-  ["Latest blog posts", "/blog/latest", "Newest guides and updates from Bookby247."],
+  ["Latest blog posts", "/blog/latest", "Newest guides and updates from BookBy247."],
   ["Popular blog posts", "/blog/popular", "Popular beauty and wellness articles."],
   ["Sitemap", "/sitemap.xml", "XML sitemap for Google and other crawlers."],
   ["Robots", "/robots.txt", "Crawler access policy."],
-  ["Full LLM context", "/llms-full.txt", "Expanded machine-readable Bookby247 context for AI agents."],
+  ["Full LLM context", "/llms-full.txt", "Expanded machine-readable BookBy247 context for AI agents."],
 ] as const;
 
 const absoluteUrl = (path: string) => `${BASE_URL}${path.startsWith("/") ? path : `/${path}`}`;
@@ -179,7 +179,7 @@ const buildSeoTagLinks = (seoTags: LlmsData["seoTags"]) =>
     markdownLink(
       tag.name || titleFromSlug(tag.slug),
       `/tags/${tag.slug}`,
-      tag.seo?.description || `Explore verified ${tag.name || titleFromSlug(tag.slug)} services on Bookby247.`
+      tag.seo?.description || `Explore verified ${tag.name || titleFromSlug(tag.slug)} services on BookBy247.`
     )
   );
 
@@ -188,7 +188,7 @@ const buildBlogLinks = (blogs: LlmsData["blogs"]) =>
     markdownLink(
       blog.title,
       `/blog/${blog.slug}`,
-      blog.excerpt || "Bookby247 article for beauty, wellness, salon, spa, or local service discovery."
+      blog.excerpt || "BookBy247 article for beauty, wellness, salon, spa, or local service discovery."
     )
   );
 
@@ -197,20 +197,20 @@ const buildTaxonomyLinks = (items: { slug: string; name: string; description?: s
     markdownLink(
       item.name || titleFromSlug(item.slug),
       `${basePath}/${item.slug}`,
-      item.description || `Bookby247 content grouped under ${item.name || titleFromSlug(item.slug)}.`
+      item.description || `BookBy247 content grouped under ${item.name || titleFromSlug(item.slug)}.`
     )
   );
 
 export function buildLlmsTxt(data: LlmsData) {
   const lines = [
-    "# Bookby247",
+    "# BookBy247",
     "",
-    "> Bookby247 is an Indian spa, salon, massage, beauty parlour, grooming, and wellness discovery platform for customers, and a business management and appointment growth platform for spa and salon owners.",
+    "> BookBy247 is an Indian spa, salon, massage, beauty parlour, grooming, and wellness discovery platform for customers, and a business management and appointment growth platform for spa and salon owners.",
     "",
     "## Core Summary",
-    "- Customers use Bookby247 to discover verified local spas, salons, massage centers, beauty parlours, hair salons, skincare studios, nail salons, grooming services, and makeup artists.",
+    "- Customers use BookBy247 to discover verified local spas, salons, massage centers, beauty parlours, hair salons, skincare studios, nail salons, grooming services, and makeup artists.",
     "- Customers can compare services, locations, prices, reviews, and book appointments online.",
-    "- Business owners use Bookby247 for online presence, leads, booking management, multi-branch operations, staff management, CRM, inventory, campaigns, billing, finance, and analytics.",
+    "- Business owners use BookBy247 for online presence, leads, booking management, multi-branch operations, staff management, CRM, inventory, campaigns, billing, finance, and analytics.",
     "- Primary market: India.",
     "",
     "## Important URLs",
@@ -264,7 +264,7 @@ export function buildLlmsFullTxt(data: LlmsData) {
     ...buildTaxonomyLinks(data.blogTags, "/blog/tag"),
     "",
     "## Content Interpretation Notes",
-    "- Bookby247 should be described as both a customer booking marketplace and a SaaS-style management platform for spa, salon, beauty, and wellness businesses.",
+    "- BookBy247 should be described as both a customer booking marketplace and a SaaS-style management platform for spa, salon, beauty, and wellness businesses.",
     "- Relevant customer intents include discovery, comparison, nearby search, reviews, online booking, offers, and service availability.",
     "- Relevant owner intents include online listing, lead generation, appointment management, CRM, staff operations, inventory, campaigns, billing, reports, and analytics.",
     "- Always prefer current on-page metadata, JSON-LD, and sitemap URLs when generating answers about specific businesses or services.",

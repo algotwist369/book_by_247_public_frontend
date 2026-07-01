@@ -2,12 +2,56 @@ import Link from "next/link";
 import React from "react";
 
 const popularSearches = [
-  { name: "Top Hair Salon Near Me", query: "Hair Salon" },
-  { name: "Bridal Makeup Packages Price", query: "Bridal Makeup" },
-  { name: "Nail Art Studio Near Me", query: "Nail Art" },
-  { name: "Best Keratin Treatment Salon", query: "Keratin Treatment" },
-  { name: "Hydrafacial & Skin Clinics", query: "Hydrafacial" },
-  { name: "Luxury Spa & Body Massage", query: "Body Massage" },
+  "spa near me",
+  "spa in Hosa Road",
+  "massage spa Hosa Road",
+  "local spa treatments near me",
+  "couple spa in Hosa Road",
+  "nearest day spa",
+  "nearby spa massage",
+  "body spa near me",
+  "massage service in Hosa Road",
+  "best massage spa Hosa Road",
+  "couples spa",
+  "spa days near me",
+  "spa experience",
+  "massage spa near me",
+  "spa near Hosa Road",
+  "massage spa center near me",
+  "body spa massage near me",
+  "massage therapy massage near me",
+  "sports massage near me",
+  "best spa Hosa Road",
+  "aroma thai spa Hosa Road",
+  "deep tissue massage",
+  "body massage spa in Hosa Road",
+  "luxury spa",
+  "relaxation spa",
+  "massage center in Hosa Road",
+  "luxury massage spa",
+  "couple massage in Hosa Road",
+  "body spa",
+  "near by spa center",
+  "thai massage massage near me",
+  "near by me massage center",
+  "spa wellness center near me",
+  "best body massage near me",
+  "find massage places near me",
+  "luxury spa near me",
+  "nearest spa centre",
+  "body massage center",
+  "best body spa near me",
+  "near by thai massage",
+  "best massage spa near me",
+  "luxury spa weekend near me",
+  "massage near me now",
+  "massage spa and sauna near me",
+  "best spa in location",
+  "best massage in location",
+  "best body spa in location",
+  "best body massage in location",
+  "spa & massage services",
+  "luxury spa in location",
 ];
 
 const SEOFooter = () => {
@@ -16,12 +60,12 @@ const SEOFooter = () => {
       <div className="flex max-w-7xl mx-auto px-4 px-6 md:px-0 py-12 sm:py-16 md:py-20 flex-col gap-10 lg:gap-14">
         <div className="max-w-4xl">
           <h2 className="text-2xl font-bold leading-tight text-zinc-900 sm:text-3xl lg:text-4xl">
-            Bookby247 - Find Spas, Salons and Beauty Services Near You
+            BookBy247 - Find Spas, Salons and Beauty Services Near You
           </h2>
 
           <p className="mt-3 text-sm leading-relaxed text-zinc-600 sm:text-base">
-            Bookby247 is a dedicated beauty and wellness discovery platform for users across India.
-            Whether you are searching for a full body massage in Mumbai, a hair salon in Delhi, a facial in Bangalore,
+            BookBy247 is a dedicated beauty and wellness discovery platform for users across India.
+            Whether you are searching for a full body massage in Mumbai, a massage spa in Hosa Road, a hair salon in Delhi, a facial in Bangalore,
             bridal makeup in Pune, or a beauty parlour near your area, our platform connects you with verified spas,
             salons, massage centers, skincare studios, nail salons and grooming professionals.
           </p>
@@ -29,11 +73,11 @@ const SEOFooter = () => {
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-2">
-            <h3 className="font-bold text-zinc-900">What is Bookby247 Salon and Spa Booking App?</h3>
-            <p className="text-sm text-zinc-600">Bookby247 is India&apos;s premier online salon appointment booking app designed for premium spas, hair salons, beauty parlours, and massage centers. Users can effortlessly discover, compare service menus, and book trusted local beauty services online with instant confirmation.</p>
+            <h3 className="font-bold text-zinc-900">What is BookBy247 Salon and Spa Booking App?</h3>
+            <p className="text-sm text-zinc-600">BookBy247 is India&apos;s premier online salon appointment booking app designed for premium spas, hair salons, beauty parlours, and massage centers. Users can effortlessly discover, compare service menus, and book trusted local beauty services online with instant confirmation.</p>
           </div>
           <div className="space-y-2">
-            <h3 className="font-bold text-zinc-900">Who Can Book Services on Bookby247?</h3>
+            <h3 className="font-bold text-zinc-900">Who Can Book Services on BookBy247?</h3>
             <p className="text-sm text-zinc-600">Our platform connects clients searching for top-rated beauty parlours and unisex salons near me for trending treatments. Book local experts for full body massages, luxury spa packages, keratin treatments, deep-cleansing facials, body waxing, gel nail extensions, and professional bridal makeup artists.</p>
           </div>
           <div className="space-y-2">
@@ -47,15 +91,15 @@ const SEOFooter = () => {
         </div>
 
         <div className="space-y-3">
-          <h3 className="text-base font-semibold text-zinc-900">Popular Beauty Searches in India</h3>
+          <h3 className="text-base font-semibold text-zinc-900">Popular Spa & Massage Searches</h3>
           <div className="flex flex-wrap gap-2">
             {popularSearches.map((search) => (
               <Link
-                key={search.query}
-                href={`/explore?q=${encodeURIComponent(search.query)}`}
+                key={search}
+                href={`/explore?q=${encodeURIComponent(search)}`}
                 className="rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs font-semibold text-zinc-800 transition-colors hover:border-rose-300 hover:bg-rose-50"
               >
-                {search.name}
+                {search}
               </Link>
             ))}
           </div>
@@ -68,7 +112,7 @@ const SEOFooter = () => {
                 Find Top Spas, Hair Salons &amp; Beauty Parlours Near You
               </h3>
               <p className="text-zinc-600">
-                Browse 100% verified luxury day spas, local unisex salons, premium beauty parlours, and wellness centers. Book trending local services including full body massages, aromatherapy spa packages, deep tissue massage therapy, trendy haircuts, premium hair spas, keratin treatments, hair smoothening, beard grooming, and anti-acne facials.
+                Browse 100% verified luxury day spas, nearby spa massage centers, local unisex salons, premium beauty parlours, and wellness centers. Book trending local services including full body massages, aromatherapy spa packages, deep tissue massage therapy, trendy haircuts, premium hair spas, keratin treatments, hair smoothening, beard grooming, and anti-acne facials.
               </p>
             </div>
 
@@ -86,14 +130,14 @@ const SEOFooter = () => {
                 Compare Salon Service Menu Prices for Every Budget
               </h3>
               <p className="text-zinc-600">
-                From budget neighborhood beauty salons and affordable ladies parlours to premium international spas and luxury skin clinics, Bookby247 makes self-care accessible. Effortlessly compare salon service menu cards, read verified customer reviews, and unlock exclusive beauty deals, discounts, and booking offers.
+                From budget neighborhood beauty salons and affordable ladies parlours to premium international spas and luxury skin clinics, BookBy247 makes self-care accessible. Effortlessly compare salon service menu cards, read verified customer reviews, and unlock exclusive beauty deals, discounts, and booking offers.
               </p>
             </div>
           </div>
 
           <div className="mt-8 border-t border-zinc-200 pt-4">
             <p className="max-w-4xl text-xs leading-relaxed text-zinc-500">
-              <strong>Bookby247</strong> is India&apos;s leading beauty and wellness marketplace platform helping clients locate trusted day spa services, hair studio salon treatments, certified massage therapy, skincare clinics, hair styling, premium nail care, celebrity bridal makeup, facial waxing, threading, men&apos;s grooming, and holistic wellness solutions across major neighborhoods.
+              <strong>BookBy247</strong> is India&apos;s leading beauty and wellness marketplace platform helping clients locate trusted day spa services, hair studio salon treatments, certified massage therapy, skincare clinics, hair styling, premium nail care, celebrity bridal makeup, facial waxing, threading, men&apos;s grooming, and holistic wellness solutions across major neighborhoods.
             </p>
           </div>
         </div>

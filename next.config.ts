@@ -59,6 +59,16 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        // Private, auth and API surfaces should never be indexed
+        source: "/:privatePath(admin|dashboard|auth|login|register|api|booking-status)/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow, noarchive",
+          },
+        ],
+      },
+      {
         // Pages with ISR - stale-while-revalidate
         source: "/(.*)",
         headers: [

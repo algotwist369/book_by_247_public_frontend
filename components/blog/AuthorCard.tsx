@@ -7,7 +7,7 @@ export function AuthorCard({ author }: { author: BlogAuthor }) {
         <div className="flex items-start gap-4">
             <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full">
                 <CustomImage
-                    src={author.avatar?.url || "https://ui-avatars.com/api/?name=Bookby247"}
+                    src={author.avatar?.url || "https://ui-avatars.com/api/?name=BookBy247"}
                     alt={author.name}
                     fill
                     className="object-cover"
@@ -20,7 +20,7 @@ export function AuthorCard({ author }: { author: BlogAuthor }) {
                 >
                     {author.name}
                 </Link>
-                <p className="mt-1.5 text-[14px] leading-relaxed text-zinc-600">{author.bio || "Editorial contributor at Bookby247."}</p>
+                <p className="mt-1.5 text-[14px] leading-relaxed text-zinc-600">{author.bio || "Editorial contributor at BookBy247."}</p>
             </div>
         </div>
     )

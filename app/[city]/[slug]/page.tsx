@@ -77,7 +77,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         ? `Top 10 Best ${info.categoryName} in ${info.areaName || cityName} | Ratings & Reviews`
         : `Best ${info.categoryName} in ${info.areaName || cityName} ${info.areaName ? `, ${cityName}` : ""} | Online Booking`;
 
-    const description = `Bookby247 is the leading platform for finding the ${info.isTop10 ? "top 10" : "best"} ${info.categoryName.toLowerCase()} in ${info.areaName || cityName}. Read customer reviews, compare service prices, and book your appointment online instantly with 24/7 confirmation.`;
+    const description = `BookBy247 is the leading platform for finding the ${info.isTop10 ? "top 10" : "best"} ${info.categoryName.toLowerCase()} in ${info.areaName || cityName}. Read customer reviews, compare service prices, and book your appointment online instantly with 24/7 confirmation.`;
 
     return {
         title,
@@ -88,7 +88,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             `best ${info.categoryName.toLowerCase()} ${info.areaName || cityName}`,
             "online spa booking",
             "salon appointment booking",
-            "bookby247"
+            "BookBy247"
         ],
         alternates: {
             canonical: `/${city}/${slug}`,
@@ -106,7 +106,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             title,
             description,
             url: `https://bookby247.com/${city}/${slug}`,
-            siteName: "Bookby247",
+            siteName: "BookBy247",
             type: "website",
             locale: "en_IN",
             images: [
@@ -114,7 +114,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
                     url: "https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png",
                     width: 1200,
                     height: 630,
-                    alt: `Find the best ${info.categoryName} in ${info.areaName || cityName} - Bookby247`,
+                    alt: `Find the best ${info.categoryName} in ${info.areaName || cityName} - BookBy247`,
                 },
             ],
         },
@@ -123,7 +123,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             title,
             description,
             images: ["https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png"],
-            creator: "@bookby247",
+            creator: "@BookBy247",
         },
     };
 }

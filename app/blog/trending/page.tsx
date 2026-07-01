@@ -5,7 +5,7 @@ import { BlogLandingContent } from "@/app/blog/BlogLandingContent"
 
 export const metadata: Metadata = {
     title: "Trending Blog Posts",
-    description: "Trending wellness and beauty content on Bookby247.",
+    description: "Trending wellness and beauty content on BookBy247.",
     alternates: { canonical: "/blog/trending" },
 }
 

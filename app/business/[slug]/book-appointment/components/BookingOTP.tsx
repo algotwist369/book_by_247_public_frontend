@@ -132,7 +132,7 @@ const BookingOTP = ({ otpChannel, phone, email, onVerify, onResend, isLoading, e
             </div>
             
             <p className="text-center text-[10px] text-zinc-400 mt-6 uppercase tracking-[0.2em] font-medium">
-                Secure Verification by Bookby247
+                Secure Verification by BookBy247
             </p>
         </div>
     );

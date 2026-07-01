@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const { slug } = await params
     return {
         title: `Category: ${slug}`,
-        description: `Category archive for ${slug} on the Bookby247 blog.`,
+        description: `Category archive for ${slug} on the BookBy247 blog.`,
         alternates: { canonical: `/blog/category/${slug}` },
     }
 }

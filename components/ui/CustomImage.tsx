@@ -86,7 +86,7 @@ const CustomImage = ({
             <Image
                 {...props}
                 src={effectiveSrc}
-                alt={alt || "Bookby247 spa salon and beauty service image"}
+                alt={alt || "BookBy247 spa salon and beauty service image"}
                 unoptimized={shouldUnoptimize}
                 sizes={props.sizes || "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
                 className={cn(

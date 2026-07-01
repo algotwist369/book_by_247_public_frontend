@@ -53,7 +53,7 @@ export function BlogJsonLd({ blog }: { blog: BlogArticle }) {
         },
         publisher: {
             "@type": "Organization",
-            name: "Bookby247",
+            name: "BookBy247",
             url: buildAbsoluteUrl("/"),
         },
         url: canonical,

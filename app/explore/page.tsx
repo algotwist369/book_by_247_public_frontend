@@ -20,8 +20,8 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
     const tag = typeof params.tag === 'string' ? params.tag : '';
     const count = typeof params.count === 'string' ? params.count : '';
 
-    let title = 'Discover Top-Rated Spas, Salons & Beauty Centers Near You - Compare Reviews & Book Online | Bookby247';
-    let description = 'Find, explore, compare, and book top-rated spas, salons, beauty centers, wellness clinics, and massage services near you. Discover verified reviews, ratings, services, pricing, and locations with advanced filters for a seamless online booking experience on Bookby247.';
+    let title = 'Discover Top-Rated Spas, Salons & Beauty Centers Near You - Compare Reviews & Book Online | BookBy247';
+    let description = 'Find, explore, compare, and book top-rated spas, salons, beauty centers, wellness clinics, and massage services near you. Discover verified reviews, ratings, services, pricing, and locations with advanced filters for a seamless online booking experience on BookBy247.';
     let keywords: string[] = [];
     let canonicalPath = '/explore';
 
@@ -29,9 +29,9 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
         const tagName = slugToTitleCase(tag);
         const displayCount = count || "10";
 
-        title = `Top ${displayCount} ${tagName} Services Near You | Compare & Book Online | Bookby247`;
+        title = `Top ${displayCount} ${tagName} Services Near You | Compare & Book Online | BookBy247`;
 
-        description = `Find, compare, and book top-rated ${tagName} services near you. Explore verified reviews, ratings, pricing, locations, and instant availability. Discover trusted professionals and book your appointment online with Bookby247.`;
+        description = `Find, compare, and book top-rated ${tagName} services near you. Explore verified reviews, ratings, pricing, locations, and instant availability. Discover trusted professionals and book your appointment online with BookBy247.`;
 
         keywords = [
             tagName,
@@ -51,7 +51,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
             `${tagName} in my city`,
             `online ${tagName} booking`,
             `trusted ${tagName} providers`,
-            `Bookby247 ${tagName}`
+            `BookBy247 ${tagName}`
         ];
 
         canonicalPath = `/tags/${tag}`;
@@ -72,11 +72,11 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
             parts.push("Near You");
         }
 
-        title = `Find, Compare & Book ${parts.join(" ")} | Bookby247`;
+        title = `Find, Compare & Book ${parts.join(" ")} | BookBy247`;
 
         description = `Discover top-rated ${category || "spas, salons and beauty centers"} ${location ? `in ${location}` : "near you"
             }. Compare verified reviews, ratings, services, pricing, locations, and availability. ${q ? `Explore results for "${q}" and find trusted businesses.` : ""
-            } Book instantly with Bookby247.`;
+            } Book instantly with BookBy247.`;
 
         keywords = [
             category || "spa",
@@ -108,7 +108,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
             "salon booking",
             "beauty center booking",
         ],
-        authors: [{ name: "Bookby247 Team" }],
+        authors: [{ name: "BookBy247 Team" }],
         alternates: {
             canonical: canonicalPath,
         },
@@ -127,7 +127,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
             images: ['https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png'],
             url: `https://bookby247.com${canonicalPath}`,
             type: "website",
-            siteName: "Bookby247",
+            siteName: "BookBy247",
             locale: "en_IN",
         },
         twitter: {
@@ -135,7 +135,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
             title,
             description,
             images: ['https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png'],
-            creator: "@bookby247",
+            creator: "@BookBy247",
         },
     };
 }
@@ -221,7 +221,7 @@ export default async function ExplorePage({ searchParams }: PageProps) {
 
                 <AiReadabilitySection
                     aboutTitle="Explore Wellness Anywhere"
-                    aboutContent="Our explore page allows you to filter through thousands of verified spas, salons, and beauty parlours across India. Whether you are looking for specific services or local favorites, Bookby247 provides a seamless discovery experience."
+                    aboutContent="Our explore page allows you to filter through thousands of verified spas, salons, and beauty parlours across India. Whether you are looking for specific services or local favorites, BookBy247 provides a seamless discovery experience."
                 />
             </main>
         </>

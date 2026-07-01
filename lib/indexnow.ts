@@ -28,7 +28,7 @@ export async function submitIndexNowUrls(urls: string[]) {
     return {
       submitted: false,
       status: 400,
-      message: "No valid Bookby247 URLs were provided.",
+      message: "No valid BookBy247 URLs were provided.",
       urlList,
     };
   }

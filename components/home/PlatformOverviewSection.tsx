@@ -35,7 +35,7 @@ const ownerBenefits = [
 
 const PlatformOverviewSection = () => {
     return (
-        <section className="bg-white px-4 py-14 sm:px-6 sm:py-16 md:px-8">
+        <section id="about-bookby247" className="bg-white px-4 py-14 sm:px-6 sm:py-16 md:px-8">
             <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-12 lg:items-center">
                 <div className="space-y-7 lg:col-span-5">
                     <div className="space-y-4">
@@ -44,10 +44,10 @@ const PlatformOverviewSection = () => {
                             INDIA'S TOP SALON BOOKING APP & SPA DIRECTORY
                         </p>
                         <h2 className="text-balance text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-4xl lg:text-5xl">
-                            What is Bookby247 & How to Book Salons Online?
+                            What is BookBy247 & How to Book Salons Online?
                         </h2>
                         <p className="text-sm leading-7 text-zinc-700 sm:text-base">
-                            <b>Bookby247</b> is a premier <b>online salon appointment booking app</b> and <b>local beauty parlour finder</b> built for <b>local spas, hair salons, and beauty parlours in India.</b> Customers can instantly locate <b>verified local spa treatments and hair stylist services</b> with <b>upfront salon menu prices</b>, while business merchants use our advanced <b>spa & salon management software</b> to manage bookings, staff schedules, client billing, and inventory from one unified dashboard.
+                            <b>BookBy247</b> is a premier <b>online salon appointment booking app</b> and <b>local beauty parlour finder</b> built for <b>local spas, hair salons, and beauty parlours in India.</b> Customers can instantly locate <b>verified local spa treatments and hair stylist services</b> with <b>upfront salon menu prices</b>, while business merchants use our advanced <b>spa & salon management software</b> to manage bookings, staff schedules, client billing, and inventory from one unified dashboard.
                         </p>
                     </div>
 
@@ -70,7 +70,7 @@ const PlatformOverviewSection = () => {
                     <div className="overflow-hidden rounded-3xl border border-zinc-200 bg-zinc-100 shadow-sm">
                         <CustomImage
                             src="/images/bookby247-platform-overview.png"
-                            alt="Bookby247 customer booking and spa salon management dashboard overview"
+                            alt="BookBy247 customer booking and spa salon management dashboard overview"
                             width={1536}
                             height={864}
                             priority
@@ -86,7 +86,7 @@ const PlatformOverviewSection = () => {
                     <div className="space-y-2">
                         <h3 className="text-xl font-bold text-zinc-900 sm:text-2xl">For Customers Booking Local Salons & Spa Treatments</h3>
                         <p className="text-sm leading-6 text-zinc-600">
-                            Bookby247 simplifies self-care by offering instant online bookings, transparent salon price checks, verified salon customer reviews, and confirmation alerts. and fast appointment booking.
+                            BookBy247 simplifies self-care by offering instant online bookings, transparent salon price checks, verified salon customer reviews, and confirmation alerts. and fast appointment booking.
                         </p>
                     </div>
                     <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -135,7 +135,7 @@ const PlatformOverviewSection = () => {
                     <div>
                         <h3 className="text-base font-bold text-zinc-900">24/7 support mindset</h3>
                         <p className="mt-2 text-sm leading-6 text-zinc-600">
-                            Bookby247 is designed to support customers and business teams with smoother appointment, communication and growth workflows.
+                            BookBy247 is designed to support customers and business teams with smoother appointment, communication and growth workflows.
                         </p>
                     </div>
                 </div>

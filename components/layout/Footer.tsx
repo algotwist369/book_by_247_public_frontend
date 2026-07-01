@@ -30,9 +30,10 @@ const Footer = () => {
     ];
 
     const quickLinks = [
-        { label: "About Us", href: "#" },
-        { label: "Contact Us", href: "#" },
-        { label: "Become a Partner", href: "#" },
+        { label: "About BookBy247", href: "/#about-bookby247" },
+        { label: "Services", href: "/explore" },
+        { label: "Contact Us", href: "mailto:support@bookby247.com" },
+        { label: "Become a Partner", href: "/free-listing" },
         { label: "Careers", href: "/careers" },
         // { label: "Blog", href: "#" }
     ];
@@ -155,7 +156,7 @@ const Footer = () => {
                 {/* 🔥 BOTTOM BAR */}
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-6 text-center md:text-left">
                     <p className="text-xs">
-                        © {currentYear} Bookby247. All rights reserved.
+                        © {currentYear} BookBy247. All rights reserved.
                     </p>
 
                     <div className="flex flex-wrap justify-center md:justify-end gap-5">

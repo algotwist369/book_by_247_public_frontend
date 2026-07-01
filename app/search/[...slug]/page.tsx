@@ -52,8 +52,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     if (area) titleParts.push(`in ${area.charAt(0).toUpperCase() + area.slice(1)}`);
     if (city) titleParts.push(area ? city.charAt(0).toUpperCase() + city.slice(1) : `in ${city.charAt(0).toUpperCase() + city.slice(1)}`);
 
-    const title = `${titleParts.join(" ")} - Book Appointments Online - Bookby247`;
-    const description = `Discover and book top-rated ${service || type || 'wellness services'} in ${area ? `${area}, ` : ''}${city || 'your city'}. Compare prices, read reviews, and book instantly on Bookby247.`;
+    const title = `${titleParts.join(" ")} - Book Appointments Online - BookBy247`;
+    const description = `Discover and book top-rated ${service || type || 'wellness services'} in ${area ? `${area}, ` : ''}${city || 'your city'}. Compare prices, read reviews, and book instantly on BookBy247.`;
 
     const canonicalPath = `/search/${slug.join("/")}`;
 
@@ -76,7 +76,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             title,
             description,
             url: `https://bookby247.com${canonicalPath}`,
-            siteName: "Bookby247",
+            siteName: "BookBy247",
             type: "website",
             locale: "en_IN",
             images: [
@@ -93,7 +93,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             title,
             description,
             images: ["https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png"],
-            creator: "@bookby247",
+            creator: "@BookBy247",
         }
     };
 }

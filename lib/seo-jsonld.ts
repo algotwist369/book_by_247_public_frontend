@@ -1,3 +1,5 @@
+import { SEO_CONFIG } from "@/lib/seo-config";
+
 type SeoValue = string | number;
 
 type BusinessServiceOption = {
@@ -102,9 +104,9 @@ type BusinessJsonLdInput = {
 const getServiceBusiness = (business: BusinessService["business"]) =>
   typeof business === "object" && business !== null ? business : undefined;
 
-const baseUrl = "https://bookby247.com";
+const baseUrl = SEO_CONFIG.baseUrl;
 
-const getBusinessName = (business: BusinessJsonLdInput) => business.name || business.business_title || "Bookby247 Partner";
+const getBusinessName = (business: BusinessJsonLdInput) => business.name || business.business_title || "BookBy247 Partner";
 
 const getBusinessSlug = (business: BusinessJsonLdInput) => business.slug || business.bussiness_slug;
 
@@ -179,7 +181,7 @@ export const generateLocalBusinessJsonLd = (business: BusinessJsonLdInput) => {
     "image": (images.length > 0 ? images : ["https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png"]).map((url) => ({
       "@type": "ImageObject",
       "url": url,
-      "caption": `${name} on Bookby247`
+      "caption": `${name} on BookBy247`
     })),
     "url": `${baseUrl}/business/${slug}`,
     "telephone": business.phone || business.business_contacts,
@@ -349,11 +351,12 @@ export const generateItemListJsonLd = (businesses: BusinessJsonLdInput[], city?:
 export const generateOrganizationJsonLd = () => {
   return {
     "@type": "Organization",
-    "name": "Bookby247",
-    "alternateName": "Book by 24/7",
-    "url": "https://bookby247.com",
-    "logo": "https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png",
-    "description": "Bookby247 helps users in India discover and book verified spas, salons, beauty parlours, massage centers, hair salons, skincare studios, nail salons, grooming services and makeup artists with price comparison and verified reviews.",
+    "@id": `${SEO_CONFIG.baseUrl}/#organization`,
+    "name": SEO_CONFIG.brandName,
+    "alternateName": SEO_CONFIG.alternateBrandNames,
+    "url": SEO_CONFIG.baseUrl,
+    "logo": SEO_CONFIG.ogImage.url,
+    "description": SEO_CONFIG.defaultDescription,
     "areaServed": {
       "@type": "Country",
       "name": "India"
@@ -388,10 +391,16 @@ export const generateOrganizationJsonLd = () => {
       "https://twitter.com/bookby247",
       "https://www.linkedin.com/company/bookby247"
     ],
+    "brand": {
+      "@type": "Brand",
+      "name": SEO_CONFIG.brandName,
+      "url": SEO_CONFIG.baseUrl
+    },
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+91-8542153652",
+      "telephone": SEO_CONFIG.contactPhone,
       "contactType": "customer service",
+      "email": SEO_CONFIG.contactEmail,
       "availableLanguage": ["English", "Hindi", "Marathi"]
     }
   };
@@ -400,22 +409,22 @@ export const generateOrganizationJsonLd = () => {
 export const generateWebSiteJsonLd = () => {
   return {
     "@type": "WebSite",
-    "@id": "https://bookby247.com/#website",
-    "name": "Bookby247",
-    "alternateName": ["Book by 24/7", "Bookby 247"],
-    "url": "https://bookby247.com",
+    "@id": `${SEO_CONFIG.baseUrl}/#website`,
+    "name": SEO_CONFIG.brandName,
+    "alternateName": SEO_CONFIG.alternateBrandNames,
+    "url": SEO_CONFIG.baseUrl,
     "inLanguage": "en-IN",
     "publisher": {
       "@type": "Organization",
-      "@id": "https://bookby247.com/#organization",
-      "name": "Bookby247",
-      "url": "https://bookby247.com"
+      "@id": `${SEO_CONFIG.baseUrl}/#organization`,
+      "name": SEO_CONFIG.brandName,
+      "url": SEO_CONFIG.baseUrl
     },
     "potentialAction": {
       "@type": "SearchAction",
       "target": {
         "@type": "EntryPoint",
-        "urlTemplate": "https://bookby247.com/explore?q={search_term_string}"
+        "urlTemplate": `${SEO_CONFIG.baseUrl}/explore?q={search_term_string}`
       },
       "query-input": "required name=search_term_string"
     }
@@ -423,11 +432,11 @@ export const generateWebSiteJsonLd = () => {
 };
 
 export const generateSeoTagsItemListJsonLd = (tags: { slug: string; name: string; seo: { title: string; description: string } }[]) => {
-  const baseUrl = "https://bookby247.com";
+  const baseUrl = SEO_CONFIG.baseUrl;
   return {
     "@type": "ItemList",
     "name": "Popular Wellness Tags",
-    "description": "Explore popular wellness and beauty service tags on Bookby247",
+    "description": `Explore popular wellness and beauty service tags on ${SEO_CONFIG.brandName}`,
     "url": baseUrl,
     "itemListElement": tags.map((tag, index) => ({
       "@type": "ListItem",

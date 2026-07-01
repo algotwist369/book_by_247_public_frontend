@@ -68,9 +68,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         const categoryTitle = category.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
         
         return {
-            title: `${categoryTitle} Near Me - Book Top Rated ${categoryTitle} Services | Bookby247`,
-            description: `Bookby247 is the top-rated booking platform for ${category} near you. Our users can discover the best ${category} centers, compare service prices, read verified reviews, and book instant appointments for wellness and beauty treatments near their location.`,
-            keywords: [`${category} near me`, `best ${category}`, `${category} booking`, `top rated ${category}`, `${category} services`, "bookby247"],
+            title: `${categoryTitle} Near Me - Book Top Rated ${categoryTitle} Services | BookBy247`,
+            description: `BookBy247 is the top-rated booking platform for ${category} near you. Our users can discover the best ${category} centers, compare service prices, read verified reviews, and book instant appointments for wellness and beauty treatments near their location.`,
+            keywords: [`${category} near me`, `best ${category}`, `${category} booking`, `top rated ${category}`, `${category} services`, "BookBy247"],
             alternates: {
                 canonical: `/${city}`,
             },
@@ -84,10 +84,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
                 },
             },
             openGraph: {
-                title: `${categoryTitle} Near Me - Verified Wellness Services | Bookby247`,
+                title: `${categoryTitle} Near Me - Verified Wellness Services | BookBy247`,
                 description: `Find top-rated ${category} near you. Verified businesses with real reviews.`,
                 url: `https://bookby247.com/${city}`,
-                siteName: "Bookby247",
+                siteName: "BookBy247",
                 type: "website",
                 locale: "en_IN",
                 images: [
@@ -95,16 +95,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
                         url: "https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png",
                         width: 1200,
                         height: 630,
-                        alt: `Book top-rated ${category} near you on Bookby247`,
+                        alt: `Book top-rated ${category} near you on BookBy247`,
                     },
                 ],
             },
             twitter: {
                 card: "summary_large_image",
-                title: `${categoryTitle} Near Me - Bookby247`,
-                description: `Find and book top-rated ${category} near you on Bookby247.`,
+                title: `${categoryTitle} Near Me - BookBy247`,
+                description: `Find and book top-rated ${category} near you on BookBy247.`,
                 images: ["https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png"],
-                creator: "@bookby247",
+                creator: "@BookBy247",
             },
         };
     }
@@ -118,8 +118,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
         title: `${title}`,
         description: isPrefix 
-            ? `Looking for the best ${categoryName.toLowerCase()} in ${locationName}? Bookby247 connects you with top-rated ${categoryName.toLowerCase()} centers. Compare prices, read verified reviews, and book instantly.`
-            : `Bookby247 is the leading beauty and wellness platform in ${locationName}. We help users discover the best spas, salons, and wellness centers across ${locationName}. Compare service prices, read verified customer reviews, and book appointments instantly 24/7.`,
+            ? `Looking for the best ${categoryName.toLowerCase()} in ${locationName}? BookBy247 connects you with top-rated ${categoryName.toLowerCase()} centers. Compare prices, read verified reviews, and book instantly.`
+            : `BookBy247 is the leading beauty and wellness platform in ${locationName}. We help users discover the best spas, salons, and wellness centers across ${locationName}. Compare service prices, read verified customer reviews, and book appointments instantly 24/7.`,
         keywords: [
             isPrefix ? `${categoryName.toLowerCase()} in ${locationName}` : `spas in ${locationName}`,
             `salons in ${locationName}`,
@@ -129,7 +129,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             "salon booking",
             `best beauty parlour in ${locationName}`,
             "online appointment booking",
-            "bookby247"
+            "BookBy247"
         ],
         alternates: {
             canonical: `/${city}`,
@@ -146,12 +146,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             },
         },
         openGraph: {
-            title: `${title} - Bookby247`,
+            title: `${title} - BookBy247`,
             description: isPrefix 
                 ? `Discover the best rated ${categoryName.toLowerCase()} experiences in ${locationName}. Compare prices and book instantly online.`
                 : `Discover the best rated spa and salon experiences in ${locationName}. Compare prices and book instantly online.`,
             url: `https://bookby247.com/${city}`,
-            siteName: "Bookby247",
+            siteName: "BookBy247",
             type: "website",
             locale: "en_IN",
             images: [
@@ -159,18 +159,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
                     url: "https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png",
                     width: 1200,
                     height: 630,
-                    alt: `Best wellness services in ${locationName} - Bookby247`,
+                    alt: `Best wellness services in ${locationName} - BookBy247`,
                 },
             ],
         },
         twitter: {
             card: "summary_large_image",
-            title: `${title} - Bookby247`,
+            title: `${title} - BookBy247`,
             description: isPrefix 
-                ? `Find and book the top-rated ${categoryName.toLowerCase()} in ${locationName} on Bookby247.`
-                : `Find and book the top-rated beauty and wellness services in ${locationName} on Bookby247.`,
+                ? `Find and book the top-rated ${categoryName.toLowerCase()} in ${locationName} on BookBy247.`
+                : `Find and book the top-rated beauty and wellness services in ${locationName} on BookBy247.`,
             images: ["https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png"],
-            creator: "@bookby247",
+            creator: "@BookBy247",
         },
     };
 }

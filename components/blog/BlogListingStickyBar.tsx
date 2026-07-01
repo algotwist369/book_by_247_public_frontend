@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { BlogSearch } from "@/components/blog/BlogSearch"
+import { startRouteProgress } from "@/lib/navigation-events"
 
 const SORT_OPTIONS = ["-publishedAt", "-stats.views", "-stats.likes", "-readingTimeMinutes"] as const
 
@@ -37,7 +38,10 @@ export function BlogListingStickyBar({ searchValue = "" }: BlogListingStickyBarP
                             const next = new URLSearchParams(searchParams.toString())
                             next.set("sort", event.target.value)
                             const q = next.toString()
-                            router.push(q ? `${pathname}?${q}` : pathname)
+                            const href = q ? `${pathname}?${q}` : pathname
+                            startRouteProgress(href)
+                            router.prefetch(href)
+                            router.push(href)
                         }}
                         className="h-10 w-full rounded-md border border-gray-200 bg-white px-3 text-[14px] text-gray-900 outline-none focus:border-gray-400 sm:min-w-[11rem]"
                     >

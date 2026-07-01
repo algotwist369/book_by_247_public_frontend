@@ -240,7 +240,7 @@ export default function FreeListingPage() {
 
       <AiReadabilitySection 
         aboutTitle="Grow Your Business with Us"
-        aboutContent="Bookby247 provides a powerful platform for salon and spa owners to list their business, manage appointments, and reach a wider audience. Join India's fastest-growing wellness network and transform your digital presence today."
+        aboutContent="BookBy247 provides a powerful platform for salon and spa owners to list their business, manage appointments, and reach a wider audience. Join India's fastest-growing wellness network and transform your digital presence today."
       />
     </div>
   );

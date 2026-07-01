@@ -29,11 +29,11 @@ export const AppPromoSection: React.FC = () => {
 
               <div className="space-y-4">
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-zinc-900 leading-tight">
-                  Book Top-Rated Beauty Parlours on the Bookby247 App
+                  Book Top-Rated Beauty Parlours on the BookBy247 App
                 </h2>
 
                 <p className="text-zinc-600 text-base sm:text-lg max-w-xl mx-auto lg:mx-0">
-                  Book hair & beauty services faster, track salon appointments instantly, and unlock exclusive spa discounts and salon offers through the free Bookby247 web app.
+                  Book hair & beauty services faster, track salon appointments instantly, and unlock exclusive spa discounts and salon offers through the free BookBy247 web app.
                 </p>
               </div>
 
