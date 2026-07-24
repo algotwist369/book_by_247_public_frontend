@@ -44,7 +44,7 @@ try {
   const exists = fs.existsSync(targetFile);
   if (exists) {
     const content = fs.readFileSync(targetFile, "utf-8");
-    const handlesWww = content.includes('host.startsWith("www.")');
+    const handlesWww = content.includes('rawHost.startsWith("www.")') || content.includes('host.startsWith("www.")');
     const handlesLowercase = content.includes('[A-Z]');
     const status301 = content.includes('status: 301');
 

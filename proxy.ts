@@ -29,13 +29,20 @@ export function proxy(request: NextRequest) {
   }
 
   let shouldRedirect = false;
-  let targetHost = host;
   let targetPathname = pathname;
 
+  // Extract real host behind reverse proxy (Nginx / Cloudflare / Vercel)
+  const forwardedHost = request.headers.get("x-forwarded-host");
+  const headerHost = request.headers.get("host");
+  const rawHost = (forwardedHost || headerHost || host || "").split(":")[0];
+
+  let targetHost = "bookby247.com";
+
   // 2. Force non-www production domain
-  if (host.startsWith("www.")) {
-    targetHost = host.replace(/^www\./, "");
+  if (rawHost.startsWith("www.") || rawHost === "www.bookby247.com") {
     shouldRedirect = true;
+  } else if (rawHost.length > 0 && rawHost !== "localhost" && rawHost !== "127.0.0.1") {
+    targetHost = rawHost.replace(/^www\./, "");
   }
 
   // 3. Enforce lowercase path segments (preserve search parameters as-is)
@@ -51,10 +58,7 @@ export function proxy(request: NextRequest) {
   }
 
   if (shouldRedirect) {
-    const redirectUrl = new URL(
-      `${targetPathname}${search}`,
-      `https://${targetHost}`
-    );
+    const redirectUrl = `https://${targetHost}${targetPathname}${search}`;
 
     return NextResponse.redirect(redirectUrl, {
       status: 301,
