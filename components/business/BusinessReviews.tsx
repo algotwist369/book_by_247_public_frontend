@@ -11,13 +11,36 @@ interface BusinessReviewsProps {
     reviews?: Review[];
     rating: number;
     reviewCount: number;
+    breakdown?: {
+        five: number;
+        four: number;
+        three: number;
+        two: number;
+        one: number;
+    };
     slug: string;
     businessName: string;
     showViewAll?: boolean;
 }
 
-const BusinessReviews = ({ reviews = [], rating, reviewCount, slug, businessName, showViewAll = true }: BusinessReviewsProps) => {
+const BusinessReviews = ({ reviews = [], rating, reviewCount, breakdown, slug, businessName, showViewAll = true }: BusinessReviewsProps) => {
     const [isWriteModalOpen, setIsWriteModalOpen] = React.useState(false);
+
+    const getStarPercentage = (star: number) => {
+        if (!reviewCount || reviewCount === 0) return '0%';
+        let count = 0;
+        if (breakdown) {
+            if (star === 5) count = breakdown.five || 0;
+            else if (star === 4) count = breakdown.four || 0;
+            else if (star === 3) count = breakdown.three || 0;
+            else if (star === 2) count = breakdown.two || 0;
+            else if (star === 1) count = breakdown.one || 0;
+        } else {
+            count = reviews.filter(r => Math.round(r.rating) === star).length;
+        }
+        return `${Math.round((count / reviewCount) * 100)}%`;
+    };
+
     return (
         <section className="space-y-6 sm:space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -42,7 +65,7 @@ const BusinessReviews = ({ reviews = [], rating, reviewCount, slug, businessName
                             />
                         ))}
                     </div>
-                    <div className="text-xs sm:text-sm text-zinc-500 font-bold">{reviewCount} Reviews</div>
+                    <div className="text-xs sm:text-sm text-zinc-500 font-bold">{reviewCount} {reviewCount === 1 ? 'Review' : 'Reviews'}</div>
                 </div>
 
                 <div className="hidden sm:block h-16 w-px bg-zinc-200" />
@@ -53,8 +76,8 @@ const BusinessReviews = ({ reviews = [], rating, reviewCount, slug, businessName
                             <span className="text-[10px] font-bold text-zinc-400 w-3">{star}</span>
                             <div className="flex-1 h-1.5 sm:h-2 bg-zinc-200 rounded-full overflow-hidden">
                                 <div
-                                    className="h-full bg-zinc-900 rounded-full"
-                                    style={{ width: star === 5 ? '70%' : star === 4 ? '20%' : '5%' }}
+                                    className="h-full bg-zinc-900 rounded-full transition-all duration-500"
+                                    style={{ width: getStarPercentage(star) }}
                                 />
                             </div>
                         </div>
@@ -120,6 +143,7 @@ const BusinessReviews = ({ reviews = [], rating, reviewCount, slug, businessName
                 isOpen={isWriteModalOpen}
                 onClose={() => setIsWriteModalOpen(false)}
                 businessName={businessName}
+                slug={slug}
             />
         </section>
     );

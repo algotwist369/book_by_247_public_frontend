@@ -619,25 +619,23 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialData }: Cl
                         </div>
 
                         {/* Reviews Section */}
-                        {((reviewsData?.reviews?.length ?? 0) > 0 || (businessRatings.total_reviews ?? 0) > 0) && (
-                            <div id="reviews">
-                                <BusinessReviews
-                                    reviews={reviewsData?.reviews?.map((r: any) => ({
-                                        id: r.createdAt, // Using createdAt as id if _id is missing
-                                        author: r.customerName,
-                                        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(r.customerName)}&background=random`,
-                                        rating: r.rating,
-                                        content: r.comment,
-                                        date: new Date(r.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
-                                        helpfulPercentage: 0
-                                    })) || []}
-                                    rating={businessRatings.average || 0}
-                                    reviewCount={businessRatings.total_reviews || 0}
-                                    slug={slug}
-                                    businessName={businessName || 'businessname'}
-                                />
-                            </div>
-                        )}
+                        <div id="reviews">
+                            <BusinessReviews
+                                reviews={reviewsData?.reviews?.map((r: any) => ({
+                                    id: r._id || r.createdAt,
+                                    author: r.customerName || 'Customer',
+                                    avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(r.customerName || 'Customer')}&background=random`,
+                                    rating: r.rating,
+                                    content: r.comment,
+                                    date: new Date(r.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
+                                    helpfulPercentage: 0
+                                })) || []}
+                                rating={businessRatings.average || 0}
+                                reviewCount={businessRatings.total_reviews || 0}
+                                slug={slug}
+                                businessName={businessName || 'businessname'}
+                            />
+                        </div>
                     </div>
 
                 </div>

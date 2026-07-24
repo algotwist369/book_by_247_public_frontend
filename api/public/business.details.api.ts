@@ -260,4 +260,10 @@ export const businessDetailsApi = {
     
     getReviews: (slug: string, page = 1, limit = 10) => 
         apiClient<ApiResponse<BusinessReviewsResponse>>(`/v1/business/${slug}/reviews?page=${page}&limit=${limit}`),
+        
+    submitReview: (slug: string, data: { customerName: string; rating: number; comment: string; email?: string; phone?: string }) =>
+        apiClient<any>(`/v1/business/${slug}/reviews`, {
+            method: 'POST',
+            body: JSON.stringify(data),
+        }),
 };

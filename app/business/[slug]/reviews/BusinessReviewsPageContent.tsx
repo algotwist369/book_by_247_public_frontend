@@ -47,9 +47,9 @@ const BusinessReviewsPageContent = ({ slug, initialData }: ReviewsPageProps) => 
     React.useEffect(() => {
         if (reviewsData?.reviews) {
             const normalizedReviews = reviewsData.reviews.map((r: any) => ({
-                id: r.createdAt, // Using createdAt as id if _id is missing
-                author: r.customerName,
-                avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(r.customerName)}&background=random`,
+                id: r._id || r.createdAt,
+                author: r.customerName || 'Customer',
+                avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(r.customerName || 'Customer')}&background=random`,
                 rating: r.rating,
                 content: r.comment,
                 date: new Date(r.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
@@ -207,7 +207,7 @@ const BusinessReviewsPageContent = ({ slug, initialData }: ReviewsPageProps) => 
                                     ))}
                                 </div>
                                 <span className="w-px h-4 bg-zinc-200 mx-2" />
-                                <span className="text-sm font-bold text-zinc-500">{businessRatings.total_reviews} Total Reviews</span>
+                                <span className="text-sm font-bold text-zinc-500">{businessRatings.total_reviews} {businessRatings.total_reviews === 1 ? 'Total Review' : 'Total Reviews'}</span>
                             </div>
                         </div>
 
@@ -217,6 +217,7 @@ const BusinessReviewsPageContent = ({ slug, initialData }: ReviewsPageProps) => 
                                 reviews={allReviews}
                                 rating={businessRatings.average}
                                 reviewCount={businessRatings.total_reviews}
+                                breakdown={businessRatings.breakdown}
                                 slug={slug}
                                 businessName={businessName}
                                 showViewAll={false}
