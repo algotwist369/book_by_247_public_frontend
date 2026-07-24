@@ -64,7 +64,12 @@ const ExploreBusinessList = ({
                 </div>
             )}
 
-            {/* End of results */}
+            {/* End of results or Crawlable Pagination Fallback */}
+            {hasNextPage && (
+                <div className="flex justify-center py-2">
+                    <a href="?page=2" className="sr-only">Next page of listings</a>
+                </div>
+            )}
             {!hasNextPage && businesses.length > 0 && (
                 <p className="text-center text-sm text-zinc-400 py-6">
                     You&apos;ve seen all {businesses.length} results

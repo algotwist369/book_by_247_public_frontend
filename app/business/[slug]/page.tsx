@@ -56,12 +56,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const title =
         seo.metaTitle || `${seoData.name} - ${prefix} ${type} in ${area ? `${area}, ` : ''}${city} - BookBy247`;
     
-    const avgRating = seoData.ratings?.average || 5;
-    const totalReviews = seoData.ratings?.totalReviews || 10;
-    
+    const realTotalReviews = seoData.ratings?.totalReviews || 0;
+    const realAvgRating = seoData.ratings?.average || 0;
+    const ratingSnippet = realTotalReviews > 0 ? `Rated ${realAvgRating}/5 from ${realTotalReviews} verified reviews. ` : '';
+
     const description =
         seo.metaDescription ||
-        `Book appointments at ${seoData.name} in ${area ? `${area}, ` : ''}${city}. Rated ${avgRating}/5 from ${totalReviews}+ verified reviews. Instant online booking, latest prices, and ${type} services. ${flags.isPopular ? 'Highly popular among locals.' : ''}`;
+        `Book appointments at ${seoData.name} in ${area ? `${area}, ` : ''}${city}. ${ratingSnippet}Instant online booking, latest prices, and ${type} services. ${flags.isPopular ? 'Popular wellness destination.' : ''}`;
     
     const canonicalPath = `/business/${seoData.slug || slug}`;
     const ogImage = seo.ogImage || (Array.isArray(mediaData?.images) ? mediaData.images[0] : "");

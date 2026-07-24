@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "clean": "node -e \"const fs=require('fs');const p='.next';if(fs.existsSync(p))fs.rmSync(p,{recursive:true,force:true,maxRetries:15,retryDelay:200})\"",
-    "dev": "next dev",
+    "dev": "npm run clean && next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seo:audit": "node scripts/seo-audit.mjs"
   },
   "dependencies": {
     "@react-google-maps/api": "^2.20.8",

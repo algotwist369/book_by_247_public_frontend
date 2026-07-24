@@ -20,6 +20,9 @@ const DISALLOWED_NON_PUBLIC_PATHS = [
   "/auth/",
   "/login",
   "/register",
+  "/checkout",
+  "/payment",
+  "/booking-status",
 ];
 
 export default function robots(): MetadataRoute.Robots {

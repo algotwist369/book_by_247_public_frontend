@@ -172,6 +172,10 @@ export const generateLocalBusinessJsonLd = (business: BusinessJsonLdInput) => {
   const priceCategory = business.searchProfile?.priceCategory || business.search_profile?.priceCategory;
   const hasMap = business.googleMapsUrl || business.hasMap;
 
+  const reviewCount = Number(business.ratings?.totalReviews || business.ratings?.total_reviews || business.total_reviews || business.business_reviws_len || 0);
+  const avgRating = Number(business.ratings?.average || business.avg_rating || business.business_avg_tating || 0);
+  const hasGenuineRating = reviewCount > 0 && avgRating > 0;
+
   return {
     "@type": ["LocalBusiness", "HealthAndBeautyBusiness"],
     "@id": `${baseUrl}/business/${slug}#business`,
@@ -194,11 +198,11 @@ export const generateLocalBusinessJsonLd = (business: BusinessJsonLdInput) => {
       "postalCode": business.zip_code || business.pincode || "",
       "addressCountry": "IN",
     },
-    "aggregateRating": (business.ratings?.average || business.avg_rating || business.business_avg_tating)
+    "aggregateRating": hasGenuineRating
       ? {
         "@type": "AggregateRating",
-        "ratingValue": business.ratings?.average || business.avg_rating || business.business_avg_tating,
-        "reviewCount": business.ratings?.totalReviews || business.total_reviews || business.business_reviws_len,
+        "ratingValue": avgRating,
+        "reviewCount": reviewCount,
         "bestRating": "5",
         "worstRating": "1"
       }

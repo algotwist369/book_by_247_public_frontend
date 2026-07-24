@@ -236,6 +236,7 @@ export default async function DetailSeoPage({ params }: Props) {
                         initialCity={cityName}
                         initialArea={info.areaName}
                         initialCategory={info.categoryName}
+                        initialBusinesses={items}
                         isTop10={info.isTop10}
                         viewType={info.isService ? 'service' : 'business'}
                         title={displayTitle}

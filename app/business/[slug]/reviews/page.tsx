@@ -1,12 +1,5 @@
 import React from 'react';
 import BusinessReviewsPageContent from './BusinessReviewsPageContent';
-
-interface PageProps {
-    params: Promise<{
-        slug: string;
-    }>
-}
-
 import { businessDetailsApi } from '@/api/public/business.details.api';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -16,17 +9,27 @@ import AiReadabilitySection from '@/components/seo/AiReadabilitySection';
 
 export const revalidate = 3600;
 
+interface PageProps {
+    params: Promise<{
+        slug: string;
+    }>
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { slug } = await params;
     
-    // Fetch SEO and Media data for metadata
-    const [seoRes, mediaRes] = await Promise.all([
+    // Fetch SEO, Media, and Reviews data for metadata
+    const [seoRes, mediaRes, reviewsRes] = await Promise.all([
         businessDetailsApi.getSeo(slug).catch(() => null),
-        businessDetailsApi.getMedia(slug).catch(() => null)
+        businessDetailsApi.getMedia(slug).catch(() => null),
+        businessDetailsApi.getReviews(slug, 1, 10).catch(() => null)
     ]);
 
     const seoData = seoRes?.data;
     const mediaData = mediaRes?.data;
+    const ratingsObj = reviewsRes?.data?.ratings;
+    const totalReviews = ratingsObj?.total_reviews || (ratingsObj as any)?.totalReviews || reviewsRes?.data?.reviews?.length || 0;
+    const hasGenuineReviews = totalReviews > 0;
 
     if (!seoData) {
         return {
@@ -44,9 +47,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const description = 
         `Read verified customer reviews and ratings for ${seoData.name} in ${city}. Find out what people are saying about their ${type} services and book online.`;
 
-    const canonicalPath = `/business/${seoData.slug || slug}/reviews`;
-    const ogImage =
-        mediaData?.images?.[0] || "";
+    const canonicalPath = hasGenuineReviews 
+        ? `/business/${seoData.slug || slug}/reviews`
+        : `/business/${seoData.slug || slug}`;
+        
+    const ogImage = mediaData?.images?.[0] || "";
 
     const metadata: Metadata = {
         title,
@@ -55,6 +60,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         authors: [{ name: "BookBy247 Team" }],
         alternates: {
             canonical: canonicalPath,
+        },
+        robots: hasGenuineReviews ? {
+            index: true,
+            follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+                'max-image-preview': 'large',
+            },
+        } : {
+            index: false,
+            follow: true,
+            googleBot: {
+                index: false,
+                follow: true,
+            },
         },
         openGraph: {
             title,
@@ -151,4 +172,3 @@ const BusinessReviewsPage = async ({ params }: PageProps) => {
 };
 
 export default BusinessReviewsPage;
-

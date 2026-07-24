@@ -38,11 +38,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         title,
         description,
         alternates: {
-            canonical: `/business/${slug}/${currentSubpath}`,
+            canonical: `/business/${slug}`,
         },
         robots: {
-            index: true,
+            index: false,
             follow: true,
+            googleBot: {
+                index: false,
+                follow: true,
+            },
         }
     };
 }

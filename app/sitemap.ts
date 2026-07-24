@@ -47,6 +47,13 @@ const getBusinessImages = (business: SitemapBusiness) =>
     ...(Array.isArray(business.images) ? business.images : []),
   ].filter(isString)).slice(0, 5);
 
+const fetchWithTimeout = <T,>(promise: Promise<T>, timeoutMs = 4000): Promise<T | null> => {
+  return Promise.race([
+    promise,
+    new Promise<null>((resolve) => setTimeout(() => resolve(null), timeoutMs)),
+  ]);
+};
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: SitemapEntry[] = [
     ...publicRoutes.map((route) =>
@@ -62,7 +69,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let blogRoutes: SitemapEntry[] = [];
 
   try {
-    const sitemapDataResponse = await businessApi.getSeoSitemapData();
+    const sitemapDataResponse = await fetchWithTimeout(businessApi.getSeoSitemapData(), 4000);
 
     if (sitemapDataResponse?.success && sitemapDataResponse.data) {
       const { cities, types, businessSlugs, cityAreaCombinations, cityServiceCombinations } = sitemapDataResponse.data;
@@ -92,29 +99,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ),
       ];
 
-      const seoSubPaths = ["reviews", "services", "contacts", "book-appointment"];
       const businesses = (businessSlugs as Array<string | SitemapBusiness>).map(normalizeBusiness);
 
-      businessDetailRoutes = businesses.flatMap((business) => {
+      businessDetailRoutes = businesses.map((business) => {
         const lastModified = toDate(business.updatedAt);
         const images = getBusinessImages(business);
-        const profileRoute = createRoute(`/business/${business.slug}`, {
+        return createRoute(`/business/${business.slug}`, {
           lastModified,
           changeFrequency: "daily",
           priority: 0.9,
           ...(images.length > 0 ? { images } : {}),
         });
-
-        return [
-          profileRoute,
-          ...seoSubPaths.map((subPath) =>
-            createRoute(`/business/${business.slug}/${subPath}`, {
-              lastModified,
-              changeFrequency: "weekly",
-              priority: subPath === "book-appointment" ? 0.7 : 0.6,
-            })
-          ),
-        ];
       });
     }
   } catch (err) {
@@ -122,34 +117,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   try {
-    const [blogListing, categoriesResponse, tagsResponse] = await Promise.all([
-      blogApi.listBlogs({ limit: 100, sort: "-publishedAt" }),
-      blogApi.getCategories(),
-      blogApi.getTags(),
-    ]);
+    const blogData = await fetchWithTimeout(
+      Promise.all([
+        blogApi.listBlogs({ limit: 100, sort: "-publishedAt" }),
+        blogApi.getCategories(),
+      ]),
+      4000
+    );
 
-    blogRoutes = [
-      ...blogListing.data.map((blog) =>
-        createRoute(`/blog/${blog.slug}`, {
-          lastModified: toDate(blog.updatedAt),
-          changeFrequency: "weekly",
-          priority: 0.8,
-          ...(blog.featuredImage?.url ? { images: [blog.featuredImage.url] } : {}),
-        })
-      ),
-      ...categoriesResponse.data.map((category) =>
-        createRoute(`/blog/category/${category.slug}`, {
-          changeFrequency: "weekly",
-          priority: 0.7,
-        })
-      ),
-      ...tagsResponse.data.map((tag) =>
-        createRoute(`/blog/tag/${tag.slug}`, {
-          changeFrequency: "weekly",
-          priority: 0.7,
-        })
-      ),
-    ];
+    if (blogData) {
+      const [blogListing, categoriesResponse] = blogData;
+      blogRoutes = [
+        ...(blogListing?.data || []).map((blog) =>
+          createRoute(`/blog/${blog.slug}`, {
+            lastModified: toDate(blog.updatedAt),
+            changeFrequency: "weekly",
+            priority: 0.8,
+            ...(blog.featuredImage?.url ? { images: [blog.featuredImage.url] } : {}),
+          })
+        ),
+        ...(categoriesResponse?.data || []).map((category) =>
+          createRoute(`/blog/category/${category.slug}`, {
+            changeFrequency: "weekly",
+            priority: 0.7,
+          })
+        ),
+      ];
+    }
   } catch (error) {
     console.error("Error fetching blog sitemap data:", error);
   }

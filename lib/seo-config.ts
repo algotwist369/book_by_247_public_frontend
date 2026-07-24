@@ -158,8 +158,9 @@ export const publicRoutes = [
   { path: "/cookies-settings", priority: 0.2, changeFrequency: "yearly" as const },
 ];
 
-export const toAbsoluteUrl = (path = "/") =>
-  `${SEO_CONFIG.baseUrl}${path.startsWith("/") ? path : `/${path}`}`;
+import { createCanonicalUrl } from "./seo-url";
+
+export const toAbsoluteUrl = (path = "/") => createCanonicalUrl(path);
 
 export const defaultOpenGraph: Metadata["openGraph"] = {
   title: SEO_CONFIG.defaultTitle,

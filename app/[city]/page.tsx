@@ -253,6 +253,7 @@ export default async function CityPage({ params }: Props) {
                     <SeoListingView 
                         initialCity={isNearMe ? "" : cityName} 
                         initialNearMe={isNearMe ? city : undefined}
+                        initialBusinesses={businesses}
                         title={displayTitle}
                         subtitle={displaySubtitle}
                     />

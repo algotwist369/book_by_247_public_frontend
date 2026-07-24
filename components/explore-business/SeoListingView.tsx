@@ -21,6 +21,7 @@ interface SeoListingViewProps {
     initialArea?: string;
     initialCategory?: string;
     initialNearMe?: string;
+    initialBusinesses?: any[];
     isTop10?: boolean;
     viewType?: 'business' | 'service';
     title?: string;
@@ -32,6 +33,7 @@ const SeoListingView = ({
     initialArea,
     initialCategory,
     initialNearMe,
+    initialBusinesses = [],
     isTop10 = false,
     viewType = 'business',
     title,
@@ -129,9 +131,10 @@ const SeoListingView = ({
     const isFetchingNextPage = isServiceView ? isFetchingNextServicePage : isFetchingNextBusinessPage;
     const fetchNextPage = isServiceView ? fetchNextServicePage : fetchNextBusinessPage;
 
-    const businesses = !isServiceView ? infiniteData?.pages.flatMap(p => p.results) ?? [] : [];
+    const fetchedBusinesses = !isServiceView ? infiniteData?.pages.flatMap(p => p.results) ?? [] : [];
+    const businesses = fetchedBusinesses.length > 0 ? fetchedBusinesses : (initialBusinesses.length > 0 ? initialBusinesses : []);
     const services = isServiceView ? infiniteData?.pages.flatMap(p => p.results) ?? [] : [];
-    const totalResults = infiniteData?.pages[0]?.totalResults;
+    const totalResults = infiniteData?.pages[0]?.totalResults ?? (businesses.length || 0);
 
     // Sync URL
     useEffect(() => {
@@ -380,7 +383,7 @@ const SeoListingView = ({
                         )}
 
                         {/* Results List */}
-                        {infiniteData ? (
+                        {(infiniteData || businesses.length > 0) ? (
                             <>
                                 {!isServiceView ? (
                                     <ExploreBusinessList

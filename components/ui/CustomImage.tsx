@@ -24,11 +24,23 @@ const UNOPTIMIZED_HOSTS = [
 ];
 
 const normalizeSrc = (src: string | undefined, fallback: string): string => {
-    if (!src || src.includes("example.com")) return fallback;
-    if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("/")) {
-        return src;
+    if (!src || typeof src !== "string" || src.includes("example.com")) return fallback;
+    const trimmed = src.trim();
+    if (!trimmed || trimmed.length <= 3) return fallback;
+    if (
+        trimmed.startsWith("http://") ||
+        trimmed.startsWith("https://") ||
+        trimmed.startsWith("/") ||
+        trimmed.startsWith("data:") ||
+        trimmed.startsWith("blob:")
+    ) {
+        return trimmed;
     }
-    return `/${src}`;
+    // Prepend slash only for relative paths containing image extensions or slashes
+    if (/\.(jpg|jpeg|png|webp|avif|svg|gif|ico)(\?.*)?$/i.test(trimmed) || trimmed.includes("/")) {
+        return `/${trimmed}`;
+    }
+    return fallback;
 };
 
 const isHotlinkProtected = (src: string): boolean => {
