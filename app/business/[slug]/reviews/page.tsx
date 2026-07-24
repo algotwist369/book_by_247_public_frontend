@@ -41,11 +41,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const city = seoData.location_info?.city || '';
     const type = seoData.search_profile?.spaTypes?.[0] || 'Wellness Center';
 
-    // Pro SEO Title for Reviews
-    const title = `Verified Reviews: ${seoData.name} - Ratings in ${city} - BookBy247`;
+    const title = hasGenuineReviews 
+        ? `Verified Reviews: ${seoData.name} - Ratings in ${city} - BookBy247`
+        : `Customer Reviews: ${seoData.name} - BookBy247`;
     
-    const description = 
-        `Read verified customer reviews and ratings for ${seoData.name} in ${city}. Find out what people are saying about their ${type} services and book online.`;
+    const description = hasGenuineReviews
+        ? `Read customer reviews and ratings for ${seoData.name} in ${city}. Find out what people are saying about their ${type} services.`
+        : `Customer reviews page for ${seoData.name} in ${city}. Leave a review or book your appointment online with BookBy247.`;
 
     const canonicalPath = hasGenuineReviews 
         ? `/business/${seoData.slug || slug}/reviews`

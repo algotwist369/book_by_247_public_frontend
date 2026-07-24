@@ -122,7 +122,7 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialData }: Cl
         return (
             <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-6 px-4">
                 <div className="text-center space-y-2">
-                    <h1 className="text-3xl font-black text-zinc-900">Business Not Found</h1>
+                    <h2 className="text-3xl font-black text-zinc-900">Business Not Found</h2>
                     <p className="text-zinc-500 max-w-md mx-auto">
                         We couldn't find the business you're looking for. It might have been moved or deleted.
                     </p>
@@ -483,9 +483,9 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialData }: Cl
                             {/* Title & Badges */}
                             <div className="flex flex-wrap items-center gap-2 sm:flex-col sm:items-start sm:gap-3 ">
                                 <div className="space-y-1">
-                                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-zinc-900 tracking-tight leading-tight">
+                                    <div className="text-2xl sm:text-3xl md:text-4xl font-black text-zinc-900 tracking-tight leading-tight">
                                         {businessName}
-                                    </h1>
+                                    </div>
 
                                 </div>
                                 <div className="flex flex-wrap items-center gap-2">

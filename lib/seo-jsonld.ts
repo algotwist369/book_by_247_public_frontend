@@ -74,7 +74,7 @@ type BusinessJsonLdInput = {
   business_avg_tating?: SeoValue;
   total_reviews?: SeoValue;
   business_reviws_len?: SeoValue;
-  location?: {
+  location?: string | {
     coordinates?: SeoValue[];
   };
   locationInfo?: {
@@ -207,13 +207,19 @@ export const generateLocalBusinessJsonLd = (business: BusinessJsonLdInput) => {
         "worstRating": "1"
       }
       : undefined,
-    "geo": (business.location?.coordinates || business.locationInfo?.coordinates)
-      ? {
+    "geo": (() => {
+      const locObj = typeof business.location === "object" ? business.location : undefined;
+      const coords = locObj?.coordinates || business.locationInfo?.coordinates;
+      if (!coords) return undefined;
+      const lat = Array.isArray(coords) ? coords[1] : (coords as any)?.lat;
+      const lng = Array.isArray(coords) ? coords[0] : (coords as any)?.lng;
+      if (!lat || !lng) return undefined;
+      return {
         "@type": "GeoCoordinates",
-        "latitude": business.location?.coordinates?.[1] || business.locationInfo?.coordinates?.lat,
-        "longitude": business.location?.coordinates?.[0] || business.locationInfo?.coordinates?.lng,
-      }
-      : undefined,
+        "latitude": lat,
+        "longitude": lng,
+      };
+    })(),
     "openingHoursSpecification": openingHoursSpecification,
     "priceRange": priceCategory === "luxury" ? "$$$" : priceCategory === "mid" ? "$$" : "$",
     "hasMap": hasMap,

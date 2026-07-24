@@ -132,9 +132,11 @@ const SeoListingView = ({
     const fetchNextPage = isServiceView ? fetchNextServicePage : fetchNextBusinessPage;
 
     const fetchedBusinesses = !isServiceView ? infiniteData?.pages.flatMap(p => p.results) ?? [] : [];
-    const businesses = fetchedBusinesses.length > 0 ? fetchedBusinesses : (initialBusinesses.length > 0 ? initialBusinesses : []);
-    const services = isServiceView ? infiniteData?.pages.flatMap(p => p.results) ?? [] : [];
-    const totalResults = infiniteData?.pages[0]?.totalResults ?? (businesses.length || 0);
+    const fetchedServices = isServiceView ? infiniteData?.pages.flatMap(p => p.results) ?? [] : [];
+
+    const businesses = fetchedBusinesses.length > 0 ? fetchedBusinesses : (!isServiceView && initialBusinesses.length > 0 ? initialBusinesses : []);
+    const services = fetchedServices.length > 0 ? fetchedServices : (isServiceView && initialBusinesses.length > 0 ? initialBusinesses : []);
+    const totalResults = infiniteData?.pages[0]?.totalResults ?? (isServiceView ? services.length : businesses.length);
 
     // Sync URL
     useEffect(() => {
@@ -383,7 +385,7 @@ const SeoListingView = ({
                         )}
 
                         {/* Results List */}
-                        {(infiniteData || businesses.length > 0) ? (
+                        {(infiniteData || businesses.length > 0 || services.length > 0) ? (
                             <>
                                 {!isServiceView ? (
                                     <ExploreBusinessList

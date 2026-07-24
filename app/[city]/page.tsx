@@ -5,8 +5,9 @@ import { businessApi } from '@/api/public/business';
 import { safeJsonLdStringify } from '@/lib/utils';
 import { generateItemListJsonLd, generateBreadcrumbJsonLd, generateOrganizationJsonLd, generateWebSiteJsonLd } from '@/lib/seo-jsonld';
 import AiReadabilitySection from '@/components/seo/AiReadabilitySection';
-
 import { notFound } from 'next/navigation';
+import { normalizeBusiness } from '@/lib/business-normalizer';
+import { buildCleanHeading, buildCleanMetadataTitle, cleanLocationName } from '@/lib/seo-title-helper';
 
 export const revalidate = 3600;
 
@@ -18,9 +19,7 @@ interface Props {
  * Validates if the city segment looks like a valid SEO route
  */
 const isValidCityRoute = (city: string) => {
-    // Ignore internal Next.js/System files
     if (city.startsWith('.') || city.startsWith('_') || city === 'api') return false;
-    // Ignore files with extensions (e.g., .json, .js, .ico)
     if (city.includes('.')) return false;
     return true;
 };
@@ -28,30 +27,19 @@ const isValidCityRoute = (city: string) => {
 const parseCitySlug = (city: string) => {
     let category = "";
     let location = city;
-    let isPrefix = false;
 
     if (city.includes("-in-")) {
         const parts = city.split("-in-");
         let categoryPart = parts[0];
-        
-        // Handle prefixes like 'best-' or 'top-' if they exist
-        if (categoryPart.startsWith("best-")) {
-            categoryPart = categoryPart.replace("best-", "");
-        } else if (categoryPart.startsWith("top-")) {
-            categoryPart = categoryPart.replace("top-", "");
-        }
-        
+        if (categoryPart.startsWith("best-")) categoryPart = categoryPart.replace("best-", "");
+        if (categoryPart.startsWith("top-")) categoryPart = categoryPart.replace("top-", "");
         category = categoryPart.replace(/-/g, " ");
         location = parts[1];
-        isPrefix = true;
     }
 
-    const capitalize = (s: string) => s.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-    
     return {
-        categoryName: category ? capitalize(category.replace(/ /g, "-")) : "",
-        locationName: capitalize(location),
-        isPrefix
+        categoryName: category,
+        locationName: cleanLocationName(location),
     };
 };
 
@@ -65,12 +53,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     // Handle "Near Me" routes
     if (city.endsWith('-near-me')) {
         const category = city.replace('-near-me', '').replace(/-/g, ' ');
-        const categoryTitle = category.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+        const categoryTitle = cleanLocationName(category);
         
         return {
-            title: `${categoryTitle} Near Me - Book Top Rated ${categoryTitle} Services | BookBy247`,
-            description: `BookBy247 is the top-rated booking platform for ${category} near you. Our users can discover the best ${category} centers, compare service prices, read verified reviews, and book instant appointments for wellness and beauty treatments near their location.`,
-            keywords: [`${category} near me`, `best ${category}`, `${category} booking`, `top rated ${category}`, `${category} services`, "BookBy247"],
+            title: `${categoryTitle} Near Me – Compare & Book Online | BookBy247`,
+            description: `Discover ${category} centers near you on BookBy247. Compare service options, view locations, and book appointments online.`,
+            keywords: [`${category} near me`, `${category} booking`, `${category} services`, "BookBy247"],
             alternates: {
                 canonical: `/${city}`,
             },
@@ -84,50 +72,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
                 },
             },
             openGraph: {
-                title: `${categoryTitle} Near Me - Verified Wellness Services | BookBy247`,
-                description: `Find top-rated ${category} near you. Verified businesses with real reviews.`,
+                title: `${categoryTitle} Near Me | BookBy247`,
+                description: `Find ${category} centers near you with verified location information.`,
                 url: `https://bookby247.com/${city}`,
                 siteName: "BookBy247",
                 type: "website",
                 locale: "en_IN",
-                images: [
-                    {
-                        url: "https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png",
-                        width: 1200,
-                        height: 630,
-                        alt: `Book top-rated ${category} near you on BookBy247`,
-                    },
-                ],
-            },
-            twitter: {
-                card: "summary_large_image",
-                title: `${categoryTitle} Near Me - BookBy247`,
-                description: `Find and book top-rated ${category} near you on BookBy247.`,
-                images: ["https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png"],
-                creator: "@BookBy247",
             },
         };
     }
 
-    const { categoryName, locationName, isPrefix } = parseCitySlug(city);
-
-    const title = isPrefix 
-        ? `Best ${categoryName} in ${locationName} | Online Booking`
-        : `Best Spas, Salons & Wellness Centers in ${locationName} - Book Online`;
+    const { categoryName, locationName } = parseCitySlug(city);
+    const title = buildCleanMetadataTitle({ category: categoryName, city: locationName });
 
     return {
-        title: `${title}`,
-        description: isPrefix 
-            ? `Looking for the best ${categoryName.toLowerCase()} in ${locationName}? BookBy247 connects you with top-rated ${categoryName.toLowerCase()} centers. Compare prices, read verified reviews, and book instantly.`
-            : `BookBy247 is the leading beauty and wellness platform in ${locationName}. We help users discover the best spas, salons, and wellness centers across ${locationName}. Compare service prices, read verified customer reviews, and book appointments instantly 24/7.`,
+        title,
+        description: categoryName
+            ? `Explore ${categoryName.toLowerCase()} options in ${locationName}. View locations, prices, and book appointments on BookBy247.`
+            : `Discover beauty and wellness centers in ${locationName}. Compare service details and book appointments online with BookBy247.`,
         keywords: [
-            isPrefix ? `${categoryName.toLowerCase()} in ${locationName}` : `spas in ${locationName}`,
+            categoryName ? `${categoryName.toLowerCase()} in ${locationName}` : `spas in ${locationName}`,
             `salons in ${locationName}`,
-            `massage in ${locationName}`,
-            `wellness centers ${locationName}`,
-            "spa booking",
-            "salon booking",
-            `best beauty parlour in ${locationName}`,
+            `wellness centers in ${locationName}`,
             "online appointment booking",
             "BookBy247"
         ],
@@ -146,31 +112,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             },
         },
         openGraph: {
-            title: `${title} - BookBy247`,
-            description: isPrefix 
-                ? `Discover the best rated ${categoryName.toLowerCase()} experiences in ${locationName}. Compare prices and book instantly online.`
-                : `Discover the best rated spa and salon experiences in ${locationName}. Compare prices and book instantly online.`,
+            title,
+            description: `Explore wellness services in ${locationName} on BookBy247.`,
             url: `https://bookby247.com/${city}`,
             siteName: "BookBy247",
             type: "website",
             locale: "en_IN",
-            images: [
-                {
-                    url: "https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png",
-                    width: 1200,
-                    height: 630,
-                    alt: `Best wellness services in ${locationName} - BookBy247`,
-                },
-            ],
-        },
-        twitter: {
-            card: "summary_large_image",
-            title: `${title} - BookBy247`,
-            description: isPrefix 
-                ? `Find and book the top-rated ${categoryName.toLowerCase()} in ${locationName} on BookBy247.`
-                : `Find and book the top-rated beauty and wellness services in ${locationName} on BookBy247.`,
-            images: ["https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png"],
-            creator: "@BookBy247",
         },
     };
 }
@@ -183,59 +130,49 @@ export default async function CityPage({ params }: Props) {
     }
 
     const isNearMe = city.endsWith('-near-me');
-    const { categoryName, locationName, isPrefix } = parseCitySlug(city);
+    const { categoryName, locationName } = parseCitySlug(city);
 
-    let title = "";
-    let businesses = [];
+    let rawBusinesses = [];
     let cityName = locationName;
-    let seoMetadata = null;
 
     if (isNearMe) {
         const response = await businessApi.getNearMeBusinesses(city).catch(() => null);
-        businesses = (response as any)?.data || [];
-        seoMetadata = (response as any)?.seo_metadata;
-        const category = city.replace('-near-me', '').replace(/-/g, ' ');
-        title = `${category.charAt(0).toUpperCase() + category.slice(1)} Near Me`;
+        rawBusinesses = (response as any)?.data || [];
         cityName = (response as any)?.detected_city || "Near You";
-    } else if (isPrefix) {
+    } else if (categoryName) {
         cityName = locationName;
         const response = await businessApi.getSeoBusinesses({ 
             city: locationName.toLowerCase().replace(/ /g, "-"), 
             type: categoryName.toLowerCase().replace(/ /g, "-"),
             limit: 20 
         }).catch(() => null);
-        businesses = (response as any)?.data || (response as any)?.results || (response as any)?.businesses || [];
-        title = `Best ${categoryName}`;
+        rawBusinesses = (response as any)?.data || (response as any)?.results || (response as any)?.businesses || [];
     } else {
         cityName = locationName;
         const response = await businessApi.getSeoBusinesses({ city: city, limit: 20 }).catch(() => null);
-        businesses = (response as any)?.data || (response as any)?.results || (response as any)?.businesses || [];
-        title = `Best Wellness Centers`;
+        rawBusinesses = (response as any)?.data || (response as any)?.results || (response as any)?.businesses || [];
     }
+
+    const businesses = Array.isArray(rawBusinesses) ? rawBusinesses.map(normalizeBusiness) : [];
+
+    const { title: displayTitle, subtitle: displaySubtitle } = buildCleanHeading({
+        category: categoryName,
+        city: cityName,
+    });
 
     const jsonLd = {
         "@context": "https://schema.org",
         "@graph": [
-            generateItemListJsonLd(businesses, isNearMe ? title : cityName),
+            generateItemListJsonLd(businesses, cityName),
             generateBreadcrumbJsonLd([
                 { name: "Home", item: "https://bookby247.com/" },
                 { name: "Explore", item: "https://bookby247.com/explore" },
-                { name: isNearMe ? title : cityName, item: `https://bookby247.com/${city}` },
+                { name: cityName, item: `https://bookby247.com/${city}` },
             ]),
             generateOrganizationJsonLd(),
             generateWebSiteJsonLd()
         ]
     };
-
-    const displayTitle = isPrefix 
-        ? `Best ${categoryName} in ${locationName}`
-        : (isNearMe ? title : `Best Wellness Centers`);
-
-    const displaySubtitle = isPrefix 
-        ? `Find the highest-rated ${categoryName.toLowerCase()} in ${locationName}`
-        : (isNearMe 
-            ? `Find the best rated ${title.toLowerCase()} in ${cityName}` 
-            : `Find the most high-rated spas, salons and beauty centers across ${cityName}`);
 
     return (
         <>
@@ -251,7 +188,7 @@ export default async function CityPage({ params }: Props) {
                     </div>
                 }>
                     <SeoListingView 
-                        initialCity={isNearMe ? "" : cityName} 
+                        initialCity={cityName} 
                         initialNearMe={isNearMe ? city : undefined}
                         initialBusinesses={businesses}
                         title={displayTitle}
@@ -260,8 +197,8 @@ export default async function CityPage({ params }: Props) {
                 </Suspense>
 
                 <AiReadabilitySection 
-                    aboutTitle={`Serving ${cityName}`} 
-                    aboutContent={`In ${cityName}, we feature a wide range of verified centers offering full body massage, haircuts, facials, and more. We cover all major areas within ${cityName} for your convenience.`} 
+                    aboutTitle={`Wellness Services in ${cityName}`} 
+                    aboutContent={`In ${cityName}, BookBy247 presents verified wellness and beauty centers. Compare service details and book appointments directly online.`} 
                 />
             </main>
         </>

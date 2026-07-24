@@ -59,11 +59,26 @@ const BusinessSubPage = async ({ params }: PageProps) => {
         notFound();
     }
 
-    // Fetch details to ensure business exists
-    const detailsRes = await businessDetailsApi.getDetails(slug).catch(() => null);
+    // Fetch initial data in parallel to eliminate server loading placeholders
+    const [detailsRes, servicesRes, contactsRes, workingHoursRes, mediaRes] = await Promise.all([
+        businessDetailsApi.getDetails(slug).catch(() => null),
+        businessDetailsApi.getServices(slug, 1, 10).catch(() => null),
+        businessDetailsApi.getContacts(slug).catch(() => null),
+        businessDetailsApi.getWorkingHours(slug).catch(() => null),
+        businessDetailsApi.getMedia(slug).catch(() => null),
+    ]);
+
     if (!detailsRes?.data) {
         notFound();
     }
+
+    const initialData = {
+        details: detailsRes.data,
+        services: servicesRes?.data,
+        contacts: contactsRes?.data,
+        workingHours: workingHoursRes?.data,
+        media: mediaRes?.data,
+    };
 
     // Map subpath to initial tab in the UI
     const tabMap: Record<string, string> = {
@@ -79,7 +94,8 @@ const BusinessSubPage = async ({ params }: PageProps) => {
     return (
         <BusinessDetailsContent 
             slug={slug} 
-            initialTab={tabMap[currentSubpath] || 'Photos'} 
+            initialTab={tabMap[currentSubpath] || 'Photos'}
+            initialData={initialData}
         />
     );
 };

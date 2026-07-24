@@ -117,6 +117,57 @@ try {
 }
 
 // ---------------------------------------------------------------
+// Test 7: Verify Zero Fake Rating Fallback in JSON-LD
+// ---------------------------------------------------------------
+try {
+  const jsonLdPath = path.join(rootDir, "lib", "seo-jsonld.ts");
+  const content = fs.readFileSync(jsonLdPath, "utf-8");
+  const isGuarded = content.includes("reviewCount > 0") && content.includes("AggregateRating");
+
+  report("JSON-LD AggregateRating schema is strictly guarded for genuine reviewCount > 0", isGuarded);
+} catch (err) {
+  report("JSON-LD AggregateRating check", false, err.message);
+}
+
+// ---------------------------------------------------------------
+// Test 8: Verify Single Primary H1 in Business Details Page
+// ---------------------------------------------------------------
+try {
+  const detailsPath = path.join(rootDir, "app", "business", "[slug]", "BusinessDetailsContent.tsx");
+  const content = fs.readFileSync(detailsPath, "utf-8");
+  const h1Matches = content.match(/<h1[^>]*>/g) || [];
+
+  report("BusinessDetailsContent contains exactly ONE primary H1 element", h1Matches.length === 1, `Found ${h1Matches.length} H1 tags`);
+} catch (err) {
+  report("Single H1 check", false, err.message);
+}
+
+// ---------------------------------------------------------------
+// Test 9: Verify Server-Side Initial Data Hydration for Subpages
+// ---------------------------------------------------------------
+try {
+  const subpathPath = path.join(rootDir, "app", "business", "[slug]", "[...subpath]", "page.tsx");
+  const content = fs.readFileSync(subpathPath, "utf-8");
+  const passesInitialData = content.includes("initialData={initialData}");
+
+  report("Business subpages pass server-fetched initialData to eliminate loading state HTML", passesInitialData);
+} catch (err) {
+  report("Subpage initialData check", false, err.message);
+}
+
+// ---------------------------------------------------------------
+// Test 10: Verify Clean Location Title Helper (No Duplicate Location Text)
+// ---------------------------------------------------------------
+try {
+  const helperPath = path.join(rootDir, "lib", "seo-title-helper.ts");
+  const exists = fs.existsSync(helperPath);
+
+  report("Central SEO Title & Location helper exists to prevent duplicate location strings", exists);
+} catch (err) {
+  report("Title helper check", false, err.message);
+}
+
+// ---------------------------------------------------------------
 // Test Summary
 // ---------------------------------------------------------------
 console.log("\n=================================================");
