@@ -3,7 +3,7 @@ const BASE_URL = `https://${HOST}`;
 const INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow";
 
 export const INDEXNOW_KEY = process.env.INDEXNOW_KEY || "b2470a5b9c6d4e8f90123456789abcde";
-export const INDEXNOW_KEY_LOCATION = `${BASE_URL}/indexnow-key.txt`;
+export const INDEXNOW_KEY_LOCATION = `${BASE_URL}/${INDEXNOW_KEY}.txt`;
 
 const normalizeUrl = (url: string) => {
   if (!url) return null;
