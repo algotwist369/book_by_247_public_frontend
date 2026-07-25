@@ -17,17 +17,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const { slug } = await params;
     const response = await businessDetailsApi.getSeo(slug).catch(() => null);
     const seoData = response?.data;
-    const mainProfilePath = `/business/${seoData?.slug || slug}`;
+    const bookingPath = `/business/${seoData?.slug || slug}/book-appointment`;
 
     return {
-        title: seoData ? `Book Appointment - ${seoData.name} | BookBy247` : "Book Appointment - BookBy247",
-        description: seoData ? `Select your time slot and book appointments online for ${seoData.name}.` : "Book appointments online.",
+        title: seoData ? `Book Appointment: ${seoData.name} - Online Slots | BookBy247` : "Book Appointment - BookBy247",
+        description: seoData ? `Select your preferred time slot and book appointments online for ${seoData.name}. Instant confirmation on BookBy247.` : "Book appointments online.",
         alternates: {
-            canonical: mainProfilePath,
+            canonical: bookingPath,
         },
         robots: {
-            index: false,
+            index: true,
             follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+                'max-image-preview': 'large',
+            },
         },
     };
 }
