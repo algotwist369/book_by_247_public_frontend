@@ -2,7 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react"
 import { blogApi } from "@/api/public/blog"
-import type { BlogAuthor } from "@/lib/blog-types"
+import type { BlogAuthor, UpdateUserProfilePayload } from "@/lib/blog-types"
 
 const ACCESS_TOKEN_KEY = "blog_access_token"
 const USER_KEY = "blog_user"
@@ -25,7 +25,10 @@ type BlogAuthContextValue = {
     login: (email: string, password: string) => Promise<BlogAuthor>
     register: (name: string, email: string, password: string) => Promise<BlogAuthor>
     refreshProfile: () => Promise<BlogAuthor | null>
-    logout: () => void
+    updateProfile: (payload: UpdateUserProfilePayload) => Promise<BlogAuthor>
+    forgotPassword: (email: string) => Promise<void>
+    resetPassword: (payload: { token: string; password: string }) => Promise<void>
+    logout: () => Promise<void>
 }
 
 const BlogAuthContext = createContext<BlogAuthContextValue | null>(null)
@@ -69,10 +72,33 @@ export function BlogAuthProvider({ children }: { children: ReactNode }) {
         }
     }, [persistSession])
 
-    const logout = useCallback(() => {
-        setUser(null)
-        localStorage.removeItem(USER_KEY)
-        localStorage.removeItem(ACCESS_TOKEN_KEY)
+    const updateProfile = useCallback(
+        async (payload: UpdateUserProfilePayload) => {
+            const response = await blogApi.updateCurrentUser(payload)
+            persistSession(response.data)
+            return response.data
+        },
+        [persistSession]
+    )
+
+    const forgotPassword = useCallback(async (email: string) => {
+        await blogApi.forgotPassword(email)
+    }, [])
+
+    const resetPassword = useCallback(async (payload: { token: string; password: string }) => {
+        await blogApi.resetPassword(payload)
+    }, [])
+
+    const logout = useCallback(async () => {
+        try {
+            await blogApi.logout()
+        } catch {
+            /* ignore logout API error */
+        } finally {
+            setUser(null)
+            localStorage.removeItem(USER_KEY)
+            localStorage.removeItem(ACCESS_TOKEN_KEY)
+        }
     }, [])
 
     /** If token exists but user JSON was cleared, restore profile; then mark ready (bookmarks page gates on this). */
@@ -127,9 +153,12 @@ export function BlogAuthProvider({ children }: { children: ReactNode }) {
             login,
             register,
             refreshProfile,
+            updateProfile,
+            forgotPassword,
+            resetPassword,
             logout,
         }),
-        [user, isReady, login, register, refreshProfile, logout]
+        [user, isReady, login, register, refreshProfile, updateProfile, forgotPassword, resetPassword, logout]
     )
 
     return <BlogAuthContext.Provider value={value}>{children}</BlogAuthContext.Provider>
@@ -137,8 +166,17 @@ export function BlogAuthProvider({ children }: { children: ReactNode }) {
 
 export function useBlogAuth() {
     const ctx = useContext(BlogAuthContext)
-    if (!ctx) {
-        throw new Error("useBlogAuth must be used within BlogAuthProvider")
+    if (ctx) return ctx
+    return {
+        user: null,
+        isReady: false,
+        isAuthenticated: false,
+        login: async () => { throw new Error("No Auth Provider") },
+        register: async () => { throw new Error("No Auth Provider") },
+        refreshProfile: async () => null,
+        updateProfile: async () => { throw new Error("No Auth Provider") },
+        forgotPassword: async () => {},
+        resetPassword: async () => {},
+        logout: async () => {},
     }
-    return ctx
 }

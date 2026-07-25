@@ -14,6 +14,7 @@ import { AuthorCard } from "@/components/blog/AuthorCard"
 import { CommentSection } from "@/components/blog/CommentSection"
 import { RelatedBlogs } from "@/components/blog/RelatedBlogs"
 import { ReaderPopup } from "@/components/blog/ReaderPopup"
+import { AiSummaryCard } from "@/components/blog/AiSummaryCard"
 import { CustomImage } from "@/components/ui/CustomImage"
 import { useBlogAuth } from "@/hooks/useBlogAuth"
 import type { BlogArticle, BlogComment } from "@/lib/blog-types"
@@ -164,6 +165,7 @@ export default function BlogArticleContent({ blog, comments, relatedBlogs }: Blo
                         ) : null}
 
                         <div className="mt-10 sm:mt-10">
+                            <AiSummaryCard slug={blog.slug} />
                             <div className={articleBodyProseClassName}>
                                 <div dangerouslySetInnerHTML={{ __html: getArticleHtml(blog) }} />
                             </div>

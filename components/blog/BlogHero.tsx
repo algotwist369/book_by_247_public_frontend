@@ -9,6 +9,8 @@ const BLOG_INDEX_ROUTES = [
     { href: "/blog/trending", label: "Trending" },
     { href: "/blog/search", label: "Search" },
     { href: "/blog/bookmarks", label: "Bookmarks" },
+    { href: "/blog/login", label: "Sign In" },
+    { href: "/blog/signup", label: "Sign Up" },
 ] as const
 
 const pillLinkClass =

@@ -135,3 +135,83 @@ export interface BlogFiltersState {
     search?: string
     sort?: string
 }
+
+export interface BlogSeoMetadata {
+    title: string
+    description: string
+    canonicalUrl: string
+    openGraph: {
+        title: string
+        description: string
+        image?: string
+    }
+    twitter: {
+        card: string
+        image?: string
+    }
+    jsonLd: Record<string, any>
+}
+
+export interface AiArticleLlmPayload {
+    title: string
+    slug: string
+    summary?: string
+    markdown?: string
+    plainText?: string
+    entities?: string[]
+    keyTakeaways?: string[]
+    categories?: BlogTaxonomy[]
+    tags?: BlogTaxonomy[]
+    author?: BlogAuthor
+}
+
+export interface MediaAsset {
+    _id: string
+    id?: string
+    uploader: string
+    originalName: string
+    mimeType: string
+    size: number
+    url: string
+    s3Key: string
+    alt?: string
+    createdAt?: string
+}
+
+export interface CreateBlogPayload {
+    title: string
+    excerpt?: string
+    content: {
+        markdown: string
+        html?: string
+    }
+    categories?: string[]
+    tags?: string[]
+    featuredImage?: BlogImage
+    gallery?: BlogImage[]
+    status?: "draft" | "review" | "published" | "archived"
+    visibility?: "public" | "private" | "unlisted"
+    seo?: {
+        metaTitle?: string
+        metaDescription?: string
+        canonicalUrl?: string
+        focusKeyword?: string
+        keywords?: string[]
+        noIndex?: boolean
+    }
+}
+
+export interface UpdateBlogPayload extends Partial<CreateBlogPayload> {}
+
+export interface UpdateUserProfilePayload {
+    name?: string
+    bio?: string
+    avatarUrl?: string
+    socialLinks?: {
+        website?: string
+        x?: string
+        linkedin?: string
+        github?: string
+    }
+}
+

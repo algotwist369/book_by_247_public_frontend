@@ -44,12 +44,13 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
     const [commentsResponse, relatedListing] = await Promise.all([
         blogApi.getComments(blog.id).catch(() => ({ data: [] })),
-        blog.tags[0]
+        (blog.tags[0]
             ? blogApi.listBlogs({ tag: blog.tags[0].id || blog.tags[0]._id, limit: 4 })
-            : blogApi.listBlogs({ limit: 4 }),
+            : blogApi.listBlogs({ limit: 4 })
+        ).catch(() => ({ data: [] })),
     ])
 
-    const relatedBlogs = relatedListing.data.filter((item) => item.id !== blog.id).slice(0, 3)
+    const relatedBlogs = (relatedListing?.data || []).filter((item) => item.id !== blog.id).slice(0, 3)
 
     return (
         <>

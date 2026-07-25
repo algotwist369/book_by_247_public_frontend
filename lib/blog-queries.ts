@@ -18,11 +18,12 @@ export async function getBlogShellData() {
 }
 
 export async function getCategoryBySlug(slug: string) {
-    const response = await blogApi.getCategories()
+    const response = await blogApi.getCategories().catch(() => ({ data: [] as BlogTaxonomy[] }))
     return response.data.find((category) => category.slug === slug) || null
 }
 
 export async function getTagBySlug(slug: string) {
-    const response = await blogApi.getTags()
+    const response = await blogApi.getTags().catch(() => ({ data: [] as BlogTaxonomy[] }))
     return response.data.find((tag) => tag.slug === slug) || null
 }
+

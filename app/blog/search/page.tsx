@@ -21,7 +21,7 @@ export default async function BlogSearchPage({ searchParams }: PageProps) {
     const params = await searchParams
     const query = params.q || ""
     const [{ data: blogs }, shell] = await Promise.all([
-        query ? blogApi.searchBlogs(query).then((response) => ({ data: response.data })) : Promise.resolve({ data: [] }),
+        query ? blogApi.searchBlogs(query).then((response) => ({ data: response.data })).catch(() => ({ data: [] })) : Promise.resolve({ data: [] }),
         getBlogShellData(),
     ])
 

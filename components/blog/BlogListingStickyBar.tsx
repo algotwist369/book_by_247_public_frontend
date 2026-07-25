@@ -1,7 +1,9 @@
 "use client"
 
+import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { BlogSearch } from "@/components/blog/BlogSearch"
+import { useBlogAuth } from "@/hooks/useBlogAuth"
 import { startRouteProgress } from "@/lib/navigation-events"
 
 const SORT_OPTIONS = ["-publishedAt", "-stats.views", "-stats.likes", "-readingTimeMinutes"] as const
@@ -14,6 +16,8 @@ export function BlogListingStickyBar({ searchValue = "" }: BlogListingStickyBarP
     const router = useRouter()
     const pathname = usePathname()
     const searchParams = useSearchParams()
+    const { user, isAuthenticated, isReady } = useBlogAuth()
+
     const rawSort = searchParams.get("sort") || "-publishedAt"
     const selectedSort = SORT_OPTIONS.includes(rawSort as (typeof SORT_OPTIONS)[number]) ? rawSort : "-publishedAt"
 
@@ -27,7 +31,7 @@ export function BlogListingStickyBar({ searchValue = "" }: BlogListingStickyBarP
                         inputClassName="h-10 w-full"
                     />
                 </div>
-                <div className="flex shrink-0 items-center gap-2 sm:min-w-[200px]">
+                <div className="flex shrink-0 items-center gap-2">
                     <label htmlFor="blog-sort" className="sr-only">
                         Sort articles
                     </label>
@@ -43,15 +47,44 @@ export function BlogListingStickyBar({ searchValue = "" }: BlogListingStickyBarP
                             router.prefetch(href)
                             router.push(href)
                         }}
-                        className="h-10 w-full rounded-md border border-gray-200 bg-white px-3 text-[14px] text-gray-900 outline-none focus:border-gray-400 sm:min-w-[11rem]"
+                        className="h-10 rounded-md border border-gray-200 bg-white px-3 text-[14px] text-gray-900 outline-none focus:border-gray-400"
                     >
                         <option value="-publishedAt">Latest</option>
                         <option value="-stats.views">Most viewed</option>
                         <option value="-stats.likes">Most liked</option>
                         <option value="-readingTimeMinutes">Short reads</option>
                     </select>
+
+                    {isReady && (
+                        <div className="flex items-center gap-2 ml-1">
+                            {isAuthenticated ? (
+                                <Link
+                                    href="/blog/profile"
+                                    className="inline-flex h-10 items-center justify-center rounded-md bg-black px-3.5 text-xs font-semibold text-white hover:bg-gray-800 transition-colors shrink-0"
+                                >
+                                    Profile ({user?.name?.split(" ")[0] || "User"})
+                                </Link>
+                            ) : (
+                                <>
+                                    <Link
+                                        href="/blog/login"
+                                        className="inline-flex h-10 items-center justify-center rounded-md border border-gray-200 bg-white px-3 text-xs font-semibold text-gray-800 hover:bg-gray-50 transition-colors shrink-0"
+                                    >
+                                        Sign In
+                                    </Link>
+                                    <Link
+                                        href="/blog/signup"
+                                        className="inline-flex h-10 items-center justify-center rounded-md bg-black px-3 text-xs font-semibold text-white hover:bg-gray-800 transition-colors shrink-0"
+                                    >
+                                        Sign Up
+                                    </Link>
+                                </>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
     )
 }
+

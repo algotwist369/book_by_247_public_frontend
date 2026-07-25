@@ -65,6 +65,7 @@ import RouteProgress from "@/components/navigation/RouteProgress";
 import Script from "next/script";
 import QueryProvider from "@/providers/QueryProvider";
 import UtmTracker from "@/components/analytics/UtmTracker";
+import { BlogAuthProvider } from "@/hooks/useBlogAuth";
 
 export default function RootLayout({
   children,
@@ -120,19 +121,21 @@ export default function RootLayout({
         )}
 
         <QueryProvider>
-          <Suspense fallback={null}>
-            <UtmTracker />
-          </Suspense>
-          <StructuredData />
-          <AutomaticBreadcrumbJsonLd />
-          <RouteProgress />
-          <Navbar />
-          <FloatingActionButtons />
-          <main className="flex-1 pb-16 md:pb-0">
-            {children}
-          </main>
-          <Footer />
-          <BottomNav />
+          <BlogAuthProvider>
+            <Suspense fallback={null}>
+              <UtmTracker />
+            </Suspense>
+            <StructuredData />
+            <AutomaticBreadcrumbJsonLd />
+            <RouteProgress />
+            <Navbar />
+            <FloatingActionButtons />
+            <main className="flex-1 pb-16 md:pb-0">
+              {children}
+            </main>
+            <Footer />
+            <BottomNav />
+          </BlogAuthProvider>
         </QueryProvider>
       </body>
     </html>

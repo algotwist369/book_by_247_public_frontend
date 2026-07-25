@@ -1,5 +1,17 @@
 import { apiClient } from "@/api/apiClient"
-import type { BlogArticle, BlogAuthor, BlogComment, BlogListResponse, BlogTaxonomy } from "@/lib/blog-types"
+import type {
+    AiArticleLlmPayload,
+    BlogArticle,
+    BlogAuthor,
+    BlogComment,
+    BlogListResponse,
+    BlogSeoMetadata,
+    BlogTaxonomy,
+    CreateBlogPayload,
+    MediaAsset,
+    UpdateBlogPayload,
+    UpdateUserProfilePayload,
+} from "@/lib/blog-types"
 import { getBlogApiBaseUrl } from "@/lib/blog-utils"
 
 const BLOG_API_BASE_URL = getBlogApiBaseUrl()
@@ -158,4 +170,91 @@ export const blogApi = {
 
     getAiArticlePayload: (slug: string) =>
         apiClient<ApiResponse<unknown>>(`/ai/articles/${slug}/extract`, withBlogBase({ next: { revalidate: 3600 } })),
+
+    logout: () =>
+        apiClient<ApiResponse<null>>("/auth/logout", withBlogAuth({
+            method: "POST",
+        })),
+
+    verifyEmail: (token: string) =>
+        apiClient<ApiResponse<null>>(`/auth/verify-email?token=${encodeURIComponent(token)}`, withBlogBase({
+            cache: "no-store",
+        })),
+
+    forgotPassword: (email: string) =>
+        apiClient<ApiResponse<null>>("/auth/forgot-password", withBlogBase({
+            method: "POST",
+            body: JSON.stringify({ email }),
+        })),
+
+    resetPassword: (payload: { token: string; password: string }) =>
+        apiClient<ApiResponse<null>>("/auth/reset-password", withBlogBase({
+            method: "POST",
+            body: JSON.stringify(payload),
+        })),
+
+    updateCurrentUser: (payload: UpdateUserProfilePayload) =>
+        apiClient<ApiResponse<BlogAuthor>>("/users/me", withBlogAuth({
+            method: "PATCH",
+            body: JSON.stringify(payload),
+        })),
+
+    createBlog: (payload: CreateBlogPayload) =>
+        apiClient<ApiResponse<BlogArticle>>("/blogs", withBlogAuth({
+            method: "POST",
+            body: JSON.stringify(payload),
+        })),
+
+    updateBlog: (id: string, payload: UpdateBlogPayload) =>
+        apiClient<ApiResponse<BlogArticle>>(`/blogs/${id}`, withBlogAuth({
+            method: "PATCH",
+            body: JSON.stringify(payload),
+        })),
+
+    deleteBlog: (id: string) =>
+        apiClient<ApiResponse<null>>(`/blogs/${id}`, withBlogAuth({
+            method: "DELETE",
+        })),
+
+    createCategory: (payload: { name: string; slug?: string; description?: string }) =>
+        apiClient<ApiResponse<BlogTaxonomy>>("/categories", withBlogAuth({
+            method: "POST",
+            body: JSON.stringify(payload),
+        })),
+
+    createTag: (payload: { name: string; slug?: string }) =>
+        apiClient<ApiResponse<BlogTaxonomy>>("/tags", withBlogAuth({
+            method: "POST",
+            body: JSON.stringify(payload),
+        })),
+
+    unsubscribeNewsletter: (email: string) =>
+        apiClient<ApiResponse<{ email: string }>>("/newsletter/unsubscribe", withBlogBase({
+            method: "POST",
+            body: JSON.stringify({ email }),
+        })),
+
+    getSeoMetadata: (slug: string) =>
+        apiClient<ApiResponse<BlogSeoMetadata>>(`/seo/metadata/${slug}`, withBlogBase({ next: { revalidate: 3600 } })),
+
+    getSitemapXml: () =>
+        fetch(`${BLOG_API_BASE_URL}/seo/sitemap.xml`).then((res) => res.text()),
+
+    getRobotsTxt: () =>
+        fetch(`${BLOG_API_BASE_URL}/seo/robots.txt`).then((res) => res.text()),
+
+    getAiArticleLlm: (slug: string) =>
+        apiClient<ApiResponse<AiArticleLlmPayload>>(`/ai/articles/${slug}/llm`, withBlogBase({ next: { revalidate: 3600 } })),
+
+    uploadMedia: (formData: FormData) =>
+        apiClient<ApiResponse<MediaAsset>>("/media/upload", withBlogAuth({
+            method: "POST",
+            body: formData,
+        })),
+
+    getSignedMediaUrl: (id: string) =>
+        apiClient<ApiResponse<{ signedUrl: string }>>(`/media/signed-url/${id}`, withBlogAuth({
+            cache: "no-store",
+        })),
 }
+

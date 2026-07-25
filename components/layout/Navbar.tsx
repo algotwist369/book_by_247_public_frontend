@@ -19,10 +19,10 @@ import { Button } from "../ui/Button"
 import { cn } from "@/lib/utils"
 import { CATEGORIES_DATA } from "@/lib/constants"
 import { useCities } from "@/hooks/useCities"
-
-// Static CITIES removed in favor of useCities hook
+import { useBlogAuth } from "@/hooks/useBlogAuth"
 
 export const Navbar = () => {
+    const { user, isAuthenticated } = useBlogAuth()
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
     const [showCities, setShowCities] = React.useState(false)
     const [showCategories, setShowCategories] = React.useState(false)
@@ -139,10 +139,15 @@ export const Navbar = () => {
                     </div>
 
                     {/* Login/Signup */}
-                    <div className="hidden md:flex items-center gap-2 cursor-pointer hover:bg-zinc-50 px-2 md:px-3 py-2 rounded-md transition-colors group">
+                    <Link
+                        href={isAuthenticated ? "/blog/profile" : "/blog/login"}
+                        className="hidden md:flex items-center gap-2 cursor-pointer hover:bg-zinc-50 px-2 md:px-3 py-2 rounded-md transition-colors group"
+                    >
                         <UserCircle2 className="w-7 h-7 md:w-8 md:h-8 text-zinc-300 group-hover:text-zinc-500 transition-colors" />
-                        <span className="hidden sm:block text-sm font-bold text-zinc-900">Login</span>
-                    </div>
+                        <span className="hidden sm:block text-sm font-bold text-zinc-900">
+                            {isAuthenticated ? (user?.name?.split(" ")[0] || "Profile") : "Login"}
+                        </span>
+                    </Link>
 
                     {/* Mobile Menu Toggle */}
                     <button
@@ -216,9 +221,15 @@ export const Navbar = () => {
                             {/* Content */}
                             <div className="flex-1 p-4 space-y-6">
                                 {/* Login Button */}
-                                <Button variant="primary" className="w-full h-12 font-bold">
-                                    Login / Signup
-                                </Button>
+                                <Link
+                                    href={isAuthenticated ? "/blog/profile" : "/blog/login"}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="block w-full"
+                                >
+                                    <Button variant="primary" className="w-full h-12 font-bold">
+                                        {isAuthenticated ? `Profile (${user?.name?.split(" ")[0] || "User"})` : "Login / Signup"}
+                                    </Button>
+                                </Link>
 
                                 {/* Cities */}
                                 <div className="space-y-3">
