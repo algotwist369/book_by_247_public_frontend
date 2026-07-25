@@ -17,44 +17,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const { slug } = await params;
     const response = await businessDetailsApi.getSeo(slug).catch(() => null);
     const seoData = response?.data;
-
-    if (!seoData) {
-        return {
-            title: "Book Appointment - BookBy247",
-            description: "Securely book spa and salon appointments online with BookBy247.",
-            robots: {
-                index: false,
-                follow: true,
-            },
-        };
-    }
-
-    const title = `Book Appointment at ${seoData.name} - Online Booking - BookBy247`;
-    const description = `Select your preferred time slot and instantly book an appointment at ${seoData.name} in ${seoData.location_info?.city || ''}. Secure your visit today!`;
-    const canonicalPath = `/business/${seoData.slug || slug}/book-appointment`;
+    const mainProfilePath = `/business/${seoData?.slug || slug}`;
 
     return {
-        title,
-        description,
-        authors: [{ name: "BookBy247 Team" }],
+        title: seoData ? `Book Appointment - ${seoData.name} | BookBy247` : "Book Appointment - BookBy247",
+        description: seoData ? `Select your time slot and book appointments online for ${seoData.name}.` : "Book appointments online.",
         alternates: {
-            canonical: canonicalPath,
+            canonical: mainProfilePath,
         },
         robots: {
-            index: true,
+            index: false,
             follow: true,
-        },
-        openGraph: {
-            title,
-            description,
-            url: `https://bookby247.com${canonicalPath}`,
-            type: "website",
-            siteName: "BookBy247",
-        },
-        twitter: {
-            card: "summary",
-            title,
-            description,
         },
     };
 }

@@ -22,17 +22,23 @@ type BusinessReviewForJsonLd = {
     rating?: number;
 };
 
+import { buildSeoMetadata } from '@/lib/seo-title-helper';
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { slug } = await params;
     
-    // Fetch SEO and Media data for metadata
-    const [seoRes, mediaRes] = await Promise.all([
+    // Fetch SEO, Media, Details & Services data for metadata evaluation
+    const [seoRes, mediaRes, servicesRes, reviewsRes] = await Promise.all([
         businessDetailsApi.getSeo(slug).catch(() => null),
-        businessDetailsApi.getMedia(slug).catch(() => null)
+        businessDetailsApi.getMedia(slug).catch(() => null),
+        businessDetailsApi.getServices(slug, 1, 5).catch(() => null),
+        businessDetailsApi.getReviews(slug, 1, 5).catch(() => null)
     ]);
 
     const seoData = seoRes?.data;
     const mediaData = mediaRes?.data;
+    const services = servicesRes?.data?.services || [];
+    const reviews = reviewsRes?.data?.reviews || [];
 
     if (!seoData) {
         return {
@@ -42,81 +48,26 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     const seo = seoData.seo || {};
     const city = seoData.location_info?.city || '';
-    const area = seoData.location_info?.area || '';
-    const type = seoData.search_profile?.spaTypes?.[0] || 'Wellness Center';
-    const flags = seoData.seo_flags || {};
-
-    // Dynamic SEO prefix based on flags
-    let prefix = 'Best';
-    if (flags.isTrending) prefix = 'Trending';
-    else if (flags.isPopular) prefix = 'Popular';
-    else if (flags.isBest) prefix = 'Best';
-
-    // Pro SEO Title: [Business Name] - [Prefix] [Type] in [Area], [City] - Online Booking
-    const title =
-        seo.metaTitle || `${seoData.name} - ${prefix} ${type} in ${area ? `${area}, ` : ''}${city} - BookBy247`;
-    
-    const realTotalReviews = seoData.ratings?.totalReviews || 0;
-    const realAvgRating = seoData.ratings?.average || 0;
-    const ratingSnippet = realTotalReviews > 0 ? `Rated ${realAvgRating}/5 from ${realTotalReviews} verified reviews. ` : '';
-
-    const description =
-        seo.metaDescription ||
-        `Book appointments at ${seoData.name} in ${area ? `${area}, ` : ''}${city}. ${ratingSnippet}Instant online booking, latest prices, and ${type} services. ${flags.isPopular ? 'Popular wellness destination.' : ''}`;
-    
+    const locality = seoData.location_info?.area || '';
     const canonicalPath = `/business/${seoData.slug || slug}`;
     const ogImage = seo.ogImage || (Array.isArray(mediaData?.images) ? mediaData.images[0] : "");
 
-    const metadata: Metadata = {
-        title,
-        description,
-        keywords: [
-            ...(seo.keywords || []),
-            seoData.name, 
-            type, 
-            area, 
-            city, 
-            "online booking", 
-            "prices", 
-            "reviews", 
-            prefix.toLowerCase(),
-            `${type} near me`,
-            `best ${type} in ${city}`,
-            `${seoData.name} booking`,
-            `${seoData.name} reviews`,
-            "BookBy247"
-        ].filter((v, i, a) => a.indexOf(v) === i), // deduplicate
-        alternates: {
-            canonical: canonicalPath,
-        },
-        robots: {
-            index: true,
-            follow: true,
-            googleBot: {
-                index: true,
-                follow: true,
-                'max-image-preview': 'large',
-            },
-        },
-        openGraph: {
-            title,
-            description,
-            url: `https://bookby247.com${canonicalPath}`,
-            siteName: "BookBy247",
-            type: "website",
-            locale: "en_IN",
-            images: ogImage ? [{ url: ogImage, width: 1200, height: 630, alt: seoData.name }] : [],
-        },
-        twitter: {
-            card: "summary_large_image",
-            title,
-            description,
-            images: ogImage ? [ogImage] : [],
-            creator: "@BookBy247",
-        }
-    };
+    const realTotalReviews = reviewsRes?.data?.ratings?.total_reviews || seoData.ratings?.totalReviews || reviews.length;
 
-    return metadata;
+    return buildSeoMetadata({
+        pageType: "business",
+        businessName: seoData.name,
+        city,
+        locality,
+        hasPrices: services.length > 0,
+        hasReviews: realTotalReviews > 0,
+        hasOpeningHours: true,
+        hasBooking: true,
+        dbMetaTitle: seo.metaTitle,
+        dbMetaDescription: seo.metaDescription,
+        canonicalPath,
+        ogImage
+    });
 }
 
 const BusinessDetailsPage = async ({ params }: PageProps) => {

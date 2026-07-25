@@ -7,7 +7,7 @@ import { generateItemListJsonLd, generateBreadcrumbJsonLd, generateOrganizationJ
 import AiReadabilitySection from '@/components/seo/AiReadabilitySection';
 import { notFound } from 'next/navigation';
 import { normalizeBusiness } from '@/lib/business-normalizer';
-import { buildCleanHeading, buildCleanMetadataTitle, cleanLocationName } from '@/lib/seo-title-helper';
+import { buildCleanHeading, buildCleanMetadataTitle, cleanLocationName, buildSeoMetadata } from '@/lib/seo-title-helper';
 
 export const revalidate = 3600;
 
@@ -43,6 +43,8 @@ const parseCitySlug = (city: string) => {
     };
 };
 
+
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { city } = await params;
     
@@ -55,71 +57,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         const category = city.replace('-near-me', '').replace(/-/g, ' ');
         const categoryTitle = cleanLocationName(category);
         
-        return {
-            title: `${categoryTitle} Near Me – Compare & Book Online | BookBy247`,
-            description: `Discover ${category} centers near you on BookBy247. Compare service options, view locations, and book appointments online.`,
-            keywords: [`${category} near me`, `${category} booking`, `${category} services`, "BookBy247"],
-            alternates: {
-                canonical: `/${city}`,
-            },
-            robots: {
-                index: true,
-                follow: true,
-                googleBot: {
-                    index: true,
-                    follow: true,
-                    'max-image-preview': 'large',
-                },
-            },
-            openGraph: {
-                title: `${categoryTitle} Near Me | BookBy247`,
-                description: `Find ${category} centers near you with verified location information.`,
-                url: `https://bookby247.com/${city}`,
-                siteName: "BookBy247",
-                type: "website",
-                locale: "en_IN",
-            },
-        };
+        return buildSeoMetadata({
+            pageType: "service",
+            serviceName: categoryTitle,
+            city: "Near You",
+            canonicalPath: `/${city}`
+        });
     }
 
     const { categoryName, locationName } = parseCitySlug(city);
-    const title = buildCleanMetadataTitle({ category: categoryName, city: locationName });
+    
+    if (categoryName) {
+        return buildSeoMetadata({
+            pageType: "cityService",
+            serviceName: categoryName,
+            city: locationName,
+            canonicalPath: `/${city}`
+        });
+    }
 
-    return {
-        title,
-        description: categoryName
-            ? `Explore ${categoryName.toLowerCase()} options in ${locationName}. View locations, prices, and book appointments on BookBy247.`
-            : `Discover beauty and wellness centers in ${locationName}. Compare service details and book appointments online with BookBy247.`,
-        keywords: [
-            categoryName ? `${categoryName.toLowerCase()} in ${locationName}` : `spas in ${locationName}`,
-            `salons in ${locationName}`,
-            `wellness centers in ${locationName}`,
-            "online appointment booking",
-            "BookBy247"
-        ],
-        alternates: {
-            canonical: `/${city}`,
-        },
-        robots: {
-            index: true,
-            follow: true,
-            googleBot: {
-                index: true,
-                follow: true,
-                'max-video-preview': -1,
-                'max-image-preview': 'large',
-                'max-snippet': -1,
-            },
-        },
-        openGraph: {
-            title,
-            description: `Explore wellness services in ${locationName} on BookBy247.`,
-            url: `https://bookby247.com/${city}`,
-            siteName: "BookBy247",
-            type: "website",
-            locale: "en_IN",
-        },
-    };
+    return buildSeoMetadata({
+        pageType: "city",
+        city: locationName,
+        canonicalPath: `/${city}`
+    });
 }
 
 export default async function CityPage({ params }: Props) {

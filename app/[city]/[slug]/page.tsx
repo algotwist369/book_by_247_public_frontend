@@ -8,7 +8,7 @@ import { generateItemListJsonLd, generateBreadcrumbJsonLd, generateGlobalService
 import AiReadabilitySection from '@/components/seo/AiReadabilitySection';
 import { notFound } from 'next/navigation';
 import { normalizeBusiness } from '@/lib/business-normalizer';
-import { buildCleanHeading, buildCleanMetadataTitle, cleanLocationName } from '@/lib/seo-title-helper';
+import { buildCleanHeading, buildCleanMetadataTitle, cleanLocationName, buildSeoMetadata } from '@/lib/seo-title-helper';
 
 export const revalidate = 3600;
 
@@ -60,6 +60,8 @@ const parseSlug = (slug: string) => {
     };
 };
 
+
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { city, slug } = await params;
     
@@ -69,46 +71,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     const info = parseSlug(slug);
     const cityName = cleanLocationName(city);
+    const pageType = info.areaName ? "localityService" : "cityService";
 
-    const title = buildCleanMetadataTitle({
-        category: info.categoryName,
-        locality: info.areaName,
+    return buildSeoMetadata({
+        pageType,
+        serviceName: info.categoryName,
         city: cityName,
-        isTop10: info.isTop10,
+        locality: info.areaName,
+        canonicalPath: `/${city}/${slug}`
     });
-
-    const description = `Discover ${info.categoryName.toLowerCase()} options in ${info.areaName || cityName}. Compare service details, view locations, and book appointments online with BookBy247.`;
-
-    return {
-        title,
-        description,
-        keywords: [
-            `${info.categoryName} in ${info.areaName || cityName}`,
-            `${info.categoryName.toLowerCase()} ${cityName}`,
-            "online appointment booking",
-            "BookBy247"
-        ],
-        alternates: {
-            canonical: `/${city}/${slug}`,
-        },
-        robots: {
-            index: true,
-            follow: true,
-            googleBot: {
-                index: true,
-                follow: true,
-                'max-image-preview': 'large',
-            },
-        },
-        openGraph: {
-            title,
-            description,
-            url: `https://bookby247.com/${city}/${slug}`,
-            siteName: "BookBy247",
-            type: "website",
-            locale: "en_IN",
-        },
-    };
 }
 
 export default async function DetailSeoPage({ params }: Props) {

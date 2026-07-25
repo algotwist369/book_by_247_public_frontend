@@ -12,132 +12,29 @@ interface PageProps {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
+import { buildSeoMetadata, cleanLocationName } from '@/lib/seo-title-helper';
+
 export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
     const params = await searchParams;
     const q = typeof params.q === 'string' ? params.q : '';
     const location = typeof params.location === 'string' ? params.location : '';
     const category = typeof params.category === 'string' ? params.category : '';
     const tag = typeof params.tag === 'string' ? params.tag : '';
-    const count = typeof params.count === 'string' ? params.count : '';
 
-    let title = 'Discover Top-Rated Spas, Salons & Beauty Centers Near You - Compare Reviews & Book Online | BookBy247';
-    let description = 'Find, explore, compare, and book top-rated spas, salons, beauty centers, wellness clinics, and massage services near you. Discover verified reviews, ratings, services, pricing, and locations with advanced filters for a seamless online booking experience on BookBy247.';
-    let keywords: string[] = [];
-    let canonicalPath = '/explore';
-
-    if (tag) {
-        const tagName = slugToTitleCase(tag);
-        const displayCount = count || "10";
-
-        title = `Top ${displayCount} ${tagName} Services Near You | Compare & Book Online | BookBy247`;
-
-        description = `Find, compare, and book top-rated ${tagName} services near you. Explore verified reviews, ratings, pricing, locations, and instant availability. Discover trusted professionals and book your appointment online with BookBy247.`;
-
-        keywords = [
-            tagName,
-            `${tagName} near me`,
-            `best ${tagName} near me`,
-            `top rated ${tagName}`,
-            `${tagName} services`,
-            `${tagName} booking`,
-            `book ${tagName} online`,
-            `${tagName} professionals`,
-            `affordable ${tagName}`,
-            `${tagName} appointment`,
-            `${tagName} services near me`,
-            `${tagName} reviews`,
-            `${tagName} pricing`,
-            `${tagName} experts`,
-            `${tagName} in my city`,
-            `online ${tagName} booking`,
-            `trusted ${tagName} providers`,
-            `BookBy247 ${tagName}`
-        ];
-
-        canonicalPath = `/tags/${tag}`;
-    } else if (q || location || category) {
-        const parts = [];
-
-        if (category) {
-            parts.push(`Top-Rated ${category}`);
-        } else if (q) {
-            parts.push(`${q}`);
-        } else {
-            parts.push("Spas, Salons & Beauty Centers");
-        }
-
-        if (location) {
-            parts.push(`in ${location}`);
-        } else {
-            parts.push("Near You");
-        }
-
-        title = `Find, Compare & Book ${parts.join(" ")} | BookBy247`;
-
-        description = `Discover top-rated ${category || "spas, salons and beauty centers"} ${location ? `in ${location}` : "near you"
-            }. Compare verified reviews, ratings, services, pricing, locations, and availability. ${q ? `Explore results for "${q}" and find trusted businesses.` : ""
-            } Book instantly with BookBy247.`;
-
-        keywords = [
-            category || "spa",
-            `${category || "spa"} near me`,
-            `${category || "spa"} booking`,
-            `best ${category || "spa"} ${location ? `in ${location}` : "near me"
-            }`,
-            `top rated ${category || "spa"}`,
-            `online booking`,
-            `beauty services`,
-            `wellness services`,
-            location,
-            q,
-        ].filter(Boolean);
+    if (location) {
+        return buildSeoMetadata({
+            pageType: category ? "cityService" : "city",
+            serviceName: category || q,
+            city: cleanLocationName(location),
+            canonicalPath: "/explore"
+        });
     }
 
-    return {
-        title,
-        description,
-        keywords: [
-            ...keywords,
-            ...(category ? [category, `best ${category}`, `${category} near me`] : []),
-            ...(location ? [location, `spas in ${location}`, `salons in ${location}`] : []),
-            "explore spas",
-            "explore salons",
-            "explore beauty centers",
-            "beauty centers",
-            "spa booking",
-            "salon booking",
-            "beauty center booking",
-        ],
-        authors: [{ name: "BookBy247 Team" }],
-        alternates: {
-            canonical: canonicalPath,
-        },
-        robots: {
-            index: true,
-            follow: true,
-            googleBot: {
-                index: true,
-                follow: true,
-                'max-image-preview': 'large',
-            },
-        },
-        openGraph: {
-            title,
-            description,
-            images: ['https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png'],
-            url: `https://bookby247.com${canonicalPath}`,
-            type: "website",
-            siteName: "BookBy247",
-            locale: "en_IN",
-        },
-        twitter: {
-            card: "summary_large_image",
-            title,
-            description,
-            images: ['https://res.cloudinary.com/dwsv275kv/image/upload/v1774691836/555666_m75jkf.png'],
-            creator: "@BookBy247",
-        },
-    };
+    return buildSeoMetadata({
+        pageType: "city",
+        city: "India",
+        canonicalPath: "/explore"
+    });
 }
 
 export default async function ExplorePage({ searchParams }: PageProps) {

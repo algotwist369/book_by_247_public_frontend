@@ -11,44 +11,28 @@ interface PageProps {
 
 export const revalidate = 300
 
+import { buildSeoMetadata } from "@/lib/seo-title-helper"
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { slug } = await params
     const response = await blogApi.getBlogBySlug(slug).catch(() => null)
     const blog = response?.data
 
     if (!blog) {
-        return { title: "Article not found" }
+        return { title: "Article Not Found - BookBy247" }
     }
 
     const path = `/blog/${blog.slug}`
-    const title = blog.seo?.metaTitle || blog.title
-    const description = blog.seo?.metaDescription || blog.excerpt
     const image = blog.seo?.ogImage || blog.featuredImage?.url
-    const canonicalAbsolute =
-        typeof blog.seo?.canonicalUrl === "string" && blog.seo.canonicalUrl.startsWith("http") ? blog.seo.canonicalUrl : null
 
-    return {
-        title,
-        description,
-        alternates: { canonical: canonicalAbsolute || path },
-        robots: blog.seo?.noIndex ? { index: false, follow: true } : { index: true, follow: true },
-        keywords: [...(blog.seo?.keywords || []), ...(blog.tags?.map((t) => t.name) || [])].slice(0, 20),
-        openGraph: {
-            title,
-            description,
-            type: "article",
-            url: canonicalAbsolute || buildAbsoluteUrl(path),
-            publishedTime: blog.publishedAt,
-            modifiedTime: blog.updatedAt,
-            images: image ? [{ url: image, alt: blog.title }] : [],
-        },
-        twitter: {
-            card: "summary_large_image",
-            title,
-            description,
-            images: image ? [image] : [],
-        },
-    }
+    return buildSeoMetadata({
+        pageType: "blog",
+        articleTitle: blog.seo?.metaTitle || blog.title,
+        articleSnippet: blog.seo?.metaDescription || blog.excerpt,
+        canonicalPath: path,
+        ogImage: image,
+        robotsNoIndex: !!blog.seo?.noIndex
+    })
 }
 
 export default async function BlogDetailPage({ params }: PageProps) {
