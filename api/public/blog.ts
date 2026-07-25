@@ -199,6 +199,12 @@ export const blogApi = {
             body: JSON.stringify(payload),
         })),
 
+    requestAuthorAccess: (reason?: string) =>
+        apiClient<ApiResponse<BlogAuthor>>("/users/request-author-access", withBlogAuth({
+            method: "POST",
+            body: JSON.stringify({ reason }),
+        })),
+
     createBlog: (payload: CreateBlogPayload) =>
         apiClient<ApiResponse<BlogArticle>>("/blogs", withBlogAuth({
             method: "POST",

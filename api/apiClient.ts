@@ -140,7 +140,12 @@ export async function apiClient<T>(
                 /* ignore listener errors */
             }
         }
-        throw new Error(errorData?.message || `API Error: ${response.status}`)
+        const extractedMsg =
+            errorData?.message ||
+            (typeof errorData?.error === "string" ? errorData.error : errorData?.error?.message) ||
+            errorData?.details ||
+            `API Error: ${response.status}`
+        throw new Error(extractedMsg)
     }
 
     let data: any

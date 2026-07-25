@@ -3,6 +3,9 @@ export interface BlogAuthor {
     _id?: string
     name: string
     username?: string
+    email?: string
+    role?: string
+    authorRequestStatus?: "none" | "pending" | "approved" | "rejected"
     bio?: string
     isLocked?: boolean
     avatar?: {

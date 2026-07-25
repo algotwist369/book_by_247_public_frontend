@@ -80,7 +80,16 @@ export default function BlogProfilePage() {
                         </div>
                         <div>
                             <h1 className="text-2xl font-bold tracking-tight text-gray-900">{user.name}</h1>
-                            <p className="text-sm text-gray-500">@{user.username || "reader"}</p>
+                            <div className="flex items-center space-x-2 mt-1">
+                                <span className="text-xs text-gray-500">@{user.username || "reader"}</span>
+                                <span className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
+                                    user.role && user.role !== "reader"
+                                        ? "bg-purple-100 text-purple-800"
+                                        : "bg-gray-100 text-gray-700"
+                                }`}>
+                                    {user.role || "reader"}
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div className="flex items-center space-x-3 w-full sm:w-auto">
@@ -88,7 +97,7 @@ export default function BlogProfilePage() {
                             href="/blog/create"
                             className="flex-1 sm:flex-initial rounded-xl bg-black px-4 py-2.5 text-center text-xs font-semibold text-white hover:bg-gray-800 transition-colors"
                         >
-                            + Write Article
+                            {user.role && user.role !== "reader" ? "+ Write Article" : "Request Author Access"}
                         </Link>
                         <button
                             onClick={handleLogout}

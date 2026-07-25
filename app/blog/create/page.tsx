@@ -1,24 +1,37 @@
 "use client"
 
-import { useState, type FormEvent, useEffect } from "react"
+import { useState, type FormEvent, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
 import { blogApi } from "@/api/public/blog"
 import { useBlogAuth } from "@/hooks/useBlogAuth"
-import type { BlogTaxonomy } from "@/lib/blog-types"
+import type { BlogArticle, BlogTaxonomy } from "@/lib/blog-types"
+import { ReaderAuthorAccessGate } from "@/components/blog/ReaderAuthorAccessGate"
+import { WpEditorHeader } from "@/components/blog/editor/WpEditorHeader"
+import { WpEditorToolbar } from "@/components/blog/editor/WpEditorToolbar"
+import { WpEditorSidebar } from "@/components/blog/editor/WpEditorSidebar"
+import { markdownToHtml } from "@/lib/blog-utils"
+import { Upload, Image as ImageIcon, Trash2 } from "lucide-react"
 
 export default function CreateBlogPage() {
-    const { isAuthenticated, isReady } = useBlogAuth()
+    const { user, isAuthenticated, isReady } = useBlogAuth()
     const router = useRouter()
+
+    const [mode, setMode] = useState<"edit" | "preview">("edit")
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true)
 
     const [title, setTitle] = useState("")
     const [excerpt, setExcerpt] = useState("")
     const [markdown, setMarkdown] = useState("")
     const [status, setStatus] = useState<"draft" | "published">("published")
+    const [visibility, setVisibility] = useState<"public" | "private">("public")
     const [selectedCategories, setSelectedCategories] = useState<string[]>([])
     const [selectedTags, setSelectedTags] = useState<string[]>([])
+
     const [featuredImageUrl, setFeaturedImageUrl] = useState("")
     const [featuredImageAlt, setFeaturedImageAlt] = useState("")
+
+    const [metaTitle, setMetaTitle] = useState("")
+    const [metaDescription, setMetaDescription] = useState("")
 
     const [allCategories, setAllCategories] = useState<BlogTaxonomy[]>([])
     const [allTags, setAllTags] = useState<BlogTaxonomy[]>([])
@@ -28,28 +41,62 @@ export default function CreateBlogPage() {
     const [errorMessage, setErrorMessage] = useState("")
     const [successMessage, setSuccessMessage] = useState("")
 
+    const textareaRef = useRef<HTMLTextAreaElement>(null)
+
     useEffect(() => {
         blogApi.getCategories().then((res) => setAllCategories(res.data)).catch(() => {})
         blogApi.getTags().then((res) => setAllTags(res.data)).catch(() => {})
     }, [])
 
     if (!isReady) {
-        return <div className="py-20 text-center text-sm text-gray-500">Loading...</div>
+        return (
+            <div className="flex min-h-[60vh] items-center justify-center">
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-black" />
+            </div>
+        )
     }
 
-    if (!isAuthenticated) {
+    if (!isAuthenticated || !user) {
         return (
             <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
                 <h1 className="text-2xl font-bold tracking-tight text-gray-900">Sign in to write articles</h1>
-                <p className="mt-2 text-sm text-gray-600">You must be logged in as an author or admin to publish new posts.</p>
-                <Link
-                    href="/blog/profile"
+                <button
+                    onClick={() => router.push("/blog/login")}
                     className="mt-6 rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white hover:bg-gray-800 transition-colors"
                 >
-                    Sign In / View Profile
-                </Link>
+                    Sign In
+                </button>
             </div>
         )
+    }
+
+    // Role check: Readers are gated!
+    const isAllowedAuthor = user.role && user.role !== "reader"
+    if (!isAllowedAuthor) {
+        return <ReaderAuthorAccessGate />
+    }
+
+    const wordsCount = markdown.trim() ? markdown.trim().split(/\s+/).length : 0
+    const readingTimeMinutes = Math.max(1, Math.ceil(wordsCount / 200))
+    const slug = title.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")
+
+    const handleInsertText = (prefix: string, suffix = "", defaultText = "") => {
+        const textarea = textareaRef.current
+        if (!textarea) return
+
+        const start = textarea.selectionStart
+        const end = textarea.selectionEnd
+        const selectedText = markdown.substring(start, end) || defaultText
+
+        const replacement = `${prefix}${selectedText}${suffix}`
+        const nextMarkdown = markdown.substring(0, start) + replacement + markdown.substring(end)
+
+        setMarkdown(nextMarkdown)
+
+        setTimeout(() => {
+            textarea.focus()
+            textarea.setSelectionRange(start + prefix.length, start + prefix.length + selectedText.length)
+        }, 10)
     }
 
     const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,23 +109,22 @@ export default function CreateBlogPage() {
         try {
             const formData = new FormData()
             formData.append("file", file)
-            formData.append("alt", featuredImageAlt || title || "Featured image")
+            formData.append("alt", featuredImageAlt || title || "Featured banner image")
 
             const response = await blogApi.uploadMedia(formData)
             if (response.data?.url) {
                 setFeaturedImageUrl(response.data.url)
             }
         } catch (err: any) {
-            setErrorMessage(err.message || "Failed to upload image. Make sure AWS S3/media upload is configured.")
+            setErrorMessage(err.message || "Image upload failed. Ensure S3 configuration is valid.")
         } finally {
             setUploadingImage(false)
         }
     }
 
-    const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault()
+    const handlePublish = async () => {
         if (!title.trim() || !markdown.trim()) {
-            setErrorMessage("Title and content markdown are required.")
+            setErrorMessage("Please enter an article title and content body.")
             return
         }
 
@@ -96,174 +142,205 @@ export default function CreateBlogPage() {
                 categories: selectedCategories,
                 tags: selectedTags,
                 status,
-                visibility: "public",
+                visibility,
                 featuredImage: featuredImageUrl
                     ? { url: featuredImageUrl, alt: featuredImageAlt || title }
                     : undefined,
+                seo: {
+                    metaTitle: metaTitle || title,
+                    metaDescription: metaDescription || excerpt,
+                },
             })
 
             setSuccessMessage("Article published successfully!")
             setTimeout(() => {
                 router.push(`/blog/${response.data.slug}`)
-            }, 1500)
+            }, 1200)
         } catch (err: any) {
-            setErrorMessage(err.message || "Failed to create article. Please check your permissions or input data.")
+            setErrorMessage(err.message || "Publishing failed. Please check permissions or input data.")
         } finally {
             setSubmitting(false)
         }
     }
 
     return (
-        <div className="min-h-screen bg-gray-50/50 py-10 px-4 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-4xl space-y-8">
-                <div className="flex items-center justify-between">
-                    <div>
-                        <h1 className="text-2xl font-bold tracking-tight text-gray-900">Create New Article</h1>
-                        <p className="text-sm text-gray-600">Draft or publish a new editorial post.</p>
-                    </div>
-                    <Link href="/blog" className="text-xs font-semibold text-gray-600 hover:text-black">
-                        &larr; Back to Blog
-                    </Link>
-                </div>
+        <div className="min-h-screen bg-white">
+            {/* Gutenberg Header */}
+            <WpEditorHeader
+                title={title}
+                isEditMode={mode === "edit"}
+                onToggleMode={setMode}
+                wordCount={wordsCount}
+                readingTimeMinutes={readingTimeMinutes}
+                isSubmitting={submitting}
+                onPublish={handlePublish}
+                isSidebarOpen={isSidebarOpen}
+                onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+            />
 
-                <form onSubmit={handleSubmit} className="rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 shadow-sm space-y-6">
-                    {errorMessage && (
-                        <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
-                            {errorMessage}
-                        </div>
-                    )}
-                    {successMessage && (
-                        <div className="rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-800">
-                            {successMessage}
-                        </div>
-                    )}
-
-                    <div>
-                        <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider">Article Title *</label>
-                        <input
-                            type="text"
-                            required
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            placeholder="e.g. 10 Spa Treatments for Rejuvenation in 2026"
-                            className="mt-1 block w-full rounded-xl border border-gray-300 px-4 py-3 text-base font-medium focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider">Excerpt / Summary</label>
-                        <textarea
-                            rows={2}
-                            value={excerpt}
-                            onChange={(e) => setExcerpt(e.target.value)}
-                            placeholder="Short overview sentence for article cards..."
-                            className="mt-1 block w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider">Featured Image</label>
-                        <div className="mt-2 space-y-3">
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={handleImageUpload}
-                                className="block w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200"
-                            />
-                            {uploadingImage && <p className="text-xs text-gray-500">Uploading media image...</p>}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                <input
-                                    type="url"
-                                    value={featuredImageUrl}
-                                    onChange={(e) => setFeaturedImageUrl(e.target.value)}
-                                    placeholder="Or paste Direct Image URL..."
-                                    className="rounded-xl border border-gray-300 px-4 py-2.5 text-xs focus:border-black focus:outline-none"
-                                />
-                                <input
-                                    type="text"
-                                    value={featuredImageAlt}
-                                    onChange={(e) => setFeaturedImageAlt(e.target.value)}
-                                    placeholder="Alt text..."
-                                    className="rounded-xl border border-gray-300 px-4 py-2.5 text-xs focus:border-black focus:outline-none"
-                                />
+            {/* Main Canvas & Inspector Drawer Container */}
+            <div className="flex">
+                <main className={`flex-1 transition-all ${isSidebarOpen ? "pr-0 sm:pr-80 lg:pr-96" : ""}`}>
+                    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-8">
+                        {errorMessage && (
+                            <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+                                {errorMessage}
                             </div>
-                        </div>
+                        )}
+                        {successMessage && (
+                            <div className="mb-6 rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-800">
+                                {successMessage}
+                            </div>
+                        )}
+
+                        {mode === "edit" ? (
+                            <div className="space-y-6">
+                                {/* Cover Banner Dropzone */}
+                                <div className="group relative rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50/60 p-6 transition-colors hover:border-gray-300">
+                                    {featuredImageUrl ? (
+                                        <div className="relative aspect-[21/9] w-full overflow-hidden rounded-xl bg-gray-100">
+                                            <img
+                                                src={featuredImageUrl}
+                                                alt={featuredImageAlt || title}
+                                                className="h-full w-full object-cover"
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => setFeaturedImageUrl("")}
+                                                className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-lg bg-black/70 text-white hover:bg-black transition-colors"
+                                                title="Remove cover image"
+                                            >
+                                                <Trash2 className="h-4 w-4" />
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div className="flex flex-col items-center justify-center text-center py-6">
+                                            <ImageIcon className="h-10 w-10 text-gray-400 mb-2" />
+                                            <p className="text-xs font-semibold text-gray-700">Set Featured Cover Image</p>
+                                            <p className="text-[11px] text-gray-500 mt-0.5">High resolution landscape image for top of article</p>
+
+                                            <div className="mt-4 flex items-center gap-3">
+                                                <label className="flex cursor-pointer items-center gap-1.5 rounded-lg bg-black px-4 py-2 text-xs font-semibold text-white hover:bg-gray-800 transition-colors">
+                                                    <Upload className="h-3.5 w-3.5" />
+                                                    <span>{uploadingImage ? "Uploading..." : "Upload File"}</span>
+                                                    <input
+                                                        type="file"
+                                                        accept="image/*"
+                                                        onChange={handleImageUpload}
+                                                        disabled={uploadingImage}
+                                                        className="hidden"
+                                                    />
+                                                </label>
+                                                <span className="text-xs text-gray-400">or</span>
+                                                <input
+                                                    type="url"
+                                                    value={featuredImageUrl}
+                                                    onChange={(e) => setFeaturedImageUrl(e.target.value)}
+                                                    placeholder="Paste Image URL..."
+                                                    className="rounded-lg border border-gray-300 px-3 py-1.5 text-xs focus:border-black focus:outline-none"
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Article Title Input */}
+                                <div>
+                                    <textarea
+                                        rows={1}
+                                        value={title}
+                                        onChange={(e) => setTitle(e.target.value)}
+                                        placeholder="Article Title..."
+                                        className="w-full resize-none bg-transparent font-serif text-3xl font-bold tracking-tight text-gray-900 placeholder-gray-300 focus:outline-none sm:text-4xl"
+                                    />
+                                </div>
+
+                                {/* Excerpt Subtitle Input */}
+                                <div>
+                                    <textarea
+                                        rows={2}
+                                        value={excerpt}
+                                        onChange={(e) => setExcerpt(e.target.value)}
+                                        placeholder="Add a subtitle or brief overview excerpt..."
+                                        className="w-full resize-none bg-transparent text-lg text-gray-600 placeholder-gray-300 focus:outline-none"
+                                    />
+                                </div>
+
+                                {/* Floating / Sticky WYSIWYG Formatting Toolbar */}
+                                <div className="sticky top-16 z-30 pt-2 pb-1">
+                                    <WpEditorToolbar onInsertText={handleInsertText} />
+                                </div>
+
+                                {/* Markdown Content Body Editor */}
+                                <div>
+                                    <textarea
+                                        ref={textareaRef}
+                                        rows={18}
+                                        value={markdown}
+                                        onChange={(e) => setMarkdown(e.target.value)}
+                                        placeholder="Start writing your article content in Markdown format..."
+                                        className="w-full rounded-2xl border border-gray-200 bg-white p-5 font-mono text-sm leading-relaxed text-gray-800 focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+                                    />
+                                </div>
+                            </div>
+                        ) : (
+                            /* Live Article Preview Tab */
+                            <div className="rounded-2xl border border-gray-200 bg-white p-6 sm:p-10 shadow-sm space-y-6">
+                                <div className="border-b border-gray-100 pb-4 flex items-center justify-between">
+                                    <span className="text-xs font-bold uppercase tracking-wider text-gray-400">Live Reader Preview</span>
+                                    <span className="text-xs text-gray-500">{readingTimeMinutes} min read</span>
+                                </div>
+
+                                {featuredImageUrl && (
+                                    <figure className="relative aspect-[16/9] w-full overflow-hidden rounded-xl">
+                                        <img src={featuredImageUrl} alt={title} className="h-full w-full object-cover" />
+                                    </figure>
+                                )}
+
+                                <h1 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-gray-900">
+                                    {title || "Untitled Article"}
+                                </h1>
+
+                                {excerpt && (
+                                    <p className="text-lg text-gray-600 leading-relaxed italic border-l-2 border-black pl-4">
+                                        {excerpt}
+                                    </p>
+                                )}
+
+                                <div className="prose prose-zinc max-w-none text-base leading-relaxed text-gray-800 border-t border-gray-100 pt-6">
+                                    <div dangerouslySetInnerHTML={{ __html: markdownToHtml(markdown) }} />
+                                </div>
+                            </div>
+                        )}
                     </div>
+                </main>
 
-                    <div>
-                        <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider">Markdown Body *</label>
-                        <textarea
-                            rows={14}
-                            required
-                            value={markdown}
-                            onChange={(e) => setMarkdown(e.target.value)}
-                            placeholder="## Section Title&#10;&#10;Write your article content in markdown format..."
-                            className="mt-1 block w-full font-mono rounded-xl border border-gray-300 px-4 py-3 text-sm leading-relaxed focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
-                        />
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
-                        <div>
-                            <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider">Categories</label>
-                            <select
-                                multiple
-                                value={selectedCategories}
-                                onChange={(e) =>
-                                    setSelectedCategories(Array.from(e.target.selectedOptions, (opt) => opt.value))
-                                }
-                                className="mt-1 block w-full rounded-xl border border-gray-300 px-3 py-2 text-xs h-28 focus:border-black focus:outline-none"
-                            >
-                                {allCategories.map((cat) => (
-                                    <option key={cat.id || cat._id} value={cat.id || cat._id}>
-                                        {cat.name}
-                                    </option>
-                                ))}
-                            </select>
-                            <p className="mt-1 text-[11px] text-gray-400">Hold Ctrl/Cmd to pick multiple</p>
-                        </div>
-
-                        <div>
-                            <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider">Tags</label>
-                            <select
-                                multiple
-                                value={selectedTags}
-                                onChange={(e) =>
-                                    setSelectedTags(Array.from(e.target.selectedOptions, (opt) => opt.value))
-                                }
-                                className="mt-1 block w-full rounded-xl border border-gray-300 px-3 py-2 text-xs h-28 focus:border-black focus:outline-none"
-                            >
-                                {allTags.map((tag) => (
-                                    <option key={tag.id || tag._id} value={tag.id || tag._id}>
-                                        #{tag.name}
-                                    </option>
-                                ))}
-                            </select>
-                            <p className="mt-1 text-[11px] text-gray-400">Hold Ctrl/Cmd to pick multiple</p>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <div className="flex items-center space-x-4">
-                            <label className="text-xs font-semibold text-gray-700">Status:</label>
-                            <select
-                                value={status}
-                                onChange={(e) => setStatus(e.target.value as "draft" | "published")}
-                                className="rounded-xl border border-gray-300 px-3 py-1.5 text-xs focus:border-black focus:outline-none"
-                            >
-                                <option value="published">Published</option>
-                                <option value="draft">Draft</option>
-                            </select>
-                        </div>
-
-                        <button
-                            type="submit"
-                            disabled={submitting}
-                            className="rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white hover:bg-gray-800 disabled:opacity-50 transition-colors"
-                        >
-                            {submitting ? "Publishing..." : "Publish Article"}
-                        </button>
-                    </div>
-                </form>
+                {/* Gutenberg Side Inspector Drawer */}
+                <WpEditorSidebar
+                    isOpen={isSidebarOpen}
+                    onClose={() => setIsSidebarOpen(false)}
+                    status={status}
+                    onChangeStatus={setStatus}
+                    visibility={visibility}
+                    onChangeVisibility={setVisibility}
+                    categories={allCategories}
+                    selectedCategories={selectedCategories}
+                    onChangeCategories={setSelectedCategories}
+                    tags={allTags}
+                    selectedTags={selectedTags}
+                    onChangeTags={setSelectedTags}
+                    metaTitle={metaTitle}
+                    onChangeMetaTitle={setMetaTitle}
+                    metaDescription={metaDescription}
+                    onChangeMetaDescription={setMetaDescription}
+                    title={title}
+                    excerpt={excerpt}
+                    slug={slug}
+                    onRefreshTaxonomies={() => {
+                        blogApi.getCategories().then((res) => setAllCategories(res.data)).catch(() => {})
+                        blogApi.getTags().then((res) => setAllTags(res.data)).catch(() => {})
+                    }}
+                />
             </div>
         </div>
     )
