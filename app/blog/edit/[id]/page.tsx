@@ -183,6 +183,16 @@ export default function EditBlogPage({ params }: EditPageProps) {
             })
 
             setSuccessMessage("Article updated successfully!")
+
+            if (status === "published" && visibility === "public") {
+                const articleSlug = title.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")
+                fetch("/api/indexnow", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ urls: [`https://bookby247.com/blog/${articleSlug}`] }),
+                }).catch(() => {})
+            }
+
             setTimeout(() => {
                 router.push("/blog")
             }, 1200)

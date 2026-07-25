@@ -153,6 +153,15 @@ export default function CreateBlogPage() {
             })
 
             setSuccessMessage("Article published successfully!")
+
+            if (response.data?.slug && status === "published" && visibility === "public") {
+                fetch("/api/indexnow", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ urls: [`https://bookby247.com/blog/${response.data.slug}`] }),
+                }).catch(() => {})
+            }
+
             setTimeout(() => {
                 router.push(`/blog/${response.data.slug}`)
             }, 1200)
