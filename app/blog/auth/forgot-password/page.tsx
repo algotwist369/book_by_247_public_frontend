@@ -20,10 +20,10 @@ export default function ForgotPasswordPage() {
         try {
             await forgotPassword(email)
             setStatus("success")
-            setMessage("If an account exists for this email, password reset instructions have been sent.")
+            setMessage(`Password reset link sent! If an account is registered with ${email}, you will receive an email shortly with reset instructions. Please check your inbox and spam folder.`)
         } catch (err: any) {
             setStatus("error")
-            setMessage(err.message || "Failed to send reset email. Please try again.")
+            setMessage(err.message || "Unable to send password reset email right now. Please check your network connection and try again.")
         }
     }
 
