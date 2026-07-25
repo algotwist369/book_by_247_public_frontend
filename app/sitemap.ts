@@ -3,7 +3,8 @@ import { businessApi } from "@/api/public/business";
 import { blogApi } from "@/api/public/blog";
 import { publicRoutes, toAbsoluteUrl } from "@/lib/seo-config";
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 type SitemapBusiness = {
   slug: string;
