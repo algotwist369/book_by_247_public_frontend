@@ -46,11 +46,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             canonical: `/tags/${slug}`,
         },
         robots: {
-            index: false,
+            index: true,
             follow: true,
             googleBot: {
-                index: false,
+                index: true,
                 follow: true,
+                'max-image-preview': 'large',
             },
         },
         openGraph: {
