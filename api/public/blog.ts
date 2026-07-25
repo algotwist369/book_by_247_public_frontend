@@ -205,6 +205,22 @@ export const blogApi = {
             body: JSON.stringify({ reason }),
         })),
 
+    listUsers: (query?: { role?: string; page?: number; limit?: number }) =>
+        apiClient<ApiResponse<BlogAuthor[]>>(`/users${query ? `?${new URLSearchParams(query as any).toString()}` : ""}`, withBlogAuth({
+            cache: "no-store",
+        })),
+
+    updateUserRole: (id: string, payload: { role?: string; authorRequestStatus?: string }) =>
+        apiClient<ApiResponse<BlogAuthor>>(`/users/${id}/role`, withBlogAuth({
+            method: "PATCH",
+            body: JSON.stringify(payload),
+        })),
+
+    getAdminDashboard: () =>
+        apiClient<ApiResponse<{ counts: { blogs: number; pendingComments: number; subscribers: number }; analytics: any }>>("/admin/dashboard", withBlogAuth({
+            cache: "no-store",
+        })),
+
     createBlog: (payload: CreateBlogPayload) =>
         apiClient<ApiResponse<BlogArticle>>("/blogs", withBlogAuth({
             method: "POST",
