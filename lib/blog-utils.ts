@@ -51,6 +51,8 @@ export const markdownToHtml = (markdown = "") => {
     const lines = markdown.split(/\r?\n/)
     const html: string[] = []
     let inList = false
+    let inCodeBlock = false
+    let codeBuffer: string[] = []
 
     const closeList = () => {
         if (inList) {
@@ -61,6 +63,24 @@ export const markdownToHtml = (markdown = "") => {
 
     for (const rawLine of lines) {
         const line = rawLine.trim()
+
+        if (line.startsWith("```")) {
+            closeList()
+            if (inCodeBlock) {
+                html.push(`<pre class="my-6 rounded-2xl bg-zinc-950 p-4 text-xs font-mono text-zinc-100 overflow-x-auto shadow-sm"><code>${escapeHtml(codeBuffer.join("\n"))}</code></pre>`)
+                codeBuffer = []
+                inCodeBlock = false
+            } else {
+                inCodeBlock = true
+            }
+            continue
+        }
+
+        if (inCodeBlock) {
+            codeBuffer.push(rawLine)
+            continue
+        }
+
         if (!line) {
             closeList()
             continue
@@ -72,37 +92,60 @@ export const markdownToHtml = (markdown = "") => {
             continue
         }
 
+        // Image match: ![alt](url)
+        const imgMatch = /^!\[(.*?)\]\((.*?)\)$/.exec(line)
+        if (imgMatch) {
+            closeList()
+            const alt = escapeHtml(imgMatch[1] || "Article Image")
+            const src = imgMatch[2]
+            html.push(`
+                <figure className="my-8 overflow-hidden rounded-2xl border border-zinc-200/80 bg-zinc-50 shadow-sm">
+                    <img src="${src}" alt="${alt}" class="w-full h-auto max-h-[550px] object-cover" />
+                    ${alt ? `<figcaption class="p-3 text-center text-xs font-medium text-zinc-500 italic border-t border-zinc-100">${alt}</figcaption>` : ""}
+                </figure>
+            `)
+            continue
+        }
+
         if (line.startsWith("### ")) {
             closeList()
-            html.push(`<h3 id="${slugifyText(line.slice(4))}" class="mt-8 text-xl font-bold text-zinc-950">${inlineMarkdown(line.slice(4))}</h3>`)
+            html.push(`<h3 id="${slugifyText(line.slice(4))}" class="mt-8 text-xl font-bold tracking-tight text-zinc-950">${inlineMarkdown(line.slice(4))}</h3>`)
             continue
         }
         if (line.startsWith("## ")) {
             closeList()
-            html.push(`<h2 id="${slugifyText(line.slice(3))}" class="mt-10 text-2xl font-bold text-zinc-950">${inlineMarkdown(line.slice(3))}</h2>`)
+            html.push(`<h2 id="${slugifyText(line.slice(3))}" class="mt-10 text-2xl font-bold tracking-tight text-zinc-950">${inlineMarkdown(line.slice(3))}</h2>`)
             continue
         }
         if (line.startsWith("# ")) {
             closeList()
-            html.push(`<h1 id="${slugifyText(line.slice(2))}" class="mt-10 text-3xl font-bold text-zinc-950">${inlineMarkdown(line.slice(2))}</h1>`)
+            html.push(`<h1 id="${slugifyText(line.slice(2))}" class="mt-10 text-3xl font-bold tracking-tight text-zinc-950">${inlineMarkdown(line.slice(2))}</h1>`)
             continue
         }
         if (line.startsWith("- ") || line.startsWith("* ")) {
             if (!inList) {
-                html.push('<ul class="my-6 list-disc space-y-2 pl-6 text-zinc-700">')
+                html.push('<ul class="my-6 list-disc space-y-2.5 pl-6 text-zinc-700 font-medium">')
                 inList = true
             }
             html.push(`<li>${inlineMarkdown(line.slice(2))}</li>`)
             continue
         }
+
+        // Callout box match: > 💡 or > Pro Tip
+        if (line.startsWith("> 💡") || line.startsWith("> Pro Tip") || line.startsWith("> Note:")) {
+            closeList()
+            html.push(`<div class="my-6 flex gap-3 rounded-2xl border border-amber-200 bg-amber-50/80 p-4 text-sm font-medium text-amber-950 leading-relaxed shadow-xs">${inlineMarkdown(line.slice(2))}</div>`)
+            continue
+        }
+
         if (line.startsWith("> ")) {
             closeList()
-            html.push(`<blockquote class="my-6 border-l-4 border-zinc-900 pl-4 italic text-zinc-600">${inlineMarkdown(line.slice(2))}</blockquote>`)
+            html.push(`<blockquote class="my-6 border-l-4 border-zinc-900 pl-4 py-1 italic font-serif text-lg text-zinc-700">${inlineMarkdown(line.slice(2))}</blockquote>`)
             continue
         }
 
         closeList()
-        html.push(`<p class="text-base leading-8 text-zinc-700">${inlineMarkdown(line)}</p>`)
+        html.push(`<p class="text-base leading-8 text-zinc-700 font-normal">${inlineMarkdown(line)}</p>`)
     }
 
     closeList()
