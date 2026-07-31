@@ -17,6 +17,8 @@ interface SearchBarProps {
     locationValue?: string
     onLocationChange?: (value: string) => void
     onSearch?: (q?: string, loc?: string) => void
+    onInputClick?: () => void
+    redirectOnClick?: boolean
 }
 
 export const SearchBar: React.FC<SearchBarProps> = ({
@@ -26,7 +28,9 @@ export const SearchBar: React.FC<SearchBarProps> = ({
     onChange,
     locationValue = "",
     onLocationChange,
-    onSearch
+    onSearch,
+    onInputClick,
+    redirectOnClick = false
 }) => {
     const [showSuggestions, setShowSuggestions] = React.useState(false);
     const [localLocation, setLocalLocation] = React.useState(locationValue);
@@ -46,6 +50,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
     const handleNearbyClick = (e: React.MouseEvent) => {
         e.preventDefault();
+        e.stopPropagation();
         setShowLocationModal(true);
     };
 
@@ -69,6 +74,13 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         onSearch?.(value, val);
     };
 
+    const handleContainerClick = (e: React.MouseEvent) => {
+        if (redirectOnClick && onInputClick) {
+            e.preventDefault();
+            onInputClick();
+        }
+    };
+
     return (
         <div className="relative w-full px-6 md:px-0">
             {/* ── Desktop: horizontal pill ── */}
@@ -76,11 +88,18 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 className={cn(
                     "hidden md:flex items-center w-full bg-white border border-zinc-200 rounded-full",
                     isCompact ? "max-w-3xl" : "max-w-5xl",
+                    redirectOnClick && "cursor-pointer",
                     className
                 )}
+                onClick={handleContainerClick}
             >
                 {/* Search input */}
-                <div className="flex-[1.5] flex items-center gap-2 px-4 border-r border-zinc-200 h-14">
+                <div
+                    className={cn(
+                        "flex-[1.5] flex items-center gap-2 px-4 border-r border-zinc-200 h-14",
+                        redirectOnClick && "cursor-pointer"
+                    )}
+                >
                     <Search className="w-4 h-4 text-zinc-400 shrink-0" />
                     <input
                         id="desktop-search-input"
@@ -89,12 +108,24 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                         placeholder={isCompact ? "What are you looking for?" : "Search hair salon, spa, beauty parlour, bridal makeup...t"}
                         value={value}
                         onChange={onChange}
+                        readOnly={redirectOnClick}
+                        onClick={handleContainerClick}
+                        onFocus={(e) => {
+                            if (redirectOnClick && onInputClick) {
+                                e.target.blur();
+                                onInputClick();
+                            }
+                        }}
                         onKeyDown={(e) => e.key === 'Enter' && onSearch?.(value, localLocation)}
-                        className="w-full h-full bg-transparent text-sm text-zinc-900 placeholder:text-zinc-400 outline-none border-none"
+                        className={cn(
+                            "w-full h-full bg-transparent text-sm text-zinc-900 placeholder:text-zinc-400 outline-none border-none",
+                            redirectOnClick && "cursor-pointer"
+                        )}
                     />
                     {value && (
                         <button
-                            onClick={() => {
+                            onClick={(e) => {
+                                e.stopPropagation();
                                 onChange?.({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>);
                                 onSearch?.('', localLocation);
                             }}
@@ -107,7 +138,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 </div>
 
                 {/* Location input */}
-                <div className="flex-1 relative flex items-center gap-2 px-4 h-14">
+                <div
+                    className={cn(
+                        "flex-1 relative flex items-center gap-2 px-4 h-14",
+                        redirectOnClick && "cursor-pointer"
+                    )}
+                >
                     <MapPin className="w-4 h-4 text-zinc-400 shrink-0" />
                     <input
                         id="desktop-location-input"
@@ -116,14 +152,26 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                         placeholder="Enter your city or area (e.g., Mumbai, Delhi)"
                         value={localLocation}
                         onChange={handleLocationChange}
-                        onFocus={() => setShowSuggestions(true)}
+                        readOnly={redirectOnClick}
+                        onClick={handleContainerClick}
+                        onFocus={(e) => {
+                            if (redirectOnClick && onInputClick) {
+                                e.target.blur();
+                                onInputClick();
+                            } else {
+                                setShowSuggestions(true);
+                            }
+                        }}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 setShowSuggestions(false);
                                 onSearch?.(value, localLocation);
                             }
                         }}
-                        className="w-full h-full bg-transparent text-sm text-zinc-900 placeholder:text-zinc-400 outline-none border-none"
+                        className={cn(
+                            "w-full h-full bg-transparent text-sm text-zinc-900 placeholder:text-zinc-400 outline-none border-none",
+                            redirectOnClick && "cursor-pointer"
+                        )}
                     />
                     {/* Near Me button */}
                     <button
@@ -148,7 +196,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                     )}
 
                     {/* Desktop suggestions */}
-                    {showSuggestions && (suggestions?.length > 0 || isLoading) && (
+                    {!redirectOnClick && showSuggestions && (suggestions?.length > 0 || isLoading) && (
                         <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-zinc-200 rounded-xl z-50 overflow-hidden">
                             {isLoading ? (
                                 <div className="px-4 py-3 text-sm text-zinc-400">Searching...</div>
@@ -174,7 +222,14 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 {/* Search button */}
                 <div className="px-2 py-2">
                     <button
-                        onClick={() => onSearch?.(value, localLocation)}
+                        onClick={(e) => {
+                            if (redirectOnClick && onInputClick) {
+                                e.stopPropagation();
+                                onInputClick();
+                            } else {
+                                onSearch?.(value, localLocation);
+                            }
+                        }}
                         className={cn(
                             "bg-black text-white text-sm font-semibold rounded-full transition-all active:scale-95 flex items-center justify-center shrink-0",
                             isCompact ? "w-10 h-10 p-0" : "px-6 h-10"
@@ -186,9 +241,21 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             </div>
 
             {/* ── Mobile: vertical stack ── */}
-            <div className={cn("flex md:hidden flex-col w-full bg-white border border-zinc-200 rounded-2xl p-3 gap-2", className)}>
+            <div
+                className={cn(
+                    "flex md:hidden flex-col w-full bg-white border border-zinc-200 rounded-2xl p-3 gap-2",
+                    redirectOnClick && "cursor-pointer",
+                    className
+                )}
+                onClick={handleContainerClick}
+            >
                 {/* Search */}
-                <div className="flex items-center gap-2 border border-zinc-200 rounded-xl px-3 h-11">
+                <div
+                    className={cn(
+                        "flex items-center gap-2 border border-zinc-200 rounded-xl px-3 h-11",
+                        redirectOnClick && "cursor-pointer"
+                    )}
+                >
                     <Search className="w-4 h-4 text-zinc-400 shrink-0" />
                     <input
                         id="mobile-search-input"
@@ -197,12 +264,24 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                         placeholder="Search services..."
                         value={value}
                         onChange={onChange}
+                        readOnly={redirectOnClick}
+                        onClick={handleContainerClick}
+                        onFocus={(e) => {
+                            if (redirectOnClick && onInputClick) {
+                                e.target.blur();
+                                onInputClick();
+                            }
+                        }}
                         onKeyDown={(e) => e.key === 'Enter' && onSearch?.()}
-                        className="flex-1 bg-transparent text-sm text-zinc-900 placeholder:text-zinc-400 outline-none border-none"
+                        className={cn(
+                            "flex-1 bg-transparent text-sm text-zinc-900 placeholder:text-zinc-400 outline-none border-none",
+                            redirectOnClick && "cursor-pointer"
+                        )}
                     />
                     {value && (
                         <button
-                            onClick={() => {
+                            onClick={(e) => {
+                                e.stopPropagation();
                                 onChange?.({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>);
                                 onSearch?.('', localLocation);
                             }}
@@ -214,7 +293,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
                 {/* Location */}
                 <div className="relative">
-                    <div className="flex items-center gap-2 border border-zinc-200 rounded-xl px-3 h-11">
+                    <div
+                        className={cn(
+                            "flex items-center gap-2 border border-zinc-200 rounded-xl px-3 h-11",
+                            redirectOnClick && "cursor-pointer"
+                        )}
+                    >
                         <MapPin className="w-4 h-4 text-zinc-400 shrink-0" />
                         <input
                             id="mobile-location-input"
@@ -223,14 +307,26 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                             placeholder="Location"
                             value={localLocation}
                             onChange={handleLocationChange}
-                            onFocus={() => setShowSuggestions(true)}
+                            readOnly={redirectOnClick}
+                            onClick={handleContainerClick}
+                            onFocus={(e) => {
+                                if (redirectOnClick && onInputClick) {
+                                    e.target.blur();
+                                    onInputClick();
+                                } else {
+                                    setShowSuggestions(true);
+                                }
+                            }}
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
                                     setShowSuggestions(false);
                                     onSearch?.(value, localLocation);
                                 }
                             }}
-                            className="flex-1 bg-transparent text-sm text-zinc-900 placeholder:text-zinc-400 outline-none border-none"
+                            className={cn(
+                                "flex-1 bg-transparent text-sm text-zinc-900 placeholder:text-zinc-400 outline-none border-none",
+                                redirectOnClick && "cursor-pointer"
+                            )}
                         />
                         {/* Near Me (Mobile) */}
                         <button
@@ -255,7 +351,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                     )}
 
                     {/* Mobile suggestions */}
-                    {showSuggestions && suggestions?.length > 0 && (
+                    {!redirectOnClick && showSuggestions && suggestions?.length > 0 && (
                         <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-zinc-200 rounded-xl z-50 max-h-52 overflow-y-auto">
                             {suggestions.map((s: any, idx: number) => (
                                 <button
@@ -276,7 +372,14 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
                 {/* Search button */}
                 <button
-                    onClick={() => onSearch?.(value, localLocation)}
+                    onClick={(e) => {
+                        if (redirectOnClick && onInputClick) {
+                            e.stopPropagation();
+                            onInputClick();
+                        } else {
+                            onSearch?.(value, localLocation);
+                        }
+                    }}
                     className="w-full bg-black text-white text-sm font-semibold rounded-xl h-11"
                 >
                     Search

@@ -114,7 +114,14 @@ export const businessApi = {
      */
     searchBusinesses: async (params: any) => {
         const queryParams = new URLSearchParams();
-        Object.entries(params).forEach(([key, value]) => {
+        const safeParams = { ...params };
+        // Cap limit to max 20 to prevent backend query timeouts
+        if (safeParams.limit) {
+            safeParams.limit = Math.min(Number(safeParams.limit) || 16, 20);
+        } else {
+            safeParams.limit = 16;
+        }
+        Object.entries(safeParams).forEach(([key, value]) => {
             if (value !== undefined && value !== null && value !== '') {
                 queryParams.append(key, String(value));
             }

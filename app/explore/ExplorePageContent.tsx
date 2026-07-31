@@ -405,60 +405,45 @@ const ExplorePageContent: React.FC<ExplorePageContentProps> = ({ initialData, ta
                         </div>
                     </div>
                 ) : (
-                    /* Premium Hero Header Banner Card when Map is closed */
-                    <div className="relative overflow-hidden rounded-3xl border border-zinc-100 bg-linear-to-r from-zinc-50/80 via-white to-zinc-50/50 p-6 sm:p-8 md:p-10 mb-8 flex flex-col justify-between items-start gap-6 shadow-xs">
-                        {/* Spa Faded Background Image */}
-                        <div className="absolute right-0 top-0 bottom-0 w-full lg:w-1/2 opacity-15 lg:opacity-30 pointer-events-none z-0">
-                            <div className="absolute inset-0 bg-gradient-to-r from-zinc-50 via-white/80 to-transparent z-10" />
+                    /* Premium Hero Header Banner Card - Desktop Only (Hidden on Mobile) */
+                    <div className="hidden lg:flex relative overflow-hidden rounded-3xl bg-black p-8 sm:p-10 md:p-12 mb-8 flex-col items-center text-center justify-center gap-6 shadow-xl border border-zinc-800">
+                        {/* Dark Overlay & Background Image Layer */}
+                        <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
                             <img
-                                src="https://res.cloudinary.com/dxpxcptn4/image/upload/v1781774213/Book_Now_1_firrpj.png"
+                                src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1600"
                                 alt="Spa wellness background banner"
-                                className="w-full h-full object-cover object-right"
+                                className="w-full h-full object-cover opacity-45"
                             />
+                            {/* Double Layer Black Overlay for 100% Readable Text */}
+                            <div className="absolute inset-0 bg-black/65 z-10" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/30 z-10" />
                         </div>
 
-                        {/* Content */}
-                        <div className="relative z-10 flex-1 space-y-6 w-full">
-                            <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
-                                <div className="space-y-2">
-                                    <div className="flex items-center gap-3 flex-wrap">
-                                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-zinc-900 tracking-tight leading-tight">
-                                            {tagName ? `Best ${tagName}` : "Best Wellness Centers"}
-                                            {(committedLocation || locationQuery) && (
-                                                <>
-                                                    {" in "}
-                                                    <span className="text-amber-800 font-serif italic font-normal">
-                                                        {committedLocation || locationQuery}
-                                                    </span>
-                                                </>
-                                            )}
-                                        </h1>
-                                        {(activeLat && activeLng) && (
-                                            <div className="flex items-center gap-1.5 px-3 py-1 bg-black/10 text-black rounded-full text-[10px] font-bold h-fit mt-1.5">
-                                                <MapPin className="w-3 h-3" />
-                                                <span>NEARBY</span>
-                                            </div>
-                                        )}
-                                    </div>
-                                    <p className="text-zinc-500 text-sm sm:text-base font-medium max-w-2xl">
-                                        {tagName
-                                            ? `Discover top-rated ${tagName} services near you`
-                                            : "Find your perfect spa or salon experience"}
-                                    </p>
-                                </div>
-
-                                {/* View on Map Button */}
-                                <button
-                                    onClick={() => setShowMap(true)}
-                                    className="hidden lg:flex items-center gap-2 bg-white border border-zinc-200 text-zinc-900 px-4 py-2.5 rounded-xl hover:bg-zinc-50 transition-all active:scale-95 shadow-sm text-xs font-bold uppercase tracking-wider shrink-0"
-                                >
-                                    <Map className="w-4 h-4" />
-                                    <span>View on Map</span>
-                                </button>
+                        {/* Content Container */}
+                        <div className="relative z-20 flex flex-col items-center text-center space-y-4 max-w-4xl mx-auto w-full">
+                            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/70 border border-white/20 text-white text-xs font-bold backdrop-blur-md shadow-md">
+                                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                                <span>Instant Online Booking • 5,000+ Verified Partners</span>
                             </div>
 
-                            {/* Desktop Search Bar inside Hero */}
-                            <div className="hidden lg:block max-w-3xl">
+                            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight drop-shadow-md">
+                                {tagName ? `Discover Best ${tagName}` : "Discover Best Wellness Centers"}
+                                {(committedLocation || locationQuery) && (
+                                    <>
+                                        {" in "}
+                                        <span className="text-amber-300 font-serif italic font-normal">
+                                            {committedLocation || locationQuery}
+                                        </span>
+                                    </>
+                                )}
+                            </h1>
+
+                            <p className="text-zinc-200 text-sm sm:text-base font-semibold max-w-2xl drop-shadow-sm">
+                                Explore top-rated verified spas, salons, and beauty parlours near you. Compare services & book online instantly.
+                            </p>
+
+                            {/* Desktop & Tablet Search Bar inside Hero */}
+                            <div className="w-full max-w-3xl pt-2">
                                 <SearchBar
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}

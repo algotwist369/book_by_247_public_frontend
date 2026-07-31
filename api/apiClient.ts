@@ -8,6 +8,10 @@ export interface ApiClientOptions extends RequestInit {
     includeAttribution?: boolean
     /** Called when the server returns 401 and a Bearer token was sent (e.g., expired session). */
     onUnauthorized?: () => void
+    next?: {
+        revalidate?: number | false
+        tags?: string[]
+    }
 }
 
 const DEFAULT_API_BASE_URL = getPublicApiBaseUrl()
@@ -116,11 +120,16 @@ export async function apiClient<T>(
     }
 
     try {
-        response = await fetch(url, {
+        const fetchOptions: RequestInit & { next?: { revalidate?: number | false; tags?: string[] } } = {
             ...requestInit,
             headers,
             cache: requestInit.cache || "default",
-        })
+            signal: requestInit.signal || AbortSignal.timeout(30000),
+        }
+        if (options.next) {
+            fetchOptions.next = options.next
+        }
+        response = await fetch(url, fetchOptions)
     } catch (error) {
         console.error(`[apiClient] Network error -> ${url}`, error)
         throw new Error("Network error: Unable to reach server")

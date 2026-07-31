@@ -43,16 +43,17 @@ type HomeBusinessResponse = {
 };
 
 export default async function Home() {
-  // Fetch initial data for SSR
-  const initialBusinessData = await businessApi.getPublicBusinesses({ limit: 16 }).catch((err) => {
-    console.error("Home page data fetch error:", err);
-    return null;
-  });
-
-  const seoTagsData = await businessApi.getSeoTags().catch((err) => {
-    console.error("SEO tags data fetch error:", err);
-    return null;
-  });
+  // Fetch initial data for SSR concurrently in parallel
+  const [initialBusinessData, seoTagsData] = await Promise.all([
+    businessApi.getPublicBusinesses({ limit: 16 }).catch((err) => {
+      console.error("Home page data fetch error:", err);
+      return null;
+    }),
+    businessApi.getSeoTags().catch((err) => {
+      console.error("SEO tags data fetch error:", err);
+      return null;
+    })
+  ]);
 
   const homeBusinessResponse = initialBusinessData as HomeBusinessResponse | null;
   const businesses = homeBusinessResponse?.businesses || homeBusinessResponse?.data || [];

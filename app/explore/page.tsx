@@ -39,10 +39,14 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
 
 export default async function ExplorePage({ searchParams }: PageProps) {
     const params = await searchParams;
+    const safeLimit = params.limit ? Math.min(Number(params.limit) || 8, 12) : 8;
     const response = await businessApi.searchBusinesses({
         ...params,
-        limit: 100
-    }).catch(() => null);
+        limit: safeLimit
+    }).catch((err) => {
+        console.warn("[ExplorePage SSR] Initial fetch timed out or failed, client will fetch data:", err);
+        return null;
+    });
 
     const data = (response as any)?.data || (response as any)?.payload?.decryptedData || response || {};
     const rawBusinesses = data.results || data.businesses || [];

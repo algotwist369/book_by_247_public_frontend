@@ -42,10 +42,10 @@ const ExploreBusinessList = ({
 
     return (
         <div className="flex flex-col gap-6">
-            {/* Grid */}
-            <div className={`grid grid-cols-1 ${isFullWidth ? 'xl:grid-cols-2' : ''} gap-4 sm:gap-5 lg:gap-8`}>
+            {/* 3-Column Desktop Grid matching Mockup Image 2 */}
+            <div className={`grid grid-cols-1 md:grid-cols-2 ${isFullWidth ? 'lg:grid-cols-3' : 'lg:grid-cols-2'} gap-6`}>
                 {businesses.map((business, index) => (
-                    <div key={`${business.id}-${index}`} className="min-w-0">
+                    <div key={`${business.id}-${index}`} className="min-w-0 flex">
                         <ExploreBusinessCard business={business} index={index} />
                     </div>
                 ))}
