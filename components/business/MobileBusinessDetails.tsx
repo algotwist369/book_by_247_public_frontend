@@ -66,10 +66,10 @@ export default function MobileBusinessDetails({
             duration: option.duration || s.duration || 60,
             price: option.price || s.price || s.sale_price || 0
         };
-    }).filter(s => s.name && s.price > 0);
+    }).filter((s: { name?: string; price?: number }) => Boolean(s.name && s.price && s.price > 0));
 
     const displayServices = realServices;
-    const minStartingPrice = displayServices.length > 0 ? Math.min(...displayServices.map(s => s.price)) : 0;
+    const minStartingPrice = displayServices.length > 0 ? Math.min(...displayServices.map((s: { price: number }) => s.price)) : 0;
 
     const handleShare = async () => {
         if (typeof window !== "undefined") {
@@ -149,7 +149,7 @@ export default function MobileBusinessDetails({
                 {/* Carousel Indicator Dots (Bottom Center) */}
                 {galleryImages.length > 1 && (
                     <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5">
-                        {galleryImages.slice(0, 5).map((_, idx) => (
+                        {galleryImages.slice(0, 5).map((_img: string, idx: number) => (
                             <button
                                 key={idx}
                                 onClick={() => setActivePhotoIdx(idx)}
@@ -244,7 +244,7 @@ export default function MobileBusinessDetails({
                 <div className="px-4 py-3.5 border-t border-zinc-100 space-y-2 bg-white">
                     <h2 className="text-base font-bold text-zinc-900 mb-2">Services</h2>
                     <div className="divide-y divide-zinc-100">
-                        {displayServices.map((service, idx) => (
+                        {displayServices.map((service: any, idx: number) => (
                             <div
                                 key={idx}
                                 className="py-2.5 flex items-center justify-between gap-3 first:pt-0 last:pb-0"

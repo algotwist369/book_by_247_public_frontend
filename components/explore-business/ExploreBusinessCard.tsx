@@ -69,8 +69,9 @@ const ExploreBusinessCard = ({ business, index }: ExploreBusinessCardProps) => {
     const locationText = business.branch || business.address || business.city || "";
 
     // 100% Real Database Ratings & Review Counts (No Dummy Calculations)
-    const rawRating = Number(business.rating ?? business.averageRating ?? business.ratings?.average ?? 0);
-    const rawReviews = Number(business.reviews ?? business.totalReviews ?? business.ratings?.totalReviews ?? business.reviewCount ?? 0);
+    const bAny = business as any;
+    const rawRating = Number(bAny.rating ?? bAny.averageRating ?? bAny.ratings?.average ?? 0);
+    const rawReviews = Number(bAny.reviews ?? bAny.totalReviews ?? bAny.ratings?.totalReviews ?? bAny.reviewCount ?? 0);
 
     const hasRating = Number.isFinite(rawRating) && rawRating > 0;
     const ratingText = hasRating ? rawRating.toFixed(1) : null;
