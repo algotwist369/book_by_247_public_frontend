@@ -43,10 +43,7 @@ export default async function ExplorePage({ searchParams }: PageProps) {
     const response = await businessApi.searchBusinesses({
         ...params,
         limit: safeLimit
-    }).catch((err) => {
-        console.warn("[ExplorePage SSR] Initial fetch timed out or failed, client will fetch data:", err);
-        return null;
-    });
+    }).catch(() => null);
 
     const data = (response as any)?.data || (response as any)?.payload?.decryptedData || response || {};
     const rawBusinesses = data.results || data.businesses || [];

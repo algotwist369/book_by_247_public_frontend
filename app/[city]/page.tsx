@@ -96,22 +96,27 @@ export default async function CityPage({ params }: Props) {
     let rawBusinesses = [];
     let cityName = locationName;
 
-    if (isNearMe) {
-        const response = await businessApi.getNearMeBusinesses(city).catch(() => null);
-        rawBusinesses = (response as any)?.data || [];
-        cityName = (response as any)?.detected_city || "Near You";
-    } else if (categoryName) {
-        cityName = locationName;
-        const response = await businessApi.getSeoBusinesses({ 
-            city: locationName.toLowerCase().replace(/ /g, "-"), 
-            type: categoryName.toLowerCase().replace(/ /g, "-"),
-            limit: 20 
-        }).catch(() => null);
-        rawBusinesses = (response as any)?.data || (response as any)?.results || (response as any)?.businesses || [];
-    } else {
-        cityName = locationName;
-        const response = await businessApi.getSeoBusinesses({ city: city, limit: 20 }).catch(() => null);
-        rawBusinesses = (response as any)?.data || (response as any)?.results || (response as any)?.businesses || [];
+    try {
+        if (isNearMe) {
+            const response = await businessApi.getNearMeBusinesses(city).catch(() => null);
+            rawBusinesses = (response as any)?.data || [];
+            cityName = (response as any)?.detected_city || "Near You";
+        } else if (categoryName) {
+            cityName = locationName;
+            const response = await businessApi.getSeoBusinesses({ 
+                city: locationName.toLowerCase().replace(/ /g, "-"), 
+                type: categoryName.toLowerCase().replace(/ /g, "-"),
+                limit: 8 
+            }).catch(() => null);
+            rawBusinesses = (response as any)?.data || (response as any)?.results || (response as any)?.businesses || [];
+        } else {
+            cityName = locationName;
+            const response = await businessApi.getSeoBusinesses({ city: city, limit: 8 }).catch(() => null);
+            rawBusinesses = (response as any)?.data || (response as any)?.results || (response as any)?.businesses || [];
+        }
+    } catch (err) {
+        console.error(`[CityPage SSR] Failed to fetch businesses for ${city}`, err);
+        rawBusinesses = [];
     }
 
     const businesses = Array.isArray(rawBusinesses) ? rawBusinesses.map(normalizeBusiness) : [];
