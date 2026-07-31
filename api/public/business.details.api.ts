@@ -193,30 +193,32 @@ export interface ApiResponse<T> {
     message: string;
 }
 
+const NEXT_CACHE_OPTION = { next: { revalidate: 3600 } };
+
 export const businessDetailsApi = {
     getDetails: (slug: string) => 
-        apiClient<ApiResponse<BusinessDetails>>(`/v1/business/${slug}`),
+        apiClient<ApiResponse<BusinessDetails>>(`/v1/business/${slug}`, NEXT_CACHE_OPTION),
     
     getContacts: (slug: string) => 
-        apiClient<ApiResponse<BusinessContacts>>(`/v1/business/${slug}/contacts`),
+        apiClient<ApiResponse<BusinessContacts>>(`/v1/business/${slug}/contacts`, NEXT_CACHE_OPTION),
     
     getWorkingHours: (slug: string) => 
-        apiClient<ApiResponse<BusinessWorkingHours>>(`/v1/business/${slug}/working-hours`),
+        apiClient<ApiResponse<BusinessWorkingHours>>(`/v1/business/${slug}/working-hours`, NEXT_CACHE_OPTION),
     
     getSocialMedia: (slug: string) => 
-        apiClient<ApiResponse<BusinessSocialMedia>>(`/v1/business/${slug}/social-media`),
+        apiClient<ApiResponse<BusinessSocialMedia>>(`/v1/business/${slug}/social-media`, NEXT_CACHE_OPTION),
     
     getMedia: (slug: string) => 
-        apiClient<ApiResponse<BusinessMedia>>(`/v1/business/${slug}/media`),
+        apiClient<ApiResponse<BusinessMedia>>(`/v1/business/${slug}/media`, NEXT_CACHE_OPTION),
     
     getCategories: (slug: string) => 
-        apiClient<ApiResponse<BusinessCategories>>(`/v1/business/${slug}/categories`),
+        apiClient<ApiResponse<BusinessCategories>>(`/v1/business/${slug}/categories`, NEXT_CACHE_OPTION),
     
     getCapacity: (slug: string) => 
-        apiClient<ApiResponse<BusinessCapacity>>(`/v1/business/${slug}/capacity`),
+        apiClient<ApiResponse<BusinessCapacity>>(`/v1/business/${slug}/capacity`, NEXT_CACHE_OPTION),
     
     getServices: async (slug: string, page = 1, limit = 10) => {
-        const response = await apiClient<any>(`/v1/business/services/public/${slug}?page=${page}&limit=${limit}`);
+        const response = await apiClient<any>(`/v1/business/services/public/${slug}?page=${page}&limit=${limit}`, NEXT_CACHE_OPTION);
         const rawServices = Array.isArray(response?.data) ? response.data : [];
 
         const normalizedServices: BusinessService[] = rawServices.map((service: any) => {
@@ -256,10 +258,10 @@ export const businessDetailsApi = {
     },
     
     getSeo: (slug: string) => 
-        apiClient<ApiResponse<BusinessSeo>>(`/v1/business/${slug}/seo`),
+        apiClient<ApiResponse<BusinessSeo>>(`/v1/business/${slug}/seo`, NEXT_CACHE_OPTION),
     
     getReviews: (slug: string, page = 1, limit = 10) => 
-        apiClient<ApiResponse<BusinessReviewsResponse>>(`/v1/business/${slug}/reviews?page=${page}&limit=${limit}`),
+        apiClient<ApiResponse<BusinessReviewsResponse>>(`/v1/business/${slug}/reviews?page=${page}&limit=${limit}`, NEXT_CACHE_OPTION),
         
     submitReview: (slug: string, data: { customerName: string; rating: number; comment: string; email?: string; phone?: string }) =>
         apiClient<any>(`/v1/business/${slug}/reviews`, {

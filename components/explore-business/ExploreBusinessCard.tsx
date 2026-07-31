@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { CalendarDays, Phone, Star, MapPin, CheckCircle2 } from "lucide-react";
-import { FaWhatsapp, FaLocationArrow } from "react-icons/fa6";
+import { FaWhatsapp } from "react-icons/fa6";
 import { Business } from "@/components/business/businessData";
 import { CustomImage } from "../ui/CustomImage";
 
@@ -31,11 +31,6 @@ const getServicePills = (business: Business) => {
     const clean = raw.map(t => String(t).trim()).map(t => t.charAt(0).toUpperCase() + t.slice(1));
     const unique = Array.from(new Set(clean));
     return unique.length >= 2 ? unique.slice(0, 4) : [...unique, ...DEFAULT_SERVICE_PILLS].slice(0, 4);
-};
-
-const formatRating = (rating?: number) => {
-    const safeRating = Number.isFinite(Number(rating)) ? Number(rating) : 0;
-    return safeRating > 0 ? safeRating.toFixed(1) : "4.9";
 };
 
 const ExploreBusinessCard = ({ business, index }: ExploreBusinessCardProps) => {
@@ -71,8 +66,14 @@ const ExploreBusinessCard = ({ business, index }: ExploreBusinessCardProps) => {
         window.location.href = `${businessHref}/book-appointment`;
     };
 
-    const locationText = business.branch || business.address || business.city || "Indiranagar, Bengaluru";
-    const reviewCount = business.reviews || 120 + ((index + 1) * 7);
+    const locationText = business.branch || business.address || business.city || "";
+
+    // 100% Real Database Ratings & Review Counts (No Dummy Calculations)
+    const rawRating = Number(business.rating ?? business.averageRating ?? business.ratings?.average ?? 0);
+    const rawReviews = Number(business.reviews ?? business.totalReviews ?? business.ratings?.totalReviews ?? business.reviewCount ?? 0);
+
+    const hasRating = Number.isFinite(rawRating) && rawRating > 0;
+    const ratingText = hasRating ? rawRating.toFixed(1) : null;
 
     return (
         <article className="group w-full rounded-2xl border border-zinc-200 bg-white overflow-hidden shadow-xs hover:shadow-xl hover:border-zinc-300 transition-all duration-300 flex flex-col justify-between">
@@ -95,9 +96,13 @@ const ExploreBusinessCard = ({ business, index }: ExploreBusinessCardProps) => {
                 {/* Floating Rating Badge + Verified Icon (Top Right) */}
                 <div className="absolute top-3 right-3 z-10 flex items-center gap-1 rounded-full bg-white/95 px-2.5 py-1 text-xs font-bold text-zinc-900 shadow-md backdrop-blur-md">
                     <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400 shrink-0" />
-                    <span>{formatRating(business.rating)}</span>
-                    <span className="text-[10px] text-zinc-500 font-medium">({reviewCount}+)</span>
-                    <CheckCircle2 className="h-3.5 w-3.5 text-blue-500 fill-blue-500/20 shrink-0 ml-0.5" />
+                    <span>{ratingText ? ratingText : "New"}</span>
+                    {rawReviews > 0 && (
+                        <span className="text-[10px] text-zinc-500 font-medium">({rawReviews})</span>
+                    )}
+                    {hasRating && rawRating >= 4.0 && (
+                        <CheckCircle2 className="h-3.5 w-3.5 text-blue-500 fill-blue-500/20 shrink-0 ml-0.5" />
+                    )}
                 </div>
 
                 {/* Floating Distance Badge - Pixel-Perfect Match with Target Image 2 */}
@@ -124,10 +129,12 @@ const ExploreBusinessCard = ({ business, index }: ExploreBusinessCardProps) => {
                     </Link>
 
                     {/* Location Pin Line */}
-                    <div className="flex items-center gap-1.5 text-xs font-medium text-zinc-500 truncate">
-                        <MapPin className="h-3.5 w-3.5 text-zinc-400 shrink-0" />
-                        <span className="truncate">{locationText}</span>
-                    </div>
+                    {locationText && (
+                        <div className="flex items-center gap-1.5 text-xs font-medium text-zinc-500 truncate">
+                            <MapPin className="h-3.5 w-3.5 text-zinc-400 shrink-0" />
+                            <span className="truncate">{locationText}</span>
+                        </div>
+                    )}
 
                     {/* Service Pills Row */}
                     <div className="flex flex-wrap items-center gap-1.5 pt-1">
@@ -142,7 +149,7 @@ const ExploreBusinessCard = ({ business, index }: ExploreBusinessCardProps) => {
                     </div>
                 </div>
 
-                {/* Buttons Row - Solid Black BOOK NOW, WhatsApp (WA), and Call */}
+                {/* Buttons Row - Solid Black BOOK NOW, Shaking WhatsApp (WA), and Shaking Call */}
                 <div className="flex items-center gap-2 pt-3 border-t border-zinc-100 mt-2">
                     {/* Solid Black BOOK NOW Button */}
                     <button
@@ -156,7 +163,7 @@ const ExploreBusinessCard = ({ business, index }: ExploreBusinessCardProps) => {
                         <span>BOOK NOW</span>
                     </button>
 
-                    {/* Outline WhatsApp (WA) Button */}
+                    {/* Outline WhatsApp (WA) Button with Global Shaking Icon */}
                     <button
                         type="button"
                         onClick={handleWhatsApp}
@@ -164,11 +171,13 @@ const ExploreBusinessCard = ({ business, index }: ExploreBusinessCardProps) => {
                         aria-label={`Chat on WhatsApp with ${business.name}`}
                         title="Chat on WhatsApp"
                     >
-                        <FaWhatsapp className="h-4 w-4 text-emerald-600 shrink-0" />
+                        <span className="shake-icon flex items-center justify-center">
+                            <FaWhatsapp className="h-4 w-4 text-emerald-600 shrink-0" />
+                        </span>
                         <span>WA</span>
                     </button>
 
-                    {/* Outline Call Button */}
+                    {/* Outline Call Button with Global Shaking Icon */}
                     <button
                         type="button"
                         onClick={handleCall}
@@ -176,7 +185,9 @@ const ExploreBusinessCard = ({ business, index }: ExploreBusinessCardProps) => {
                         aria-label={`Call ${business.name}`}
                         title="Call Business"
                     >
-                        <Phone className="h-3.5 w-3.5 text-zinc-700 shrink-0" />
+                        <span className="shake-icon flex items-center justify-center">
+                            <Phone className="h-3.5 w-3.5 text-zinc-700 shrink-0" />
+                        </span>
                         <span>Call</span>
                     </button>
                 </div>

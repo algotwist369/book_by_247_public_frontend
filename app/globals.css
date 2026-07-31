@@ -72,3 +72,32 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Eye-Catching Shaking Icon Animation */
+@keyframes iconShake {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  8% {
+    transform: rotate(-20deg) scale(1.25);
+  }
+  16% {
+    transform: rotate(20deg) scale(1.25);
+  }
+  24% {
+    transform: rotate(-16deg) scale(1.25);
+  }
+  32% {
+    transform: rotate(16deg) scale(1.25);
+  }
+  40% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+.shake-icon {
+  animation: iconShake 2.2s infinite ease-in-out !important;
+  display: inline-block !important;
+  transform-origin: center !important;
+  will-change: transform;
+}

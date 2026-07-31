@@ -20,8 +20,11 @@ import { cn } from "@/lib/utils"
 import { CATEGORIES_DATA } from "@/lib/constants"
 import { useCities } from "@/hooks/useCities"
 import { useBlogAuth } from "@/hooks/useBlogAuth"
+import { usePathname } from "next/navigation"
 
 export const Navbar = () => {
+    const pathname = usePathname()
+    const isBusinessPage = pathname?.startsWith("/business/")
     const { user, isAuthenticated } = useBlogAuth()
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
     const [showCities, setShowCities] = React.useState(false)
@@ -66,14 +69,15 @@ export const Navbar = () => {
     }
 
     // Close menus when clicking link
-    const handleLinkClick = () => {
-        setIsMobileMenuOpen(false)
+    const handleCloseMenus = () => {
         setShowCities(false)
         setShowCategories(false)
+        setIsMobileMenuOpen(false)
     }
+    const handleLinkClick = handleCloseMenus;
 
     return (
-        <nav className="sticky top-0 z-50 w-full bg-white shadow-sm">
+        <nav className={cn("sticky top-0 z-50 w-full bg-white shadow-sm", isBusinessPage && "hidden lg:block")}>
             {/* Top Tier */}
             <div className="relative flex items-center justify-between py-3 md:py-4 border-b border-zinc-50 max-w-7xl mx-auto">
                 <div className="flex items-center gap-3 sm:gap-4 md:gap-8 px-6 md:px-0">
