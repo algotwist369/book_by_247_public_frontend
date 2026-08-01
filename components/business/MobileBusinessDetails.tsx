@@ -2,10 +2,36 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Share2, Star, MapPin, Phone, Navigation } from 'lucide-react';
+import {
+    ArrowLeft,
+    Share2,
+    Star,
+    MapPin,
+    Phone,
+    Navigation,
+    Wifi,
+    Car,
+    Wind,
+    Coffee,
+    CreditCard,
+    CalendarCheck,
+    ShieldCheck,
+    Clock,
+    ChevronDown,
+    ChevronUp,
+    Facebook,
+    Instagram,
+    Twitter,
+    Linkedin,
+    Youtube,
+    Send,
+    PhoneCall
+} from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa6';
 import { CustomImage } from '@/components/ui/CustomImage';
 import ShareModal from '@/components/business/ShareModal';
+import BusinessCategories from '@/components/business/BusinessCategories';
+import BusinessReviews from '@/components/business/BusinessReviews';
 
 interface MobileBusinessDetailsProps {
     slug: string;
@@ -15,6 +41,9 @@ interface MobileBusinessDetailsProps {
     media: any;
     services: any[];
     reviewsData: any;
+    capacity?: any;
+    categoriesData?: any;
+    socialMedia?: any;
 }
 
 const DEFAULT_FALLBACK_IMAGES = [
@@ -30,11 +59,15 @@ export default function MobileBusinessDetails({
     workingHours,
     media,
     services = [],
-    reviewsData
+    reviewsData,
+    capacity,
+    categoriesData,
+    socialMedia
 }: MobileBusinessDetailsProps) {
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
     const [activePhotoIdx, setActivePhotoIdx] = useState(0);
     const [currentUrl, setCurrentUrl] = useState('');
+    const [isHoursOpen, setIsHoursOpen] = useState(false);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -83,7 +116,7 @@ export default function MobileBusinessDetails({
                     });
                     return;
                 } catch (e) {
-                    // Fall back to modal if user cancels or native share fails
+                    // Fall back to modal
                 }
             }
             setIsShareModalOpen(true);
@@ -111,8 +144,19 @@ export default function MobileBusinessDetails({
 
     const aboutDescription = details?.description || details?.seo?.metaDescription || "Experience premium wellness treatments, relaxation therapies, and professional care.";
 
+    const getAmenityIcon = (name: string) => {
+        const lower = name.toLowerCase();
+        if (lower.includes('wifi') || lower.includes('wi-fi')) return Wifi;
+        if (lower.includes('parking')) return Car;
+        if (lower.includes('ac') || lower.includes('air conditioning')) return Wind;
+        if (lower.includes('beverage') || lower.includes('coffee')) return Coffee;
+        if (lower.includes('card') || lower.includes('payment')) return CreditCard;
+        if (lower.includes('booking') || lower.includes('online')) return CalendarCheck;
+        return ShieldCheck;
+    };
+
     return (
-        <div className="lg:hidden min-h-screen bg-white pb-20 font-sans">
+        <div className="lg:hidden min-h-screen bg-white pb-24 font-sans">
             {/* Top Photo Banner / Carousel */}
             <div className="relative w-full h-64 sm:h-72 bg-zinc-900 overflow-hidden">
                 <CustomImage
@@ -163,9 +207,9 @@ export default function MobileBusinessDetails({
                 )}
             </div>
 
-            {/* Business Info Header Card - Exact Target Spacing & Font Styling */}
+            {/* Business Info Header Card */}
             <div className="px-4 pt-4 pb-3 space-y-2.5 bg-white">
-                {/* Title (Serif Warm Tone matching Target UI) */}
+                {/* Title */}
                 <h1 className="font-serif text-[22px] sm:text-2xl font-normal text-[#8c7453] tracking-tight leading-tight">
                     {businessName}
                 </h1>
@@ -193,7 +237,7 @@ export default function MobileBusinessDetails({
                     </div>
                 </div>
 
-                {/* Action Buttons Row (Call, WhatsApp, Direction) - Exact Target UI Spacing */}
+                {/* Action Buttons Row (Call, WhatsApp, Direction) */}
                 <div className="grid grid-cols-3 gap-2.5 pt-2">
                     {/* Call Button */}
                     <button
@@ -231,7 +275,7 @@ export default function MobileBusinessDetails({
                 </div>
             </div>
 
-            {/* About Us Section - Exact Target Spacing */}
+            {/* About Us Section */}
             <div className="px-4 py-3.5 border-t border-zinc-100 space-y-1.5 bg-white">
                 <h2 className="text-base font-bold text-zinc-900">About Us</h2>
                 <p className="text-zinc-600 text-xs sm:text-sm leading-relaxed font-normal">
@@ -239,7 +283,7 @@ export default function MobileBusinessDetails({
                 </p>
             </div>
 
-            {/* Real Services Menu Section from DB - Exact Target Spacing */}
+            {/* Real Services Menu Section from DB */}
             {displayServices.length > 0 && (
                 <div className="px-4 py-3.5 border-t border-zinc-100 space-y-2 bg-white">
                     <h2 className="text-base font-bold text-zinc-900 mb-2">Services</h2>
@@ -259,6 +303,157 @@ export default function MobileBusinessDetails({
                                 </div>
                             </div>
                         ))}
+                    </div>
+                </div>
+            )}
+
+            {/* Features & Amenities Section */}
+            {(capacity?.features?.length > 0 || capacity?.amenities?.length > 0) && (
+                <div className="px-4 py-4 border-t border-zinc-100 space-y-4 bg-white">
+                    {capacity.features?.length > 0 && (
+                        <div className="space-y-2">
+                            <h3 className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Key Features</h3>
+                            <div className="flex flex-wrap gap-1.5">
+                                {capacity.features.map((feature: string, i: number) => (
+                                    <span key={i} className="px-2.5 py-1 bg-zinc-100 text-zinc-900 font-bold rounded-lg text-xs border border-zinc-200">
+                                        {feature}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {capacity.amenities?.length > 0 && (
+                        <div className="space-y-2">
+                            <h3 className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Amenities</h3>
+                            <div className="grid grid-cols-2 gap-2">
+                                {capacity.amenities.map((amenity: string, i: number) => {
+                                    const Icon = getAmenityIcon(amenity);
+                                    return (
+                                        <div key={i} className="flex items-center gap-2 text-zinc-700 bg-zinc-50 p-2.5 rounded-xl border border-zinc-100">
+                                            <Icon className="w-4 h-4 text-zinc-900 shrink-0" />
+                                            <span className="text-xs font-medium truncate">{amenity}</span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {/* Categories, Tags & Expertise Section */}
+            {categoriesData && (
+                <div className="px-4 py-4 border-t border-zinc-100 bg-white">
+                    <BusinessCategories
+                        categories={categoriesData?.categories ? [categoriesData.categories] : []}
+                        subCategories={categoriesData?.sub_categories ? [categoriesData.sub_categories] : []}
+                        tags={categoriesData?.tags || []}
+                        specialties={categoriesData?.specialties || []}
+                        languages={categoriesData?.languages || []}
+                    />
+                </div>
+            )}
+
+            {/* Working Hours & Schedule Section */}
+            <div className="px-4 py-4 border-t border-zinc-100 bg-white space-y-3">
+                <button
+                    type="button"
+                    onClick={() => setIsHoursOpen(!isHoursOpen)}
+                    className="w-full flex items-center justify-between py-1 text-left cursor-pointer"
+                >
+                    <div className="flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-zinc-900" />
+                        <h2 className="text-base font-bold text-zinc-900">Working Hours</h2>
+                    </div>
+                    <div className="p-1 text-zinc-500">
+                        {isHoursOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                    </div>
+                </button>
+
+                {isHoursOpen && (
+                    <div className="pt-2 space-y-3 border-t border-zinc-100">
+                        <div className="space-y-2">
+                            {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => {
+                                const dayLower = day.toLowerCase();
+                                const isOpen = workingHours?.working_hours?.days?.includes(dayLower);
+                                const timeRange = (isOpen && workingHours?.working_hours)
+                                    ? `${workingHours.working_hours.open} - ${workingHours.working_hours.close}`
+                                    : 'Closed';
+
+                                return (
+                                    <div key={day} className="flex justify-between text-xs sm:text-sm">
+                                        <span className="text-zinc-500">{day}</span>
+                                        <span className={`font-medium ${!isOpen ? 'text-rose-500' : 'text-zinc-900'}`}>
+                                            {timeRange}
+                                        </span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        {(workingHours?.days_off?.length > 0 || workingHours?.holidays?.length > 0) && (
+                            <div className="pt-2 border-t border-zinc-100 space-y-1.5">
+                                {workingHours.days_off?.length > 0 && (
+                                    <p className="text-[11px] text-zinc-500">
+                                        <span className="font-bold text-zinc-700 uppercase">Days Off:</span> {workingHours.days_off.join(', ')}
+                                    </p>
+                                )}
+                                {workingHours.holidays?.length > 0 && (
+                                    <p className="text-[11px] text-zinc-500">
+                                        <span className="font-bold text-zinc-700 uppercase">Holidays:</span> {workingHours.holidays.join(', ')}
+                                    </p>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
+
+            {/* Reviews & Customer Feedback Section */}
+            <div className="px-4 py-4 border-t border-zinc-100 bg-white">
+                <BusinessReviews
+                    reviews={reviewsData?.reviews?.map((r: any) => ({
+                        id: r._id || r.createdAt,
+                        author: r.customerName || 'Customer',
+                        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(r.customerName || 'Customer')}&background=random`,
+                        rating: r.rating,
+                        content: r.comment,
+                        date: new Date(r.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
+                        helpfulPercentage: 0
+                    })) || []}
+                    rating={rawRating}
+                    reviewCount={rawReviews}
+                    slug={slug}
+                    businessName={businessName}
+                />
+            </div>
+
+            {/* Follow Us / Social Links */}
+            {socialMedia && (
+                <div className="px-4 py-5 border-t border-zinc-100 bg-white text-center space-y-3">
+                    <h4 className="font-bold text-zinc-900 text-xs uppercase tracking-wider">Follow Us</h4>
+                    <div className="flex flex-wrap justify-center gap-3">
+                        {[
+                            { Icon: Facebook, url: socialMedia?.facebook, name: "Facebook", color: "hover:bg-[#1877F2]" },
+                            { Icon: Instagram, url: socialMedia?.instagram, name: "Instagram", color: "hover:bg-[#E4405F]" },
+                            { Icon: Twitter, url: socialMedia?.twitter, name: "Twitter", color: "hover:bg-[#000000]" },
+                            { Icon: Linkedin, url: socialMedia?.linkedin, name: "Linkedin", color: "hover:bg-[#0077B5]" },
+                            { Icon: Youtube, url: socialMedia?.youtube, name: "Youtube", color: "hover:bg-[#FF0000]" },
+                            { Icon: PhoneCall, url: socialMedia?.whatsapp ? `https://wa.me/${socialMedia.whatsapp.replace(/[^0-9]/g, '')}` : null, name: "WhatsApp", color: "hover:bg-[#25D366]" },
+                            { Icon: Send, url: socialMedia?.telegram ? `https://t.me/${socialMedia.telegram.replace('@', '')}` : null, name: "Telegram", color: "hover:bg-[#24A1DE]" }
+                        ].map((social, i) => social.url ? (
+                            <a
+                                key={i}
+                                href={social.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                title={social.name}
+                                className={`w-9 h-9 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-500 hover:text-white transition-all ${social.color}`}
+                            >
+                                <social.Icon className="w-4 h-4" />
+                            </a>
+                        ) : null)}
                     </div>
                 </div>
             )}

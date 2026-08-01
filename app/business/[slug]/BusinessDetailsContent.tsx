@@ -162,6 +162,9 @@ const BusinessDetailsContent = ({ slug, initialTab = 'Photos', initialData }: Cl
                 media={media}
                 services={servicesData?.services || []}
                 reviewsData={reviewsData}
+                capacity={capacity}
+                categoriesData={categoriesData}
+                socialMedia={socialMedia}
             />
 
             {/* Desktop View (100% Untouched - Hidden on Mobile) */}
