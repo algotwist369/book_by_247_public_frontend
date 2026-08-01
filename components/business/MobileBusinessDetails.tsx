@@ -69,6 +69,33 @@ export default function MobileBusinessDetails({
     const [currentUrl, setCurrentUrl] = useState('');
     const [isHoursOpen, setIsHoursOpen] = useState(false);
     const [isAboutExpanded, setIsAboutExpanded] = useState(false);
+    const [touchStartX, setTouchStartX] = useState<number | null>(null);
+    const [touchEndX, setTouchEndX] = useState<number | null>(null);
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        setTouchStartX(e.targetTouches[0].clientX);
+        setTouchEndX(null);
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        setTouchEndX(e.targetTouches[0].clientX);
+    };
+
+    const handleTouchEnd = () => {
+        if (!touchStartX || !touchEndX) return;
+        const distance = touchStartX - touchEndX;
+        const minSwipeDistance = 35; // minimum swipe distance in px
+
+        if (distance > minSwipeDistance) {
+            // Swiped Left -> Next Photo
+            setActivePhotoIdx((prev) => (prev + 1) % galleryImages.length);
+        } else if (distance < -minSwipeDistance) {
+            // Swiped Right -> Previous Photo
+            setActivePhotoIdx((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
+        }
+        setTouchStartX(null);
+        setTouchEndX(null);
+    };
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -158,17 +185,33 @@ export default function MobileBusinessDetails({
 
     return (
         <div className="lg:hidden min-h-screen bg-white pb-24 font-sans">
-            {/* Top Photo Banner / Carousel */}
-            <div className="relative w-full h-64 sm:h-72 bg-zinc-900 overflow-hidden">
-                <CustomImage
-                    src={galleryImages[activePhotoIdx] || galleryImages[0]}
-                    alt={businessName}
-                    fill
-                    priority
-                    sizes="100vw"
-                    className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
+            {/* Top Photo Banner / Touch Slider */}
+            <div
+                className="relative w-full h-64 sm:h-72 bg-zinc-900 overflow-hidden select-none touch-pan-x"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+            >
+                {/* Horizontal Sliding Photo Container */}
+                <div
+                    className="flex w-full h-full transition-transform duration-300 ease-out"
+                    style={{ transform: `translateX(-${activePhotoIdx * 100}%)` }}
+                >
+                    {galleryImages.map((img: string, idx: number) => (
+                        <div key={idx} className="relative w-full h-full shrink-0">
+                            <CustomImage
+                                src={img}
+                                alt={`${businessName} photo ${idx + 1}`}
+                                fill
+                                priority={idx === 0}
+                                sizes="100vw"
+                                className="object-cover"
+                            />
+                        </div>
+                    ))}
+                </div>
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none z-10" />
 
                 {/* Floating Back Button (Top Left) */}
                 <button
@@ -193,12 +236,12 @@ export default function MobileBusinessDetails({
 
                 {/* Carousel Indicator Dots (Bottom Center) */}
                 {galleryImages.length > 1 && (
-                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5">
+                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 bg-black/30 px-3 py-1 rounded-full backdrop-blur-xs">
                         {galleryImages.slice(0, 5).map((_img: string, idx: number) => (
                             <button
                                 key={idx}
                                 onClick={() => setActivePhotoIdx(idx)}
-                                className={`h-1.5 rounded-full transition-all ${
+                                className={`h-1.5 rounded-full transition-all cursor-pointer ${
                                     activePhotoIdx === idx ? 'w-4 bg-white' : 'w-1.5 bg-white/50'
                                 }`}
                                 aria-label={`Go to slide ${idx + 1}`}
@@ -228,13 +271,13 @@ export default function MobileBusinessDetails({
                         <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400 shrink-0" />
                         <span>{ratingText ? ratingText : "New"}</span>
                         {rawReviews > 0 && (
-                            <span className="text-zinc-300 font-normal ml-0.5">({rawReviews.toLocaleString()} Reviews)</span>
+                            <span className="text-zinc-300 font-normal ml-0.5">({rawReviews.toLocaleString()})</span>
                         )}
                     </div>
 
                     {/* Open Status Badge */}
                     <div className="bg-[#e6f7ef] text-[#13864c] text-[11px] font-bold px-2.5 py-1 rounded-full border border-[#c3edd9] uppercase tracking-wider">
-                        OPEN NOW
+                        OPEN
                     </div>
                 </div>
 
@@ -287,9 +330,9 @@ export default function MobileBusinessDetails({
                         <button
                             type="button"
                             onClick={() => setIsAboutExpanded(!isAboutExpanded)}
-                            className="text-xs font-bold text-zinc-900 hover:underline mt-1 inline-flex items-center gap-0.5 cursor-pointer"
+                            className="text-xs font-bold text-blue-900 hover:underline mt-1 inline-flex items-center gap-0.5 cursor-pointer"
                         >
-                            {isAboutExpanded ? 'Show Less' : '...more'}
+                            {isAboutExpanded ? 'Show Less' : 'more'}
                         </button>
                     )}
                 </div>
