@@ -2,11 +2,9 @@
 
 import React, { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { CheckCircle2, ArrowLeft } from 'lucide-react';
-import { FiMail, FiMessageSquare, FiPhone, FiUser } from 'react-icons/fi';
+import { CheckCircle2, ArrowLeft, X } from 'lucide-react';
+import { FiMail, FiPhone, FiUser } from 'react-icons/fi';
 import Modal from '@/components/ui/Modal';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
 import { inquiryApi, SendInquiryOtpPayload } from '@/api/public/inquiry';
 import BookingOTP from '@/app/business/[slug]/book-appointment/components/BookingOTP';
 
@@ -36,7 +34,7 @@ const EnquiryModal = ({ isOpen, onClose, businessName, businessId }: EnquiryModa
         phone: '',
         email: '',
         message: '',
-        otpChannel: 'email'
+        otpChannel: 'sms'
     });
     const [submitError, setSubmitError] = useState('');
 
@@ -137,132 +135,161 @@ const EnquiryModal = ({ isOpen, onClose, businessName, businessId }: EnquiryModa
 
     const handleClose = () => {
         setStep('details');
-        setFormData({ name: '', phone: '', email: '', message: '', otpChannel: 'email' });
+        setFormData({ name: '', phone: '', email: '', message: '', otpChannel: 'sms' });
         setSubmitError('');
         onClose();
     };
 
-    const isDetailsValid = formData.name && formData.phone;
+    const isDetailsValid = Boolean(formData.name && formData.phone);
 
     return (
-        <Modal isOpen={isOpen} onClose={handleClose} className="max-w-lg px-4 sm:px-0">
-            <div className="bg-white rounded-xl border border-zinc-200 overflow-hidden">
+        <Modal isOpen={isOpen} onClose={handleClose} className="max-w-md w-full p-0 overflow-hidden bg-transparent border-0 shadow-none">
+            <div className="bg-white rounded-t-[32px] sm:rounded-3xl border border-zinc-200/80 shadow-2xl overflow-hidden relative transition-all">
+                {/* Top Drag Handle Indicator for Mobile */}
+                <div className="pt-3 pb-1 flex justify-center">
+                    <div className="w-12 h-1 bg-zinc-200 rounded-full" />
+                </div>
+
+                {/* Close Button */}
+                <button
+                    type="button"
+                    onClick={handleClose}
+                    className="absolute top-4 right-4 text-zinc-400 hover:text-zinc-900 p-2 rounded-full hover:bg-zinc-100 transition-colors cursor-pointer z-10"
+                    aria-label="Close"
+                >
+                    <X className="w-5 h-5" />
+                </button>
+
                 {step === 'details' && (
-                    <div className="p-5 sm:p-7 space-y-6">
-                        <div className="space-y-1">
-                            <p className="text-xs uppercase tracking-wide text-zinc-500 font-medium">Customer Enquiry</p>
-                            <h2 className="text-xl sm:text-2xl font-bold text-zinc-900">Send enquiry to - <span className="underline font-semibold">{businessName}</span></h2>
-                            <p className="text-sm text-zinc-600">
-                                Fill your details and the business team will contact you shortly.
-                            </p>
+                    <div className="px-5 pb-6 pt-1 sm:px-7 sm:pb-8 space-y-5">
+                        {/* Gold Badge & Header matching Target Screenshot */}
+                        <div className="text-center space-y-2">
+                            <div className="inline-block">
+                                <span className="bg-gradient-to-r from-amber-200 via-yellow-300 to-amber-200 text-amber-900 text-[11px] font-extrabold px-3.5 py-1 rounded-full uppercase tracking-wider shadow-2xs">
+                                    ✨ QUICK ENQUIRY
+                                </span>
+                            </div>
+                            <h2 className="text-xl sm:text-2xl font-black text-zinc-900 tracking-tight leading-tight px-4">
+                                Send enquiry to <span className="text-black font-black">{businessName}</span>
+                            </h2>
                         </div>
 
-                        <form onSubmit={handleSendOTP} className="space-y-4">
-                            <div className="space-y-1.5">
-                                <label className="text-xs font-medium text-zinc-700 uppercase tracking-wide">Full Name</label>
-                                <Input
-                                    required
-                                    type="text"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    placeholder="Enter your name"
-                                    icon={<FiUser className="w-4 h-4 text-zinc-400" />}
-                                    className="h-11 border-zinc-300 text-sm text-black focus-visible:ring-0 focus-visible:outline-none focus:border-zinc-300"
-                                />
-                            </div>
-
-                            <div className="space-y-1.5">
-                                <label className="text-xs font-medium text-zinc-700 uppercase tracking-wide">Phone Number</label>
-                                <Input
-                                    required
-                                    type="tel"
-                                    name="phone"
-                                    value={formData.phone}
-                                    onChange={handleChange}
-                                    placeholder="Enter your mobile number"
-                                    icon={<FiPhone className="w-4 h-4 text-zinc-400" />}
-                                    className="h-11 border-zinc-300 text-sm text-black focus-visible:ring-0 focus-visible:outline-none focus:border-zinc-300"
-                                />
-                            </div>
-
-                            <div className="space-y-1.5">
-                                <label className="text-xs font-medium text-zinc-700 uppercase tracking-wide">Email (Optional)</label>
-                                <Input
-                                    type="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    placeholder="Enter your email address"
-                                    icon={<FiMail className="w-4 h-4 text-zinc-400" />}
-                                    className="h-11 border-zinc-300 text-sm text-black focus-visible:ring-0 focus-visible:outline-none focus:border-zinc-300"
-                                />
-                            </div>
-
-                            <div className="space-y-1.5">
-                                <label className="text-xs font-medium text-zinc-700 uppercase tracking-wide">Send OTP via</label>
-                                <div className="flex items-center gap-6">
-                                    <label className="flex items-center gap-2 cursor-pointer">
-                                        <input
-                                            type="radio"
-                                            name="inquiryOtpChannel"
-                                            value="email"
-                                            checked={formData.otpChannel === 'email'}
-                                            onChange={() => handleOtpChannelChange('email')}
-                                            className="w-4 h-4 text-zinc-900 bg-gray-100 border-gray-300 focus:ring-zinc-900"
-                                        />
-                                        <span className="text-sm text-gray-700 flex items-center gap-1">
-                                            <FiMail className="w-3.5 h-3.5" />
-                                            Email
-                                        </span>
+                        <form onSubmit={handleSendOTP} className="space-y-3.5">
+                            {/* Full Name Input Box */}
+                            <div className="bg-zinc-100/90 border border-transparent focus-within:border-zinc-900 focus-within:bg-white rounded-2xl p-3 flex items-center gap-3 transition-all">
+                                <FiUser className="w-5 h-5 text-zinc-500 shrink-0" />
+                                <div className="flex-1 min-w-0">
+                                    <label className="text-[10px] font-medium text-zinc-400 block leading-none mb-0.5">
+                                        Full Name
                                     </label>
-                                    <label className="flex items-center gap-2 cursor-pointer">
-                                        <input
-                                            type="radio"
-                                            name="inquiryOtpChannel"
-                                            value="sms"
-                                            checked={formData.otpChannel === 'sms'}
-                                            onChange={() => handleOtpChannelChange('sms')}
-                                            className="w-4 h-4 text-zinc-900 bg-gray-100 border-gray-300 focus:ring-zinc-900"
-                                        />
-                                        <span className="text-sm text-gray-700 flex items-center gap-1">
-                                            <FiPhone className="w-3.5 h-3.5" />
-                                            SMS
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div className="space-y-1.5">
-                                <label className="text-xs font-medium text-zinc-700 uppercase tracking-wide">Message</label>
-                                <div className="relative">
-                                    <div className="absolute left-3 top-3 text-zinc-400">
-                                        <FiMessageSquare className="w-4 h-4" />
-                                    </div>
-                                    <textarea
-                                        name="message"
-                                        value={formData.message}
+                                    <input
+                                        required
+                                        type="text"
+                                        name="name"
+                                        value={formData.name}
                                         onChange={handleChange}
-                                        placeholder="Describe your requirement..."
-                                        className="w-full h-28 sm:h-32 pl-10 pr-3 py-2.5 rounded-md border border-zinc-300 bg-white focus:border-zinc-300 focus:outline-none text-sm text-black placeholder:text-zinc-400 resize-none"
+                                        placeholder="Enter your name"
+                                        className="w-full bg-transparent border-0 p-0 text-sm font-semibold text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-0"
                                     />
                                 </div>
                             </div>
 
-                            <div className="pt-1">
-                                <Button
+                            {/* Phone Number Input Box */}
+                            <div className="bg-zinc-100/90 border border-transparent focus-within:border-zinc-900 focus-within:bg-white rounded-2xl p-3 flex items-center gap-3 transition-all">
+                                <FiPhone className="w-5 h-5 text-zinc-500 shrink-0" />
+                                <div className="flex-1 min-w-0">
+                                    <label className="text-[10px] font-medium text-zinc-400 block leading-none mb-0.5">
+                                        Phone Number
+                                    </label>
+                                    <input
+                                        required
+                                        type="tel"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        placeholder="Enter your mobile number"
+                                        className="w-full bg-transparent border-0 p-0 text-sm font-semibold text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-0"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Email (Optional) Input Box */}
+                            <div className="bg-zinc-100/90 border border-transparent focus-within:border-zinc-900 focus-within:bg-white rounded-2xl p-3 flex items-center gap-3 transition-all">
+                                <FiMail className="w-5 h-5 text-zinc-500 shrink-0" />
+                                <div className="flex-1 min-w-0">
+                                    <label className="text-[10px] font-medium text-zinc-400 block leading-none mb-0.5">
+                                        Email (Optional)
+                                    </label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        placeholder="Enter your email address"
+                                        className="w-full bg-transparent border-0 p-0 text-sm font-semibold text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-0"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* OTP Channel Selection Row matching Target Screenshot */}
+                            <div className="flex items-center justify-between pt-1">
+                                <span className="text-xs sm:text-sm font-bold text-zinc-800">
+                                    Send OTP via:
+                                </span>
+                                <div className="bg-zinc-100 p-1 rounded-2xl flex items-center gap-1 border border-zinc-200/50">
+                                    <button
+                                        type="button"
+                                        onClick={() => handleOtpChannelChange('sms')}
+                                        className={`px-5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                                            formData.otpChannel === 'sms'
+                                                ? 'bg-[#182238] text-white shadow-xs'
+                                                : 'text-zinc-500 hover:text-zinc-800'
+                                        }`}
+                                    >
+                                        SMS
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleOtpChannelChange('email')}
+                                        className={`px-5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                                            formData.otpChannel === 'email'
+                                                ? 'bg-[#182238] text-white shadow-xs'
+                                                : 'text-zinc-500 hover:text-zinc-800'
+                                        }`}
+                                    >
+                                        Email
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Message Text Area matching Target Screenshot */}
+                            <div className="border border-zinc-200 bg-white rounded-2xl p-3 focus-within:border-zinc-900 transition-all">
+                                <textarea
+                                    name="message"
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    placeholder="Share your requirements or preferred time 📝"
+                                    className="w-full h-20 bg-transparent border-0 p-0 text-sm font-medium text-zinc-900 placeholder:text-zinc-400 focus:outline-none resize-none"
+                                />
+                            </div>
+
+                            {/* Submit Button */}
+                            <div className="pt-2">
+                                <button
                                     type="submit"
                                     disabled={!isDetailsValid || isSubmitting}
-                                    className="w-full h-11 text-sm font-semibold rounded-md"
+                                    className={`w-full h-13 text-sm font-extrabold rounded-2xl shadow-lg flex items-center justify-center transition-all cursor-pointer ${
+                                        !isDetailsValid || isSubmitting
+                                            ? 'bg-zinc-300 text-zinc-500 cursor-not-allowed'
+                                            : 'bg-black hover:bg-zinc-900 active:scale-[0.98] text-white'
+                                    }`}
                                 >
                                     {sendOtpMutation.isPending ? 'Sending OTP...' : 'Send OTP & Continue'}
-                                </Button>
+                                </button>
+
                                 {submitError && (
-                                    <p className="text-[12px] text-red-600 mt-2">{submitError}</p>
+                                    <p className="text-xs text-red-600 text-center mt-2 font-medium">{submitError}</p>
                                 )}
-                                <p className="text-[11px] text-zinc-500 mt-3 leading-relaxed">
-                                    By clicking Send OTP, you agree to our <span className="underline cursor-pointer">Terms</span> and <span className="underline cursor-pointer">Privacy Policy</span>.
-                                </p>
                             </div>
                         </form>
                     </div>
@@ -272,7 +299,7 @@ const EnquiryModal = ({ isOpen, onClose, businessName, businessId }: EnquiryModa
                     <div className="p-5 sm:p-7">
                         <button
                             onClick={handleBackToDetails}
-                            className="flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900 mb-6"
+                            className="flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900 mb-6 font-semibold"
                         >
                             <ArrowLeft className="w-4 h-4" />
                             Back to details
@@ -296,16 +323,23 @@ const EnquiryModal = ({ isOpen, onClose, businessName, businessId }: EnquiryModa
                 {step === 'success' && (
                     <div className="p-8 sm:p-10 text-center space-y-4">
                         <div className="flex justify-center">
-                            <div className="w-14 h-14 rounded-full border border-zinc-200 bg-white flex items-center justify-center text-zinc-900">
+                            <div className="w-14 h-14 rounded-full border border-emerald-200 bg-emerald-50 flex items-center justify-center text-emerald-600">
                                 <CheckCircle2 className="w-8 h-8" />
                             </div>
                         </div>
                         <div className="space-y-1">
-                            <h3 className="text-xl font-semibold text-zinc-900">Enquiry Sent</h3>
+                            <h3 className="text-xl font-bold text-zinc-900">Enquiry Sent Successfully</h3>
                             <p className="text-sm text-zinc-600">
-                                Thank you for your interest. {businessName} will contact you shortly.
+                                Thank you for reaching out! <span className="font-semibold text-zinc-900">{businessName}</span> will contact you shortly.
                             </p>
                         </div>
+                        <button
+                            type="button"
+                            onClick={handleClose}
+                            className="w-full h-11 bg-black text-white font-bold text-xs rounded-xl mt-4"
+                        >
+                            Done
+                        </button>
                     </div>
                 )}
             </div>

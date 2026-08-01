@@ -68,6 +68,7 @@ export default function MobileBusinessDetails({
     const [activePhotoIdx, setActivePhotoIdx] = useState(0);
     const [currentUrl, setCurrentUrl] = useState('');
     const [isHoursOpen, setIsHoursOpen] = useState(false);
+    const [isAboutExpanded, setIsAboutExpanded] = useState(false);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -278,9 +279,20 @@ export default function MobileBusinessDetails({
             {/* About Us Section */}
             <div className="px-4 py-3.5 border-t border-zinc-100 space-y-1.5 bg-white">
                 <h2 className="text-base font-bold text-zinc-900">About Us</h2>
-                <p className="text-zinc-600 text-xs sm:text-sm leading-relaxed font-normal">
-                    {aboutDescription}
-                </p>
+                <div>
+                    <p className={`text-zinc-600 text-xs sm:text-sm leading-relaxed font-normal ${!isAboutExpanded ? 'line-clamp-4' : ''}`}>
+                        {aboutDescription}
+                    </p>
+                    {aboutDescription && aboutDescription.length > 140 && (
+                        <button
+                            type="button"
+                            onClick={() => setIsAboutExpanded(!isAboutExpanded)}
+                            className="text-xs font-bold text-zinc-900 hover:underline mt-1 inline-flex items-center gap-0.5 cursor-pointer"
+                        >
+                            {isAboutExpanded ? 'Show Less' : '...more'}
+                        </button>
+                    )}
+                </div>
             </div>
 
             {/* Real Services Menu Section from DB */}
