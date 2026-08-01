@@ -26,6 +26,16 @@ export const Navbar = () => {
     const pathname = usePathname()
     const isBusinessPage = pathname?.startsWith("/business/")
     const { user, isAuthenticated } = useBlogAuth()
+
+    // Prevent React SSR Hydration Mismatch for client-side auth state
+    const [isClient, setIsClient] = React.useState(false)
+    React.useEffect(() => {
+        setIsClient(true)
+    }, [])
+
+    const isAuth = isClient && isAuthenticated
+    const userName = isClient && user?.name ? user.name.split(" ")[0] : ""
+
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
     const [showCities, setShowCities] = React.useState(false)
     const [showCategories, setShowCategories] = React.useState(false)
@@ -83,11 +93,10 @@ export const Navbar = () => {
                 <div className="flex items-center gap-3 sm:gap-4 md:gap-8 px-6 md:px-0">
                     <Link href="/" className="shrink-0 flex items-center">
                         <img
-                            src="https://res.cloudinary.com/dwsv275kv/image/upload/v1774790235/White_and_Black_Simple_Marketing_LinkedIn_Banner_f7aqfk.png" // put your logo inside public folder
+                            src="https://res.cloudinary.com/dwsv275kv/image/upload/v1774790235/White_and_Black_Simple_Marketing_LinkedIn_Banner_f7aqfk.png"
                             alt="BookBy247 Logo"
                             width={180}
                             height={60}
-                            // priority
                             className="h-10 sm:h-12 md:h-14 w-auto object-contain"
                         />
                     </Link>
@@ -103,7 +112,6 @@ export const Navbar = () => {
                     </div>
                 </div>
 
-                {/* Sticky Search in Center (Desktop Only - Avoid overlap on tablets/mobile) - REMOVED ON SCROLL AS REQUESTED */}
                 <div className="hidden lg:flex flex-1 justify-center px-8 lg:px-12 max-w-3xl" />
 
                 <div className="flex items-center gap-2 md:gap-4">
@@ -141,14 +149,14 @@ export const Navbar = () => {
                         <ChevronDown className={cn("w-4 h-4 text-zinc-400 transition-transform duration-200", showCategories && "rotate-180")} />
                     </div>
 
-                    {/* Login/Signup */}
+                    {/* Login/Signup (SSR Hydration Safe) */}
                     <Link
-                        href={isAuthenticated ? "/blog/profile" : "/blog/login"}
+                        href={isAuth ? "/blog/profile" : "/blog/login"}
                         className="hidden md:flex items-center gap-2 cursor-pointer hover:bg-zinc-50 px-2 md:px-3 py-2 rounded-md transition-colors group"
                     >
                         <UserCircle2 className="w-7 h-7 md:w-8 md:h-8 text-zinc-300 group-hover:text-zinc-500 transition-colors" />
                         <span className="hidden sm:block text-sm font-bold text-zinc-900">
-                            {isAuthenticated ? (user?.name?.split(" ")[0] || "Profile") : "Login"}
+                            {isAuth ? (userName || "Profile") : "Login"}
                         </span>
                     </Link>
 
@@ -223,14 +231,14 @@ export const Navbar = () => {
 
                             {/* Content */}
                             <div className="flex-1 p-4 space-y-6">
-                                {/* Login Button */}
+                                {/* Login Button (SSR Hydration Safe) */}
                                 <Link
-                                    href={isAuthenticated ? "/blog/profile" : "/blog/login"}
+                                    href={isAuth ? "/blog/profile" : "/blog/login"}
                                     onClick={() => setIsMobileMenuOpen(false)}
                                     className="block w-full"
                                 >
                                     <Button variant="primary" className="w-full h-12 font-bold">
-                                        {isAuthenticated ? `Profile (${user?.name?.split(" ")[0] || "User"})` : "Login / Signup"}
+                                        {isAuth ? `Profile (${userName || "User"})` : "Login / Signup"}
                                     </Button>
                                 </Link>
 

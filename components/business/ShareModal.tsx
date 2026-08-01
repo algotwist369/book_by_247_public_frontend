@@ -63,6 +63,7 @@ const ShareModal = ({ isOpen, onClose, url }: ShareModalProps) => {
             isOpen={isOpen}
             onClose={onClose}
             showCloseButton={false}
+            position="bottom"
             className="max-w-md w-full"
         >
             <div className="bg-white rounded-2xl overflow-hidden shadow-2xl">

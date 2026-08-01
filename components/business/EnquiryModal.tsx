@@ -143,7 +143,7 @@ const EnquiryModal = ({ isOpen, onClose, businessName, businessId }: EnquiryModa
     const isDetailsValid = Boolean(formData.name && formData.phone);
 
     return (
-        <Modal isOpen={isOpen} onClose={handleClose} className="max-w-md w-full p-0 overflow-hidden bg-transparent border-0 shadow-none">
+        <Modal isOpen={isOpen} onClose={handleClose} position="bottom" className="max-w-md w-full p-0 overflow-hidden bg-transparent border-0 shadow-none">
             <div className="bg-white rounded-t-[32px] sm:rounded-3xl border border-zinc-200/80 shadow-2xl overflow-hidden relative transition-all">
                 {/* Top Drag Handle Indicator for Mobile */}
                 <div className="pt-3 pb-1 flex justify-center">
