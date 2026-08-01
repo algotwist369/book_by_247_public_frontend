@@ -23,9 +23,9 @@ const HeroSection = () => {
                         id="hero-title"
                         className="max-w-5xl text-[40px] font-bold leading-[1.08] text-slate-900 sm:text-[52px] md:text-[58px] lg:text-[64px]"
                     >
-                        Discover & Book Beauty Experts
+                        Discover & Book Top Salons, Spas & Beauty Businesses
                         <span className="block text-rose-700">
-                            Near Me In India.
+                            Near You.
                         </span>
                     </h1>
 

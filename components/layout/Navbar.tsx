@@ -98,8 +98,7 @@ export const Navbar = () => {
                             icon={Briefcase}
                             title="BookBy247 for Business"
                             subtitle="Trusted by 5,000+ Top Salons & Spas"
-                            href="https://business.bookby247.com"
-                            target="_blank"
+                            href="/free-listing"
                         />
                     </div>
                 </div>
@@ -275,19 +274,17 @@ export const Navbar = () => {
 
                                 {/* Business Links */}
                                 <div className="space-y-3 pt-4 border-t border-zinc-100">
-                                    <a
-                                        href="https://business.bookby247.com"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
+                                    <Link
+                                        href="/free-listing"
                                         onClick={handleLinkClick}
                                         className="flex items-center gap-3 p-3 hover:bg-zinc-50 rounded-lg transition-colors group"
                                     >
                                         <Briefcase className="w-5 h-5 text-zinc-500 group-hover:text-zinc-700" />
                                         <div>
-                                            <p className="text-sm font-bold text-zinc-900">LOGO for Business</p>
+                                            <p className="text-sm font-bold text-zinc-900">BookBy247 for Business</p>
                                             <p className="text-xs text-zinc-500">Trusted by 5,000+ Top Salons & Spas</p>
                                         </div>
-                                    </a>
+                                    </Link>
                                     <a
                                         href="https://business.bookby247.com/book-demo"
                                         target="_blank"
