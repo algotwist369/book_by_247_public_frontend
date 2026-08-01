@@ -287,19 +287,19 @@ export default function MobileBusinessDetails({
                     <button
                         type="button"
                         onClick={handleCall}
-                        className="h-9 border border-zinc-300 rounded-lg bg-white hover:bg-zinc-50 active:scale-95 text-zinc-800 font-medium text-xs flex items-center justify-center gap-1.5 transition-all shadow-2xs cursor-pointer"
+                        className="h-9 border border-zinc-300 rounded-lg bg-white hover:bg-zinc-50 active:scale-95 text-zinc-800 font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-2xs cursor-pointer"
                     >
                         <span className="shake-icon flex items-center justify-center">
-                            <Phone className="w-3.5 h-3.5 text-zinc-700 shrink-0" />
+                            <Phone className="w-4 h-4 text-zinc-700 shrink-0" />
                         </span>
-                        <span>Call</span>
+                        <span>Call Now</span>
                     </button>
 
                     {/* WhatsApp Button */}
                     <button
                         type="button"
                         onClick={handleWhatsApp}
-                        className="h-9 border border-zinc-300 rounded-lg bg-white hover:bg-emerald-50 active:scale-95 text-zinc-800 font-medium text-xs flex items-center justify-center gap-1.5 transition-all shadow-2xs cursor-pointer"
+                        className="h-9 border border-zinc-300 rounded-lg bg-white hover:bg-emerald-50 active:scale-95 text-zinc-800 font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-2xs cursor-pointer"
                     >
                         <span className="shake-icon flex items-center justify-center">
                             <FaWhatsapp className="w-4 h-4 text-emerald-600 shrink-0" />
@@ -311,7 +311,7 @@ export default function MobileBusinessDetails({
                     <button
                         type="button"
                         onClick={handleDirections}
-                        className="h-9 border border-zinc-300 rounded-lg bg-white hover:bg-zinc-50 active:scale-95 text-zinc-800 font-medium text-xs flex items-center justify-center gap-1.5 transition-all shadow-2xs cursor-pointer"
+                        className="h-9 border border-zinc-300 rounded-lg bg-white hover:bg-zinc-50 active:scale-95 text-zinc-800 font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-2xs cursor-pointer"
                     >
                         <Navigation className="w-3.5 h-3.5 text-zinc-700 shrink-0" />
                         <span>Direction</span>
