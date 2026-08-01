@@ -51,6 +51,8 @@ export const markdownToHtml = (markdown = "") => {
     const lines = markdown.split(/\r?\n/)
     const html: string[] = []
     let inList = false
+    let inTable = false
+    let tableHeaderDone = false
     let inCodeBlock = false
     let codeBuffer: string[] = []
 
@@ -61,13 +63,22 @@ export const markdownToHtml = (markdown = "") => {
         }
     }
 
+    const closeTable = () => {
+        if (inTable) {
+            html.push("</tbody></table></div>")
+            inTable = false
+            tableHeaderDone = false
+        }
+    }
+
     for (const rawLine of lines) {
         const line = rawLine.trim()
 
         if (line.startsWith("```")) {
             closeList()
+            closeTable()
             if (inCodeBlock) {
-                html.push(`<pre class="my-6 rounded-2xl bg-zinc-950 p-4 text-xs font-mono text-zinc-100 overflow-x-auto shadow-sm"><code>${escapeHtml(codeBuffer.join("\n"))}</code></pre>`)
+                html.push(`<pre class="my-6 rounded-2xl bg-zinc-950 p-4 text-xs font-mono text-zinc-100 overflow-x-auto shadow-md"><code>${escapeHtml(codeBuffer.join("\n"))}</code></pre>`)
                 codeBuffer = []
                 inCodeBlock = false
             } else {
@@ -79,6 +90,38 @@ export const markdownToHtml = (markdown = "") => {
         if (inCodeBlock) {
             codeBuffer.push(rawLine)
             continue
+        }
+
+        // Markdown Table Processing (| Col 1 | Col 2 |)
+        if (line.startsWith("|") && line.endsWith("|")) {
+            closeList()
+            const cells = line.split("|").slice(1, -1).map((c) => c.trim())
+
+            // Divider row check (| --- | --- |)
+            if (cells.every((c) => /^:?-+:?$/.test(c))) {
+                continue
+            }
+
+            if (!inTable) {
+                inTable = true
+                html.push('<div class="my-8 overflow-x-auto rounded-2xl border border-zinc-200 bg-white shadow-xs"><table class="w-full text-left text-sm text-zinc-700">')
+                html.push('<thead class="bg-zinc-100/80 font-semibold text-zinc-900 border-b border-zinc-200"><tr>')
+                cells.forEach((cell) => {
+                    html.push(`<th class="px-4 py-3">${inlineMarkdown(cell)}</th>`)
+                })
+                html.push('</tr></thead><tbody class="divide-y divide-zinc-100">')
+                tableHeaderDone = true
+                continue
+            }
+
+            html.push('<tr class="hover:bg-zinc-50/50 transition-colors">')
+            cells.forEach((cell) => {
+                html.push(`<td class="px-4 py-3">${inlineMarkdown(cell)}</td>`)
+            })
+            html.push('</tr>')
+            continue
+        } else {
+            closeTable()
         }
 
         if (!line) {
@@ -99,7 +142,7 @@ export const markdownToHtml = (markdown = "") => {
             const alt = escapeHtml(imgMatch[1] || "Article Image")
             const src = imgMatch[2]
             html.push(`
-                <figure className="my-8 overflow-hidden rounded-2xl border border-zinc-200/80 bg-zinc-50 shadow-sm">
+                <figure class="my-8 overflow-hidden rounded-2xl border border-zinc-200/80 bg-zinc-50 shadow-sm">
                     <img src="${src}" alt="${alt}" class="w-full h-auto max-h-[550px] object-cover" />
                     ${alt ? `<figcaption class="p-3 text-center text-xs font-medium text-zinc-500 italic border-t border-zinc-100">${alt}</figcaption>` : ""}
                 </figure>
@@ -131,24 +174,35 @@ export const markdownToHtml = (markdown = "") => {
             continue
         }
 
-        // Callout box match: > 💡 or > Pro Tip
+        // Callout box variations
         if (line.startsWith("> 💡") || line.startsWith("> Pro Tip") || line.startsWith("> Note:")) {
             closeList()
-            html.push(`<div class="my-6 flex gap-3 rounded-2xl border border-amber-200 bg-amber-50/80 p-4 text-sm font-medium text-amber-950 leading-relaxed shadow-xs">${inlineMarkdown(line.slice(2))}</div>`)
+            html.push(`<div class="my-6 flex gap-3 rounded-2xl border border-amber-200 bg-amber-50/90 p-4 text-sm font-medium text-amber-950 leading-relaxed shadow-xs">${inlineMarkdown(line.slice(2))}</div>`)
+            continue
+        }
+        if (line.startsWith("> 📌") || line.startsWith("> Key Takeaway") || line.startsWith("> Summary:")) {
+            closeList()
+            html.push(`<div class="my-6 flex gap-3 rounded-2xl border border-indigo-200 bg-indigo-50/90 p-4 text-sm font-medium text-indigo-950 leading-relaxed shadow-xs">${inlineMarkdown(line.slice(2))}</div>`)
+            continue
+        }
+        if (line.startsWith("> ⚠️") || line.startsWith("> Warning") || line.startsWith("> Caution:")) {
+            closeList()
+            html.push(`<div class="my-6 flex gap-3 rounded-2xl border border-rose-200 bg-rose-50/90 p-4 text-sm font-medium text-rose-950 leading-relaxed shadow-xs">${inlineMarkdown(line.slice(2))}</div>`)
             continue
         }
 
         if (line.startsWith("> ")) {
             closeList()
-            html.push(`<blockquote class="my-6 border-l-4 border-zinc-900 pl-4 py-1 italic font-serif text-lg text-zinc-700">${inlineMarkdown(line.slice(2))}</blockquote>`)
+            html.push(`<blockquote class="my-6 border-l-4 border-zinc-900 pl-4 py-1 italic font-serif text-lg text-zinc-800">${inlineMarkdown(line.slice(2))}</blockquote>`)
             continue
         }
 
         closeList()
-        html.push(`<p class="text-base leading-8 text-zinc-700 font-normal">${inlineMarkdown(line)}</p>`)
+        html.push(`<p class="my-4 text-base leading-8 text-zinc-800 font-normal">${inlineMarkdown(line)}</p>`)
     }
 
     closeList()
+    closeTable()
     return html.join("")
 }
 

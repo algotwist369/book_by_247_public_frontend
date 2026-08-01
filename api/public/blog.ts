@@ -8,6 +8,8 @@ import type {
     BlogSeoMetadata,
     BlogTaxonomy,
     CreateBlogPayload,
+    LuomoGeneratePayload,
+    LuomoGenerateResponse,
     MediaAsset,
     UpdateBlogPayload,
     UpdateUserProfilePayload,
@@ -278,5 +280,12 @@ export const blogApi = {
         apiClient<ApiResponse<{ signedUrl: string }>>(`/media/signed-url/${id}`, withBlogAuth({
             cache: "no-store",
         })),
+
+    generateAiBlog: (payload: LuomoGeneratePayload) =>
+        apiClient<ApiResponse<LuomoGenerateResponse>>("/ai/generate-blog", withBlogAuth({
+            method: "POST",
+            body: JSON.stringify(payload),
+        })),
 }
+
 

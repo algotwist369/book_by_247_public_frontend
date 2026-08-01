@@ -218,3 +218,26 @@ export interface UpdateUserProfilePayload {
     }
 }
 
+export interface LuomoGeneratePayload {
+    title: string
+    subtitle?: string
+    categoryNames?: string[]
+    tagNames?: string[]
+    tone?: string
+}
+
+export interface LuomoGenerateResponse {
+    title: string
+    excerpt: string
+    markdown: string
+    seo?: {
+        metaTitle?: string
+        metaDescription?: string
+        focusKeyword?: string
+    }
+    schemaMarkup?: {
+        faq?: Array<{ question: string; answer: string }>
+    }
+}
+
+

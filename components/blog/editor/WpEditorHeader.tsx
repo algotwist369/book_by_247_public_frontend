@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Eye, Edit3, Settings, CheckCircle2 } from "lucide-react"
+import { Eye, Edit3, Settings, CheckCircle2, Sparkles } from "lucide-react"
 
 interface WpEditorHeaderProps {
     title: string
@@ -14,6 +14,8 @@ interface WpEditorHeaderProps {
     isSidebarOpen: boolean
     onToggleSidebar: () => void
     isUpdate?: boolean
+    userRole?: string
+    onOpenLuomoModal?: () => void
 }
 
 export function WpEditorHeader({
@@ -27,7 +29,11 @@ export function WpEditorHeader({
     isSidebarOpen,
     onToggleSidebar,
     isUpdate = false,
+    userRole,
+    onOpenLuomoModal,
 }: WpEditorHeaderProps) {
+    const isAdmin = userRole === "admin"
+
     return (
         <header className="sticky top-0 z-40 border-b border-gray-200 bg-white/95 backdrop-blur px-4 py-2.5 sm:px-6">
             <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
@@ -62,6 +68,20 @@ export function WpEditorHeader({
 
                 {/* Right: Actions & Controls */}
                 <div className="flex items-center gap-2 shrink-0">
+                    {/* Admin-Only: Luomo AI Writer Button */}
+                    {isAdmin && onOpenLuomoModal && (
+                        <button
+                            type="button"
+                            onClick={onOpenLuomoModal}
+                            className="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 px-3 py-1.5 text-xs font-bold text-white shadow-md hover:opacity-90 transition-all"
+                            title="Generate full SEO article with Luomo AI (Admin Only)"
+                        >
+                            <Sparkles className="h-3.5 w-3.5 animate-pulse text-amber-300" />
+                            <span className="hidden sm:inline">Write with Luomo AI</span>
+                            <span className="sm:hidden">Luomo AI</span>
+                        </button>
+                    )}
+
                     {/* Switcher Edit / Preview */}
                     <div className="flex rounded-lg bg-gray-100 p-1">
                         <button
