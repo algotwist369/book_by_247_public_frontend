@@ -5,10 +5,14 @@ import { CalendarDays, Phone, Star, MapPin, CheckCircle2 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 import { Business } from "@/components/business/businessData";
 import { CustomImage } from "../ui/CustomImage";
+import { getBusinessCoordinates, calculateRealDistanceKm, formatDistance } from "@/lib/distance-utils";
+import { useGeolocation } from "@/hooks/useGeolocation";
 
 interface ExploreBusinessCardProps {
     business: Business;
     index: number;
+    userLat?: number | null;
+    userLng?: number | null;
 }
 
 const DEFAULT_FALLBACK_IMAGES = [
@@ -27,16 +31,22 @@ const getServicePills = (business: Business) => {
     ].filter(Boolean);
 
     if (raw.length === 0) return DEFAULT_SERVICE_PILLS;
-    
+
     const clean = raw.map(t => String(t).trim()).map(t => t.charAt(0).toUpperCase() + t.slice(1));
     const unique = Array.from(new Set(clean));
     return unique.length >= 2 ? unique.slice(0, 4) : [...unique, ...DEFAULT_SERVICE_PILLS].slice(0, 4);
 };
 
-const ExploreBusinessCard = ({ business, index }: ExploreBusinessCardProps) => {
+const ExploreBusinessCard = ({ business, index, userLat, userLng }: ExploreBusinessCardProps) => {
+    const { latitude: geoLat, longitude: geoLng } = useGeolocation();
+
+    // Use passed coordinates or active browser geolocation
+    const activeUserLat = userLat ?? geoLat;
+    const activeUserLng = userLng ?? geoLng;
+
     const serviceTags = getServicePills(business);
     const businessHref = `/business/${business.slug}`;
-    
+
     const fallbackImage = DEFAULT_FALLBACK_IMAGES[index % DEFAULT_FALLBACK_IMAGES.length];
     const imageSrc = business.image || business.thumbnailImage || business.images?.[0] || business.gallery?.[0] || fallbackImage;
     const cleanPhone = business.phone?.replace(/[^0-9]/g, "");
@@ -68,13 +78,23 @@ const ExploreBusinessCard = ({ business, index }: ExploreBusinessCardProps) => {
 
     const locationText = business.branch || business.address || business.city || "";
 
-    // 100% Real Database Ratings & Review Counts (No Dummy Calculations)
+    // 100% Real Database Ratings & Review Counts
     const bAny = business as any;
     const rawRating = Number(bAny.rating ?? bAny.averageRating ?? bAny.ratings?.average ?? 0);
     const rawReviews = Number(bAny.reviews ?? bAny.totalReviews ?? bAny.ratings?.totalReviews ?? bAny.reviewCount ?? 0);
 
     const hasRating = Number.isFinite(rawRating) && rawRating > 0;
     const ratingText = hasRating ? rawRating.toFixed(1) : null;
+
+    // 100% Real Distance Calculation - Zero Dummy Fallbacks
+    const bizCoords = getBusinessCoordinates(business);
+    const calculatedDistanceKm = (activeUserLat != null && activeUserLng != null && bizCoords)
+        ? calculateRealDistanceKm(activeUserLat, activeUserLng, bizCoords.lat, bizCoords.lng)
+        : (typeof business.distanceKm === "number" && !isNaN(business.distanceKm) ? business.distanceKm : null);
+
+    const displayDistanceText = (calculatedDistanceKm != null && calculatedDistanceKm >= 0)
+        ? formatDistance(calculatedDistanceKm)
+        : null;
 
     return (
         <article className="group w-full rounded-2xl border border-zinc-200 bg-white overflow-hidden shadow-xs hover:shadow-xl hover:border-zinc-300 transition-all duration-300 flex flex-col justify-between">
@@ -106,15 +126,11 @@ const ExploreBusinessCard = ({ business, index }: ExploreBusinessCardProps) => {
                     )}
                 </div>
 
-                {/* Floating Distance Badge - Pixel-Perfect Match with Target Image 2 */}
-                {business.distanceKm !== undefined && business.distanceKm !== null && (
+                {/* Floating Distance Badge - ONLY rendered if user location is ON & real distance is computed */}
+                {displayDistanceText && (
                     <div className="absolute top-3 left-3 z-10 flex items-center gap-2 rounded-xl bg-[#2b2927]/95 px-3.5 py-2 text-sm font-medium text-white shadow-md backdrop-blur-md border border-white/10">
                         <MapPin className="h-4 w-4 text-white shrink-0" />
-                        <span>
-                            {business.distanceKm < 1
-                                ? `${Math.round(business.distanceKm * 1000)} m`
-                                : `${business.distanceKm} km`}
-                        </span>
+                        <span>{displayDistanceText}</span>
                     </div>
                 )}
             </Link>

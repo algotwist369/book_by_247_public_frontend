@@ -7,37 +7,55 @@ import { cn } from '@/lib/utils';
 import { Business } from './businessData';
 import { CustomImage } from '../ui/CustomImage';
 import { FaLocationArrow } from "react-icons/fa6";
+import { getBusinessCoordinates, calculateRealDistanceKm, formatDistance } from '@/lib/distance-utils';
+import { useGeolocation } from '@/hooks/useGeolocation';
 
 interface BusinessCardProps {
     business: Business;
     className?: string;
     priority?: boolean;
+    userLat?: number | null;
+    userLng?: number | null;
 }
 
-const BusinessCard: React.FC<BusinessCardProps> = ({ business, className, priority = false }) => {
+const BusinessCard: React.FC<BusinessCardProps> = ({ business, className, priority = false, userLat, userLng }) => {
+    const { latitude: geoLat, longitude: geoLng } = useGeolocation();
+
+    const activeUserLat = userLat ?? geoLat;
+    const activeUserLng = userLng ?? geoLng;
+
+    // 100% Real Distance Calculation - Zero Dummy Fallbacks
+    const bizCoords = getBusinessCoordinates(business);
+    const calculatedDistanceKm = (activeUserLat != null && activeUserLng != null && bizCoords)
+        ? calculateRealDistanceKm(activeUserLat, activeUserLng, bizCoords.lat, bizCoords.lng)
+        : (typeof business.distanceKm === "number" && !isNaN(business.distanceKm) ? business.distanceKm : null);
+
+    const displayDistanceText = (calculatedDistanceKm != null && calculatedDistanceKm >= 0)
+        ? formatDistance(calculatedDistanceKm)
+        : null;
+
     return (
         <div className={cn("flex flex-col gap-3 group cursor-pointer border border-gray-200 rounded-lg p-1", className)}>
             <Link href={`/business/${business.slug}`} className="block h-full">
                 {/* Image Container */}
                 <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-zinc-100 mb-3">
                     <CustomImage
-                        src={business.image || business.images?.[0] || business.gallery?.[0] || ''} // Priority: primary image -> first image array -> gallery
+                        src={business.image || business.images?.[0] || business.gallery?.[0] || ''}
                         alt={`${business.name} thumbnail`}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                         priority={priority}
                     />
-                    {/* Distance Badge */}
-                    {business.distanceKm !== undefined && (
-                        <div className="absolute top-3 right-3 z-10 flex items-center bg-white/80 backdrop-blur-md px-1 rounded-full">
+                    {/* Distance Badge - Rendered ONLY if real user location distance exists */}
+                    {displayDistanceText && (
+                        <div className="absolute top-3 right-3 z-10 flex items-center gap-1 bg-white/90 backdrop-blur-md px-2 py-1 rounded-full shadow-xs">
                             <FaLocationArrow className="w-3 h-3 text-black" />
                             <span className="text-[11px] font-black text-black">
-                                {business.distanceKm} km
+                                {displayDistanceText}
                             </span>
                         </div>
                     )}
                 </div>
-
 
                 {/* Content Section */}
                 <div className="flex flex-col gap-0.5 sm:gap-1">
