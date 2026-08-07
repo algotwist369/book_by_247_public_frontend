@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { useMutation } from '@tanstack/react-query';
 import { Business } from '@/components/business/businessData';
 import { appointmentApi, BookingData } from '@/api/public/appointment';
@@ -11,10 +12,11 @@ import BookingProgress from './components/BookingProgress';
 import BookingServices from './components/BookingServices';
 import BookingSchedule from './components/BookingSchedule';
 import BookingDetails from './components/BookingDetails';
-import BookingPayment from './components/BookingPayment';
 import BookingSummary from './components/BookingSummary';
-import BookingSuccess from './components/BookingSuccess';
-import BookingOTP from './components/BookingOTP';
+
+const BookingPayment = dynamic(() => import('./components/BookingPayment'), { ssr: false });
+const BookingSuccess = dynamic(() => import('./components/BookingSuccess'), { ssr: false });
+const BookingOTP = dynamic(() => import('./components/BookingOTP'), { ssr: false });
 
 interface BookingPageContentProps {
     business: Business;

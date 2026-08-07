@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import ExploreBusinessList from '@/components/explore-business/ExploreBusinessList';
-import ExploreMap from '@/components/explore-business/ExploreMap';
 import ExploreFilters from '@/components/explore-business/ExploreFilters';
-import ExploreFilterModal, { FilterState } from '@/components/explore-business/ExploreFilterModal';
+import type { FilterState } from '@/components/explore-business/ExploreFilterModal';
 import { Map, List, MapPin, ArrowLeft, Search, X as CloseIcon } from 'lucide-react';
 import { SearchBar } from '@/components/ui/SearchBar';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
@@ -12,6 +12,19 @@ import { useInfiniteSearch } from '@/hooks/useInfiniteSearch';
 import { useBusinessTypes } from '@/hooks/useBusinessTypes';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { useLocationSuggestions } from '@/hooks/useLocationSuggestions';
+
+const ExploreMap = dynamic(() => import('@/components/explore-business/ExploreMap'), {
+    ssr: false,
+    loading: () => (
+        <div className="w-full h-full bg-zinc-100 animate-pulse rounded-2xl flex items-center justify-center text-zinc-400 font-medium">
+            Loading interactive map...
+        </div>
+    ),
+});
+
+const ExploreFilterModal = dynamic(() => import('@/components/explore-business/ExploreFilterModal'), {
+    ssr: false,
+});
 
 interface ExplorePageContentProps {
     initialData?: any;
@@ -410,9 +423,11 @@ const ExplorePageContent: React.FC<ExplorePageContentProps> = ({ initialData, ta
                         {/* Dark Overlay & Background Image Layer */}
                         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
                             <img
-                                src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1600"
+                                src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1000&q=75&auto=format"
                                 alt="Spa wellness background banner"
                                 className="w-full h-full object-cover opacity-45"
+                                fetchPriority="high"
+                                loading="eager"
                             />
                             {/* Double Layer Black Overlay for 100% Readable Text */}
                             <div className="absolute inset-0 bg-black/65 z-10" />

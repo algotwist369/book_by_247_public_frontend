@@ -158,7 +158,7 @@ const ExploreBusinessCard = ({ business, index, userLat, userLng }: ExploreBusin
                         {serviceTags.map((tag) => (
                             <span
                                 key={tag}
-                                className="rounded-md bg-zinc-100 px-2.5 py-1 text-[11px] font-medium text-zinc-600"
+                                className="rounded-md bg-zinc-100 px-2.5 py-1 text-[11px] font-semibold text-zinc-800"
                             >
                                 {tag}
                             </span>

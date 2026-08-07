@@ -13,7 +13,6 @@ import { Input } from "../ui/Input";
 const Footer = () => {
     const currentYear = new Date().getFullYear();
 
-    // 🔥 DATA
     const socialLinks = [
         { icon: Instagram, label: "Instagram", Link: "https://www.instagram.com/bookby247" },
         { icon: Facebook, label: "Facebook", Link: "https://www.facebook.com/bookby247" },
@@ -35,7 +34,6 @@ const Footer = () => {
         { label: "Contact Us", href: "mailto:support@bookby247.com" },
         { label: "Become a Partner", href: "/free-listing" },
         { label: "Careers", href: "/careers" },
-        // { label: "Blog", href: "#" }
     ];
 
     const bottomLinks = [
@@ -45,54 +43,50 @@ const Footer = () => {
         { label: "Cookies Settings", href: "/cookies-settings" }
     ];
 
-    const renderLinks = (links: Array<string | { label: string; href: string }>) =>
-        links.map((item) => {
-            const label = typeof item === "string" ? item : item.label;
-            const href = typeof item === "string" ? "#" : item.href;
-            return (
-            <li key={label}>
+    const renderLinks = (links: Array<{ label: string; href: string }>) =>
+        links.map((item) => (
+            <li key={item.label}>
                 <Link
-                    href={href}
+                    href={item.href}
                     className="text-sm hover:text-white transition-colors flex items-center gap-2 group"
                 >
                     <ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
-                    {label}
+                    {item.label}
                 </Link>
             </li>
-        )});
+        ));
 
     return (
-        <footer className="bg-zinc-950 text-zinc-400 border-t border-white/5 py-10 ">
-            <div className="max-w-7xl mx-auto px-4 md:px-0">
-
-                {/* 🔥 TOP GRID */}
+        <footer className="bg-zinc-950 text-zinc-400 border-t border-white/5 py-10">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+                {/* TOP GRID */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-
                     {/* Brand */}
                     <div className="space-y-5">
-                        <Link href="/" className="shrink-0 flex items-center">
-                            <Image
-                                src="https://res.cloudinary.com/dwsv275kv/image/upload/f_auto,q_auto,w_360/v1774690800/WhatsApp_Image_2026-03-28_at_3_imgupscaler.ai_General_8K_x8h19z.jpg"
-                                alt="BOOKBY247 Logo"
-                                width={180}
-                                height={60}
-                                loading="lazy"
-                                className="h-10 sm:h-12 md:h-14 w-auto object-contain rounded-lg"
-                            />
+                        <Link href="/" className="shrink-0 flex items-center" aria-label="BookBy247 Home">
+                            <div className="relative h-10 sm:h-12 md:h-14 w-[120px] sm:w-[144px] md:w-[168px] aspect-[3/1] shrink-0">
+                                <Image
+                                    src="https://res.cloudinary.com/dwsv275kv/image/upload/f_auto,q_auto,w_360/v1774690800/WhatsApp_Image_2026-03-28_at_3_imgupscaler.ai_General_8K_x8h19z.jpg"
+                                    alt="BOOKBY247 Logo"
+                                    width={180}
+                                    height={60}
+                                    className="h-full w-full object-contain rounded-lg"
+                                />
+                            </div>
                         </Link>
 
-                        <p className="text-sm max-w-xs">
+                        <p className="text-sm max-w-xs text-zinc-300">
                             Discover and book premium spas and salons. Wellness at your fingertips.
                         </p>
 
                         {/* Social */}
                         <div className="flex gap-3 flex-wrap">
-                            {socialLinks.map(({ icon: Icon, label }) => (
+                            {socialLinks.map(({ icon: Icon, label, Link: socialHref }) => (
                                 <Link
                                     key={label}
-                                    href={socialLinks.find((link) => link.label === label)?.Link || "#"}
+                                    href={socialHref}
                                     aria-label={label}
-                                    className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white hover:text-zinc-950 transition-all"
+                                    className="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white hover:text-zinc-950 transition-all"
                                 >
                                     <Icon className="w-5 h-5" />
                                 </Link>
@@ -100,29 +94,24 @@ const Footer = () => {
                         </div>
                     </div>
 
-                    {/* 🔥 Categories + Quick Links (2 COL ON MOBILE) */}
-                    <div className="grid grid-cols-2 gap-8 sm:col-span-2 lg:col-span-2">
+                    {/* Categories */}
+                    <div className="space-y-5">
+                        <h3 className="text-white font-bold text-sm uppercase tracking-widest">
+                            Top Categories
+                        </h3>
+                        <ul className="space-y-3">
+                            {renderLinks(categories)}
+                        </ul>
+                    </div>
 
-                        {/* Categories */}
-                        <div className="space-y-5">
-                            <h3 className="text-white font-bold text-sm uppercase tracking-widest">
-                                Top Categories
-                            </h3>
-                            <ul className="space-y-3">
-                                {renderLinks(categories)}
-                            </ul>
-                        </div>
-
-                        {/* Quick Links */}
-                        <div className="space-y-5">
-                            <h3 className="text-white font-bold text-sm uppercase tracking-widest">
-                                Quick Links
-                            </h3>
-                            <ul className="space-y-3">
-                                {renderLinks(quickLinks)}
-                            </ul>
-                        </div>
-
+                    {/* Quick Links */}
+                    <div className="space-y-5">
+                        <h3 className="text-white font-bold text-sm uppercase tracking-widest">
+                            Quick Links
+                        </h3>
+                        <ul className="space-y-3">
+                            {renderLinks(quickLinks)}
+                        </ul>
                     </div>
 
                     {/* Newsletter */}
@@ -130,14 +119,15 @@ const Footer = () => {
                         <h3 className="text-white font-bold text-sm uppercase tracking-widest">
                             Stay Updated
                         </h3>
-                        <p className="text-sm">
+                        <p className="text-sm text-zinc-300">
                             Get offers & wellness tips directly.
                         </p>
 
                         <div className="space-y-3">
                             <Input
                                 placeholder="Email address"
-                                className="bg-white/5 border-white/10 text-white placeholder:text-zinc-600"
+                                aria-label="Email address for newsletter"
+                                className="bg-white/10 border-white/20 text-white placeholder:text-zinc-400"
                             />
                             <Button className="w-full bg-white text-zinc-950 hover:bg-zinc-200 font-bold">
                                 Subscribe
@@ -146,15 +136,15 @@ const Footer = () => {
                     </div>
                 </div>
 
-                {/* 🔥 CONTACT */}
-                <div className="border-y border-white/5 py-6 mt-10 text-center md:text-left">
-                    <p className="text-sm text-white">
-                        Need help? - <a href="mailto:support@bookby247.com" className="text-white hover:text-zinc-400 transition-colors">support@bookby247.com</a>
+                {/* CONTACT */}
+                <div className="border-y border-white/10 py-6 mt-10 text-center md:text-left">
+                    <p className="text-sm text-zinc-300">
+                        Need help? - <a href="mailto:support@bookby247.com" className="text-white underline hover:text-zinc-300 transition-colors">support@bookby247.com</a>
                     </p>
                 </div>
 
-                {/* 🔥 BOTTOM BAR */}
-                <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-6 text-center md:text-left">
+                {/* BOTTOM BAR */}
+                <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-6 text-center md:text-left text-zinc-400">
                     <p className="text-xs">
                         © {currentYear} BookBy247. All rights reserved.
                     </p>

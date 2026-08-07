@@ -92,6 +92,7 @@ const ServiceCard = ({
                     <input
                         type="checkbox"
                         checked={isServiceSelected}
+                        aria-label={`Select ${service.name}`}
                         onChange={(e) => {
                             e.stopPropagation();
                             if (!isServiceSelected) {
@@ -106,31 +107,31 @@ const ServiceCard = ({
                 </div>
 
                 <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-zinc-900 text-base">{service.name}</h3>
+                    <h2 className="font-semibold text-zinc-900 text-base">{service.name}</h2>
                     <div className="flex items-center gap-1.5 mt-0.5">
-                        <Clock className="w-3 h-3 text-zinc-400" />
-                        <span className="text-[11px] text-zinc-500 font-medium">{(options[0]?.duration ?? 0)} - {(options[options.length - 1]?.duration ?? 0)}</span>
+                        <Clock className="w-3 h-3 text-zinc-500" />
+                        <span className="text-[11px] text-zinc-600 font-medium">{(options[0]?.duration ?? 0)} - {(options[options.length - 1]?.duration ?? 0)}</span>
                     </div>
                 </div>
 
                 <div className="text-right flex items-center gap-3">
                     <div className="flex flex-col items-end">
-                        <span className="text-[9px] text-emerald-600 font-black uppercase tracking-tighter">Starting at</span>
+                        <span className="text-[9px] text-emerald-800 font-black uppercase tracking-tighter">Starting at</span>
                         <div className="flex items-center gap-1.5">
                             {previousPriceMin > 0 && (
-                                <span className="text-[11px] text-zinc-400 line-through font-medium">₹{previousPriceMin.toLocaleString('en-IN')}</span>
+                                <span className="text-[11px] text-zinc-600 line-through font-medium">₹{previousPriceMin.toLocaleString('en-IN')}</span>
                             )}
                             <span className="font-black text-zinc-900 text-base">₹{sellingPriceMin.toLocaleString('en-IN')}</span>
                             <div className={`transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}>
                                 {isExpanded ? (
-                                    <ChevronUp className="w-4 h-4 text-zinc-400" />
+                                    <ChevronUp className="w-4 h-4 text-zinc-600" />
                                 ) : (
-                                    <ChevronDown className="w-4 h-4 text-zinc-400" />
+                                    <ChevronDown className="w-4 h-4 text-zinc-600" />
                                 )}
                             </div>
                         </div>
                         {discountPercentHeader > 0 && (
-                            <span className="text-[10px] text-red-500 font-black tracking-tight">{discountPercentHeader}% OFF</span>
+                            <span className="text-[10px] text-red-700 font-black tracking-tight">{discountPercentHeader}% OFF</span>
                         )}
                     </div>
                 </div>
@@ -156,21 +157,21 @@ const ServiceCard = ({
                                         }`}
                                 >
                                     <div className="flex flex-col">
-                                        <span className={`font-bold text-sm ${isSelected ? 'text-zinc-900' : 'text-zinc-700'}`}>
+                                        <span className={`font-bold text-sm ${isSelected ? 'text-zinc-900' : 'text-zinc-800'}`}>
                                             {option.name || option.duration}
                                         </span>
-                                        <span className="text-xs text-zinc-400">{option.duration}</span>
+                                        <span className="text-xs text-zinc-600">{option.duration}</span>
                                     </div>
 
                                     <div className="text-right flex flex-col items-end">
                                         <div className="flex items-center gap-1.5">
                                             {previousPrice > 0 && (
-                                                <span className="text-[11px] text-zinc-400 line-through font-medium">₹{previousPrice.toLocaleString('en-IN')}</span>
+                                                <span className="text-[11px] text-zinc-600 line-through font-medium">₹{previousPrice.toLocaleString('en-IN')}</span>
                                             )}
                                             <span className="font-black text-zinc-900 text-sm">₹{sellingPrice.toLocaleString('en-IN') || 0}</span>
                                         </div>
                                         {discountPercent > 0 && (
-                                            <span className="text-[10px] text-red-500 font-black tracking-tight">{discountPercent}% OFF</span>
+                                            <span className="text-[10px] text-red-700 font-black tracking-tight">{discountPercent}% OFF</span>
                                         )}
                                     </div>
                                 </div>

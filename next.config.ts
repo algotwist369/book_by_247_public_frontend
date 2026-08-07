@@ -6,18 +6,16 @@ const nextConfig: NextConfig = {
 
   // Compiler optimizations
   compiler: {
-    removeConsole: process.env.NODE_ENV === "production",
+    removeConsole: process.env.NODE_ENV === "production" ? { exclude: ["error", "warn"] } : false,
   },
 
-  // Target modern browsers to reduce legacy JS polyfills
+  // Target modern imports to reduce bundle overhead
   experimental: {
-    optimizePackageImports: ["lucide-react", "framer-motion"],
+    optimizePackageImports: ["lucide-react", "framer-motion", "react-icons"],
   },
 
   images: {
-    // Allow images from any HTTPS source - needed because business images
-    // are scraped from a wide variety of third-party domains (JustDial,
-    // Cloudinary, Google, Unsplash, etc.) that can't all be whitelisted.
+    // Allow images from any HTTPS source
     remotePatterns: [
       {
         protocol: "https",
@@ -28,14 +26,17 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
     // Cache optimized images for 1 year
     minimumCacheTTL: 31536000,
+    deviceSizes: [320, 420, 640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
 
-  // Add cache-control headers to maximize browser caching and cut latency
+  // Add cache-control and security headers to maximize score & safety
   async headers() {
     const isProd = process.env.NODE_ENV === "production";
-    const csp = isProd
-      ? "default-src 'self' https: data: blob:; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https:; img-src 'self' https: data: blob:; font-src 'self' https: data:; connect-src 'self' https: wss: https://cloudflareinsights.com https://maps.googleapis.com http://localhost:9009 http://localhost:9004 http://127.0.0.1:9004; frame-src 'self' https:;"
-      : "default-src 'self' https: data: blob:; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https:; img-src 'self' https: data: blob:; font-src 'self' https: data:; connect-src 'self' https: wss: https://cloudflareinsights.com https://maps.googleapis.com http://localhost:9009 http://localhost:9004 http://127.0.0.1:9004; frame-src 'self' https:;";
+    const csp = (isProd
+      ? "default-src 'self' https: data: blob:; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://maps.googleapis.com https://www.clarity.ms https://*.clarity.ms; style-src 'self' 'unsafe-inline' https:; img-src 'self' https: data: blob: res.cloudinary.com images.unsplash.com lh3.googleusercontent.com; font-src 'self' https: data:; connect-src 'self' https: wss: https://cloudflareinsights.com https://maps.googleapis.com https://*.clarity.ms http://localhost:9009 http://localhost:9004 http://127.0.0.1:9004; frame-src 'self' https:;"
+      : "default-src 'self' https: data: blob:; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://maps.googleapis.com https://www.clarity.ms https://*.clarity.ms; style-src 'self' 'unsafe-inline' https:; img-src 'self' https: data: blob: res.cloudinary.com images.unsplash.com lh3.googleusercontent.com; font-src 'self' https: data:; connect-src 'self' https: wss: https://cloudflareinsights.com https://maps.googleapis.com https://*.clarity.ms http://localhost:9009 http://localhost:9004 http://127.0.0.1:9004; frame-src 'self' https:;"
+    ).replace(/\s{2,}/g, " ").trim();
 
     return [
       {
@@ -69,7 +70,7 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // Pages with ISR - stale-while-revalidate
+        // Global Pages
         source: "/(.*)",
         headers: [
           {
@@ -86,7 +87,11 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Referrer-Policy",
-            value: "no-referrer",
+            value: "strict-origin-when-cross-origin",
+          },
+          {
+            key: "Cross-Origin-Opener-Policy",
+            value: "same-origin",
           },
           {
             key: "Permissions-Policy",

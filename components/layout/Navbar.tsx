@@ -92,13 +92,16 @@ export const Navbar = () => {
             <div className="relative flex items-center justify-between py-3 md:py-4 border-b border-zinc-50 max-w-7xl mx-auto">
                 <div className="flex items-center gap-3 sm:gap-4 md:gap-8 px-6 md:px-0">
                     <Link href="/" className="shrink-0 flex items-center">
-                        <img
-                            src="https://res.cloudinary.com/dwsv275kv/image/upload/v1774790235/White_and_Black_Simple_Marketing_LinkedIn_Banner_f7aqfk.png"
-                            alt="BookBy247 Logo"
-                            width={180}
-                            height={60}
-                            className="h-10 sm:h-12 md:h-14 w-auto object-contain"
-                        />
+                        <div className="relative h-10 sm:h-12 md:h-14 w-[120px] sm:w-[144px] md:w-[168px] aspect-[3/1] shrink-0">
+                            <img
+                                src="https://res.cloudinary.com/dwsv275kv/image/upload/f_auto,q_auto,w_360/v1774790235/White_and_Black_Simple_Marketing_LinkedIn_Banner_f7aqfk.png"
+                                alt="BookBy247 Logo"
+                                width={180}
+                                height={60}
+                                className="h-full w-full object-contain"
+                                fetchPriority="high"
+                            />
+                        </div>
                     </Link>
 
                     {/* Info Blocks (Desktop Only) */}

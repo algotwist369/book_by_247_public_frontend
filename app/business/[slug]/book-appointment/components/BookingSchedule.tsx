@@ -109,14 +109,15 @@ const BookingSchedule = ({
                                 <button
                                     key={i}
                                     onClick={() => onSelectDate(dateItem.fullDate)}
-                                    className={`shrink-0 w-14 py-2.5 rounded-lg flex flex-col items-center justify-center text-center border ${isActive
-                                        ? 'border-zinc-900 bg-zinc-900 text-white'
-                                        : 'border-gray-200 bg-white text-gray-600'
+                                    aria-label={`Select date ${dateItem.dayName} ${dateItem.dateNum} ${dateItem.monthName}`}
+                                    className={`shrink-0 w-14 py-2.5 rounded-lg flex flex-col items-center justify-center text-center border cursor-pointer ${isActive
+                                        ? 'border-zinc-950 bg-zinc-950 text-white'
+                                        : 'border-gray-200 bg-white text-gray-800 hover:border-gray-300'
                                         }`}
                                 >
-                                    <span className={`text-[10px] font-medium uppercase ${isActive ? 'text-white/80' : 'text-gray-400'}`}>{dateItem.dayName}</span>
-                                    <span className="text-base font-semibold leading-tight mt-0.5">{dateItem.dateNum}</span>
-                                    <span className={`text-[9px] font-medium ${isActive ? 'text-white/70' : 'text-gray-400'}`}>{dateItem.monthName}</span>
+                                    <span className={`text-[10px] font-bold uppercase ${isActive ? 'text-white/90' : 'text-zinc-600'}`}>{dateItem.dayName}</span>
+                                    <span className="text-base font-bold leading-tight mt-0.5">{dateItem.dateNum}</span>
+                                    <span className={`text-[9px] font-bold ${isActive ? 'text-white/80' : 'text-zinc-600'}`}>{dateItem.monthName}</span>
                                 </button>
                             );
                         })}

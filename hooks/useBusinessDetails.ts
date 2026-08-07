@@ -10,21 +10,20 @@ import { businessDetailsApi } from "@/api/public/business.details.api";
 function useSafeQuery<TData = any, TError = any, TSelected = TData>(
     options: UseQueryOptions<TData, TError, TSelected>
 ) {
+    const queryResult = useQuery<TData, TError, TSelected>(options);
     if (typeof window === "undefined") {
         const rawData = options.initialData as any;
         const select = options.select;
         const selectedData = rawData && select ? select(rawData) : (rawData?.data ?? rawData);
 
         return {
-            data: selectedData as TSelected,
-            isLoading: !selectedData,
-            error: null,
-            isFetching: false,
-            isSuccess: !!selectedData,
-            refetch: () => Promise.resolve(),
+            ...queryResult,
+            data: (selectedData as TSelected) ?? queryResult.data,
+            isLoading: !selectedData && queryResult.isLoading,
+            isSuccess: !!selectedData || queryResult.isSuccess,
         };
     }
-    return useQuery<TData, TError, TSelected>(options);
+    return queryResult;
 }
 
 export const useBusinessDetails = (slug: string, initialData?: any) => {

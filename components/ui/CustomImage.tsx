@@ -1,26 +1,21 @@
-"use client"
+"use client";
 
-import React, { useMemo, useState } from "react"
-import Image, { ImageProps } from "next/image"
-import { cn } from "@/lib/utils"
+import React, { useMemo, useState } from "react";
+import Image, { ImageProps } from "next/image";
+import { cn } from "@/lib/utils";
+import { getOptimizedImageUrl } from "@/lib/image-optimizer";
 
 interface CustomImageProps extends ImageProps {
-    fallback?: string
-    containerClassName?: string
+    fallback?: string;
+    containerClassName?: string;
 }
 
-const GLOBAL_PLACEHOLDER = "https://img.freepik.com/free-photo/stylish-beauty-women-elegent-enjoy-concept_53876-132577.jpg?semt=ais_user_personalization&w=740&q=80";
+const GLOBAL_PLACEHOLDER = "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400&q=80&auto=format";
 
 const UNOPTIMIZED_HOSTS = [
-    "googleusercontent.com",
-    "lh3.googleusercontent.com",
-    "maps.googleapis.com",
     "content.jdmagicbox.com",
     "jdmagicbox.com",
-    "images.unsplash.com",
-    "cdn.pixabay.com",
     "halohealingtherapies.com",
-    "img.youtube.com",
 ];
 
 const normalizeSrc = (src: string | undefined, fallback: string): string => {
@@ -36,7 +31,6 @@ const normalizeSrc = (src: string | undefined, fallback: string): string => {
     ) {
         return trimmed;
     }
-    // Prepend slash only for relative paths containing image extensions or slashes
     if (/\.(jpg|jpeg|png|webp|avif|svg|gif|ico)(\?.*)?$/i.test(trimmed) || trimmed.includes("/")) {
         return `/${trimmed}`;
     }
@@ -68,15 +62,18 @@ const CustomImage = ({
     ...props
 }: CustomImageProps) => {
     const normalizedSrc = useMemo(() => normalizeSrc(src as string | undefined, fallback), [src, fallback]);
+    const optimizedSrc = useMemo(() => getOptimizedImageUrl(normalizedSrc, 400), [normalizedSrc]);
+
     const [failedSources, setFailedSources] = useState<Record<string, true>>({});
     const [loadedSrc, setLoadedSrc] = useState("");
 
     const fallbackSrc = normalizeSrc(fallback, GLOBAL_PLACEHOLDER);
-    const effectiveSrc = failedSources[normalizedSrc]
+    const effectiveSrc = failedSources[optimizedSrc]
         ? failedSources[fallbackSrc]
             ? GLOBAL_PLACEHOLDER
             : fallbackSrc
-        : normalizedSrc;
+        : optimizedSrc;
+
     const shouldUnoptimize = unoptimized ?? isHotlinkProtected(effectiveSrc);
     const isFill = !!props.fill;
     const effectiveLoading = priority ? "eager" : (loading ?? "lazy");
@@ -100,9 +97,9 @@ const CustomImage = ({
                 src={effectiveSrc}
                 alt={alt || "BookBy247 spa salon and beauty service image"}
                 unoptimized={shouldUnoptimize}
-                sizes={props.sizes || "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
+                sizes={props.sizes || "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 384px"}
                 className={cn(
-                    "duration-500 ease-in-out opacity-100",
+                    "duration-300 ease-in-out opacity-100",
                     className
                 )}
                 loading={effectiveLoading}
@@ -113,12 +110,12 @@ const CustomImage = ({
             />
 
             {isLoading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-zinc-200">
-                    <div className="w-6 h-6 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                <div className="absolute inset-0 flex items-center justify-center bg-zinc-100" aria-hidden="true">
+                    <div className="w-5 h-5 border-2 border-zinc-400 border-t-black rounded-full animate-spin" />
                 </div>
             )}
         </div>
-    )
-}
+    );
+};
 
-export { CustomImage }
+export { CustomImage };

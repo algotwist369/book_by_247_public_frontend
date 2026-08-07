@@ -45,7 +45,6 @@ const BusinessGallery = ({ images, businessName = "Business" }: BusinessGalleryP
                                 src={images[1]}
                                 alt={`${businessName} gallery image 2`}
                                 fill
-                                priority
                                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                             />
                         </div>
@@ -61,7 +60,6 @@ const BusinessGallery = ({ images, businessName = "Business" }: BusinessGalleryP
                                 src={images[2]}
                                 alt={`${businessName} gallery image 3`}
                                 fill
-                                priority
                                 className={`object-cover transition-transform duration-700 group-hover:scale-105 ${images.length > 3 ? 'opacity-50' : ''}`}
                             />
                             {images.length > 3 && (

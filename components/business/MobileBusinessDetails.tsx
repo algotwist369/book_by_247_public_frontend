@@ -235,16 +235,18 @@ export default function MobileBusinessDetails({
 
                 {/* Carousel Indicator Dots */}
                 {galleryImages.length > 1 && (
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 bg-black/40 px-3.5 py-1.5 rounded-full backdrop-blur-md">
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 bg-black/40 px-3 py-1 rounded-full backdrop-blur-md">
                         {galleryImages.slice(0, 5).map((_img: string, idx: number) => (
                             <button
                                 key={idx}
                                 onClick={() => setActivePhotoIdx(idx)}
-                                className={`h-2 rounded-full transition-all cursor-pointer ${
-                                    activePhotoIdx === idx ? 'w-5 bg-white' : 'w-2 bg-white/50'
-                                }`}
+                                className="p-2 min-w-[36px] min-h-[36px] flex items-center justify-center cursor-pointer"
                                 aria-label={`Go to slide ${idx + 1}`}
-                            />
+                            >
+                                <span className={`h-2 rounded-full transition-all ${
+                                    activePhotoIdx === idx ? 'w-5 bg-white' : 'w-2 bg-white/60'
+                                }`} />
+                            </button>
                         ))}
                     </div>
                 )}
@@ -270,7 +272,7 @@ export default function MobileBusinessDetails({
                         <Star className="w-4 h-4 fill-amber-400 text-amber-400 shrink-0" />
                         <span className="text-sm">{ratingText ? ratingText : "New"}</span>
                         {rawReviews > 0 && (
-                            <span className="text-zinc-400 font-medium text-xs ml-0.5">({rawReviews.toLocaleString()})</span>
+                            <span className="text-zinc-300 font-medium text-xs ml-0.5">({rawReviews.toLocaleString()})</span>
                         )}
                     </div>
 
@@ -344,7 +346,7 @@ export default function MobileBusinessDetails({
                 <div className="px-4 py-5 mt-2 border-y border-zinc-100 space-y-3 bg-white">
                     <div className="flex items-center justify-between">
                         <h2 className="text-lg sm:text-xl font-black text-zinc-950 tracking-tight">Popular Services</h2>
-                        <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">{displayServices.length} Items</span>
+                        <span className="text-xs font-bold text-zinc-600 uppercase tracking-wider">{displayServices.length} Items</span>
                     </div>
                     <div className="divide-y divide-zinc-100">
                         {displayServices.map((service: any, idx: number) => (
@@ -376,7 +378,7 @@ export default function MobileBusinessDetails({
                 <div className="px-4 py-5 mt-2 border-y border-zinc-100 space-y-4 bg-white">
                     {capacity.features?.length > 0 && (
                         <div className="space-y-2.5">
-                            <h3 className="text-xs font-black text-zinc-400 uppercase tracking-widest">Key Features</h3>
+                            <h3 className="text-xs font-black text-zinc-600 uppercase tracking-widest">Key Features</h3>
                             <div className="flex flex-wrap gap-2">
                                 {capacity.features.map((feature: string, i: number) => (
                                     <span key={i} className="px-3 py-1.5 bg-zinc-100 text-zinc-900 font-extrabold rounded-xl text-xs border border-zinc-200">
@@ -512,7 +514,7 @@ export default function MobileBusinessDetails({
             <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-t border-zinc-200 px-4 py-3 flex items-center justify-between gap-3 shadow-2xl">
                 {minStartingPrice > 0 ? (
                     <div className="flex flex-col pl-1">
-                        <span className="text-[11px] text-zinc-400 font-bold uppercase tracking-wider leading-none">from</span>
+                        <span className="text-[11px] text-zinc-600 font-bold uppercase tracking-wider leading-none">from</span>
                         <span className="text-xl sm:text-2xl font-black text-zinc-950 leading-tight">
                             ₹{minStartingPrice.toLocaleString('en-IN')}
                         </span>

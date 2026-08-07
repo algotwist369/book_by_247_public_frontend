@@ -2,21 +2,23 @@
 
 import React from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { Star, MapPin, Phone, Globe, Clock, Share2, Mail, Facebook, Instagram, Twitter, Wifi, Car, Wind, Coffee, BadgeCheck, ShieldCheck, Navigation, CreditCard, CalendarCheck, Linkedin, Youtube, Send, PhoneCall } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import { Button } from '@/components/ui/Button';
 import DropdownSection from '@/components/ui/DropdownSection';
 import PopularServices from '@/components/business/PopularServices';
-import BusinessGallery from '@/components/business/BusinessGallery';
-import Business360Tour from '@/components/business/Business360Tour';
 import TabNavigation from '@/components/ui/TabNavigation';
-import ShareModal from '@/components/business/ShareModal';
 import BusinessCategories from '@/components/business/BusinessCategories';
-import BusinessReviews from '@/components/business/BusinessReviews';
-import BusinessVideos from '@/components/business/BusinessVideos';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
-import EnquiryModal from '@/components/business/EnquiryModal';
-import MobileBusinessDetails from '@/components/business/MobileBusinessDetails';
+
+const BusinessGallery = dynamic(() => import('@/components/business/BusinessGallery'), { ssr: false });
+const Business360Tour = dynamic(() => import('@/components/business/Business360Tour'), { ssr: false });
+const ShareModal = dynamic(() => import('@/components/business/ShareModal'), { ssr: false });
+const BusinessReviews = dynamic(() => import('@/components/business/BusinessReviews'), { ssr: false });
+const BusinessVideos = dynamic(() => import('@/components/business/BusinessVideos'), { ssr: false });
+const EnquiryModal = dynamic(() => import('@/components/business/EnquiryModal'), { ssr: false });
+const MobileBusinessDetails = dynamic(() => import('@/components/business/MobileBusinessDetails'), { ssr: false });
 
 import {
     useBusinessDetails,

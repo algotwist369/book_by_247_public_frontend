@@ -142,6 +142,7 @@ const ExploreFilters = ({
                             <select
                                 value={sortBy}
                                 onChange={(e) => onSortChange(e.target.value)}
+                                aria-label="Sort businesses by"
                                 className="appearance-none h-10 pl-4 pr-9 bg-white border border-zinc-300 hover:border-zinc-400 rounded-full font-bold text-xs text-zinc-800 focus:outline-none cursor-pointer"
                             >
                                 <option value="Recommended">Recommended</option>

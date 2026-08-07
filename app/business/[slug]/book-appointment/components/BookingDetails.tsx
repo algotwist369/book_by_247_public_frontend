@@ -34,17 +34,19 @@ const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
     return (
         <div className="bg-white rounded-lg border border-gray-200 p-5 sm:p-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-1">Your Details</h2>
-            <p className="text-gray-500 text-sm mb-6">We need your info to confirm the booking</p>
+            <p className="text-gray-600 text-sm mb-6">We need your info to confirm the booking</p>
 
             <div className="space-y-4">
                 <div>
-                    <label className="text-xs font-semibold text-black uppercase tracking-wider mb-1.5 block">Full Name</label>
+                    <label htmlFor="booking-name" className="text-xs font-semibold text-black uppercase tracking-wider mb-1.5 block">Full Name</label>
                     <div className="relative">
-                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                         <input
+                            id="booking-name"
                             type="text"
+                            aria-label="Full Name"
                             placeholder="John Doe"
-                            className="w-full h-11 pl-10 pr-3 bg-white border border-gray-200 rounded-lg focus:border-black outline-none text-sm text-black placeholder:text-gray-400"
+                            className="w-full h-11 pl-10 pr-3 bg-white border border-gray-200 rounded-lg focus:border-black outline-none text-sm text-black placeholder:text-gray-500"
                             value={formData.name}
                             onChange={(e) => onUpdateForm({ name: e.target.value })}
                         />
@@ -52,15 +54,17 @@ const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
                 </div>
 
                 <div>
-                    <label className="text-xs font-semibold text-black uppercase tracking-wider mb-1.5 block">Phone Number</label>
+                    <label htmlFor="booking-phone" className="text-xs font-semibold text-black uppercase tracking-wider mb-1.5 block">Phone Number</label>
                     <div className="relative">
-                        <Phone className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 ${showPhoneError ? 'text-red-400' : 'text-gray-400'}`} />
+                        <Phone className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 ${showPhoneError ? 'text-red-500' : 'text-gray-500'}`} />
                         <input
+                            id="booking-phone"
                             type="tel"
+                            aria-label="Phone Number"
                             inputMode="numeric"
                             maxLength={10}
                             placeholder="10-digit mobile number"
-                            className={`w-full h-11 pl-10 pr-3 bg-white border rounded-lg outline-none text-sm text-black placeholder:text-gray-400 ${showPhoneError ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-black'}`}
+                            className={`w-full h-11 pl-10 pr-3 bg-white border rounded-lg outline-none text-sm text-black placeholder:text-gray-500 ${showPhoneError ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-black'}`}
                             value={formData.phone}
                             onChange={(e) => handlePhoneChange(e.target.value)}
                         />
@@ -74,13 +78,15 @@ const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
                 </div>
 
                 <div>
-                    <label className="text-xs font-semibold text-black uppercase tracking-wider mb-1.5 block">Email Address <span className="text-gray-500 normal-case tracking-normal">(optional)</span></label>
+                    <label htmlFor="booking-email" className="text-xs font-semibold text-black uppercase tracking-wider mb-1.5 block">Email Address <span className="text-gray-600 normal-case tracking-normal">(optional)</span></label>
                     <div className="relative">
-                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                         <input
+                            id="booking-email"
                             type="email"
+                            aria-label="Email Address"
                             placeholder="you@example.com"
-                            className="w-full h-11 pl-10 pr-3 bg-white border border-gray-200 rounded-lg focus:border-black outline-none text-sm text-black placeholder:text-gray-400"
+                            className="w-full h-11 pl-10 pr-3 bg-white border border-gray-200 rounded-lg focus:border-black outline-none text-sm text-black placeholder:text-gray-500"
                             value={formData.email}
                             onChange={(e) => onUpdateForm({ email: e.target.value })}
                         />
@@ -95,11 +101,12 @@ const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
                                 type="radio"
                                 name="otpChannel"
                                 value="email"
+                                aria-label="Send OTP via Email"
                                 checked={formData.otpChannel === 'email'}
                                 onChange={() => handleOtpChannelChange('email')}
                                 className="w-4 h-4 text-zinc-900 bg-gray-100 border-gray-300 focus:ring-zinc-900"
                             />
-                            <span className="text-sm text-gray-700 flex items-center gap-1">
+                            <span className="text-sm text-gray-800 flex items-center gap-1">
                                 <Mail className="w-3.5 h-3.5" />
                                 Email
                             </span>
@@ -109,11 +116,12 @@ const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
                                 type="radio"
                                 name="otpChannel"
                                 value="sms"
+                                aria-label="Send OTP via SMS"
                                 checked={formData.otpChannel === 'sms'}
                                 onChange={() => handleOtpChannelChange('sms')}
                                 className="w-4 h-4 text-zinc-900 bg-gray-100 border-gray-300 focus:ring-zinc-900"
                             />
-                            <span className="text-sm text-gray-700 flex items-center gap-1">
+                            <span className="text-sm text-gray-800 flex items-center gap-1">
                                 <Smartphone className="w-3.5 h-3.5" />
                                 SMS
                             </span>
@@ -122,10 +130,12 @@ const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
                 </div>
 
                 <div>
-                    <label className="text-xs font-semibold text-black uppercase tracking-wider mb-1.5 block">Special Instructions <span className="text-gray-500 normal-case tracking-normal">(optional)</span></label>
+                    <label htmlFor="booking-notes" className="text-xs font-semibold text-black uppercase tracking-wider mb-1.5 block">Special Instructions <span className="text-gray-600 normal-case tracking-normal">(optional)</span></label>
                     <textarea
+                        id="booking-notes"
+                        aria-label="Special Instructions"
                         placeholder="Any special requirements..."
-                        className="w-full h-28 p-3 bg-white border border-gray-200 rounded-lg focus:border-black outline-none text-sm text-black placeholder:text-gray-400 resize-none"
+                        className="w-full h-28 p-3 bg-white border border-gray-200 rounded-lg focus:border-black outline-none text-sm text-black placeholder:text-gray-500 resize-none"
                         value={formData.notes}
                         onChange={(e) => onUpdateForm({ notes: e.target.value })}
                     />
@@ -136,4 +146,3 @@ const BookingDetails = ({ formData, onUpdateForm }: BookingDetailsProps) => {
 };
 
 export default BookingDetails;
-
