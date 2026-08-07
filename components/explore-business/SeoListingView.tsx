@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import ExploreBusinessList from '@/components/explore-business/ExploreBusinessList';
-import ExploreMap from '@/components/explore-business/ExploreMap';
 import ExploreFilters from '@/components/explore-business/ExploreFilters';
-import ExploreFilterModal, { FilterState } from '@/components/explore-business/ExploreFilterModal';
+import type { FilterState } from '@/components/explore-business/ExploreFilterModal';
 import { Map, List, ArrowLeft, Search, X as CloseIcon, MapPin } from 'lucide-react';
 import { SearchBar } from '../ui/SearchBar';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
@@ -15,6 +15,19 @@ import { useServiceMetadata } from '@/hooks/useServices';
 import ExploreServiceList from '@/components/explore-services/ExploreServiceList';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { useLocationSuggestions } from '@/hooks/useLocationSuggestions';
+
+const ExploreMap = dynamic(() => import('@/components/explore-business/ExploreMap'), {
+    ssr: false,
+    loading: () => (
+        <div className="w-full h-full bg-zinc-100 animate-pulse rounded-2xl flex items-center justify-center text-zinc-400 font-medium">
+            Loading interactive map...
+        </div>
+    ),
+});
+
+const ExploreFilterModal = dynamic(() => import('@/components/explore-business/ExploreFilterModal'), {
+    ssr: false,
+});
 
 interface SeoListingViewProps {
     initialCity?: string;

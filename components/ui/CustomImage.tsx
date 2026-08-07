@@ -104,6 +104,7 @@ const CustomImage = ({
                 )}
                 loading={effectiveLoading}
                 priority={priority}
+                fetchPriority={priority ? "high" : (props.fetchPriority as any ?? "auto")}
                 onLoad={() => setLoadedSrc(effectiveSrc)}
                 onError={handleError}
                 referrerPolicy="no-referrer"

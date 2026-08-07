@@ -15,6 +15,8 @@ export function FeaturedBlogCard({ blog }: { blog: BlogArticle }) {
                                 src={blog.featuredImage.url}
                                 alt={blog.featuredImage.alt || blog.title}
                                 fill
+                                priority
+                                sizes="(max-width: 640px) 100vw, 240px"
                                 className="object-cover"
                             />
                         </div>

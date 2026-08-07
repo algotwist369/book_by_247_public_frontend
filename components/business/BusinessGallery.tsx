@@ -29,6 +29,7 @@ const BusinessGallery = ({ images, businessName = "Business" }: BusinessGalleryP
                         alt={`${businessName} main gallery image`}
                         fill
                         priority
+                        sizes="(max-width: 768px) 100vw, 66vw"
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />

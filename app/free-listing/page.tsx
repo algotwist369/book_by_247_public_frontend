@@ -1,14 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import "./freelisting.css";
 import StepProgress from "@/components/freelisting/ui/StepProgress";
 import Step1Phone from "@/components/freelisting/Step1Phone";
-import Step2PersonalDetails from "@/components/freelisting/Step2PersonalDetails";
-import Step3BusinessDetails from "@/components/freelisting/Step3BusinessDetails";
-import SuccessScreen from "@/components/freelisting/SuccessScreen";
 import { submitListing, ListingPayload } from "@/lib/freelisting-api";
 import AiReadabilitySection from "@/components/seo/AiReadabilitySection";
+
+const Step2PersonalDetails = dynamic(() => import("@/components/freelisting/Step2PersonalDetails"), { ssr: false });
+const Step3BusinessDetails = dynamic(() => import("@/components/freelisting/Step3BusinessDetails"), { ssr: false });
+const SuccessScreen = dynamic(() => import("@/components/freelisting/SuccessScreen"), { ssr: false });
 
 const STEPS = [
   { label: "Mobile Number" },

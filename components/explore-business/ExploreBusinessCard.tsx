@@ -108,8 +108,8 @@ const ExploreBusinessCard = ({ business, index, userLat, userLng }: ExploreBusin
                     src={imageSrc}
                     alt={business.name}
                     fill
-                    priority={index < 4}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    priority={index < 2}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 384px"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />

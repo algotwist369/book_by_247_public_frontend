@@ -1,7 +1,6 @@
-# Target modern browsers to reduce polyfills
-last 2 versions
-> 0.5%
+# Target modern browsers to purge legacy polyfills and eliminate TBT
+chrome >= 100
+firefox >= 100
+safari >= 15.4
+edge >= 100
 not dead
-not op_mini all
-not ie 11
-not ie_mob 11
