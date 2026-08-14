@@ -4,9 +4,9 @@ export const SEO_CONFIG = {
   brandName: "BookBy247",
   alternateBrandNames: ["bookby247", "Book By 247", "Book by 24/7"],
   baseUrl: "https://bookby247.com",
-  defaultTitle: "BookBy247 | Online Spa, Salon & Wellness Booking Platform",
+  defaultTitle: "BookBy247 | India's First & Largest Spa, Salon & Beauty Discovery, Booking Platform & CRM",
   defaultDescription:
-    "BookBy247 helps users discover and book spa, salon and wellness services online with a fast and secure booking experience.",
+    "BookBy247 is India's first and largest spa, salon & beauty discovery and booking platform & CRM. Discover top beauty experts near you and book appointments online instantly.",
   defaultKeywords: [
     "BookBy247",
     "bookby247",
